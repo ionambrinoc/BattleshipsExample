@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>109cc8df</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RazorGenerator.Mvc">
+      <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -99,6 +103,9 @@
     <Reference Include="T4MVCExtensions">
       <HintPath>..\packages\T4MVCExtensions.3.9.1\lib\net40\T4MVCExtensions.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -116,6 +123,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -222,7 +230,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets'))" />
   </Target>
+  <Import Project="..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets" Condition="Exists('..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
