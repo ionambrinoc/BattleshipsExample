@@ -157,6 +157,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Components\bootstrap\dist\css\bootstrap-theme.css" />
+    <Content Include="Components\bootstrap\dist\css\bootstrap-theme.min.css" />
+    <Content Include="Components\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="Components\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="Components\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Components\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="Components\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="Components\jquery-form\jquery.form.js" />
+    <Content Include="Components\jquery.validation\dist\additional-methods.js" />
+    <Content Include="Components\jquery.validation\dist\additional-methods.min.js" />
+    <Content Include="Components\jquery.validation\dist\jquery.validate.js" />
+    <Content Include="Components\jquery.validation\dist\jquery.validate.min.js" />
+    <Content Include="Components\jquery\dist\jquery.js" />
+    <Content Include="Components\jquery\dist\jquery.min.js" />
+    <Content Include="Components\Microsoft.jQuery.Unobtrusive.Validation\jquery.validate.unobtrusive.js" />
+    <Content Include="Components\Microsoft.jQuery.Unobtrusive.Validation\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Components\respond\dest\respond.matchmedia.addListener.min.js" />
+    <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
+    <Content Include="Components\respond\dest\respond.min.js" />
+    <Content Include="Components\respond\dest\respond.src.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -171,6 +191,12 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Components\bootstrap\dist\css\bootstrap-theme.css.map" />
+    <Content Include="Components\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="Components\bootstrap\dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Components\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Components\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Components\jquery\dist\jquery.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -253,10 +279,7 @@
     <Error Condition="!Exists('..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets'))" />
   </Target>
   <Import Project="..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets" Condition="Exists('..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
+    <Exec Command=".bin\bower install" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target> -->
 </Project>
