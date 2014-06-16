@@ -6,7 +6,7 @@
     {
         public virtual ActionResult Index()
         {
-            return View();
+            return View(Views.Index);
         }
     }
 }

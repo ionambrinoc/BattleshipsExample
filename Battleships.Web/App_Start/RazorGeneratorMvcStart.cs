@@ -1,9 +1,9 @@
-using Battleships.Web.App_Start;
+using Battleships.Web;
 using WebActivatorEx;
 
 [assembly: PostApplicationStartMethod(typeof(RazorGeneratorMvcStart), "Start")]
 
-namespace Battleships.Web.App_Start
+namespace Battleships.Web
 {
     using RazorGenerator.Mvc;
     using System.Web;
