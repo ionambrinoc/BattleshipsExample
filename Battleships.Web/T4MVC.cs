@@ -70,6 +70,14 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class HeadToHead {
+            private const string URLPATH = "~/Scripts/HeadToHead";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string play_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/play.min.js") ? Url("play.min.js") : Url("play.js");
+        }
+    
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

@@ -13,7 +13,11 @@
                 "~/Components/jquery.validation/dist/jquery.validate.js",
                 "~/Components/Microsoft.jQuery.Unobtrusive.Validation/jquery.validate.unobtrusive.js",
                 "~/Components/bootstrap/dist/js/bootstrap.js",
+                "~/Components/jquery-form/jquery.form.js",
                 "~/Components/respond/dest/respond.src.js"));
+
+            bundles.Add(new CustomScriptBundle("~/bundles/scripts/headToHead/play").Include(
+                "~/Scripts/HeadToHead/play.js"));
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/common").Include(
                 "~/Components/bootstrap/less/bootstrap.less",

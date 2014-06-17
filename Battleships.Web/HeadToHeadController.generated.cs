@@ -63,6 +63,12 @@ namespace Battleships.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Play);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult RunGame()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunGame);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public HeadToHeadController Actions { get { return MVC.HeadToHead; } }
@@ -81,6 +87,7 @@ namespace Battleships.Web.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Play = "Play";
+            public readonly string RunGame = "RunGame";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -88,6 +95,7 @@ namespace Battleships.Web.Controllers
         {
             public const string Index = "Index";
             public const string Play = "Play";
+            public const string RunGame = "RunGame";
         }
 
 
@@ -96,6 +104,15 @@ namespace Battleships.Web.Controllers
         public ActionParamsClass_Play PlayParams { get { return s_params_Play; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Play
+        {
+            public readonly string playerOneName = "playerOneName";
+            public readonly string playerTwoName = "playerTwoName";
+        }
+        static readonly ActionParamsClass_RunGame s_params_RunGame = new ActionParamsClass_RunGame();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_RunGame RunGameParams { get { return s_params_RunGame; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_RunGame
         {
             public readonly string playerOneName = "playerOneName";
             public readonly string playerTwoName = "playerTwoName";
@@ -144,6 +161,19 @@ namespace Battleships.Web.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerOneName", playerOneName);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerTwoName", playerTwoName);
             PlayOverride(callInfo, playerOneName, playerTwoName);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void RunGameOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string playerOneName, string playerTwoName);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult RunGame(string playerOneName, string playerTwoName)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunGame);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerOneName", playerOneName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerTwoName", playerTwoName);
+            RunGameOverride(callInfo, playerOneName, playerTwoName);
             return callInfo;
         }
 

@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Web.Controllers
 {
     using Battleships.Web.Models.HeadToHead;
+    using System.Threading;
     using System.Web.Mvc;
 
     public partial class HeadToHeadController : Controller
@@ -17,6 +18,13 @@
         {
             var model = new PlayViewModel { PlayerOneName = playerOneName, PlayerTwoName = playerTwoName };
             return View(Views.Play, model);
+        }
+
+        [HttpPost]
+        public virtual ActionResult RunGame(string playerOneName, string playerTwoName)
+        {
+            Thread.Sleep(2000);
+            return Json(playerOneName);
         }
     }
 }

@@ -4,3 +4,17 @@
 @{
     ViewBag.Title = String.Format("{0} vs. {1}", Model.PlayerOneName, Model.PlayerTwoName);
 }
+
+@using (Html.BeginForm(MVC.HeadToHead.RunGame(Model.PlayerOneName, Model.PlayerTwoName), FormMethod.Post, new { id = "run-game-form" })) {}
+
+<h4>And the winner is...</h4>
+<div id="result"></div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/scripts/headToHead/play")
+    <script type="text/javascript">
+        $(function() {
+            battleships.headToHead.play.init();
+        });
+    </script>
+}
