@@ -315,8 +315,8 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
     <Error Condition="!Exists('..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets'))" />
   </Target>
-  <Import Project="..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets" Condition="Exists('..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets')" />
-  <Target Name="BeforeBuild">
+  <Import Project="..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets" Condition="Exists('..\packages\RazorGenerator.MsBuild.2.2.4\build\RazorGenerator.MsBuild.targets') AND '$(NCrunch)' != 1" />
+  <Target Name="BeforeBuild" Condition="'$(NCrunch)' != 1">
     <Exec Command=".bin\bower install" />
   </Target>
 </Project>
