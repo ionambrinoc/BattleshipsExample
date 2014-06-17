@@ -53,6 +53,16 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
+      <Project>{59E0E326-4953-4D40-A556-70E29F9172B4}</Project>
+      <Name>Battleships.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battleships.Runner\Battleships.Runner.csproj">
+      <Project>{97020B4B-5BB9-4181-95B7-521C3A4B1BF7}</Project>
+      <Name>Battleships.Runner</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
