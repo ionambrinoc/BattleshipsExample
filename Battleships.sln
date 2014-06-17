@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F0F85F
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battleships.Player", "Battleships.Player\Battleships.Player.csproj", "{59E0E326-4953-4D40-A556-70E29F9172B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battleships.ExamplePlayer", "Battleships.ExamplePlayer\Battleships.ExamplePlayer.csproj", "{21A20FC7-E30F-451F-B562-69768FBBEF4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +26,14 @@ Global
 		{3F623207-FABD-49E2-88B0-626E9EE788C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F623207-FABD-49E2-88B0-626E9EE788C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F623207-FABD-49E2-88B0-626E9EE788C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59E0E326-4953-4D40-A556-70E29F9172B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59E0E326-4953-4D40-A556-70E29F9172B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59E0E326-4953-4D40-A556-70E29F9172B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59E0E326-4953-4D40-A556-70E29F9172B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A20FC7-E30F-451F-B562-69768FBBEF4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A20FC7-E30F-451F-B562-69768FBBEF4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A20FC7-E30F-451F-B562-69768FBBEF4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A20FC7-E30F-451F-B562-69768FBBEF4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
