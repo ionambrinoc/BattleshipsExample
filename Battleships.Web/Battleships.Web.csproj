@@ -254,7 +254,9 @@
     <Content Include="Components\bootstrap\less\variables.less" />
     <Content Include="Components\bootstrap\less\wells.less" />
     <None Include="T4MVC.tt.settings.xml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -285,6 +287,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
+      <Project>{59E0E326-4953-4D40-A556-70E29F9172B4}</Project>
+      <Name>Battleships.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battleships.Runner\Battleships.Runner.csproj">
+      <Project>{97020B4B-5BB9-4181-95B7-521C3A4B1BF7}</Project>
+      <Name>Battleships.Runner</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
