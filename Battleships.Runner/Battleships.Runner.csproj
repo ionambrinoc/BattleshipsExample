@@ -49,8 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleshipsContext.cs" />
     <Compile Include="Exceptions\InvalidPlayerException.cs" />
     <Compile Include="HeadToHeadRunner.cs" />
+    <Compile Include="Models\Kitten.cs" />
     <Compile Include="PlayerLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShipPositionValidator.cs" />
