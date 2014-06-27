@@ -27,6 +27,7 @@ public static partial class MVC
 {
     public static Battleships.Web.Controllers.HeadToHeadController HeadToHead = new Battleships.Web.Controllers.T4MVC_HeadToHeadController();
     public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
+    public static Battleships.Web.Controllers.KittensController Kittens = new Battleships.Web.Controllers.T4MVC_KittensController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

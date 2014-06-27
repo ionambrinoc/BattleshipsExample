@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Kittens";
+}
+
+@using (Html.BeginForm(MVC.Kittens.Index())) {
+    <div class="form-group">
+        <label for="kittenName">Name: </label>
+        <input id="kittenName" name="kittenName" class="form-control" type="text" placeholder="Strumpf"/>
+    </div>
+    <input class="btn" id="submit" type="submit" value="Add Kitten"/>
+}
