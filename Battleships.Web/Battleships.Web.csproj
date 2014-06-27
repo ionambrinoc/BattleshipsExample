@@ -43,10 +43,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BundleTransformer.Core">
-      <HintPath>..\packages\BundleTransformer.Core.1.8.32\lib\net40\BundleTransformer.Core.dll</HintPath>
+      <HintPath>..\packages\BundleTransformer.Core.1.9.1\lib\net40\BundleTransformer.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="BundleTransformer.Less">
-      <HintPath>..\packages\BundleTransformer.Less.1.8.33\lib\net40\BundleTransformer.Less.dll</HintPath>
+      <HintPath>..\packages\BundleTransformer.Less.1.9.1\lib\net40\BundleTransformer.Less.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -209,13 +211,13 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <None Include="BundleTransformer.Configuration.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
-    <None Include="BundleTransformer.Configuration.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Components\jquery\dist\jquery.min.map" />
     <Content Include="Scripts\HeadToHead\play.js" />
     <Content Include="Scripts\_references.js" />
