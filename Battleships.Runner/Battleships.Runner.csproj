@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleshipsContext.cs" />
+    <Compile Include="BattleshipsInitializer.cs" />
     <Compile Include="Exceptions\InvalidPlayerException.cs" />
     <Compile Include="HeadToHeadRunner.cs" />
     <Compile Include="Migrations\201406261652239_InitialCreate.cs" />
