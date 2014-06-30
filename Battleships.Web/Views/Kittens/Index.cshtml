@@ -2,10 +2,18 @@
     ViewBag.Title = "Kittens";
 }
 
-@using (Html.BeginForm(MVC.Kittens.Index())) {
+<h3>Add a kitten</h3>
+
+@using (Html.BeginForm(MVC.Kittens.Index(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
     <div class="form-group">
         <label for="kittenName">Name: </label>
         <input id="kittenName" name="kittenName" class="form-control" type="text" placeholder="Strumpf"/>
     </div>
+    <div class="form-group">
+        <label for="kittenFile">Image: </label>
+        <input type="file" id="kittenFile" name="kittenFile" class="form-control" />
+    </div>
     <input class="btn" id="submit" type="submit" value="Add Kitten"/>
+}
+
 }

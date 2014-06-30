@@ -1,9 +1,11 @@
 ﻿namespace Battleships.Runner.Repositories
 {
+    using System.Collections.Generic;
     using System.Data.Entity;
 
     public interface IRepository<T> where T : class
     {
+        IEnumerable<T> GetAll();
         void Add(T entity);
         void SaveContext();
     }
@@ -20,6 +22,11 @@
         protected DbSet<T> Entities
         {
             get { return context.Set<T>(); }
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return Entities;
         }
 
         public void Add(T entity)

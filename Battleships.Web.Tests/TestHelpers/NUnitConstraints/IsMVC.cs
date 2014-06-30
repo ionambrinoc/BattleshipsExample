@@ -1,8 +1,8 @@
 ﻿namespace Battleships.Web.Tests.TestHelpers.NUnitConstraints
 {
-    using System.Web.Mvc;
     using NUnit.Framework;
     using NUnit.Framework.Constraints;
+    using System.Web.Mvc;
 
     public static class IsMVC
     {
@@ -19,6 +19,12 @@
         public static Constraint RedirectTo(string localRedirectUrl)
         {
             return Is.InstanceOf<RedirectResult>() & Has.Property("Url").EqualTo(localRedirectUrl);
+        }
+
+        public static Constraint RedirectTo(ActionResult action)
+        {
+            var expectedRouteValues = action.GetT4MVCResult().RouteValueDictionary;
+            return Is.InstanceOf<RedirectToRouteResult>() & Has.Property("RouteValues").EquivalentTo(expectedRouteValues);
         }
 
         public static Constraint Json(object data)
