@@ -20,7 +20,7 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View();
+            return View(kittensRepo.GetAll());
         }
 
         [HttpPost]

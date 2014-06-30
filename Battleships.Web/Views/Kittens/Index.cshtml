@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Battleships.Runner.Models
+@model IEnumerable<Kitten>
+
+
+@{
     ViewBag.Title = "Kittens";
 }
 
@@ -16,4 +20,8 @@
     <input class="btn" id="submit" type="submit" value="Add Kitten"/>
 }
 
+<h3>List of kittens</h3>
+
+@foreach (var kitten in Model) {
+    <div>@kitten.Name</div>
 }
