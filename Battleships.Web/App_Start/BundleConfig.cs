@@ -22,6 +22,9 @@
             bundles.Add(new CustomStyleBundle("~/bundles/styles/common").Include(
                 "~/Components/bootstrap/less/bootstrap.less",
                 "~/Content/site.less"));
+
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/kittens/index").Include(
+                "~/Content/kittens/index.less"));
         }
     }
 }
