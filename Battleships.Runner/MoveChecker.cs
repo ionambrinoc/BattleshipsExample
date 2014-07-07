@@ -3,22 +3,29 @@
     using Battleships.Player;
     using System.Collections.Generic;
 
-    internal class MoveChecker
+    public interface IMoveChecker
     {
-        private readonly IEnumerable<IShipPosition> playerOShipPositions;
-        private readonly IGridSquare target;
+        bool CheckResultOfMove(IGridSquare target);
+        void AddToCellsHit(IGridSquare target);
+        bool AllHit();
+    }
 
-        public MoveChecker(IEnumerable<IShipPosition> playerOShipPositions, IGridSquare target)
+    internal class MoveChecker : IMoveChecker
+    {
+        private readonly IEnumerable<IShipPosition> opposingPlayerShipPositions;
+        private readonly CellsHitByPlayerChecker cellsOfShipHitChecker;
+
+        public MoveChecker(IEnumerable<IShipPosition> opposingPlayerShipPositions)
         {
-            this.playerOShipPositions = playerOShipPositions;
-            this.target = target;
+            this.opposingPlayerShipPositions = opposingPlayerShipPositions;
+            cellsOfShipHitChecker = new CellsHitByPlayerChecker();
         }
 
-        public bool CheckResultOfMove()
+        public bool CheckResultOfMove(IGridSquare target)
         {
-            foreach (var shipPosition in playerOShipPositions)
+            foreach (var shipPosition in opposingPlayerShipPositions)
             {
-                if (IsTargetInShip(shipPosition))
+                if (IsTargetInShip(shipPosition, target))
                 {
                     return true;
                 }
@@ -26,7 +33,17 @@
             return false;
         }
 
-        private bool IsTargetInShip(IShipPosition shipPosition)
+        public void AddToCellsHit(IGridSquare target)
+        {
+            cellsOfShipHitChecker.AddCell(target);
+        }
+
+        public bool AllHit()
+        {
+            return cellsOfShipHitChecker.AllHit();
+        }
+
+        private bool IsTargetInShip(IShipPosition shipPosition, IGridSquare target)
         {
             if (IsShipHorizontal(shipPosition))
             {

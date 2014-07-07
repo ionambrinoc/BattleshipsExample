@@ -1,7 +1,7 @@
 ﻿namespace Battleships.Runner
 {
     using Battleships.Player;
-    using System.Collections.Generic;
+    using System.Linq;
 
     public class HeadToHeadRunner
     {
@@ -14,19 +14,13 @@
 
         public IBattleshipsPlayer RunGame(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
         {
-            var player1ShipPositions = player1.GetShipPositions();
-            var player2ShipPositions = player2.GetShipPositions();
-            var cellsHitByPlayer1 = new CellsHitByPlayerChecker();
-            var cellsHitByPlayer2 = new CellsHitByPlayerChecker();
+            var moveCheckerForPlayer1 = new MoveChecker(player2.GetShipPositions().ToList());
+            var moveCheckerForPlayer2 = new MoveChecker(player1.GetShipPositions().ToList());
 
-            if (!shipPositionValidator.IsValid(player1ShipPositions))
+            var winnerByDefault = ValidateStartingShipsPositions(player1, player2);
+            if (winnerByDefault != null)
             {
-                return player2;
-            }
-
-            if (!shipPositionValidator.IsValid(player2ShipPositions))
-            {
-                return player1;
+                return winnerByDefault;
             }
 
             var isFinished = false;
@@ -34,39 +28,44 @@
             while (!isFinished)
             {
                 playerTurn = 1 - playerTurn;
-                if (playerTurn == 0)
-                {
-                    isFinished = MakeMove(player1, player2, player2ShipPositions, cellsHitByPlayer1);
-                }
-                else
-                {
-                    isFinished = MakeMove(player2, player1, player1ShipPositions, cellsHitByPlayer2);
-                }
+                isFinished = playerTurn == 0 ? MakeMove(player1, player2, moveCheckerForPlayer1) : MakeMove(player2, player1, moveCheckerForPlayer2);
             }
 
             if (playerTurn == 0)
             {
-                return player2;
+                return player1;
             }
             return player2;
         }
 
-        private bool MakeMove(IBattleshipsPlayer attackingPlayer, IBattleshipsPlayer opposingPlayer,
-                              IEnumerable<IShipPosition> playerOShipPositions, CellsHitByPlayerChecker cellsHitByAttackingPlayer)
+        private IBattleshipsPlayer ValidateStartingShipsPositions(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
         {
-            var target = attackingPlayer.SelectTarget();
-            var moveChecker = new MoveChecker(playerOShipPositions, target);
-            var HasHit = moveChecker.CheckResultOfMove();
-
-            if (HasHit)
+            if (!shipPositionValidator.IsValid(player1.GetShipPositions()))
             {
-                cellsHitByAttackingPlayer.AddCell(target);
+                return player2;
             }
 
-            attackingPlayer.HandleShotResult(target, HasHit);
+            if (!shipPositionValidator.IsValid(player2.GetShipPositions()))
+            {
+                return player1;
+            }
+            return null;
+        }
+
+        private bool MakeMove(IBattleshipsPlayer attackingPlayer, IBattleshipsPlayer opposingPlayer, MoveChecker moveChecker)
+        {
+            var target = attackingPlayer.SelectTarget();
+            var hasHit = moveChecker.CheckResultOfMove(target);
+
+            if (hasHit)
+            {
+                moveChecker.AddToCellsHit(target);
+            }
+
+            attackingPlayer.HandleShotResult(target, hasHit);
             opposingPlayer.HandleOpponentsShot(target);
 
-            return cellsHitByAttackingPlayer.AllHit();
+            return moveChecker.AllHit();
         }
     }
 }

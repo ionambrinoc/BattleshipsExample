@@ -5,7 +5,12 @@
 
     public class CellsHitByPlayerChecker
     {
-        private readonly List<IGridSquare> cellsOfShipsHit = new List<IGridSquare>();
+        private readonly List<IGridSquare> cellsOfShipsHit;
+
+        public CellsHitByPlayerChecker()
+        {
+            cellsOfShipsHit = new List<IGridSquare>();
+        }
 
         public bool AllHit()
         {
