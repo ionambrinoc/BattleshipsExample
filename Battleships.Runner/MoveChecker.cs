@@ -32,30 +32,21 @@
             {
                 if (target.Row == shipPosition.EndingSquare.Row)
                 {
-                    if (target.Column <= shipPosition.EndingSquare.Column && target.Column >= shipPosition.StartingSquare.Column)
-                    {
-                        return true;
-                    }
-                    if (target.Column >= shipPosition.EndingSquare.Column && target.Column <= shipPosition.StartingSquare.Column)
-                    {
-                        return true;
-                    }
+                    return RangeChecker(target.Column, shipPosition.EndingSquare.Column, shipPosition.StartingSquare.Column);
                 }
             }
             else
             {
                 if (target.Column == shipPosition.EndingSquare.Column)
                 {
-                    if (target.Row <= shipPosition.EndingSquare.Row && target.Row >= shipPosition.StartingSquare.Row)
-                    {
-                        return true;
-                    }
-                    if (target.Row >= shipPosition.EndingSquare.Row && target.Row <= shipPosition.StartingSquare.Row)
-                    {
-                        return true;
-                    }
+                    return RangeChecker(target.Row, shipPosition.EndingSquare.Row, shipPosition.StartingSquare.Row);
                 }
             }
+        }
+
+        private bool RangeChecker(int target, int shipEnd, int shipStart)
+        {
+            return (target <= shipEnd && target >= shipStart) || (target >= shipEnd && target <= shipStart);
         }
 
         private bool IsShipHorizontal(IShipPosition shipPosition)
