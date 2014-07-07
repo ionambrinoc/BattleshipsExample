@@ -28,9 +28,13 @@
         public void Player_loses_if_ship_positions_invalid(int expectedWinner, int expectedLoser)
         {
             // Given
-            var shipPositions = A.CollectionOfFake<IShipPosition>(5);
-            A.CallTo(() => Player(expectedLoser).GetShipPositions()).Returns(shipPositions);
-            A.CallTo(() => shipPositionValidator.IsValid(shipPositions)).Returns(false);
+            var losingShipPositions = A.CollectionOfFake<IShipPosition>(5);
+            A.CallTo(() => Player(expectedLoser).GetShipPositions()).Returns(losingShipPositions);
+            A.CallTo(() => shipPositionValidator.IsValid(losingShipPositions)).Returns(false);
+
+            var winningShipPositions = A.CollectionOfFake<IShipPosition>(5);
+            A.CallTo(() => Player(expectedWinner).GetShipPositions()).Returns(winningShipPositions);
+            A.CallTo(() => shipPositionValidator.IsValid(winningShipPositions)).Returns(true);
 
             // When
             var winner = RunGame();
@@ -44,6 +48,10 @@
         {
             // Given
             A.CallTo(() => Player(expectedLoser).GetShipPositions()).Throws(() => new Exception());
+
+            var winningShipPositions = A.CollectionOfFake<IShipPosition>(5);
+            A.CallTo(() => Player(expectedWinner).GetShipPositions()).Returns(winningShipPositions);
+            A.CallTo(() => shipPositionValidator.IsValid(winningShipPositions)).Returns(true);
 
             // When
             var winner = RunGame();

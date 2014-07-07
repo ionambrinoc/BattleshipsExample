@@ -14,14 +14,14 @@
 
         public IBattleshipsPlayer RunGame(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
         {
-            var moveCheckerForPlayer1 = new MoveChecker(player2.GetShipPositions().ToList());
-            var moveCheckerForPlayer2 = new MoveChecker(player1.GetShipPositions().ToList());
-
             var winnerByDefault = ValidateStartingShipsPositions(player1, player2);
             if (winnerByDefault != null)
             {
                 return winnerByDefault;
             }
+
+            var moveCheckerForPlayer1 = new MoveChecker(player2.GetShipPositions().ToList());
+            var moveCheckerForPlayer2 = new MoveChecker(player1.GetShipPositions().ToList());
 
             var isFinished = false;
             var playerTurn = 1;
@@ -40,15 +40,30 @@
 
         private IBattleshipsPlayer ValidateStartingShipsPositions(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
         {
-            if (!shipPositionValidator.IsValid(player1.GetShipPositions()))
+            try
+            {
+                if (!shipPositionValidator.IsValid(player1.GetShipPositions()))
+                {
+                    return player2;
+                }
+            }
+            catch
             {
                 return player2;
             }
 
-            if (!shipPositionValidator.IsValid(player2.GetShipPositions()))
+            try
+            {
+                if (!shipPositionValidator.IsValid(player2.GetShipPositions()))
+                {
+                    return player1;
+                }
+            }
+            catch
             {
                 return player1;
             }
+
             return null;
         }
 
