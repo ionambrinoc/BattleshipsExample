@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="BattleshipsContext.cs" />
     <Compile Include="BattleshipsInitializer.cs" />
+    <Compile Include="CellsHitByPlayerChecker.cs" />
     <Compile Include="Exceptions\InvalidPlayerException.cs" />
     <Compile Include="HeadToHeadRunner.cs" />
     <Compile Include="Migrations\201406261652239_InitialCreate.cs" />
@@ -59,6 +60,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Kitten.cs" />
+    <Compile Include="MoveChecker.cs" />
     <Compile Include="PlayerLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\KittensRepository.cs" />

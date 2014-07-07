@@ -42,6 +42,7 @@
                     return RangeChecker(target.Row, shipPosition.EndingSquare.Row, shipPosition.StartingSquare.Row);
                 }
             }
+            return false;
         }
 
         private bool RangeChecker(int target, int shipEnd, int shipStart)
