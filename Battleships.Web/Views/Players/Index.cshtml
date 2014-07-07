@@ -1,0 +1,41 @@
+﻿@using Battleships.Runner.Models
+@model IEnumerable<Player>
+
+@Styles.Render("~/bundles/styles/players/index") <!-- ask about this part-->
+
+@{
+    ViewBag.Title = "Players";
+}
+
+<h3>Add a player</h3>
+
+@using (Html.BeginForm(MVC.Players.Index(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    <div class="form-group">
+        <label for="userName">Username: </label>
+        <input id="userName" name="userName" class="form-control" type="text" placeholder="Kitten" />
+    </div>
+    <div class="form-group">
+        <label for="botName">Botname: </label>
+        <input id="botName" name="botName" class="form-control" type="text" placeholder="KittenBot"/>
+    </div>
+    <div class="form-group">
+        <label for="codeFile">Code file: </label>
+        <input type="file" id="codeFile" name="codeFile" class="form-control" />
+    </div>
+    <input class="btn" id="submit" type="submit" value="Add Player"/>
+}
+
+<h3>List of players</h3>
+
+<table style ="width: 400px">
+    <tr>
+        <th>User Name</th>
+        <th>Bot Name</th>
+    </tr>
+    @foreach (var player in Model) {
+        <tr>
+            <td>@player.UserName</td>
+            <td>@player.BotName</td>
+        </tr>
+    }
+</table>
