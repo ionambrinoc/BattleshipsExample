@@ -8,5 +8,7 @@
         public BattleshipsContext() : base("DefaultConnection") {}
 
         public DbSet<Kitten> Kittens { get; set; }
+
+        public DbSet<Player> Bots { get; set; }
     }
 }

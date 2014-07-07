@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\PlayerControllerTests.cs" />
     <Compile Include="Controllers\KittensControllerTests.cs" />
     <Compile Include="Controllers\HeadToHeadControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
