@@ -1,9 +1,10 @@
 ﻿namespace Battleships.Runner
 {
     using Battleships.Runner.Models;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System.Data.Entity;
 
-    public class BattleshipsContext : DbContext
+    public class BattleshipsContext : IdentityDbContext<User>
     {
         public BattleshipsContext() : base("DefaultConnection") {}
 
