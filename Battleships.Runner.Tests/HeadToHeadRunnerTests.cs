@@ -2,6 +2,7 @@
 {
     using Battleships.Player;
     using FakeItEasy;
+    using FluentAssertions;
     using NUnit.Framework;
     using NUnit.Framework.Constraints;
     using System;
@@ -14,14 +15,22 @@
         private IBattleshipsPlayer player1;
         private IBattleshipsPlayer player2;
         private IShipPositionValidator shipPositionValidator;
+        private IMoveChecker player1MoveChecker;
+        private IMoveChecker player2MoveChecker;
+        private IMoveCheckerFactory moveCheckerFactory;
+        private ICellsHitByPlayerChecker cellsHitByPlayerChecker;
 
         [SetUp]
         public void SetUp()
         {
             shipPositionValidator = A.Fake<IShipPositionValidator>();
-            runner = new HeadToHeadRunner(shipPositionValidator);
             player1 = A.Fake<IBattleshipsPlayer>();
             player2 = A.Fake<IBattleshipsPlayer>();
+            player1MoveChecker = A.Fake<IMoveChecker>();
+            player2MoveChecker = A.Fake<IMoveChecker>();
+            moveCheckerFactory = A.Fake<IMoveCheckerFactory>();
+            runner = new HeadToHeadRunner(shipPositionValidator, moveCheckerFactory);
+            cellsHitByPlayerChecker = A.Fake<CellsHitByPlayerChecker>();
         }
 
         [TestCaseSource("Games")]
@@ -61,12 +70,63 @@
         }
 
         [Test]
+        public void Player_one_wins()
+        {
+            // Given
+            var player1ShipPositions = A.CollectionOfFake<IShipPosition>(5);
+            A.CallTo(() => player1.GetShipPositions()).Returns(player1ShipPositions);
+            var player2ShipPositions = A.CollectionOfFake<IShipPosition>(5);
+            A.CallTo(() => player2.GetShipPositions()).Returns(player2ShipPositions);
+            A.CallTo(() => shipPositionValidator.IsValid(player1ShipPositions)).Returns(true);
+            A.CallTo(() => shipPositionValidator.IsValid(player2ShipPositions)).Returns(true);
+
+            A.CallTo(() => moveCheckerFactory.GetMoveChecker(player2ShipPositions)).
+              Returns(player1MoveChecker);
+
+            A.CallTo(() => player1MoveChecker.AllHit()).Returns(true);
+
+            // When
+            var winner = RunGame();
+
+            // Then
+            winner.Should().Be(player1);
+        }
+
+        [Test]
+        public void Player_two_wins()
+        {
+            // Given
+            var player1ShipPositions = A.CollectionOfFake<IShipPosition>(5);
+            A.CallTo(() => player1.GetShipPositions()).Returns(player1ShipPositions);
+            var player2ShipPositions = A.CollectionOfFake<IShipPosition>(5);
+            A.CallTo(() => player2.GetShipPositions()).Returns(player2ShipPositions);
+            A.CallTo(() => shipPositionValidator.IsValid(player1ShipPositions)).Returns(true);
+            A.CallTo(() => shipPositionValidator.IsValid(player2ShipPositions)).Returns(true);
+
+            A.CallTo(() => moveCheckerFactory.GetMoveChecker(player2ShipPositions)).
+              Returns(player1MoveChecker);
+            A.CallTo(() => moveCheckerFactory.GetMoveChecker(player1ShipPositions)).
+              Returns(player2MoveChecker);
+
+            A.CallTo(() => player1MoveChecker.AllHit()).Returns(false);
+            A.CallTo(() => player2MoveChecker.AllHit()).Returns(true);
+
+            // When
+            var winner = RunGame();
+
+            // Then
+            winner.Should().Be(player2);
+        }
+
+        [Test]
         public void Player_loses_on_timeout() {}
 
         [Test]
+        // Tested in MoveCheckerTests
         public void Shot_result_is_reported_correctly_to_player() {}
 
         [Test]
+        // Tested in MoveCheckerTests
         public void Opponent_shot_is_reported_correctly_to_player() {}
 
         private static IEnumerable<int[]> Games()

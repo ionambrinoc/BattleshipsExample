@@ -58,7 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CellsHitByPlayerCheckerTests.cs" />
     <Compile Include="HeadToHeadRunnerTests.cs" />
+    <Compile Include="MoveCheckerTests.cs" />
     <Compile Include="PlayerLoaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers\TestPlayerStore.cs" />

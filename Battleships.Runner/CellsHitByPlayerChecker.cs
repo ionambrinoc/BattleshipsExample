@@ -3,7 +3,13 @@
     using Battleships.Player;
     using System.Collections.Generic;
 
-    public class CellsHitByPlayerChecker
+    public interface ICellsHitByPlayerChecker
+    {
+        bool AllHit();
+        void AddCell(IGridSquare target);
+    }
+
+    public class CellsHitByPlayerChecker : ICellsHitByPlayerChecker
     {
         private readonly List<IGridSquare> cellsOfShipsHit;
 
