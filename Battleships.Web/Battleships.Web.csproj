@@ -213,15 +213,12 @@
     <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
     <Content Include="Components\respond\dest\respond.min.js" />
     <Content Include="Components\respond\dest\respond.src.js" />
-    <Content Include="Content\Kittens\index.css" />
-    <Content Include="Content\Kittens\index.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Content\Kittens\index.css.map" />
     <Content Include="Content\Kittens\index.less" />
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
