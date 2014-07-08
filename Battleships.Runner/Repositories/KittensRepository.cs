@@ -1,5 +1,7 @@
 ﻿namespace Battleships.Runner.Repositories
 {
+    using System.Collections.Generic;
+    using System.Security.Cryptography.X509Certificates;
     using Battleships.Runner.Models;
 
     public interface IKittensRepository : IRepository<Kitten> {}

@@ -162,12 +162,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\HeadToHeadController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KittensController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HeadToHeadController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="HomeController.generated.cs">
@@ -296,6 +300,7 @@
     <Content Include="Views\HeadToHead\Play.cshtml" />
     <Content Include="Views\Kittens\Index.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
+    <Content Include="Views\History\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

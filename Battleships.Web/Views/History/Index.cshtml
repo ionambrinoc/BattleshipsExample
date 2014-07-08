@@ -1,0 +1,27 @@
+﻿@using System.Net.Mime
+@using Battleships.Runner.Models
+@model IEnumerable<PastGame>
+
+@{
+    ViewBag.Title = "Recent Games Log";
+}
+
+<table class="table myTable">
+    <thead>
+        <tr>
+            <th>First Player</th>
+            <th>Second Player</th>
+            <th>Result</th>
+            <th>Time Played</th>
+        </tr>
+    </thead>
+  
+    @foreach (PastGame pastGame in Model) {
+        <tr>
+            <td>@pastGame.FirstPlayer</td>
+            <td>@pastGame.SecondPlayer</td>
+            <td>@pastGame.Winner wins!</td>
+            <td>@pastGame.TimePlayed</td>
+        </tr>
+    }
+</table>
