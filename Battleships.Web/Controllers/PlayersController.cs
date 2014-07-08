@@ -26,12 +26,12 @@
         [HttpPost]
         public virtual ActionResult Index(FormCollection form)
         {
-            var codeFile = Request.Files["codeFile"];
+            var codeFile = Request.Files["file"];
             if (codeFile != null)
             {
                 var newPlayer = playersUploadService.UploadAndGetPlayer(
                     form.Get("userName"),
-                    form.Get("botName"),
+                    form.Get("name"),
                     codeFile,
                     Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
                 playersRepo.Add(newPlayer);

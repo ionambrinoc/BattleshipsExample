@@ -1,8 +1,6 @@
 ﻿@using Battleships.Runner.Models
 @model IEnumerable<Player>
 
-@Styles.Render("~/bundles/styles/players/index") <!-- ask about this part-->
-
 @{
     ViewBag.Title = "Players";
 }
@@ -12,30 +10,30 @@
 @using (Html.BeginForm(MVC.Players.Index(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
     <div class="form-group">
         <label for="userName">Username: </label>
-        <input id="userName" name="userName" class="form-control" type="text" placeholder="Kitten" />
+        <input id="userName" name="userName" class="form-control" type="text" placeholder="User" />
     </div>
     <div class="form-group">
-        <label for="botName">Botname: </label>
-        <input id="botName" name="botName" class="form-control" type="text" placeholder="KittenBot"/>
+        <label for="name">Player name: </label>
+        <input id="name" name="name" class="form-control" type="text" placeholder="Player"/>
     </div>
     <div class="form-group">
-        <label for="codeFile">Code file: </label>
-        <input type="file" id="codeFile" name="codeFile" class="form-control" />
+        <label for="file">File: </label>
+        <input type="file" id="file" name="file" class="form-control" />
     </div>
     <input class="btn" id="submit" type="submit" value="Add Player"/>
 }
 
 <h3>List of players</h3>
 
-<table>
+<table class ="table table-striped">
     <tr>
         <th>User Name</th>
-        <th>Bot Name</th>
+        <th>Player Name</th>
     </tr>
     @foreach (var player in Model) {
         <tr>
             <td>@player.UserName</td>
-            <td>@player.BotName</td>
+            <td>@player.Name</td>
         </tr>
     }
 </table>

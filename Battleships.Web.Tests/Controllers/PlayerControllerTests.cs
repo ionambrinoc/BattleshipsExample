@@ -16,20 +16,22 @@
     [TestFixture]
     public class PlayerControllerTests
     {
-        private const string TestPlayerUserName = "My Test Kitten";
-        private const string TestPlayerBotName = "My Test KittenBot";
+        private const string TestPlayerUserName = "My Test User";
+        private const string TestPlayerName = "My Test Player";
         private const string UserNameField = "userName";
-        private const string BotNameField = "botName";
+        private const string NameField = "name";
+        private FormCollection formInput;
         private PlayersController controller;
         private IPlayersRepository fakePlayerRepo;
         private IPlayerUploadService fakePlayerUploadService;
-        private HttpPostedFileBase fakeCodeFile;
+        private HttpPostedFileBase fakeFile;
 
         [SetUp]
         public void SetUp()
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
 
+            formInput = new FormCollection { { UserNameField, TestPlayerUserName }, { NameField, TestPlayerName } };
             fakePlayerRepo = A.Fake<IPlayersRepository>();
             fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             controller = new PlayersController(fakePlayerRepo, fakePlayerUploadService) { ControllerContext = GetFakeControllerContext() };
@@ -49,7 +51,7 @@
         public void Posting_to_index_redirects_to_index()
         {
             // When
-            var result = controller.Index(new FormCollection { { UserNameField, TestPlayerUserName }, { BotNameField, TestPlayerBotName } });
+            var result = controller.Index(formInput);
 
             // Then
             Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
@@ -59,10 +61,10 @@
         public void Posting_code_file_delegates_to_player_upload_service()
         {
             // When
-            controller.Index(new FormCollection { { UserNameField, TestPlayerUserName }, { BotNameField, TestPlayerBotName } });
+            controller.Index(formInput);
 
             // Then
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayer(TestPlayerUserName, TestPlayerBotName, fakeCodeFile, TestPlayerStore.Directory))
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayer(TestPlayerUserName, TestPlayerName, fakeFile, TestPlayerStore.Directory))
              .MustHaveHappened();
         }
 
@@ -75,7 +77,7 @@
              .Returns(fakePlayer);
 
             // When
-            controller.Index(new FormCollection { { UserNameField, TestPlayerUserName }, { BotNameField, TestPlayerBotName } });
+            controller.Index(formInput);
 
             // Then
             A.CallTo(() => fakePlayerRepo.Add(fakePlayer)).MustHaveHappened();
@@ -87,11 +89,11 @@
             var fakeHttpContext = A.Fake<HttpContextBase>();
             var fakeRequest = A.Fake<HttpRequestBase>();
             var fileCollection = A.Fake<HttpFileCollectionBase>();
-            fakeCodeFile = A.Fake<HttpPostedFileBase>();
+            fakeFile = A.Fake<HttpPostedFileBase>();
 
             A.CallTo(() => fakeHttpContext.Request).Returns(fakeRequest);
             A.CallTo(() => fakeRequest.Files).Returns(fileCollection);
-            A.CallTo(() => fileCollection["codeFile"]).Returns(fakeCodeFile);
+            A.CallTo(() => fileCollection["file"]).Returns(fakeFile);
 
             return new ControllerContext(fakeHttpContext, new RouteData(), A.Fake<ControllerBase>());
         }
