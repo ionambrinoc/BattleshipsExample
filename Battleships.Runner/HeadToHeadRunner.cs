@@ -1,15 +1,16 @@
 ﻿namespace Battleships.Runner
 {
     using Battleships.Player;
-    using System.Linq;
 
     public class HeadToHeadRunner
     {
         private readonly IShipPositionValidator shipPositionValidator;
+        private readonly IMoveCheckerFactory moveCheckerFactory;
 
-        public HeadToHeadRunner(IShipPositionValidator shipPositionValidator)
+        public HeadToHeadRunner(IShipPositionValidator shipPositionValidator, IMoveCheckerFactory moveCheckerFactory)
         {
             this.shipPositionValidator = shipPositionValidator;
+            this.moveCheckerFactory = moveCheckerFactory;
         }
 
         public IBattleshipsPlayer RunGame(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
@@ -20,18 +21,18 @@
                 return winnerByDefault;
             }
 
-            var moveCheckerForPlayer1 = new MoveChecker(player2.GetShipPositions().ToList());
-            var moveCheckerForPlayer2 = new MoveChecker(player1.GetShipPositions().ToList());
+            var moveCheckerForPlayer1 = moveCheckerFactory.GetMoveChecker(player2.GetShipPositions());
+            var moveCheckerForPlayer2 = moveCheckerFactory.GetMoveChecker(player1.GetShipPositions());
 
             var isFinished = false;
-            var playerTurn = 1;
+            var playerOnesTurn = false;
             while (!isFinished)
             {
-                playerTurn = 1 - playerTurn;
-                isFinished = playerTurn == 0 ? MakeMove(player1, player2, moveCheckerForPlayer1) : MakeMove(player2, player1, moveCheckerForPlayer2);
+                playerOnesTurn = !playerOnesTurn;
+                isFinished = playerOnesTurn ? MakeMove(player1, player2, moveCheckerForPlayer1) : MakeMove(player2, player1, moveCheckerForPlayer2);
             }
 
-            if (playerTurn == 0)
+            if (playerOnesTurn)
             {
                 return player1;
             }
@@ -67,7 +68,7 @@
             return null;
         }
 
-        private bool MakeMove(IBattleshipsPlayer attackingPlayer, IBattleshipsPlayer opposingPlayer, MoveChecker moveChecker)
+        private bool MakeMove(IBattleshipsPlayer attackingPlayer, IBattleshipsPlayer opposingPlayer, IMoveChecker moveChecker)
         {
             var target = attackingPlayer.SelectTarget();
             var hasHit = moveChecker.CheckResultOfMove(target);

@@ -10,15 +10,15 @@
         bool AllHit();
     }
 
-    internal class MoveChecker : IMoveChecker
+    public class MoveChecker : IMoveChecker
     {
         private readonly IEnumerable<IShipPosition> opposingPlayerShipPositions;
-        private readonly CellsHitByPlayerChecker cellsOfShipHitChecker;
+        private readonly ICellsHitByPlayerChecker cellsOfShipHitChecker;
 
-        public MoveChecker(IEnumerable<IShipPosition> opposingPlayerShipPositions)
+        public MoveChecker(IEnumerable<IShipPosition> opposingPlayerShipPositions, ICellsHitByPlayerChecker cellsOfShipHitChecker)
         {
             this.opposingPlayerShipPositions = opposingPlayerShipPositions;
-            cellsOfShipHitChecker = new CellsHitByPlayerChecker();
+            this.cellsOfShipHitChecker = cellsOfShipHitChecker;
         }
 
         public bool CheckResultOfMove(IGridSquare target)
