@@ -99,6 +99,18 @@ namespace Links
             public static readonly string index_min_css = Url("index.min.css");
         }
     
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Players {
+            private const string URLPATH = "~/Content/Players";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string index_less = Url("index.less");
+            public static readonly string index_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/index.min.css") ? Url("index.min.css") : Url("index.css");
+                 
+            public static readonly string index_css_map = Url("index.css.map");
+            public static readonly string index_min_css = Url("index.min.css");
+        }
+    
         public static readonly string site_less = Url("site.less");
     }
 
