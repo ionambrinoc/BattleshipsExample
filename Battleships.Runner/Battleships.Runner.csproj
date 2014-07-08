@@ -57,6 +57,10 @@
     <Compile Include="Migrations\201406261652239_InitialCreate.Designer.cs">
       <DependentUpon>201406261652239_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201407081143177_AddFileNameToKitten.cs" />
+    <Compile Include="Migrations\201407081143177_AddFileNameToKitten.Designer.cs">
+      <DependentUpon>201407081143177_AddFileNameToKitten.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Kitten.cs" />
@@ -80,6 +84,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201406261652239_InitialCreate.resx">
       <DependentUpon>201406261652239_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407081143177_AddFileNameToKitten.resx">
+      <DependentUpon>201407081143177_AddFileNameToKitten.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

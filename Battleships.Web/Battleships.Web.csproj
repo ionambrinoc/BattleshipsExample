@@ -218,8 +218,6 @@
     <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
     <Content Include="Components\respond\dest\respond.min.js" />
     <Content Include="Components\respond\dest\respond.src.js" />
-    <Content Include="Content\Kittens\index.css" />
-    <Content Include="Content\Kittens\index.min.css" />
     <Content Include="Content\Players\index.css">
       <DependentUpon>index.less</DependentUpon>
     </Content>
@@ -232,7 +230,6 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Content\Kittens\index.css.map" />
     <Content Include="Content\Kittens\index.less" />
     <Content Include="Content\Players\index.less" />
     <Content Include="Content\Players\index.css.map">
