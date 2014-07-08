@@ -82,6 +82,7 @@
     <Compile Include="PlayerLoaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\KittensRepositoryTests.cs" />
+    <Compile Include="Repositories\PastGameRepositoryTests.cs" />
     <Compile Include="TestHelpers\TestPlayerStore.cs" />
   </ItemGroup>
   <ItemGroup>

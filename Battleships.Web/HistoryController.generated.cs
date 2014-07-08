@@ -90,10 +90,8 @@ namespace Battleships.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string HistoryView = "HistoryView";
                 public readonly string Index = "Index";
             }
-            public readonly string HistoryView = "~/Views/History/HistoryView.cshtml";
             public readonly string Index = "~/Views/History/Index.cshtml";
         }
     }

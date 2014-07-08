@@ -1,27 +1,35 @@
-﻿@using System.Net.Mime
-@using Battleships.Runner.Models
+﻿@using Battleships.Runner.Models
 @model IEnumerable<PastGame>
 
-@{
-    ViewBag.Title = "Recent Games Log";
-}
+@Styles.Render("~/bundles/styles/history/index")
 
-<table class="table myTable">
-    <thead>
-        <tr>
-            <th>First Player</th>
-            <th>Second Player</th>
-            <th>Result</th>
-            <th>Time Played</th>
-        </tr>
-    </thead>
-  
-    @foreach (PastGame pastGame in Model) {
-        <tr>
-            <td>@pastGame.FirstPlayer</td>
-            <td>@pastGame.SecondPlayer</td>
-            <td>@pastGame.Winner wins!</td>
-            <td>@pastGame.TimePlayed</td>
-        </tr>
+<div class="everything">
+    <div></div>
+    @{
+        ViewBag.Title = "Recent Games Log";
     }
-</table>
+
+
+
+    <table class="table table-striped table-bordered">
+        <thead class="tableHeader">
+            <tr>
+                <th>First Player</th>
+                <th>Second Player</th>
+                <th>Result</th>
+                <th>Time Played</th>
+            </tr>
+        </thead>
+
+
+        @foreach (var pastGame in Model) {
+            <tr class="tableContent">
+                <td>@pastGame.FirstPlayer</td>
+                <td>@pastGame.SecondPlayer</td>
+                <td>@pastGame.Winner wins!</td>
+                <td>@pastGame.TimePlayed</td>
+            </tr>
+        }
+    </table>
+
+</div>
