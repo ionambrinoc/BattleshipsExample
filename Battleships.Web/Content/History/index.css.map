@@ -1,8 +1,8 @@
 {
   "version": 3,
-  "file": "HistoryStyleSheet.css",
+  "file": "index.css",
   "sources": [
-    "HistoryStyleSheet.less"
+    "index.less"
   ],
   "names": [],
   "mappings": "AAAA;EACI,YAAA;EACA,uBAAA;EACA,iBAAA;;AAGJ;EACI,gBAAA;EACA,yBAAA"

@@ -12,5 +12,7 @@
         public DbSet<Kitten> Kittens { get; set; }
 
         public DbSet<Player> Bots { get; set; }
+
+        public DbSet<GameResult> GameResults { get; set; }
     }
 }

@@ -222,6 +222,12 @@
     <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
     <Content Include="Components\respond\dest\respond.min.js" />
     <Content Include="Components\respond\dest\respond.src.js" />
+    <Content Include="Content\History\index.css">
+      <DependentUpon>index.less</DependentUpon>
+    </Content>
+    <Content Include="Content\History\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
     <Content Include="Content\Kittens\index.css" />
     <Content Include="Content\Kittens\index.min.css" />
     <Content Include="favicon.ico" />
@@ -231,9 +237,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Kittens\index.less" />
-    <Content Include="Content\HistoryStyleSheet.less" />
-    <Content Include="Content\HistoryStyleSheet.css.map">
-      <DependentUpon>HistoryStyleSheet.css</DependentUpon>
+    <Content Include="Content\History\index.less" />
+    <Content Include="Content\History\index.css.map">
+      <DependentUpon>index.css</DependentUpon>
     </Content>
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
@@ -344,7 +350,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52244</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

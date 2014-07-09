@@ -5,17 +5,17 @@
 
     public partial class HistoryController : Controller
     {
-        private readonly IPastGameRepository pastGameRepo;
+        private readonly IGameResultsRepository gameResultsRepo;
 
-        public HistoryController(IPastGameRepository pastGameRepo)
+        public HistoryController(IGameResultsRepository gameResultsRepo)
         {
-            this.pastGameRepo = pastGameRepo;
+            this.gameResultsRepo = gameResultsRepo;
         }
 
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View(pastGameRepo.GetAll());
+            return View(gameResultsRepo.GetAll());
         }
     }
 }
