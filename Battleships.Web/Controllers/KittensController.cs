@@ -1,7 +1,7 @@
 ﻿namespace Battleships.Web.Controllers
 {
     using Battleships.Runner.Repositories;
-    using Battleships.Runner.Services;
+    using Battleships.Web.Services;
     using System.Configuration;
     using System.IO;
     using System.Web.Mvc;

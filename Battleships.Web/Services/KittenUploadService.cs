@@ -1,4 +1,4 @@
-﻿namespace Battleships.Runner.Services
+﻿namespace Battleships.Web.Services
 {
     using Battleships.Runner.Models;
     using System.IO;

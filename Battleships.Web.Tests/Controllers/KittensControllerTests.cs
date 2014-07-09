@@ -2,9 +2,9 @@
 {
     using Battleships.Runner.Models;
     using Battleships.Runner.Repositories;
-    using Battleships.Runner.Services;
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
+    using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
