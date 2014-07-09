@@ -14,7 +14,7 @@
     using System.Web.Routing;
 
     [TestFixture]
-    public class PlayerControllerTests
+    public class PlayersControllerTests
     {
         private const string TestPlayerUserName = "My Test User";
         private const string TestPlayerName = "My Test Player";
