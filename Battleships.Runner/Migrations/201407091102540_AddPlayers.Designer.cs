@@ -7,13 +7,13 @@ namespace Battleships.Runner.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class RenameBotNameToName : IMigrationMetadata
+    public sealed partial class Players : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RenameBotNameToName));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Players));
         
         string IMigrationMetadata.Id
         {
-            get { return "201407081613001_RenameBotNameToName"; }
+            get { return "201407091102540_Players"; }
         }
         
         string IMigrationMetadata.Source

@@ -2,7 +2,7 @@ namespace Battleships.Runner.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    public partial class AddPlayers : DbMigration
+    public partial class Players : DbMigration
     {
         public override void Up()
         {
@@ -12,8 +12,8 @@ namespace Battleships.Runner.Migrations
                      {
                          Id = c.Int(false, true),
                          UserName = c.String(),
-                         BotName = c.String(),
-                         CodeFileName = c.String(),
+                         Name = c.String(),
+                         FileName = c.String(),
                      })
                 .PrimaryKey(t => t.Id);
         }
