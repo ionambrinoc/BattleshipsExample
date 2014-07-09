@@ -10,8 +10,6 @@
 </div>
 
 <h3>Log in</h3>
-
-
 @using Battleships.Web.Models.Home
 @model LogInViewModel
 
@@ -25,7 +23,7 @@
     </div>
     <div class="form-group">
         <label for="Password">Password: </label>
-        <input id="Password" name="Password" class="form-control" type="text" placeholder="" />
+        <input id="Password" name="Password" class="form-control" type="password" placeholder="" />
         @Html.ValidationMessageFor(m => m.Password)
     </div>
     <input class="btn" id="submit" type="submit" value="Submit" />
@@ -37,3 +35,9 @@
 @using (Html.BeginForm(MVC.Home.SignUp(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
     <input class="btn" id="submit" type="submit" value="Sign up" />
 }
+
+<style type="text/css">
+    .field-validation-error { color: red; }
+
+    .validation-summary-errors { color: Red; }
+</style>
