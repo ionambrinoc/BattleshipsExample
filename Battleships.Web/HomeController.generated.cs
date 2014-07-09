@@ -86,6 +86,14 @@ namespace Battleships.Web.Controllers
         }
 
 
+        static readonly ActionParamsClass_LogIn s_params_LogIn = new ActionParamsClass_LogIn();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_LogIn LogInParams { get { return s_params_LogIn; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_LogIn
+        {
+            public readonly string model = "model";
+        }
         static readonly ActionParamsClass_Register s_params_Register = new ActionParamsClass_Register();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Register RegisterParams { get { return s_params_Register; } }
@@ -136,6 +144,18 @@ namespace Battleships.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
             LogInOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void LogInOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.Home.LogInViewModel model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult LogIn(Battleships.Web.Models.Home.LogInViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            LogInOverride(callInfo, model);
             return callInfo;
         }
 

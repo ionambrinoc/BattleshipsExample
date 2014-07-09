@@ -1,7 +1,7 @@
 ﻿namespace Battleships.Web.Services
 {
+    using Battleships.Runner.Models;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
 
     public interface IUserService
     {
@@ -10,16 +10,16 @@
 
     public class UserService : IUserService
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<User> userManager;
 
-        public UserService(UserManager<IdentityUser> userManager)
+        public UserService(UserManager<User> userManager)
         {
             this.userManager = userManager;
         }
 
         public IdentityResult AddUser(string username, string password)
         {
-            return userManager.Create(new IdentityUser { UserName = username }, password);
+            return userManager.Create(new User { UserName = username }, password);
         }
     }
 }

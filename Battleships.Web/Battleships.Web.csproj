@@ -194,6 +194,7 @@
     </Compile>
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
     <Compile Include="Models\Home\CreateAccountViewModel.cs" />
+    <Compile Include="Models\Home\LogInViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\KittenUploadService.cs" />
     <Compile Include="Services\UserService.cs" />

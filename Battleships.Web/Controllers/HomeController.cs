@@ -2,6 +2,7 @@
 {
     using Battleships.Web.Models.Home;
     using Battleships.Web.Services;
+    using System.Linq;
     using System.Web.Mvc;
 
     public partial class HomeController : Controller
@@ -18,8 +19,17 @@
             return View(Views.Index);
         }
 
+        [HttpGet]
         public virtual ActionResult LogIn()
         {
+            return View(Views.Index);
+        }
+
+        [HttpPost]
+        public virtual ActionResult LogIn(LogInViewModel model)
+        {
+            if (ModelState.IsValid) {}
+
             return View(Views.Index);
         }
 
@@ -37,8 +47,28 @@
         [HttpPost]
         public virtual ActionResult Register(CreateAccountViewModel model)
         {
-            var result = userService.AddUser(model.Name, model.Password);
-            return RedirectToAction(Actions.Register());
+            if (ModelState.IsValid)
+            {
+                bool signUpFailed;
+                var errormessage = "";
+
+                var result = userService.AddUser(model.Name, model.Password);
+                if (result.Succeeded)
+                {
+                    signUpFailed = false;
+                }
+                else
+                {
+                    signUpFailed = true;
+                    errormessage = result.Errors.FirstOrDefault();
+                    ModelState.AddModelError("SqlError", errormessage);
+                    return View(Views.SignUp);
+                }
+
+                return RedirectToAction(Actions.Index());
+            }
+
+            return View(Views.SignUp);
         }
     }
 }
