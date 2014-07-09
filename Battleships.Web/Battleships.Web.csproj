@@ -193,8 +193,10 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
+    <Compile Include="Models\Home\CreateAccountViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\KittenUploadService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -308,6 +310,7 @@
     <Content Include="Views\HeadToHead\Index.cshtml" />
     <Content Include="Views\HeadToHead\Play.cshtml" />
     <Content Include="Views\Kittens\Index.cshtml" />
+    <Content Include="Views\Home\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

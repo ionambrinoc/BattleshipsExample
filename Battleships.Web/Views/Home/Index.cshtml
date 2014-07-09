@@ -5,3 +5,24 @@
 <div class="jumbotron">
     <h1>BATTLESHIPS!</h1>
 </div>
+
+<h3>Log in</h3>
+
+@using (Html.BeginForm(MVC.Home.LogIn(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    <div class="form-group">
+        <label for="userName">Username: </label>
+        <input id="userName" name="userName" class="form-control" type="text" placeholder="" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password: </label>
+        <input id="password" name="password" class="form-control" type="text" placeholder="" />
+    </div>
+    <input class="btn" id="submit" type="submit" value="Submit" />
+}
+
+<br/>
+<h4>Not a user?</h4>
+
+@using (Html.BeginForm(MVC.Home.SignUp(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    <input class="btn" id="submit" type="submit" value="Sign up" />
+}

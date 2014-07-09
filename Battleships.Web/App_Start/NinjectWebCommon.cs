@@ -7,7 +7,6 @@ using WebActivatorEx;
 namespace Battleships.Web
 {
     using Battleships.Runner;
-    using Battleships.Runner.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security;
@@ -58,8 +57,8 @@ namespace Battleships.Web
         {
             kernel.Bind(x => x.FromAssembliesMatching("Battleships.*").SelectAllClasses().BindDefaultInterface());
             kernel.Bind<DbContext>().To<BattleshipsContext>().InRequestScope();
-            kernel.Bind<UserManager<User>>().ToSelf().InRequestScope();
-            kernel.Bind<IUserStore<User>>().ToConstructor(c => new UserStore<User>(c.Inject<DbContext>())).InRequestScope();
+            kernel.Bind<UserManager<IdentityUser>>().ToSelf().InRequestScope();
+            kernel.Bind<IUserStore<IdentityUser>>().ToConstructor(c => new UserStore<IdentityUser>(c.Inject<DbContext>())).InRequestScope();
             kernel.Bind<IAuthenticationManager>().ToMethod(x => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();
             kernel.Bind<IPrincipal>().ToMethod(x => HttpContext.Current.GetOwinContext().Authentication.User).InRequestScope();
         }

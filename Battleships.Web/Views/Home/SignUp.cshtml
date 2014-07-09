@@ -1,0 +1,22 @@
+﻿@using Battleships.Web.Models.Home
+@model CreateAccountViewModel
+
+@{
+    ViewBag.Title = "Sign Up";
+}
+
+@using (Html.BeginForm(MVC.Home.Register(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    <div class="form-group">
+        <label for="name">Username: </label>
+        <input id="name" name="name" class="form-control" type="text" placeholder="" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password: </label>
+        <input id="password" name="password" class="form-control" type="text" placeholder="" />
+    </div>
+    <div class="form-group">
+        <label for="confirmPassword">Repeat password: </label>
+        <input id="confirmPassword" name="confirmPassword" class="form-control" type="text" placeholder="" />
+    </div>
+    <input class="btn" id="submit" type="submit" value="Submit" />
+}
