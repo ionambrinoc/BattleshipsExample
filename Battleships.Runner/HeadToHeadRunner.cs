@@ -4,25 +4,32 @@
 
     public class HeadToHeadRunner
     {
-        private readonly IShipPositionValidator shipPositionValidator;
         private readonly IMoveCheckerFactory moveCheckerFactory;
+        private readonly IShipsPlacementFactory shipsPlacementFactory;
 
-        public HeadToHeadRunner(IShipPositionValidator shipPositionValidator, IMoveCheckerFactory moveCheckerFactory)
+        public HeadToHeadRunner(IShipsPlacementFactory shipsPlacementFactory, IMoveCheckerFactory moveCheckerFactory)
         {
-            this.shipPositionValidator = shipPositionValidator;
+            this.shipsPlacementFactory = shipsPlacementFactory;
             this.moveCheckerFactory = moveCheckerFactory;
         }
 
         public IBattleshipsPlayer RunGame(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
         {
-            var winnerByDefault = ValidateStartingShipsPositions(player1, player2);
-            if (winnerByDefault != null)
+            var playerOneShipsPlacement = shipsPlacementFactory.GetShipPlacement(player1);
+            var playerTwoShipsPlacement = shipsPlacementFactory.GetShipPlacement(player2);
+
+            if (!playerOneShipsPlacement.IsValid())
             {
-                return winnerByDefault;
+                return player2;
             }
 
-            var moveCheckerForPlayer1 = moveCheckerFactory.GetMoveChecker(player2.GetShipPositions());
-            var moveCheckerForPlayer2 = moveCheckerFactory.GetMoveChecker(player1.GetShipPositions());
+            if (!playerTwoShipsPlacement.IsValid())
+            {
+                return player1;
+            }
+
+            var moveCheckerForPlayer1 = moveCheckerFactory.GetMoveChecker(playerTwoShipsPlacement);
+            var moveCheckerForPlayer2 = moveCheckerFactory.GetMoveChecker(playerOneShipsPlacement);
 
             var isFinished = false;
             var playerOnesTurn = false;
@@ -37,35 +44,6 @@
                 return player1;
             }
             return player2;
-        }
-
-        private IBattleshipsPlayer ValidateStartingShipsPositions(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
-        {
-            try
-            {
-                if (!shipPositionValidator.IsValid(player1.GetShipPositions()))
-                {
-                    return player2;
-                }
-            }
-            catch
-            {
-                return player2;
-            }
-
-            try
-            {
-                if (!shipPositionValidator.IsValid(player2.GetShipPositions()))
-                {
-                    return player1;
-                }
-            }
-            catch
-            {
-                return player1;
-            }
-
-            return null;
         }
 
         private bool MakeMove(IBattleshipsPlayer attackingPlayer, IBattleshipsPlayer opposingPlayer, IMoveChecker moveChecker)

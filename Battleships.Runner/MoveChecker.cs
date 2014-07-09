@@ -1,7 +1,6 @@
 ﻿namespace Battleships.Runner
 {
     using Battleships.Player;
-    using System.Collections.Generic;
 
     public interface IMoveChecker
     {
@@ -12,18 +11,18 @@
 
     public class MoveChecker : IMoveChecker
     {
-        private readonly IEnumerable<IShipPosition> opposingPlayerShipPositions;
+        private readonly IShipsPlacement opposingPlayerShipsPlacement;
         private readonly ICellsHitByPlayerChecker cellsOfShipHitChecker;
 
-        public MoveChecker(IEnumerable<IShipPosition> opposingPlayerShipPositions, ICellsHitByPlayerChecker cellsOfShipHitChecker)
+        public MoveChecker(IShipsPlacement opposingPlayerShipsPlacement, ICellsHitByPlayerChecker cellsOfShipHitChecker)
         {
-            this.opposingPlayerShipPositions = opposingPlayerShipPositions;
+            this.opposingPlayerShipsPlacement = opposingPlayerShipsPlacement;
             this.cellsOfShipHitChecker = cellsOfShipHitChecker;
         }
 
         public bool CheckResultOfMove(IGridSquare target)
         {
-            foreach (var shipPosition in opposingPlayerShipPositions)
+            foreach (var shipPosition in opposingPlayerShipsPlacement.GetShipPositions())
             {
                 if (IsTargetInShip(shipPosition, target))
                 {
@@ -49,20 +48,20 @@
             {
                 if (target.Row == shipPosition.EndingSquare.Row)
                 {
-                    return RangeChecker(target.Column, shipPosition.EndingSquare.Column, shipPosition.StartingSquare.Column);
+                    return IsInRange(target.Column, shipPosition.EndingSquare.Column, shipPosition.StartingSquare.Column);
                 }
             }
             else
             {
                 if (target.Column == shipPosition.EndingSquare.Column)
                 {
-                    return RangeChecker(target.Row, shipPosition.EndingSquare.Row, shipPosition.StartingSquare.Row);
+                    return IsInRange(target.Row, shipPosition.EndingSquare.Row, shipPosition.StartingSquare.Row);
                 }
             }
             return false;
         }
 
-        private bool RangeChecker(int target, int shipEnd, int shipStart)
+        private bool IsInRange(int target, int shipEnd, int shipStart)
         {
             return (target <= shipEnd && target >= shipStart) || (target >= shipEnd && target <= shipStart);
         }

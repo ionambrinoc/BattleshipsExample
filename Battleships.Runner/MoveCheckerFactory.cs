@@ -1,18 +1,15 @@
 ﻿namespace Battleships.Runner
 {
-    using Battleships.Player;
-    using System.Collections.Generic;
-
     public interface IMoveCheckerFactory
     {
-        IMoveChecker GetMoveChecker(IEnumerable<IShipPosition> shipPositions);
+        IMoveChecker GetMoveChecker(IShipsPlacement shipsPlacement);
     }
 
     public class MoveCheckerFactory
     {
-        public IMoveChecker GetMoveChecker(IEnumerable<IShipPosition> shipPositions)
+        public IMoveChecker GetMoveChecker(IShipsPlacement shipsPlacement)
         {
-            return new MoveChecker(shipPositions, new CellsHitByPlayerChecker());
+            return new MoveChecker(shipsPlacement, new CellsHitByPlayerChecker());
         }
     }
 }

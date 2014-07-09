@@ -14,36 +14,30 @@
         private HeadToHeadRunner runner;
         private IBattleshipsPlayer player1;
         private IBattleshipsPlayer player2;
-        private IShipPositionValidator shipPositionValidator;
         private IMoveChecker player1MoveChecker;
         private IMoveChecker player2MoveChecker;
         private IMoveCheckerFactory moveCheckerFactory;
-        private ICellsHitByPlayerChecker cellsHitByPlayerChecker;
+        private IShipsPlacementFactory shipsPlacementFactory;
 
         [SetUp]
         public void SetUp()
         {
-            shipPositionValidator = A.Fake<IShipPositionValidator>();
             player1 = A.Fake<IBattleshipsPlayer>();
             player2 = A.Fake<IBattleshipsPlayer>();
             player1MoveChecker = A.Fake<IMoveChecker>();
             player2MoveChecker = A.Fake<IMoveChecker>();
+
             moveCheckerFactory = A.Fake<IMoveCheckerFactory>();
-            runner = new HeadToHeadRunner(shipPositionValidator, moveCheckerFactory);
-            cellsHitByPlayerChecker = A.Fake<CellsHitByPlayerChecker>();
+            shipsPlacementFactory = A.Fake<IShipsPlacementFactory>();
+            runner = new HeadToHeadRunner(shipsPlacementFactory, moveCheckerFactory);
         }
 
         [TestCaseSource("Games")]
-        public void Player_loses_if_ship_positions_invalid(int expectedWinner, int expectedLoser)
+        public void Player_loses_if_ship_positions_invalid_or_player_throws_exception(int expectedWinner, int expectedLoser)
         {
             // Given
-            var losingShipPositions = A.CollectionOfFake<IShipPosition>(5);
-            A.CallTo(() => Player(expectedLoser).GetShipPositions()).Returns(losingShipPositions);
-            A.CallTo(() => shipPositionValidator.IsValid(losingShipPositions)).Returns(false);
-
-            var winningShipPositions = A.CollectionOfFake<IShipPosition>(5);
-            A.CallTo(() => Player(expectedWinner).GetShipPositions()).Returns(winningShipPositions);
-            A.CallTo(() => shipPositionValidator.IsValid(winningShipPositions)).Returns(true);
+            InitialiseShips(Player(expectedLoser), false, false);
+            InitialiseShips(Player(expectedWinner), true, false);
 
             // When
             var winner = RunGame();
@@ -53,63 +47,11 @@
         }
 
         [TestCaseSource("Games")]
-        public void Player_loses_if_it_throws_exception(int expectedWinner, int expectedLoser)
+        public void Player_two_wins_if_both_invalid(int aPlayer, int anotherPlayer)
         {
             // Given
-            A.CallTo(() => Player(expectedLoser).GetShipPositions()).Throws(() => new Exception());
-
-            var winningShipPositions = A.CollectionOfFake<IShipPosition>(5);
-            A.CallTo(() => Player(expectedWinner).GetShipPositions()).Returns(winningShipPositions);
-            A.CallTo(() => shipPositionValidator.IsValid(winningShipPositions)).Returns(true);
-
-            // When
-            var winner = RunGame();
-
-            // Then
-            Assert.That(winner, IsPlayer(expectedWinner));
-        }
-
-        [Test]
-        public void Player_one_wins()
-        {
-            // Given
-            var player1ShipPositions = A.CollectionOfFake<IShipPosition>(5);
-            A.CallTo(() => player1.GetShipPositions()).Returns(player1ShipPositions);
-            var player2ShipPositions = A.CollectionOfFake<IShipPosition>(5);
-            A.CallTo(() => player2.GetShipPositions()).Returns(player2ShipPositions);
-            A.CallTo(() => shipPositionValidator.IsValid(player1ShipPositions)).Returns(true);
-            A.CallTo(() => shipPositionValidator.IsValid(player2ShipPositions)).Returns(true);
-
-            A.CallTo(() => moveCheckerFactory.GetMoveChecker(player2ShipPositions)).
-              Returns(player1MoveChecker);
-
-            A.CallTo(() => player1MoveChecker.AllHit()).Returns(true);
-
-            // When
-            var winner = RunGame();
-
-            // Then
-            winner.Should().Be(player1);
-        }
-
-        [Test]
-        public void Player_two_wins()
-        {
-            // Given
-            var player1ShipPositions = A.CollectionOfFake<IShipPosition>(5);
-            A.CallTo(() => player1.GetShipPositions()).Returns(player1ShipPositions);
-            var player2ShipPositions = A.CollectionOfFake<IShipPosition>(5);
-            A.CallTo(() => player2.GetShipPositions()).Returns(player2ShipPositions);
-            A.CallTo(() => shipPositionValidator.IsValid(player1ShipPositions)).Returns(true);
-            A.CallTo(() => shipPositionValidator.IsValid(player2ShipPositions)).Returns(true);
-
-            A.CallTo(() => moveCheckerFactory.GetMoveChecker(player2ShipPositions)).
-              Returns(player1MoveChecker);
-            A.CallTo(() => moveCheckerFactory.GetMoveChecker(player1ShipPositions)).
-              Returns(player2MoveChecker);
-
-            A.CallTo(() => player1MoveChecker.AllHit()).Returns(false);
-            A.CallTo(() => player2MoveChecker.AllHit()).Returns(true);
+            InitialiseShips(Player(anotherPlayer), false, false);
+            InitialiseShips(Player(aPlayer), false, false);
 
             // When
             var winner = RunGame();
@@ -118,21 +60,38 @@
             winner.Should().Be(player2);
         }
 
+        [TestCaseSource("Games")]
+        public void Correct_player_wins(int expectedWinner, int expectedLoser)
+        {
+            // Given
+            InitialiseShips(Player(expectedWinner), true, false);
+            InitialiseShips(Player(expectedLoser), true, true);
+
+            // When
+            var winner = RunGame();
+
+            // Then
+            winner.Should().Be(Player(expectedWinner));
+        }
+
         [Test]
         public void Player_loses_on_timeout() {}
-
-        [Test]
-        // Tested in MoveCheckerTests
-        public void Shot_result_is_reported_correctly_to_player() {}
-
-        [Test]
-        // Tested in MoveCheckerTests
-        public void Opponent_shot_is_reported_correctly_to_player() {}
 
         private static IEnumerable<int[]> Games()
         {
             yield return new[] { 1, 2 };
             yield return new[] { 2, 1 };
+        }
+
+        private void InitialiseShips(IBattleshipsPlayer player, bool valid, bool allPlayersShipsHit)
+        {
+            var shipPlacements = A.Fake<IShipsPlacement>();
+            A.CallTo(() => shipsPlacementFactory.GetShipPlacement(player)).Returns(shipPlacements);
+            A.CallTo(() => shipPlacements.IsValid()).Returns(valid);
+
+            var moveChecker = player.Equals(Player(1)) ? player2MoveChecker : player1MoveChecker;
+            A.CallTo(() => moveCheckerFactory.GetMoveChecker(shipPlacements)).Returns(moveChecker);
+            A.CallTo(() => moveChecker.AllHit()).Returns(allPlayersShipsHit);
         }
 
         private IBattleshipsPlayer Player(int number)

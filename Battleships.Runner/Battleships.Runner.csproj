@@ -67,6 +67,8 @@
     <Compile Include="Repositories\KittensRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="ShipPositionValidator.cs" />
+    <Compile Include="ShipsPlacement.cs" />
+    <Compile Include="ShipsPlacementFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
