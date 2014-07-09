@@ -36,7 +36,6 @@
                 kittensRepo.Add(newKitten);
                 kittensRepo.SaveContext();
             }
-
             return RedirectToAction(Actions.Index());
         }
     }
