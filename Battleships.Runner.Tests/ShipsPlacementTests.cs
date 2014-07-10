@@ -19,7 +19,7 @@
         }
 
         [Test]
-        public void IsValid_returns_false_if_player_invalid()
+        public void Ships_placement_is_invalid_if_player_is_invalid()
         {
             // Given
             A.CallTo(() => player.GetShipPositions()).Throws(() => new Exception());
@@ -33,7 +33,7 @@
         }
 
         [Test]
-        public void AllHit_returns_true_after_all_ship_cells_hit()
+        public void All_ships_are_hit_when_17_cells_hit()
         {
             // Given
             ThereAre17Ships();
@@ -91,7 +91,7 @@
         }
 
         [Test]
-        public void Shot_off_the_board_returns_false()
+        public void Shot_off_the_board_misses()
         {
             // Given
             ThereIsAShipAt('G', 1, 'G', 5);
@@ -104,7 +104,7 @@
         }
 
         [Test]
-        public void Shot_in_the_middle_of_ship_returns_true()
+        public void Shot_in_the_middle_of_ship_hits()
         {
             // Given
             ThereIsAShipAt('C', 1, 'C', 5);
