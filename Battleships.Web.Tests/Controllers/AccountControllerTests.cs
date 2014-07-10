@@ -122,6 +122,26 @@
         }
 
         [Test]
+        public void Automatic_signin_when_created_account()
+        {
+            // Given
+            var model = new CreateAccountViewModel();
+            var identityResult = IdentityResult.Success;
+            A.CallTo(() => userService.AddUser(model.Name, model.Password)).Returns(identityResult);
+
+            var user = new User();
+            var identity = new ClaimsIdentity();
+            A.CallTo(() => userService.Find(model.Name, model.Password)).Returns(user);
+            A.CallTo(() => userService.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie)).Returns(identity);
+
+            // When
+            controller.Register(model);
+
+            // Then
+            A.CallTo(() => authenticationManager.SignIn(A<AuthenticationProperties>.That.Matches(ap => ap.IsPersistent == false), identity)).MustHaveHappened();
+        }
+
+        [Test]
         public void Create_account_failure_is_handled()
         {
             // Given

@@ -70,6 +70,8 @@
                     return View(Views.Register);
                 }
 
+                var user = userService.Find(model.Name, model.Password);
+                SignIn(user);
                 return RedirectToAction(MVC.Home.Index());
             }
             return View(Views.Register);
