@@ -14,7 +14,6 @@
 
     public class ShipsPlacement : IShipsPlacement
     {
-        public int NumberOfCellsHit;
         private const int TotalNumberOfShipCells = 17;
         private readonly IEnumerable<IShipPosition> positions;
         private readonly HashSet<IGridSquare> cellsOfShipsHit;
@@ -31,7 +30,6 @@
             }
 
             cellsOfShipsHit = new HashSet<IGridSquare>();
-            NumberOfCellsHit = 0;
         }
 
         public bool IsValid()
@@ -45,7 +43,6 @@
             if (positions.Any(ship => IsTargetInShip(ship, target)))
             {
                 cellsOfShipsHit.Add(target);
-                NumberOfCellsHit = cellsOfShipsHit.Count;
                 return true;
             }
             return false;

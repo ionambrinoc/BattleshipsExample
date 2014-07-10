@@ -121,14 +121,16 @@
         {
             // Given
             ThereIsAShipAt('A', 1, 'B', 1);
-            shipsPlacement.IsHit(new GridSquare('A', 1));
-            shipsPlacement.IsHit(new GridSquare('A', 1));
+            for (var i = 0; i < 17; i++)
+            {
+                shipsPlacement.IsHit(new GridSquare('A', 1));
+            }
 
             // When
-            var numberOfCells = shipsPlacement.NumberOfCellsHit;
+            var allHit = shipsPlacement.AllHit();
 
             // Then
-            numberOfCells.Should().Be(1, "Hits on the same cell should be stored once but were not");
+            allHit.Should().BeFalse("Hits on the same cell should be stored once but were not");
         }
 
         private void ThereAre17Ships()
