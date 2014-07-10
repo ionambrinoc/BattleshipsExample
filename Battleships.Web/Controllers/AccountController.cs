@@ -52,11 +52,6 @@
             return View(Views.Login);
         }
 
-        public virtual ActionResult SignUp()
-        {
-            return View(Views.Register);
-        }
-
         [HttpGet]
         public virtual ActionResult Register()
         {

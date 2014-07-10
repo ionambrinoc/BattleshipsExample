@@ -72,7 +72,6 @@ namespace Battleships.Web.Controllers
         {
             public readonly string LogOff = "LogOff";
             public readonly string LogIn = "LogIn";
-            public readonly string SignUp = "SignUp";
             public readonly string Register = "Register";
         }
 
@@ -81,7 +80,6 @@ namespace Battleships.Web.Controllers
         {
             public const string LogOff = "LogOff";
             public const string LogIn = "LogIn";
-            public const string SignUp = "SignUp";
             public const string Register = "Register";
         }
 
@@ -156,17 +154,6 @@ namespace Battleships.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             LogInOverride(callInfo, model);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void SignUpOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult SignUp()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SignUp);
-            SignUpOverride(callInfo);
             return callInfo;
         }
 
