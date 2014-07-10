@@ -4,13 +4,11 @@
 
     public class HeadToHeadRunner
     {
-        private readonly IMoveCheckerFactory moveCheckerFactory;
         private readonly IShipsPlacementFactory shipsPlacementFactory;
 
-        public HeadToHeadRunner(IShipsPlacementFactory shipsPlacementFactory, IMoveCheckerFactory moveCheckerFactory)
+        public HeadToHeadRunner(IShipsPlacementFactory shipsPlacementFactory)
         {
             this.shipsPlacementFactory = shipsPlacementFactory;
-            this.moveCheckerFactory = moveCheckerFactory;
         }
 
         public IBattleshipsPlayer RunGame(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
@@ -28,38 +26,28 @@
                 return player1;
             }
 
-            var moveCheckerForPlayer1 = moveCheckerFactory.GetMoveChecker(playerTwoShipsPlacement);
-            var moveCheckerForPlayer2 = moveCheckerFactory.GetMoveChecker(playerOneShipsPlacement);
-
-            var isFinished = false;
-            var playerOnesTurn = false;
-            while (!isFinished)
+            while (true)
             {
-                playerOnesTurn = !playerOnesTurn;
-                isFinished = playerOnesTurn ? MakeMove(player1, player2, moveCheckerForPlayer1) : MakeMove(player2, player1, moveCheckerForPlayer2);
-            }
+                MakeMove(player1, player2, playerTwoShipsPlacement);
+                if (playerTwoShipsPlacement.AllHit())
+                {
+                    return player1;
+                }
 
-            if (playerOnesTurn)
-            {
-                return player1;
+                MakeMove(player2, player1, playerOneShipsPlacement);
+                if (playerOneShipsPlacement.AllHit())
+                {
+                    return player2;
+                }
             }
-            return player2;
         }
 
-        private bool MakeMove(IBattleshipsPlayer attackingPlayer, IBattleshipsPlayer opposingPlayer, IMoveChecker moveChecker)
+        private static void MakeMove(IBattleshipsPlayer attacker, IBattleshipsPlayer defender, IShipsPlacement defendingShips)
         {
-            var target = attackingPlayer.SelectTarget();
-            var hasHit = moveChecker.CheckResultOfMove(target);
+            var target = attacker.SelectTarget();
 
-            if (hasHit)
-            {
-                moveChecker.AddToCellsHit(target);
-            }
-
-            attackingPlayer.HandleShotResult(target, hasHit);
-            opposingPlayer.HandleOpponentsShot(target);
-
-            return moveChecker.AllHit();
+            attacker.HandleShotResult(target, defendingShips.IsHit(target));
+            defender.HandleOpponentsShot(target);
         }
     }
 }
