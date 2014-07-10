@@ -61,6 +61,7 @@
         [Test]
         public void Opponent_shot_is_reported_correctly_to_player() {}
 
+        // ReSharper disable once UnusedMember.Local
         private static IEnumerable<int[]> Games()
         {
             yield return new[] { 1, 2 };
