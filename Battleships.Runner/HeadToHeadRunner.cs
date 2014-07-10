@@ -4,16 +4,50 @@
 
     public class HeadToHeadRunner
     {
-        private readonly IShipPositionValidator shipPositionValidator;
+        private readonly IShipsPlacementFactory shipsPlacementFactory;
 
-        public HeadToHeadRunner(IShipPositionValidator shipPositionValidator)
+        public HeadToHeadRunner(IShipsPlacementFactory shipsPlacementFactory)
         {
-            this.shipPositionValidator = shipPositionValidator;
+            this.shipsPlacementFactory = shipsPlacementFactory;
         }
 
-        public IBattleshipsPlayer RunGame(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
+        public IBattleshipsPlayer FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
-            return player1;
+            var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
+            var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
+
+            if (!playerOneShipsPlacement.IsValid())
+            {
+                return playerTwo;
+            }
+
+            if (!playerTwoShipsPlacement.IsValid())
+            {
+                return playerOne;
+            }
+
+            while (true)
+            {
+                MakeMove(playerOne, playerTwo, playerTwoShipsPlacement);
+                if (playerTwoShipsPlacement.AllHit())
+                {
+                    return playerOne;
+                }
+
+                MakeMove(playerTwo, playerOne, playerOneShipsPlacement);
+                if (playerOneShipsPlacement.AllHit())
+                {
+                    return playerTwo;
+                }
+            }
+        }
+
+        private static void MakeMove(IBattleshipsPlayer attacker, IBattleshipsPlayer defender, IShipsPlacement defendingShips)
+        {
+            var target = attacker.SelectTarget();
+
+            attacker.HandleShotResult(target, defendingShips.IsHit(target));
+            defender.HandleOpponentsShot(target);
         }
     }
 }

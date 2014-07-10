@@ -2,6 +2,7 @@
 {
     using Battleships.Player;
     using FakeItEasy;
+    using FluentAssertions;
     using NUnit.Framework;
     using NUnit.Framework.Constraints;
     using System;
@@ -13,59 +14,102 @@
         private HeadToHeadRunner runner;
         private IBattleshipsPlayer player1;
         private IBattleshipsPlayer player2;
-        private IShipPositionValidator shipPositionValidator;
+        private IShipsPlacementFactory shipsPlacementFactory;
 
         [SetUp]
         public void SetUp()
         {
-            shipPositionValidator = A.Fake<IShipPositionValidator>();
-            runner = new HeadToHeadRunner(shipPositionValidator);
             player1 = A.Fake<IBattleshipsPlayer>();
             player2 = A.Fake<IBattleshipsPlayer>();
+            shipsPlacementFactory = A.Fake<IShipsPlacementFactory>();
+            runner = new HeadToHeadRunner(shipsPlacementFactory);
         }
 
         [TestCaseSource("Games")]
         public void Player_loses_if_ship_positions_invalid(int expectedWinner, int expectedLoser)
         {
             // Given
-            var shipPositions = A.CollectionOfFake<IShipPosition>(5);
-            A.CallTo(() => Player(expectedLoser).GetShipPositions()).Returns(shipPositions);
-            A.CallTo(() => shipPositionValidator.IsValid(shipPositions)).Returns(false);
+            PlayerIsValid(Player(expectedWinner));
+            PlayerIsInvalid(Player(expectedLoser));
 
             // When
-            var winner = RunGame();
+            var winner = FindWinner();
 
             // Then
             Assert.That(winner, IsPlayer(expectedWinner));
         }
 
-        [TestCaseSource("Games")]
-        public void Player_loses_if_it_throws_exception(int expectedWinner, int expectedLoser)
+        [Test]
+        public void Player_two_wins_if_both_invalid()
         {
             // Given
-            A.CallTo(() => Player(expectedLoser).GetShipPositions()).Throws(() => new Exception());
+            PlayerIsInvalid(player1);
+            PlayerIsInvalid(player2);
 
             // When
-            var winner = RunGame();
+            var winner = FindWinner();
 
             // Then
-            Assert.That(winner, IsPlayer(expectedWinner));
+            winner.Should().Be(player2);
+        }
+
+        [TestCaseSource("Games")]
+        public void Player_with_all_ships_hit_loses(int expectedWinner, int expectedLoser)
+        {
+            // Given
+            PlayerIsValid(Player(expectedWinner));
+            PlayerIsValid(Player(expectedLoser));
+            ShipsNotAllHit(Player(expectedWinner));
+            ShipsAllHit(Player(expectedLoser));
+
+            // When
+            var winner = FindWinner();
+
+            // Then
+            winner.Should().Be(Player(expectedWinner));
         }
 
         [Test]
         public void Player_loses_on_timeout() {}
-
-        [Test]
-        public void Shot_result_is_reported_correctly_to_player() {}
-
-        [Test]
-        public void Opponent_shot_is_reported_correctly_to_player() {}
 
         // ReSharper disable once UnusedMember.Local
         private static IEnumerable<int[]> Games()
         {
             yield return new[] { 1, 2 };
             yield return new[] { 2, 1 };
+        }
+
+        private void PlayerIsValid(IBattleshipsPlayer player)
+        {
+            SetPlayerValid(player, true);
+        }
+
+        private void PlayerIsInvalid(IBattleshipsPlayer player)
+        {
+            SetPlayerValid(player, false);
+        }
+
+        private void SetPlayerValid(IBattleshipsPlayer player, bool isValid)
+        {
+            var shipPlacements = A.Fake<IShipsPlacement>();
+            A.CallTo(() => shipsPlacementFactory.GetShipsPlacement(player)).Returns(shipPlacements);
+            A.CallTo(() => shipPlacements.IsValid()).Returns(isValid);
+        }
+
+        private void ShipsAllHit(IBattleshipsPlayer player)
+        {
+            SetPlayerShipsAllHit(player, true);
+        }
+
+        private void ShipsNotAllHit(IBattleshipsPlayer player)
+        {
+            SetPlayerShipsAllHit(player, false);
+        }
+
+        private void SetPlayerShipsAllHit(IBattleshipsPlayer player, bool isAllHit)
+        {
+            var shipPlacements = shipsPlacementFactory.GetShipsPlacement(player);
+            A.CallTo(() => shipPlacements.AllHit()).Returns(isAllHit);
         }
 
         private IBattleshipsPlayer Player(int number)
@@ -81,9 +125,9 @@
             }
         }
 
-        private IBattleshipsPlayer RunGame()
+        private IBattleshipsPlayer FindWinner()
         {
-            return runner.RunGame(player1, player2);
+            return runner.FindWinner(player1, player2);
         }
 
         private Constraint IsPlayer(int number)
