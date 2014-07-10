@@ -41,7 +41,6 @@
                     ModelState.AddModelError("SqlError", "Invalid username or password");
                 }
                 SignIn(user);
-                //FormsAuthentication.SetAuthCookie(model.Name, true);
             }
 
             return RedirectToAction(Actions.Index());
