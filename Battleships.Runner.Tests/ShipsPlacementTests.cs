@@ -29,7 +29,7 @@
             var valid = shipsPlacement.IsValid();
 
             // Then
-            valid.Should().BeFalse("Invalid player did not cause IsValid to be false");
+            valid.Should().BeFalse("Ships placement should be invalid if the player throws an exception");
         }
 
         [Test]
@@ -78,7 +78,7 @@
         }
 
         [Test]
-        public void Miss_returns_false()
+        public void Shot_not_on_ship_is_miss()
         {
             // Given
             ThereIsAShipAt('G', 1, 'G', 5);

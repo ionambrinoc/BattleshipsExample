@@ -11,10 +11,6 @@
     [TestFixture]
     public class HeadToHeadRunnerTests
     {
-        private const bool Valid = true;
-        private const bool NotValid = false;
-        private const bool AllHit = true;
-        private const bool NotAllHit = false;
         private HeadToHeadRunner runner;
         private IBattleshipsPlayer player1;
         private IBattleshipsPlayer player2;
@@ -33,8 +29,8 @@
         public void Player_loses_if_ship_positions_invalid(int expectedWinner, int expectedLoser)
         {
             // Given
-            InitialiseShips(Player(expectedLoser), NotValid, NotAllHit);
-            InitialiseShips(Player(expectedWinner), Valid, NotAllHit);
+            PlayerIsValid(Player(expectedWinner));
+            PlayerIsInvalid(Player(expectedLoser));
 
             // When
             var winner = RunGame();
@@ -43,12 +39,12 @@
             Assert.That(winner, IsPlayer(expectedWinner));
         }
 
-        [TestCaseSource("Games")]
-        public void Player_two_wins_if_both_invalid(int aPlayer, int anotherPlayer)
+        [Test]
+        public void Player_two_wins_if_both_invalid()
         {
             // Given
-            InitialiseShips(Player(anotherPlayer), NotValid, NotAllHit);
-            InitialiseShips(Player(aPlayer), NotValid, NotAllHit);
+            PlayerIsInvalid(player1);
+            PlayerIsInvalid(player2);
 
             // When
             var winner = RunGame();
@@ -61,8 +57,10 @@
         public void Correct_player_wins(int expectedWinner, int expectedLoser)
         {
             // Given
-            InitialiseShips(Player(expectedWinner), Valid, NotAllHit);
-            InitialiseShips(Player(expectedLoser), Valid, AllHit);
+            PlayerIsValid(Player(expectedWinner));
+            PlayerIsValid(Player(expectedLoser));
+            ShipsNotAllHit(Player(expectedWinner));
+            ShipsAllHit(Player(expectedLoser));
 
             // When
             var winner = RunGame();
@@ -80,13 +78,37 @@
             yield return new[] { 2, 1 };
         }
 
-        private void InitialiseShips(IBattleshipsPlayer player, bool valid, bool allPlayersShipsHit)
+        private void PlayerIsValid(IBattleshipsPlayer player)
+        {
+            SetPlayerValid(player, true);
+        }
+
+        private void PlayerIsInvalid(IBattleshipsPlayer player)
+        {
+            SetPlayerValid(player, false);
+        }
+
+        private void SetPlayerValid(IBattleshipsPlayer player, bool isValid)
         {
             var shipPlacements = A.Fake<IShipsPlacement>();
-            A.CallTo(() => shipsPlacementFactory.GetShipPlacement(player)).Returns(shipPlacements);
-            A.CallTo(() => shipPlacements.IsValid()).Returns(valid);
+            A.CallTo(() => shipsPlacementFactory.GetShipsPlacement(player)).Returns(shipPlacements);
+            A.CallTo(() => shipPlacements.IsValid()).Returns(isValid);
+        }
 
-            A.CallTo(() => shipPlacements.AllHit()).Returns(allPlayersShipsHit);
+        private void ShipsAllHit(IBattleshipsPlayer player)
+        {
+            SetPlayerShipsAllHit(player, true);
+        }
+
+        private void ShipsNotAllHit(IBattleshipsPlayer player)
+        {
+            SetPlayerShipsAllHit(player, false);
+        }
+
+        private void SetPlayerShipsAllHit(IBattleshipsPlayer player, bool isAllHit)
+        {
+            var shipPlacements = shipsPlacementFactory.GetShipsPlacement(player);
+            A.CallTo(() => shipPlacements.AllHit()).Returns(isAllHit);
         }
 
         private IBattleshipsPlayer Player(int number)

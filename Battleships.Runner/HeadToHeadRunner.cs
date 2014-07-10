@@ -11,33 +11,33 @@
             this.shipsPlacementFactory = shipsPlacementFactory;
         }
 
-        public IBattleshipsPlayer RunGame(IBattleshipsPlayer player1, IBattleshipsPlayer player2)
+        public IBattleshipsPlayer RunGame(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
-            var playerOneShipsPlacement = shipsPlacementFactory.GetShipPlacement(player1);
-            var playerTwoShipsPlacement = shipsPlacementFactory.GetShipPlacement(player2);
+            var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
+            var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
 
             if (!playerOneShipsPlacement.IsValid())
             {
-                return player2;
+                return playerTwo;
             }
 
             if (!playerTwoShipsPlacement.IsValid())
             {
-                return player1;
+                return playerOne;
             }
 
             while (true)
             {
-                MakeMove(player1, player2, playerTwoShipsPlacement);
+                MakeMove(playerOne, playerTwo, playerTwoShipsPlacement);
                 if (playerTwoShipsPlacement.AllHit())
                 {
-                    return player1;
+                    return playerOne;
                 }
 
-                MakeMove(player2, player1, playerOneShipsPlacement);
+                MakeMove(playerTwo, playerOne, playerOneShipsPlacement);
                 if (playerOneShipsPlacement.AllHit())
                 {
-                    return player2;
+                    return playerTwo;
                 }
             }
         }
