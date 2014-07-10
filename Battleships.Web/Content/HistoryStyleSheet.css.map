@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "file": "HistoryStyleSheet.css",
-  "sources": [
-    "HistoryStyleSheet.less"
-  ],
-  "names": [],
-  "mappings": "AAAA;EACI,YAAA;EACA,uBAAA;EACA,iBAAA;;AAGJ;EACI,gBAAA;EACA,yBAAA"
-}
