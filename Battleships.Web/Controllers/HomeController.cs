@@ -24,13 +24,22 @@
             return View(Views.Index);
         }
 
+        [HttpPost]
+        public virtual ActionResult LogOff()
+        {
+            authenticationManager.SignOut();
+            return RedirectToAction(MVC.Home.Index());
+        }
+
         [HttpGet]
+        [AllowAnonymous]
         public virtual ActionResult LogIn()
         {
             return View(Views.Index);
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public virtual ActionResult LogIn(LogInViewModel model)
         {
             if (ModelState.IsValid)
@@ -39,11 +48,13 @@
                 if (user == null)
                 {
                     ModelState.AddModelError("SqlError", "Invalid username or password");
+                    return View(Views.Index);
                 }
                 SignIn(user);
+                return RedirectToAction(Actions.Index());
             }
 
-            return RedirectToAction(Actions.Index());
+            return View(Views.Index);
         }
 
         public virtual ActionResult SignUp()
@@ -87,7 +98,7 @@
         private void SignIn(User user)
         {
             var identity = userService.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-            authenticationManager.SignIn(identity);
+            authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = false }, identity);
         }
     }
 }

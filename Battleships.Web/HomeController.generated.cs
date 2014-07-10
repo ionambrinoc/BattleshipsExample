@@ -71,6 +71,7 @@ namespace Battleships.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string LogOff = "LogOff";
             public readonly string LogIn = "LogIn";
             public readonly string SignUp = "SignUp";
             public readonly string Register = "Register";
@@ -80,6 +81,7 @@ namespace Battleships.Web.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string LogOff = "LogOff";
             public const string LogIn = "LogIn";
             public const string SignUp = "SignUp";
             public const string Register = "Register";
@@ -133,6 +135,17 @@ namespace Battleships.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             IndexOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void LogOffOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult LogOff()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOff);
+            LogOffOverride(callInfo);
             return callInfo;
         }
 
