@@ -24,6 +24,23 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Kittens", MVC.Kittens.Index())</li>
                     </ul>
+                    @if (Request.IsAuthenticated) {
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Hello " + User.Identity.Name + "!", "Index", "Home", null, null)
+                            </li>
+                            <li>
+                                @Html.ActionLink("Log Off", "LogOff", "Account", null, null)
+                            </li>
+                        </ul>
+                    }
+                    else {
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>@Html.ActionLink("Register", "Register", "Account", null, null)</li>
+                            <li>@Html.ActionLink("Log in", "LogIn", "Account", null, null)</li>
+                        </ul>
+                    }
+
                 </div>
             </div>
         </div>

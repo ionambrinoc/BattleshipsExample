@@ -26,6 +26,9 @@ namespace Battleships.Web.Controllers
     public partial class HomeController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public HomeController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected HomeController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -71,39 +74,15 @@ namespace Battleships.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string LogOff = "LogOff";
-            public readonly string LogIn = "LogIn";
-            public readonly string SignUp = "SignUp";
-            public readonly string Register = "Register";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string LogOff = "LogOff";
-            public const string LogIn = "LogIn";
-            public const string SignUp = "SignUp";
-            public const string Register = "Register";
         }
 
 
-        static readonly ActionParamsClass_LogIn s_params_LogIn = new ActionParamsClass_LogIn();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_LogIn LogInParams { get { return s_params_LogIn; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_LogIn
-        {
-            public readonly string model = "model";
-        }
-        static readonly ActionParamsClass_Register s_params_Register = new ActionParamsClass_Register();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Register RegisterParams { get { return s_params_Register; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Register
-        {
-            public readonly string model = "model";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -115,10 +94,8 @@ namespace Battleships.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Index = "Index";
-                public readonly string SignUp = "SignUp";
             }
             public readonly string Index = "~/Views/Home/Index.cshtml";
-            public readonly string SignUp = "~/Views/Home/SignUp.cshtml";
         }
     }
 
@@ -135,74 +112,6 @@ namespace Battleships.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             IndexOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void LogOffOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult LogOff()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOff);
-            LogOffOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void LogInOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult LogIn()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
-            LogInOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void LogInOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.Home.LogInViewModel model);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult LogIn(Battleships.Web.Models.Home.LogInViewModel model)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            LogInOverride(callInfo, model);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void SignUpOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult SignUp()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SignUp);
-            SignUpOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Register()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
-            RegisterOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.Home.CreateAccountViewModel model);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Register(Battleships.Web.Models.Home.CreateAccountViewModel model)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            RegisterOverride(callInfo, model);
             return callInfo;
         }
 
