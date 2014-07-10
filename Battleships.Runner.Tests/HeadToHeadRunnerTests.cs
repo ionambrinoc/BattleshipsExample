@@ -33,7 +33,7 @@
             PlayerIsInvalid(Player(expectedLoser));
 
             // When
-            var winner = RunGame();
+            var winner = FindWinner();
 
             // Then
             Assert.That(winner, IsPlayer(expectedWinner));
@@ -47,14 +47,14 @@
             PlayerIsInvalid(player2);
 
             // When
-            var winner = RunGame();
+            var winner = FindWinner();
 
             // Then
             winner.Should().Be(player2);
         }
 
         [TestCaseSource("Games")]
-        public void Correct_player_wins(int expectedWinner, int expectedLoser)
+        public void Player_with_all_ships_hit_loses(int expectedWinner, int expectedLoser)
         {
             // Given
             PlayerIsValid(Player(expectedWinner));
@@ -63,7 +63,7 @@
             ShipsAllHit(Player(expectedLoser));
 
             // When
-            var winner = RunGame();
+            var winner = FindWinner();
 
             // Then
             winner.Should().Be(Player(expectedWinner));
@@ -124,9 +124,9 @@
             }
         }
 
-        private IBattleshipsPlayer RunGame()
+        private IBattleshipsPlayer FindWinner()
         {
-            return runner.RunGame(player1, player2);
+            return runner.FindWinner(player1, player2);
         }
 
         private Constraint IsPlayer(int number)

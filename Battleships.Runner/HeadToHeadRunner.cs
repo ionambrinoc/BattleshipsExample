@@ -11,7 +11,7 @@
             this.shipsPlacementFactory = shipsPlacementFactory;
         }
 
-        public IBattleshipsPlayer RunGame(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
+        public IBattleshipsPlayer FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
             var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
             var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
