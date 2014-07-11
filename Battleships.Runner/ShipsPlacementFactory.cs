@@ -7,7 +7,7 @@
         IShipsPlacement GetShipsPlacement(IBattleshipsPlayer player);
     }
 
-    public class ShipsPlacementFactory
+    public class ShipsPlacementFactory : IShipsPlacementFactory
     {
         public IShipsPlacement GetShipsPlacement(IBattleshipsPlayer player)
         {
