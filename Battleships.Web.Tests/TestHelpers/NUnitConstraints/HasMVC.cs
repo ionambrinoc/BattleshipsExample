@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Web.Mvc;
 
-    public static class ModelErrors
+    public static class HasMVC
     {
         public static ResolvableConstraintExpression Model
         {

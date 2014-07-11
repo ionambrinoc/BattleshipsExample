@@ -119,7 +119,7 @@
     <Compile Include="Controllers\KittensControllerTests.cs" />
     <Compile Include="Controllers\HeadToHeadControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestHelpers\NUnitConstraints\ModelErrors.cs" />
+    <Compile Include="TestHelpers\NUnitConstraints\HasMVC.cs" />
     <Compile Include="TestHelpers\NUnitConstraints\IsMVC.cs" />
   </ItemGroup>
   <ItemGroup>

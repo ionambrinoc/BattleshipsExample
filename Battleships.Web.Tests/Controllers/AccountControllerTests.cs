@@ -92,7 +92,7 @@
             var result = controller.LogIn(model);
 
             // Then
-            Assert.That(controller, ModelErrors.ModelLevelErrors());
+            Assert.That(controller, HasMVC.ModelLevelErrors());
             Assert.That(result, IsMVC.View(MVC.Account.Views.Login));
         }
 
@@ -154,7 +154,7 @@
             var result = controller.Register(model);
 
             // Then
-            Assert.That(controller, ModelErrors.ModelLevelErrors());
+            Assert.That(controller, HasMVC.ModelLevelErrors());
             Assert.That(result, IsMVC.View(MVC.Account.Views.Register));
         }
 
