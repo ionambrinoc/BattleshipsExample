@@ -23,9 +23,6 @@
                 "~/Components/bootstrap/less/bootstrap.less",
                 "~/Content/site.less"));
 
-            bundles.Add(new CustomStyleBundle("~/bundles/styles/kittens/index").Include(
-                "~/Content/kittens/index.less"));
-
             bundles.Add(new CustomStyleBundle("~/bundles/styles/players/index").Include(
                 "~/Content/players/index.less"));
             bundles.Add(new CustomStyleBundle("~/bundles/styles/gameresults/index").Include(

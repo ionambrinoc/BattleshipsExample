@@ -9,9 +9,7 @@
 
         public BattleshipsContext(string nameOrConnectionString) : base(nameOrConnectionString) {}
 
-        public DbSet<Kitten> Kittens { get; set; }
-
-        public DbSet<Player> Bots { get; set; }
+        public DbSet<Player> Players { get; set; }
 
         public DbSet<GameResult> GameResults { get; set; }
     }
