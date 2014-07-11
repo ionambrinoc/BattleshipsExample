@@ -87,7 +87,20 @@ namespace Links
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+<<<<<<< HEAD
         public static readonly string HistoryStyleSheet_less = Url("HistoryStyleSheet.less");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Kittens {
+            private const string URLPATH = "~/Content/Kittens";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string index_less = Url("index.less");
+        }
+    
+=======
+        public static readonly string HistoryStyleSheet_css_map = Url("HistoryStyleSheet.css.map");
+        public static readonly string HistoryStyleSheet_less = Url("HistoryStyleSheet.less");
+>>>>>>> KillAllKittens
         public static readonly string site_less = Url("site.less");
     }
 

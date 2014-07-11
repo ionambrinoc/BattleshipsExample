@@ -164,7 +164,6 @@
     <Compile Include="Controllers\HeadToHeadController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KittensController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -177,16 +176,12 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="KittensController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
     <Compile Include="PlayersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PlayerUploadService.cs" />
-    <Compile Include="Services\KittenUploadService.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -228,7 +223,6 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Content\Kittens\index.less" />
     <Content Include="Content\HistoryStyleSheet.less" />
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
@@ -299,7 +293,6 @@
     </None>
     <Content Include="Views\HeadToHead\Index.cshtml" />
     <Content Include="Views\HeadToHead\Play.cshtml" />
-    <Content Include="Views\Kittens\Index.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
   </ItemGroup>

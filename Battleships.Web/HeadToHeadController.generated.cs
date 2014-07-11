@@ -87,7 +87,7 @@ namespace Battleships.Web.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Play = "Play";
-            public readonly string RunGame = "FindWinner";
+            public readonly string RunGame = "RunGame";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -95,7 +95,7 @@ namespace Battleships.Web.Controllers
         {
             public const string Index = "Index";
             public const string Play = "Play";
-            public const string RunGame = "FindWinner";
+            public const string RunGame = "RunGame";
         }
 
 
