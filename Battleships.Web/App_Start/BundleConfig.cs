@@ -28,8 +28,8 @@
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/players/index").Include(
                 "~/Content/players/index.less"));
-            bundles.Add(new CustomStyleBundle("~/bundles/styles/history/index").Include(
-                "~/Content/History/index.less"));
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/gameresults/index").Include(
+                "~/Content/GameResults/index.less"));
         }
     }
 }

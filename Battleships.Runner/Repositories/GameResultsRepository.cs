@@ -17,37 +17,37 @@
             player1.Name = "Jasper";
             player2.Name = "Bingqian";
 
-            var pastgame1 = new GameResult
-                            {
-                                Winner = player1,
-                                Loser = player2,
-                                TimePlayed = new DateTime(2014, 7, 7, 12, 12, 12),
-                            };
-            var pastgame2 = new GameResult
-                            {
-                                Winner = player1,
-                                Loser = player2,
-                                TimePlayed = new DateTime(2014, 7, 7, 12, 12, 12),
-                            };
+            var gameResult1 = new GameResult
+                              {
+                                  Winner = player1,
+                                  Loser = player2,
+                                  TimePlayed = new DateTime(2014, 7, 7, 12, 12, 12),
+                              };
+            var gameResult2 = new GameResult
+                              {
+                                  Winner = player1,
+                                  Loser = player2,
+                                  TimePlayed = new DateTime(2014, 7, 7, 12, 12, 12),
+                              };
 
-            var pastgame3 = new GameResult
-                            {
-                                Winner = player1,
-                                Loser = player2,
-                                TimePlayed = new DateTime(2014, 7, 7, 12, 12, 12),
-                            };
+            var gameResult3 = new GameResult
+                              {
+                                  Winner = player1,
+                                  Loser = player2,
+                                  TimePlayed = new DateTime(2014, 7, 7, 12, 12, 12),
+                              };
 
-            var pastgame4 = new GameResult
-                            {
-                                Winner = player1,
-                                Loser = player2,
-                                TimePlayed = new DateTime(2014, 7, 7, 12, 12, 12),
-                            };
+            var gameResult4 = new GameResult
+                              {
+                                  Winner = player1,
+                                  Loser = player2,
+                                  TimePlayed = new DateTime(2014, 7, 7, 12, 12, 12),
+                              };
 
-            PastGames = new List<GameResult> { pastgame1, pastgame2, pastgame3, pastgame4 };
+            PastGames = new List<GameResult> { gameResult1, gameResult2, gameResult3, gameResult4 };
         }
 
-        public IEnumerable<GameResult> PastGames { get; set; }
+        private IEnumerable<GameResult> PastGames { get; set; }
 
         public new IEnumerable<GameResult> GetAll()
         {

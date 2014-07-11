@@ -118,7 +118,7 @@
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 4\Assemblies\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
@@ -162,16 +162,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\HeadToHeadController.cs" />
-    <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\GameResultsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KittensController.cs" />
+    <Compile Include="GameResultsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HeadToHeadController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HistoryController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="HomeController.generated.cs">
@@ -222,12 +222,6 @@
     <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
     <Content Include="Components\respond\dest\respond.min.js" />
     <Content Include="Components\respond\dest\respond.src.js" />
-    <Content Include="Content\History\index.css">
-      <DependentUpon>index.less</DependentUpon>
-    </Content>
-    <Content Include="Content\History\index.min.css">
-      <DependentUpon>index.css</DependentUpon>
-    </Content>
     <Content Include="Content\Kittens\index.css" />
     <Content Include="Content\Kittens\index.min.css" />
     <Content Include="favicon.ico" />
@@ -237,10 +231,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Kittens\index.less" />
-    <Content Include="Content\History\index.less" />
-    <Content Include="Content\History\index.css.map">
-      <DependentUpon>index.css</DependentUpon>
-    </Content>
+    <Content Include="Content\GameResults\index.less" />
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
@@ -312,7 +303,7 @@
     <Content Include="Views\HeadToHead\Play.cshtml" />
     <Content Include="Views\Kittens\Index.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
-    <Content Include="Views\History\Index.cshtml" />
+    <Content Include="Views\GameResults\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -350,7 +341,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52244</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

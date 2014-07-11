@@ -9,23 +9,21 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
 
-    internal class HistoryControllerTest
+    public class GameResultsControllerTest
     {
         private IGameResultsRepository fakeResultsRepository;
-        private HistoryController controller;
+        private GameResultsController controller;
 
         [SetUp]
         public void SetUp()
         {
             fakeResultsRepository = A.Fake<IGameResultsRepository>();
-            controller = new HistoryController(fakeResultsRepository);
+            controller = new GameResultsController(fakeResultsRepository);
         }
 
         [Test]
         public void Index_returns_index_view()
         {
-            //Given
-
             // When
             var view = controller.Index();
 
