@@ -96,6 +96,10 @@ namespace Links
         }
     
         public static readonly string site_less = Url("site.less");
+        public static readonly string site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.css") ? Url("site.min.css") : Url("site.css");
+             
+        public static readonly string site_css_map = Url("site.css.map");
+        public static readonly string site_min_css = Url("site.min.css");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

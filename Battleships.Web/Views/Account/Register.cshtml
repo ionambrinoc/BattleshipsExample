@@ -9,8 +9,8 @@
 }
 
 
-@using (Html.BeginForm(MVC.Account.Register(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
-    <div>@Html.ValidationMessageFor(m => m.SqlError)</div>
+@using (Html.BeginForm(MVC.Account.Register(), FormMethod.Post)) {
+    <div>@Html.ValidationMessage("")</div>
     <br />
     <div class="form-group">
         <label for="Name">Username: </label>
@@ -29,9 +29,3 @@
     </div>
     <input class="btn" id="submit" type="submit" value="Submit" />
 }
-
-<style type="text/css">
-    .field-validation-error { color: red; }
-
-    .validation-summary-errors { color: Red; }
-</style>

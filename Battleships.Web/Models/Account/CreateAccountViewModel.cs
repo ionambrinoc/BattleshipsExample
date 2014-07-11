@@ -16,7 +16,5 @@
         [Required(ErrorMessage = "Passwords do not match")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
-
-        public string SqlError { get; set; }
     }
 }

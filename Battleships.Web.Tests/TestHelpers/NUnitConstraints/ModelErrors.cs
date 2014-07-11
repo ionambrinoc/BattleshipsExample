@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Web.Mvc;
 
-    public static class HasMVC
+    public static class ModelErrors
     {
         public static ResolvableConstraintExpression Model
         {
@@ -15,7 +15,7 @@
 
         public static Constraint ModelLevelErrors()
         {
-            return ModelErrorsForKey("SqlError");
+            return ModelErrorsForKey("");
         }
 
         public static Constraint ModelErrorsForKey(string key)

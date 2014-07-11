@@ -42,7 +42,7 @@
                 var user = userService.Find(model.Name, model.Password);
                 if (user == null)
                 {
-                    ModelState.AddModelError("SqlError", "Invalid username or password");
+                    ModelState.AddModelError("", "Invalid username or password");
                     return View(Views.Login);
                 }
                 SignIn(user);
@@ -66,7 +66,7 @@
                 var result = userService.AddUser(model.Name, model.Password);
                 if (!result.Succeeded)
                 {
-                    ModelState.AddModelError("SqlError", result.Errors.FirstOrDefault());
+                    ModelState.AddModelError("", result.Errors.FirstOrDefault());
                     return View(Views.Register);
                 }
 
