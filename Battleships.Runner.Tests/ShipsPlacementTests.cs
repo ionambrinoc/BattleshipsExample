@@ -19,6 +19,122 @@
         }
 
         [Test]
+        public void Ships_placement_is_invalid_if_not_all_ships_provided()
+        {
+            // Given
+            ThereIsAShipAt('A', 1, 'B', 1);
+
+            // When
+            var valid = shipsPlacement.IsValid();
+
+            // Then
+            valid.Should().BeFalse("Should be invalid as not all required ships were provided");
+        }
+
+        [Test]
+        public void Ships_placement_is_invalid_if_too_many_ships_provided()
+        {
+            // Given
+            var shipPositions = new List<IShipPosition>
+                                {
+                                    new ShipPosition(new GridSquare('J', 1), new GridSquare('J', 5)),
+                                    new ShipPosition(new GridSquare('G', 8), new GridSquare('H', 8)),
+                                };
+            ThereAreShipsAt(shipPositions);
+
+            //When
+            var valid = shipsPlacement.IsValid();
+
+            // Then
+            valid.Should().BeFalse("Should be invalid as too many ships were provided");
+        }
+
+        [Test]
+        public void Ships_placement_is_invalid_if_ship_that_is_off_the_board_is_provided()
+        {
+            // Given
+            var shipPositions = new List<IShipPosition>
+                                {
+                                    new ShipPosition(new GridSquare('J', 0), new GridSquare('J', 4))
+                                };
+            ThereAreShipsAt(shipPositions);
+
+            //When
+            var valid = shipsPlacement.IsValid();
+
+            // Then
+            valid.Should().BeFalse("Should be invalid as a ship that is off the board was provided");
+        }
+
+        [Test]
+        public void Ships_placement_is_invalid_if_wrong_size_ship_provided()
+        {
+            // Given
+            var shipPositions = new List<IShipPosition>
+                                {
+                                    new ShipPosition(new GridSquare('J', 1), new GridSquare('J', 6))
+                                };
+            ThereAreShipsAt(shipPositions);
+
+            //When
+            var valid = shipsPlacement.IsValid();
+
+            // Then
+            valid.Should().BeFalse("Should be invalid as a ship of the wrong size was provided");
+        }
+
+        [Test]
+        public void Ships_placement_is_invalid_if_diagonal_ship_provided()
+        {
+            // Given
+            var shipPositions = new List<IShipPosition>
+                                {
+                                    new ShipPosition(new GridSquare('F', 1), new GridSquare('J', 5))
+                                };
+            ThereAreShipsAt(shipPositions);
+
+            //When
+            var valid = shipsPlacement.IsValid();
+
+            // Then
+            valid.Should().BeFalse("Should be invalid as a diagonal ship was provided");
+        }
+
+        [Test]
+        public void Ships_placement_is_invalid_if_adjacent_ships()
+        {
+            // Given
+            var shipPositions = new List<IShipPosition>
+                                {
+                                    new ShipPosition(new GridSquare('J', 1), new GridSquare('E', 1))
+                                };
+            ThereAreShipsAt(shipPositions);
+
+            //When
+            var valid = shipsPlacement.IsValid();
+
+            // Then
+            valid.Should().BeFalse("Should be invalid as adjacent ships were provided");
+        }
+
+        [Test]
+        public void Ships_with_reverse_orientation_are_still_valid()
+        {
+            // Given
+            var shipPositions = new List<IShipPosition>
+                                {
+                                    new ShipPosition(new GridSquare('J', 5), new GridSquare('J', 1))
+                                };
+            ThereAreShipsAt(shipPositions);
+
+            //When
+            var valid = shipsPlacement.IsValid();
+
+            // Then
+            valid.Should().BeTrue("Should be valid as orientation of ships doesn't matter");
+        }
+
+        [Test]
         public void Ships_placement_is_invalid_if_player_is_invalid()
         {
             // Given
@@ -151,6 +267,21 @@
                                                                   new ShipPosition(new GridSquare(startSquareRow, startSquareColumn),
                                                                       new GridSquare(endSquareRow, endSquareColumn))
                                                               });
+            shipsPlacement = new ShipsPlacement(player);
+        }
+
+        private void ThereAreShipsAt(List<IShipPosition> shipPositions)
+        {
+            var constantShips = new List<IShipPosition>
+                                {
+                                    new ShipPosition(new GridSquare('A', 1), new GridSquare('D', 1)),
+                                    new ShipPosition(new GridSquare('A', 3), new GridSquare('A', 4)),
+                                    new ShipPosition(new GridSquare('D', 9), new GridSquare('F', 9)),
+                                    new ShipPosition(new GridSquare('D', 5), new GridSquare('D', 7))
+                                };
+            shipPositions.AddRange(constantShips);
+
+            A.CallTo(() => player.GetShipPositions()).Returns(shipPositions);
             shipsPlacement = new ShipsPlacement(player);
         }
     }

@@ -34,8 +34,36 @@
 
         public bool IsValid()
         {
-            // TODO: Card 16 - Check players' ship positions are valid
-            return positions != null;
+            var shipsAvailableOfSize = new Dictionary<int, int> { { 2, 1 }, { 3, 2 }, { 4, 1 }, { 5, 1 } };
+            var gridSquaresOccupied = new bool[10, 10];
+
+            try
+            {
+                foreach (var shipPosition in positions)
+                {
+                    var shipLength = GetShipLength(shipPosition);
+                    if (shipsAvailableOfSize.ContainsKey(shipLength) && shipsAvailableOfSize[shipLength] != 0
+                        && IsNotAdjacentToPreviousShips(shipPosition, gridSquaresOccupied))
+                    {
+                        shipsAvailableOfSize[shipLength] -= 1;
+                        OccupyGridSquares(shipPosition, gridSquaresOccupied);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                return shipsAvailableOfSize.Aggregate(true, (current, shipAvailable) => current && shipAvailable.Value == 0);
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
         }
 
         public bool IsHit(IGridSquare target)
@@ -80,6 +108,64 @@
         private static bool IsShipHorizontal(IShipPosition shipPosition)
         {
             return shipPosition.StartingSquare.Row == shipPosition.EndingSquare.Row;
+        }
+
+        private static bool IsShipVertical(IShipPosition shipPosition)
+        {
+            return shipPosition.StartingSquare.Column == shipPosition.EndingSquare.Column;
+        }
+
+        private void OccupyGridSquares(IShipPosition shipPosition, bool[,] gridSquaresOccupied)
+        {
+            var orientedShipPosition = GridSquaresInCorrectOrder(shipPosition.StartingSquare, shipPosition.EndingSquare);
+
+            for (var i = orientedShipPosition.StartingSquare.Column - 2; i <= orientedShipPosition.EndingSquare.Column; i++)
+            {
+                for (var j = (orientedShipPosition.StartingSquare.Row - 'A') - 1; j <= (orientedShipPosition.EndingSquare.Row - 'A') + 1; j++)
+                {
+                    if (i >= 0 && j >= 0 && i < 10 && j < 10)
+                    {
+                        gridSquaresOccupied[i, j] = true;
+                    }
+                }
+            }
+        }
+
+        private bool IsNotAdjacentToPreviousShips(IShipPosition shipPosition, bool[,] gridSquaresOccupied)
+        {
+            var adjacent = false;
+            var orientedShipPosition = GridSquaresInCorrectOrder(shipPosition.StartingSquare, shipPosition.EndingSquare);
+
+            for (var i = orientedShipPosition.StartingSquare.Column - 1; i <= orientedShipPosition.EndingSquare.Column - 1; i++)
+            {
+                for (var j = (orientedShipPosition.StartingSquare.Row - 'A'); j <= (orientedShipPosition.EndingSquare.Row - 'A'); j++)
+                {
+                    adjacent = gridSquaresOccupied[i, j] || adjacent;
+                }
+            }
+            return !adjacent;
+        }
+
+        private IShipPosition GridSquaresInCorrectOrder(IGridSquare firstGridSquare, IGridSquare secondGridSquare)
+        {
+            if (firstGridSquare.Column <= secondGridSquare.Column && firstGridSquare.Row <= secondGridSquare.Row)
+            {
+                return new ShipPosition(firstGridSquare, secondGridSquare);
+            }
+            return new ShipPosition(secondGridSquare, firstGridSquare);
+        }
+
+        private int GetShipLength(IShipPosition shipPosition)
+        {
+            if (IsShipHorizontal(shipPosition))
+            {
+                return Math.Abs(shipPosition.StartingSquare.Column - shipPosition.EndingSquare.Column) + 1;
+            }
+            if (IsShipVertical(shipPosition))
+            {
+                return Math.Abs(shipPosition.StartingSquare.Row - shipPosition.EndingSquare.Row) + 1;
+            }
+            return 0;
         }
     }
 }
