@@ -6,7 +6,7 @@
     using FakeItEasy;
     using NUnit.Framework;
 
-    internal class HistoryControllerTest
+    internal class HistoryControllerTests
     {
         private IPastGameRepository fakeIPastGameRepository;
         private HistoryController controller;

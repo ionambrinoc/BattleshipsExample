@@ -89,7 +89,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\PlayersControllerTests.cs" />
-    <Compile Include="Controllers\HistoryControllerTest.cs" />
+    <Compile Include="Controllers\HistoryControllerTests.cs" />
+    <Compile Include="Controllers\AddPlayerControllerTests.cs" />
     <Compile Include="Controllers\HeadToHeadControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers\NUnitConstraints\IsMVC.cs" />

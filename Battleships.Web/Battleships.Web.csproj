@@ -155,11 +155,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddPlayerController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AddPlayerController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\HeadToHeadController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
@@ -177,6 +181,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
+    <Compile Include="Models\Players\ChallengeViewModel.cs" />
     <Compile Include="PlayersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -229,7 +234,9 @@
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
     <Content Include="Components\jquery\dist\jquery.min.map" />
+    <Content Include="Scripts\AddPlayer\addplayer.js" />
     <Content Include="Scripts\HeadToHead\play.js" />
+    <Content Include="Scripts\Players\challenge.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Components\bootstrap\less\alerts.less" />
     <Content Include="Components\bootstrap\less\badges.less" />
@@ -295,6 +302,8 @@
     <Content Include="Views\HeadToHead\Play.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
+    <Content Include="Views\Players\Challenge.cshtml" />
+    <Content Include="Views\AddPlayer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
