@@ -20,13 +20,13 @@ window.battleships.players.index = (function($, undefined) {
         } else window.alert("There are already two players added to the game!");
     }
 
-    function deleteFirstPlayer() {
+    function resetFirstPlayer() {
         $("#firstPlayer").text("First player");
         firstPlayerExists = false;
         firstPlayerId = null;
     }
 
-    function deleteSecondPlayer() {
+    function resetSecondPlayer() {
         $("#secondPlayer").text("Second player");
         secondPlayerExists = false;
         secondPlayerId = null;
@@ -39,12 +39,14 @@ window.battleships.players.index = (function($, undefined) {
     return {
         init: function() {
 
-            $("#firstPlayerDelete").click(deleteFirstPlayer);
-            $("#secondPlayerDelete").click(deleteSecondPlayer);
+            $("#firstPlayerReset").click(resetFirstPlayer);
+            $("#secondPlayerReset").click(resetSecondPlayer);
 
             $('#play').click(function() {
-                var url = "/Players/Challenge?playerOneId=" + firstPlayerId.toString() + "&playerTwoId=" + secondPlayerId.toString();
-                window.location.href = url;
+                if (firstPlayerExists && secondPlayerExists) {
+                    var url = "/Players/Challenge?playerOneId=" + firstPlayerId.toString() + "&playerTwoId=" + secondPlayerId.toString();
+                    window.location.href = url;
+                } else window.alert("You need two players to start the game!");
             });
 
 
