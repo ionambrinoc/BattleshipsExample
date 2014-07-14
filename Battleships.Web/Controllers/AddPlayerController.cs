@@ -8,19 +8,19 @@
 
     public partial class AddPlayerController : Controller
     {
-        private readonly IPlayersRepository playersRepository;
+        private readonly IPlayerRecordsRepository playerRecordsRepository;
         private readonly IPlayerUploadService playersUploadService;
 
-        public AddPlayerController(IPlayersRepository playersRepository, IPlayerUploadService playersUploadService)
+        public AddPlayerController(IPlayerRecordsRepository playerRecordsRepository, IPlayerUploadService playersUploadService)
         {
-            this.playersRepository = playersRepository;
+            this.playerRecordsRepository = playerRecordsRepository;
             this.playersUploadService = playersUploadService;
         }
 
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View(playersRepository.GetAll());
+            return View(playerRecordsRepository.GetAll());
         }
 
         [HttpPost]
@@ -31,13 +31,13 @@
             {
                 try
                 {
-                    var newPlayer = playersUploadService.UploadAndGetPlayer(
+                    var newPlayer = playersUploadService.UploadAndGetPlayerRecord(
                         form.Get("userName"),
                         playerFile,
                         Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
 
-                    playersRepository.Add(newPlayer);
-                    playersRepository.SaveContext();
+                    playerRecordsRepository.Add(newPlayer);
+                    playerRecordsRepository.SaveContext();
                 }
                 catch
                 {

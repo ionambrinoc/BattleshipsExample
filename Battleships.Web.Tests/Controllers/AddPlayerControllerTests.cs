@@ -19,11 +19,11 @@
         private const string TestPlayerName = "My Test Player";
         private const string UserNameField = "userName";
         private const string NameField = "name";
-        private Player playerOne;
-        private Player playerTwo;
+        private PlayerRecord playerRecordOne;
+        private PlayerRecord playerRecordTwo;
         private FormCollection formInput;
         private AddPlayerController controller;
-        private IPlayersRepository fakePlayerRepository;
+        private IPlayerRecordsRepository fakePlayerRecordRepository;
         private IPlayerUploadService fakePlayerUploadService;
         private HttpPostedFileBase fakeFile;
 
@@ -33,15 +33,15 @@
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
 
             formInput = new FormCollection { { UserNameField, TestPlayerUserName }, { NameField, TestPlayerName } };
-            fakePlayerRepository = A.Fake<IPlayersRepository>();
+            fakePlayerRecordRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerUploadService = A.Fake<IPlayerUploadService>();
-            controller = new AddPlayerController(fakePlayerRepository, fakePlayerUploadService) { ControllerContext = GetFakeControllerContext() };
-            playerOne = A.Fake<Player>();
-            playerTwo = A.Fake<Player>();
-            playerOne.Id = 1;
-            playerTwo.Id = 2;
-            playerOne.Name = "Kitten";
-            playerTwo.Name = "KittenTwo";
+            controller = new AddPlayerController(fakePlayerRecordRepository, fakePlayerUploadService) { ControllerContext = GetFakeControllerContext() };
+            playerRecordOne = A.Fake<PlayerRecord>();
+            playerRecordTwo = A.Fake<PlayerRecord>();
+            playerRecordOne.Id = 1;
+            playerRecordTwo.Id = 2;
+            playerRecordOne.Name = "Kitten";
+            playerRecordTwo.Name = "KittenTwo";
         }
 
         [Test]
@@ -71,7 +71,7 @@
             controller.Index(formInput);
 
             // Then
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayer(TestPlayerUserName, fakeFile, TestPlayerStore.Directory))
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(TestPlayerUserName, fakeFile, TestPlayerStore.Directory))
              .MustHaveHappened();
         }
 
@@ -79,16 +79,16 @@
         public void Posting_code_file_saves_new_player()
         {
             // Given
-            var fakePlayer = A.Fake<Player>();
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayer(A<string>._, A<HttpPostedFileBase>._, A<string>._))
+            var fakePlayer = A.Fake<PlayerRecord>();
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(A<string>._, A<HttpPostedFileBase>._, A<string>._))
              .Returns(fakePlayer);
 
             // When
             controller.Index(formInput);
 
             // Then
-            A.CallTo(() => fakePlayerRepository.Add(fakePlayer)).MustHaveHappened();
-            A.CallTo(() => fakePlayerRepository.SaveContext()).MustHaveHappened();
+            A.CallTo(() => fakePlayerRecordRepository.Add(fakePlayer)).MustHaveHappened();
+            A.CallTo(() => fakePlayerRecordRepository.SaveContext()).MustHaveHappened();
         }
 
         private ControllerContext GetFakeControllerContext()
