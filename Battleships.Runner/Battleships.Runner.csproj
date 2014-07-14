@@ -65,13 +65,13 @@
     <Compile Include="Migrations\201407091434001_AddPlayers.Designer.cs">
       <DependentUpon>201407091434001_AddPlayers.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201407101041494_AddGameResults.cs" />
-    <Compile Include="Migrations\201407101041494_AddGameResults.Designer.cs">
-      <DependentUpon>201407101041494_AddGameResults.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201407101358201_RemoveKittens.cs" />
     <Compile Include="Migrations\201407101358201_RemoveKittens.Designer.cs">
       <DependentUpon>201407101358201_RemoveKittens.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407141108063_AddGameResults.cs" />
+    <Compile Include="Migrations\201407141108063_AddGameResults.Designer.cs">
+      <DependentUpon>201407141108063_AddGameResults.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Player.cs" />
@@ -105,11 +105,11 @@
     <EmbeddedResource Include="Migrations\201407091434001_AddPlayers.resx">
       <DependentUpon>201407091434001_AddPlayers.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407101041494_AddGameResults.resx">
-      <DependentUpon>201407101041494_AddGameResults.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407101358201_RemoveKittens.resx">
       <DependentUpon>201407101358201_RemoveKittens.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407141108063_AddGameResults.resx">
+      <DependentUpon>201407141108063_AddGameResults.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
