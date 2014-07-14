@@ -9,7 +9,7 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
 
-    public class GameResultsControllerTest
+    public class GameResultsControllerTests
     {
         private IGameResultsRepository fakeResultsRepository;
         private GameResultsController controller;

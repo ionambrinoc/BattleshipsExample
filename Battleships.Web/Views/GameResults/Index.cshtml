@@ -17,11 +17,11 @@
     </thead>
 
     <tbody>
-        @foreach (var pastGame in Model) {
+        @foreach (var gameResult in Model) {
             <tr class="tableContent">
-                <td>@pastGame.Winner.Name</td>
-                <td>@pastGame.Loser.Name</td>
-                <td>@pastGame.TimePlayed</td>
+                <td>@gameResult.Winner.Name</td>
+                <td>@gameResult.Loser.Name</td>
+                <td>@gameResult.TimePlayed</td>
             </tr>
         }
     </tbody>
