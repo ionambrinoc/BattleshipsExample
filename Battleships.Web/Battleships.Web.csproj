@@ -235,7 +235,6 @@
     <None Include=".bin\node.cmd" />
     <Content Include="Components\jquery\dist\jquery.min.map" />
     <Content Include="Scripts\HeadToHead\play.js" />
-    <Content Include="Scripts\Players\challenge.js" />
     <Content Include="Scripts\Players\index.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Components\bootstrap\less\alerts.less" />
@@ -302,7 +301,6 @@
     <Content Include="Views\HeadToHead\Play.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
-    <Content Include="Views\Players\Challenge.cshtml" />
     <Content Include="Views\AddPlayer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

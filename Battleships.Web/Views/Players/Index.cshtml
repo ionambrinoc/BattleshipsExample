@@ -6,8 +6,11 @@
 }
 @Styles.Render("~/bundles/styles/players/challenge")
 
-<h3>Current challenge</h3>
-<table class="twoPlayerTable">
+@using (Html.BeginForm(MVC.Players.RunGame(), FormMethod.Post, new { id = "run-game-form" })) {
+    @Html.Hidden("playerOneId")
+    @Html.Hidden("playerTwoId")
+}
+<table id="challengeTable">
     <tr>
         <td id="firstPlayer" class="text-center twoPlayerTopTd">First player</td>
         <td class="text-center twoPlayerTopTd"> VS</td>
@@ -16,31 +19,32 @@
     <tr>
         <td class="text-center">
             <button id="firstPlayerReset" type="button" class="btn btn-default">
-                Reset first!
+                Reset first
             </button>
         </td>
-        <td id="play" class="text-center">
-            <button type="button" class="btn btn-default">
-                Play!
+        <td class="text-center">
+            <button id="playGame" type="button" class="btn btn-default">
+                Play
             </button>
         </td>
         <td class="text-center">
             <button id="secondPlayerReset" type="button" class="btn btn-default">
-                Reset second!
+                Reset second
             </button>
         </td>
     </tr>
 </table>
+<div id="winner"></div>
 
 <h3>List of players</h3>
 
-<table class ="table table-striped" id="playerTable">
+<table class="table table-striped" id="playerTable">
     <tr>
         <th>User Name</th>
         <th>Player Name</th>
-        <th class="text-center challengeTd">Challenge!</th>
+        <th class="text-center challengeTd"></th>
     </tr>
-    @foreach (var player in Model.Reverse()) {
+    @foreach (var player in Model) {
         <tr>
             <td>@player.UserName</td>
             <td>@player.Name</td>

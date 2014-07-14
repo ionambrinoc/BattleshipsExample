@@ -6,7 +6,6 @@
     using Battleships.Runner.Repositories;
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
-    using Battleships.Web.Models.Players;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
@@ -47,22 +46,6 @@
             playerRecordTwo.Id = 2;
             playerRecordOne.Name = "Kitten";
             playerRecordTwo.Name = "KittenTwo";
-        }
-
-        [Test]
-        public void Challenge_returns_challenge_view_with_correct_model()
-        {
-            //When
-            var view = controller.Challenge(playerRecordOne.Id, playerRecordTwo.Id);
-
-            //Then
-            Assert.That(view, IsMVC.View(MVC.Players.Views.Challenge));
-            var model = ((ViewResult)view).Model as ChallengeViewModel;
-            Assert.NotNull(model);
-            Assert.That(model.PlayerOneId, Is.EqualTo(1));
-            Assert.That(model.PlayerTwoId, Is.EqualTo(2));
-            Assert.That(model.PlayerOneName, Is.EqualTo("Kitten"));
-            Assert.That(model.PlayerTwoName, Is.EqualTo("KittenTwo"));
         }
 
         [Test]

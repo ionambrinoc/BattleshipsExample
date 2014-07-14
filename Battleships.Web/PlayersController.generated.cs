@@ -56,12 +56,6 @@ namespace Battleships.Web.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Challenge()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Challenge);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult RunGame()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunGame);
@@ -83,7 +77,6 @@ namespace Battleships.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string Challenge = "Challenge";
             public readonly string RunGame = "RunGame";
         }
 
@@ -91,28 +84,10 @@ namespace Battleships.Web.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string Challenge = "Challenge";
             public const string RunGame = "RunGame";
         }
 
 
-        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Index
-        {
-            public readonly string form = "form";
-        }
-        static readonly ActionParamsClass_Challenge s_params_Challenge = new ActionParamsClass_Challenge();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Challenge ChallengeParams { get { return s_params_Challenge; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Challenge
-        {
-            public readonly string playerOneId = "playerOneId";
-            public readonly string playerTwoId = "playerTwoId";
-        }
         static readonly ActionParamsClass_RunGame s_params_RunGame = new ActionParamsClass_RunGame();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_RunGame RunGameParams { get { return s_params_RunGame; } }
@@ -132,10 +107,8 @@ namespace Battleships.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Challenge = "Challenge";
                 public readonly string Index = "Index";
             }
-            public readonly string Challenge = "~/Views/Players/Challenge.cshtml";
             public readonly string Index = "~/Views/Players/Index.cshtml";
         }
     }
@@ -153,31 +126,6 @@ namespace Battleships.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             IndexOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Web.Mvc.FormCollection form);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Index(System.Web.Mvc.FormCollection form)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "form", form);
-            IndexOverride(callInfo, form);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void ChallengeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerOneId, int playerTwoId);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Challenge(int playerOneId, int playerTwoId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Challenge);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerOneId", playerOneId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerTwoId", playerTwoId);
-            ChallengeOverride(callInfo, playerOneId, playerTwoId);
             return callInfo;
         }
 

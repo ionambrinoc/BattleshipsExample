@@ -19,9 +19,6 @@
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/headToHead/play").Include(
                 "~/Scripts/HeadToHead/play.js"));
 
-            bundles.Add(new CustomScriptBundle("~/bundles/scripts/players/challenge").Include(
-                "~/Scripts/Players/challenge.js"));
-
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/addplayer/addplayer").Include(
                 "~/Scripts/AddPlayer/addplayer.js"));
 

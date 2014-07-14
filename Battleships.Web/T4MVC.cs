@@ -86,7 +86,6 @@ namespace Links
             private const string URLPATH = "~/Scripts/Players";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string challenge_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/challenge.min.js") ? Url("challenge.min.js") : Url("challenge.js");
             public static readonly string index_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/index.min.js") ? Url("index.min.js") : Url("index.js");
         }
     

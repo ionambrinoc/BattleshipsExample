@@ -2,7 +2,7 @@
 {
     using Battleships.Runner;
     using Battleships.Runner.Repositories;
-    using Battleships.Web.Models.Players;
+    using System.Linq;
     using System.Web.Mvc;
 
     public partial class PlayersController : Controller
@@ -21,27 +21,7 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View(playerRecordsRepository.GetAll());
-        }
-
-        [HttpPost]
-        public virtual ActionResult Index(FormCollection form)
-        {
-            return RedirectToAction(Actions.Index());
-        }
-
-        [HttpGet]
-        //[Route("{playerOneName}/vs/{PlayerTwoName}")]
-        public virtual ActionResult Challenge(int playerOneId, int playerTwoId)
-        {
-            var model = new ChallengeViewModel
-                        {
-                            PlayerOneId = playerOneId,
-                            PlayerTwoId = playerTwoId,
-                            PlayerOneName = playerRecordsRepository.GetPlayerRecordById(playerOneId).Name,
-                            PlayerTwoName = playerRecordsRepository.GetPlayerRecordById(playerTwoId).Name
-                        };
-            return View(Views.Challenge, model);
+            return View(playerRecordsRepository.GetAll().Reverse());
         }
 
         [HttpPost]
