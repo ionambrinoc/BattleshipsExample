@@ -1,11 +1,51 @@
-﻿#challengeTable {
-    width:300px;
+﻿@successColor: #5cb85c;
+
+#challenge {
+    text-align: center;
+
+    .large() {
+        font-size: 6em;
+        border-radius: 0.3em;
+    }
+
+    .player {
+        .large;
+        color: lightgray;
+        border: solid;
+        width: 75%;
+        margin: auto;
+        background: url(../../Images/remove.png) no-repeat right -515px center;
+        padding: 3px 4px;
+
+        &.filled {
+            color: @successColor;
+            padding-right: 100px; /* Use the same right padding in the JavaScript. */
+        }
+        &.x {
+            background-position: right 5px center;
+        }
+        &.onX {
+            cursor:pointer;
+        }
+    }
+
+    #runGameButton {
+        .large;
+        margin-top: 0.5em;
+        width: 55%;
+    }
+
+    #vs {
+        font-size: 4em;
+        color: gray;
+    }
+
+    #winner {
+        .large;
+        color: #3a87ad;
+    }
 }
 
-.twoPlayerTopTd {
-     height:30px;
-}
-
-.challengeTd {
-    width:12%;
+.action-column {
+    width: 12%;
 }

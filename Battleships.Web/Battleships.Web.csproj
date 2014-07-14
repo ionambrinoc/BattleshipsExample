@@ -234,6 +234,7 @@
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
     <Content Include="Components\jquery\dist\jquery.min.map" />
+    <Content Include="Images\remove.png" />
     <Content Include="Scripts\HeadToHead\play.js" />
     <Content Include="Scripts\Players\index.js" />
     <Content Include="Scripts\_references.js" />
