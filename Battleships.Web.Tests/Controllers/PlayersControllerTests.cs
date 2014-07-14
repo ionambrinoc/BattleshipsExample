@@ -29,6 +29,7 @@
         private HttpPostedFileBase fakeFile;
         private IBattleshipsPlayer battleshipsPlayer1;
         private IBattleshipsPlayer battleshipsPlayer2;
+        private IGameResultsRepository fakeGameResultsRepo;
 
         [SetUp]
         public void SetUp()
@@ -39,7 +40,8 @@
             fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
-            controller = new PlayersController(fakePlayerRepo, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            fakeGameResultsRepo = A.Fake<IGameResultsRepository>();
+            controller = new PlayersController(fakePlayerRepo, fakeGameResultsRepo, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
             playerOne = A.Fake<Player>();
             playerTwo = A.Fake<Player>();
             battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();

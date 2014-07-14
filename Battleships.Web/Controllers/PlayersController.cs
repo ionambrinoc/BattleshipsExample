@@ -1,8 +1,10 @@
 ﻿namespace Battleships.Web.Controllers
 {
     using Battleships.Runner;
+    using Battleships.Runner.Models;
     using Battleships.Runner.Repositories;
     using Battleships.Web.Models.Players;
+    using System;
     using System.Web.Mvc;
 
     public partial class PlayersController : Controller
@@ -10,12 +12,15 @@
         private readonly IPlayersRepository playersRepository;
         private readonly IPlayerLoader playerLoader;
         private readonly IHeadToHeadRunner headToHeadRunner;
+        private readonly IGameResultsRepository gameResultsRepository;
 
-        public PlayersController(IPlayersRepository playerRepository, IPlayerLoader playerLoader, IHeadToHeadRunner headToHeadRunner)
+        public PlayersController(IPlayersRepository playerRepository, IGameResultsRepository gameResultsRepository,
+                                 IPlayerLoader playerLoader, IHeadToHeadRunner headToHeadRunner)
         {
             playersRepository = playerRepository;
             this.playerLoader = playerLoader;
             this.headToHeadRunner = headToHeadRunner;
+            this.gameResultsRepository = gameResultsRepository;
         }
 
         [HttpGet]
@@ -52,6 +57,11 @@
             var battleshipsPlayerOne = playerLoader.GetPlayerFromFile(playerOne.FileName);
             var battleshipsPlayerTwo = playerLoader.GetPlayerFromFile(playerTwo.FileName);
             var result = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
+            var winner = result.Name == playerOne.Name ? playerOne : playerTwo;
+            var loser = result.Name == playerOne.Name ? playerTwo : playerOne;
+            var gameResult = new GameResult { Winner = winner, Loser = loser, TimePlayed = DateTime.Now };
+            gameResultsRepository.Add(gameResult);
+            gameResultsRepository.SaveContext();
             return Json(result.Name);
         }
     }
