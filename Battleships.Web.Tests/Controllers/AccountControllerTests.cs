@@ -39,7 +39,7 @@
         }
 
         [Test]
-        public void Login_GET_returns_register_view()
+        public void Login_GET_returns_login_view()
         {
             // When
             var result = controller.LogIn();
@@ -150,7 +150,6 @@
             A.CallTo(() => userService.AddUser(model.Name, model.Password)).Returns(identityResult);
 
             // When
-
             var result = controller.Register(model);
 
             // Then

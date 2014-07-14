@@ -15,7 +15,6 @@
                                         {
                                             AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                                             LoginPath = new PathString("/Home/Index"),
-//                                            CookieSecure = CookieSecureOption.Always
                                         });
         }
     }
