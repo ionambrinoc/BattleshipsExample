@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="Controllers\PlayersControllerTests.cs" />
     <Compile Include="Controllers\GameResultsControllerTest.cs" />
+    <Compile Include="Controllers\AddPlayerControllerTests.cs" />
     <Compile Include="Controllers\HeadToHeadControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers\NUnitConstraints\IsMVC.cs" />
@@ -99,6 +100,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
+      <Project>{59E0E326-4953-4D40-A556-70E29F9172B4}</Project>
+      <Name>Battleships.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battleships.Runner.Tests\Battleships.Runner.Tests.csproj">
       <Project>{6C4DF483-2210-4CC0-A5CF-5673018DC2EC}</Project>
       <Name>Battleships.Runner.Tests</Name>

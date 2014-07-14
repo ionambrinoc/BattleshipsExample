@@ -25,6 +25,7 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    public static Battleships.Web.Controllers.AddPlayerController AddPlayer = new Battleships.Web.Controllers.T4MVC_AddPlayerController();
     public static Battleships.Web.Controllers.GameResultsController GameResults = new Battleships.Web.Controllers.T4MVC_GameResultsController();
     public static Battleships.Web.Controllers.HeadToHeadController HeadToHead = new Battleships.Web.Controllers.T4MVC_HeadToHeadController();
     public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
@@ -73,11 +74,27 @@ namespace Links
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class AddPlayer {
+            private const string URLPATH = "~/Scripts/AddPlayer";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string addplayer_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/addplayer.min.js") ? Url("addplayer.min.js") : Url("addplayer.js");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class HeadToHead {
             private const string URLPATH = "~/Scripts/HeadToHead";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string play_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/play.min.js") ? Url("play.min.js") : Url("play.js");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Players {
+            private const string URLPATH = "~/Scripts/Players";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string challenge_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/challenge.min.js") ? Url("challenge.min.js") : Url("challenge.js");
         }
     
     }

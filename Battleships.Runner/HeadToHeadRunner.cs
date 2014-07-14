@@ -2,7 +2,12 @@
 {
     using Battleships.Player;
 
-    public class HeadToHeadRunner
+    public interface IHeadToHeadRunner
+    {
+        IBattleshipsPlayer FindWinner(IBattleshipsPlayer player1, IBattleshipsPlayer player2);
+    }
+
+    public class HeadToHeadRunner : IHeadToHeadRunner
     {
         private readonly IShipsPlacementFactory shipsPlacementFactory;
 

@@ -1,0 +1,31 @@
+﻿@using Battleships.Runner.Models
+@model IEnumerable<Player>
+@{
+    ViewBag.Title = "Add a Player";
+}
+
+@using (Html.BeginForm(MVC.AddPlayer.Index(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    <div class="form-group">
+        <label for="userName">Username: </label>
+        <input id="userName" name="userName" class="form-control" type="text" placeholder="User" />
+    </div>
+    @Html.ValidationMessage("")
+    <div class="form-group">
+        <label for="file">File: </label>
+        <input type="file" id="file" name="file" class="form-control" />
+    </div>
+    <input class="btn" id="submit" type="submit" value="Add Player" />
+}
+
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/scripts/addplayer/addplayer")
+    <script type="text/javascript">
+
+    </script>
+
+    <style type="text/css">
+        .field-validation-error { color: red }
+    </style>
+}

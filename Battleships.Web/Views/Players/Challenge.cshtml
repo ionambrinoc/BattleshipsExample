@@ -1,0 +1,20 @@
+﻿@using Battleships.Web.Models.Players
+@model ChallengeViewModel
+
+@{
+    ViewBag.Title = String.Format("{0} vs. {1}", Model.PlayerOneName, Model.PlayerTwoName);
+}
+
+@using (Html.BeginForm(MVC.Players.RunGame(Model.PlayerOneId, Model.PlayerTwoId), FormMethod.Post, new { id = "run-game-form" })) {}
+
+<h4>And the winner is...</h4>
+<div id="result"></div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/scripts/players/challenge")
+    <script type="text/javascript">
+        $(function() {
+            battleships.players.challenge.init();
+        });
+    </script>
+}

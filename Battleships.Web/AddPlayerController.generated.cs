@@ -23,10 +23,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace Battleships.Web.Controllers
 {
-    public partial class PlayersController
+    public partial class AddPlayerController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected PlayersController(Dummy d) { }
+        protected AddPlayerController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -54,27 +54,15 @@ namespace Battleships.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Challenge()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Challenge);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult RunGame()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunGame);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public PlayersController Actions { get { return MVC.Players; } }
+        public AddPlayerController Actions { get { return MVC.AddPlayer; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Players";
+        public readonly string Name = "AddPlayer";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Players";
+        public const string NameConst = "AddPlayer";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -83,16 +71,12 @@ namespace Battleships.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string Challenge = "Challenge";
-            public readonly string RunGame = "RunGame";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string Challenge = "Challenge";
-            public const string RunGame = "RunGame";
         }
 
 
@@ -104,24 +88,6 @@ namespace Battleships.Web.Controllers
         {
             public readonly string form = "form";
         }
-        static readonly ActionParamsClass_Challenge s_params_Challenge = new ActionParamsClass_Challenge();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Challenge ChallengeParams { get { return s_params_Challenge; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Challenge
-        {
-            public readonly string playerOneId = "playerOneId";
-            public readonly string playerTwoId = "playerTwoId";
-        }
-        static readonly ActionParamsClass_RunGame s_params_RunGame = new ActionParamsClass_RunGame();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_RunGame RunGameParams { get { return s_params_RunGame; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_RunGame
-        {
-            public readonly string playerOneId = "playerOneId";
-            public readonly string playerTwoId = "playerTwoId";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -132,18 +98,16 @@ namespace Battleships.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Challenge = "Challenge";
                 public readonly string Index = "Index";
             }
-            public readonly string Challenge = "~/Views/Players/Challenge.cshtml";
-            public readonly string Index = "~/Views/Players/Index.cshtml";
+            public readonly string Index = "~/Views/AddPlayer/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_PlayersController : Battleships.Web.Controllers.PlayersController
+    public partial class T4MVC_AddPlayerController : Battleships.Web.Controllers.AddPlayerController
     {
-        public T4MVC_PlayersController() : base(Dummy.Instance) { }
+        public T4MVC_AddPlayerController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
@@ -165,32 +129,6 @@ namespace Battleships.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "form", form);
             IndexOverride(callInfo, form);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void ChallengeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerOneId, int playerTwoId);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Challenge(int playerOneId, int playerTwoId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Challenge);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerOneId", playerOneId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerTwoId", playerTwoId);
-            ChallengeOverride(callInfo, playerOneId, playerTwoId);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void RunGameOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerOneId, int playerTwoId);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult RunGame(int playerOneId, int playerTwoId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunGame);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerOneId", playerOneId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerTwoId", playerTwoId);
-            RunGameOverride(callInfo, playerOneId, playerTwoId);
             return callInfo;
         }
 
