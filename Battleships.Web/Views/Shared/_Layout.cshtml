@@ -27,17 +27,17 @@
                     @if (Request.IsAuthenticated) {
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                @Html.ActionLink("Hello " + User.Identity.Name + "!", "Index", "Home", null, null)
+                                @Html.ActionLink("Hello " + User.Identity.Name + "!", MVC.Home.Index())
                             </li>
                             <li>
-                                @Html.ActionLink("Log Off", "LogOff", "Account", null, null)
+                                @Html.ActionLink("Log Off", MVC.Account.LogOff())
                             </li>
                         </ul>
                     }
                     else {
                         <ul class="nav navbar-nav navbar-right">
-                            <li>@Html.ActionLink("Register", "Register", "Account", null, null)</li>
-                            <li>@Html.ActionLink("Log in", "LogIn", "Account", null, null)</li>
+                            <li>@Html.ActionLink("Register", MVC.Account.Register())</li>
+                            <li>@Html.ActionLink("Log in", MVC.Account.LogIn())</li>
                         </ul>
                     }
 
