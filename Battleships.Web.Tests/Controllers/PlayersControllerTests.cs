@@ -7,7 +7,6 @@
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Models.Players;
-    using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
@@ -23,7 +22,6 @@
         private Player playerTwo;
         private PlayersController controller;
         private IPlayersRepository fakePlayerRepo;
-        private IPlayerUploadService fakePlayerUploadService;
         private IPlayerLoader fakePlayerLoader;
         private IHeadToHeadRunner fakeHeadToHeadRunner;
         private HttpPostedFileBase fakeFile;
@@ -37,7 +35,6 @@
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
 
             fakePlayerRepo = A.Fake<IPlayersRepository>();
-            fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
             fakeGameResultsRepo = A.Fake<IGameResultsRepository>();
@@ -50,6 +47,15 @@
             playerTwo.Id = 2;
             playerOne.Name = "Kitten";
             playerTwo.Name = "KittenTwo";
+
+            A.CallTo(() => fakePlayerRepo.GetPlayerById(1)).Returns(playerOne);
+            A.CallTo(() => fakePlayerRepo.GetPlayerById(2)).Returns(playerTwo);
+            playerOne.FileName = "KittenBot1.dll";
+            playerTwo.FileName = "KittenBot2.dll";
+            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot1.dll")).Returns(battleshipsPlayer1);
+            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot2.dll")).Returns(battleshipsPlayer2);
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(battleshipsPlayer1);
+            A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
         }
 
         [Test]
@@ -75,21 +81,22 @@
         [Test]
         public void Run_game_returns_winner_as_json_result()
         {
-            //Given
-            A.CallTo(() => fakePlayerRepo.GetPlayerById(1)).Returns(playerOne);
-            A.CallTo(() => fakePlayerRepo.GetPlayerById(2)).Returns(playerTwo);
-            playerOne.FileName = "KittenBot1.dll";
-            playerTwo.FileName = "KittenBot2.dll";
-            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot1.dll")).Returns(battleshipsPlayer1);
-            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot2.dll")).Returns(battleshipsPlayer2);
-            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(battleshipsPlayer1);
-            A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
-
             //When
             var result = controller.RunGame(playerOne.Id, playerTwo.Id);
 
             //Then
             Assert.That(result, IsMVC.Json("Kitten"));
+        }
+
+        [Test]
+        public void Run_game_saves_result()
+        {
+            //When
+            controller.RunGame(playerOne.Id, playerTwo.Id);
+
+            //Then
+            A.CallTo(() => fakeGameResultsRepo.Add(A<GameResult>.That.Matches(g => g.Winner == playerOne && g.Loser == playerTwo))).MustHaveHappened();
+            A.CallTo(() => fakeGameResultsRepo.SaveContext()).MustHaveHappened();
         }
 
         private ControllerContext GetFakeControllerContext()
