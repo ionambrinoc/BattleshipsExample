@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Runner.Models
 {
-    public class Player
+    public class PlayerRecord
     {
         public int Id { get; set; }
         public string UserName { get; set; }

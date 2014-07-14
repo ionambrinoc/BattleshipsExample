@@ -229,14 +229,15 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\GameResults\index.less" />
+    <Content Include="Content\Players\challenge.less" />
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
     <Content Include="Components\jquery\dist\jquery.min.map" />
-    <Content Include="Scripts\AddPlayer\addplayer.js" />
     <Content Include="Scripts\HeadToHead\play.js" />
     <Content Include="Scripts\Players\challenge.js" />
+    <Content Include="Scripts\Players\index.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Components\bootstrap\less\alerts.less" />
     <Content Include="Components\bootstrap\less\badges.less" />

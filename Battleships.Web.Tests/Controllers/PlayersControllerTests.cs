@@ -18,10 +18,10 @@
     [TestFixture]
     public class PlayersControllerTests
     {
-        private Player playerOne;
-        private Player playerTwo;
+        private PlayerRecord playerRecordOne;
+        private PlayerRecord playerRecordTwo;
         private PlayersController controller;
-        private IPlayersRepository fakePlayerRepo;
+        private IPlayerRecordsRepository fakePlayerRecordRepository;
         private IPlayerLoader fakePlayerLoader;
         private IHeadToHeadRunner fakeHeadToHeadRunner;
         private HttpPostedFileBase fakeFile;
@@ -34,19 +34,20 @@
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
 
-            fakePlayerRepo = A.Fake<IPlayersRepository>();
+            fakePlayerRecordRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
-            fakeGameResultsRepo = A.Fake<IGameResultsRepository>();
-            controller = new PlayersController(fakePlayerRepo, fakeGameResultsRepo, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
-            playerOne = A.Fake<Player>();
-            playerTwo = A.Fake<Player>();
-            battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();
+            controller = new PlayersController(fakePlayerRecordRepository, fakeGameResultsRepo, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            controller = new PlayersController(fakePlayerRecordRepository, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            playerRecordOne = A.Fake<PlayerRecord>();
+            playerRecordTwo = A.Fake<PlayerRecord>();            battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();
             battleshipsPlayer2 = A.Fake<IBattleshipsPlayer>();
-            playerOne.Id = 1;
-            playerTwo.Id = 2;
-            playerOne.Name = "Kitten";
-            playerTwo.Name = "KittenTwo";
+            A.CallTo(() => fakePlayerRecordRepository.GetPlayerRecordById(1)).Returns(playerRecordOne);
+            A.CallTo(() => fakePlayerRecordRepository.GetPlayerRecordById(2)).Returns(playerRecordTwo);
+            playerRecordOne.Id = 1;
+            playerRecordTwo.Id = 2;
+            playerRecordOne.Name = "Kitten";
+            playerRecordTwo.Name = "KittenTwo";
 
             A.CallTo(() => fakePlayerRepo.GetPlayerById(1)).Returns(playerOne);
             A.CallTo(() => fakePlayerRepo.GetPlayerById(2)).Returns(playerTwo);
@@ -61,12 +62,8 @@
         [Test]
         public void Challenge_returns_challenge_view_with_correct_model()
         {
-            //Given
-            A.CallTo(() => fakePlayerRepo.GetPlayerById(1)).Returns(playerOne);
-            A.CallTo(() => fakePlayerRepo.GetPlayerById(2)).Returns(playerTwo);
-
             //When
-            var view = controller.Challenge(playerOne.Id, playerTwo.Id);
+            var view = controller.Challenge(playerRecordOne.Id, playerRecordTwo.Id);
 
             //Then
             Assert.That(view, IsMVC.View(MVC.Players.Views.Challenge));
@@ -81,8 +78,16 @@
         [Test]
         public void Run_game_returns_winner_as_json_result()
         {
+            //Given
+            playerRecordOne.FileName = "KittenBot1.dll";
+            playerRecordTwo.FileName = "KittenBot2.dll";
+            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot1.dll")).Returns(battleshipsPlayer1);
+            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot2.dll")).Returns(battleshipsPlayer2);
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(battleshipsPlayer1);
+            A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
+
             //When
-            var result = controller.RunGame(playerOne.Id, playerTwo.Id);
+            var result = controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
             //Then
             Assert.That(result, IsMVC.Json("Kitten"));
