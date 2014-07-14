@@ -7,7 +7,6 @@
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Models.Players;
-    using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
@@ -22,8 +21,7 @@
         private Player playerOne;
         private Player playerTwo;
         private PlayersController controller;
-        private IPlayersRepository fakePlayerRepo;
-        private IPlayerUploadService fakePlayerUploadService;
+        private IPlayersRepository fakePlayerRepository;
         private IPlayerLoader fakePlayerLoader;
         private IHeadToHeadRunner fakeHeadToHeadRunner;
         private HttpPostedFileBase fakeFile;
@@ -35,15 +33,16 @@
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
 
-            fakePlayerRepo = A.Fake<IPlayersRepository>();
-            fakePlayerUploadService = A.Fake<IPlayerUploadService>();
+            fakePlayerRepository = A.Fake<IPlayersRepository>();
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
-            controller = new PlayersController(fakePlayerRepo, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            controller = new PlayersController(fakePlayerRepository, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
             playerOne = A.Fake<Player>();
             playerTwo = A.Fake<Player>();
             battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();
             battleshipsPlayer2 = A.Fake<IBattleshipsPlayer>();
+            A.CallTo(() => fakePlayerRepository.GetPlayerById(1)).Returns(playerOne);
+            A.CallTo(() => fakePlayerRepository.GetPlayerById(2)).Returns(playerTwo);
             playerOne.Id = 1;
             playerTwo.Id = 2;
             playerOne.Name = "Kitten";
@@ -53,10 +52,6 @@
         [Test]
         public void Challenge_returns_challenge_view_with_correct_model()
         {
-            //Given
-            A.CallTo(() => fakePlayerRepo.GetPlayerById(1)).Returns(playerOne);
-            A.CallTo(() => fakePlayerRepo.GetPlayerById(2)).Returns(playerTwo);
-
             //When
             var view = controller.Challenge(playerOne.Id, playerTwo.Id);
 
@@ -74,8 +69,6 @@
         public void Run_game_returns_winner_as_json_result()
         {
             //Given
-            A.CallTo(() => fakePlayerRepo.GetPlayerById(1)).Returns(playerOne);
-            A.CallTo(() => fakePlayerRepo.GetPlayerById(2)).Returns(playerTwo);
             playerOne.FileName = "KittenBot1.dll";
             playerTwo.FileName = "KittenBot2.dll";
             A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot1.dll")).Returns(battleshipsPlayer1);

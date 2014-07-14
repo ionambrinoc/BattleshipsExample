@@ -11,10 +11,10 @@
         private readonly IPlayersRepository playersRepository;
         private readonly IPlayerUploadService playersUploadService;
 
-        public AddPlayerController(IPlayersRepository playerRepository, IPlayerUploadService playerUploadService)
+        public AddPlayerController(IPlayersRepository playersRepository, IPlayerUploadService playersUploadService)
         {
-            playersRepository = playerRepository;
-            playersUploadService = playerUploadService;
+            this.playersRepository = playersRepository;
+            this.playersUploadService = playersUploadService;
         }
 
         [HttpGet]
@@ -26,14 +26,14 @@
         [HttpPost]
         public virtual ActionResult Index(FormCollection form)
         {
-            var codeFile = Request.Files["file"];
-            if (codeFile != null)
+            var playerFile = Request.Files["file"];
+            if (playerFile != null)
             {
                 try
                 {
                     var newPlayer = playersUploadService.UploadAndGetPlayer(
                         form.Get("userName"),
-                        codeFile,
+                        playerFile,
                         Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
 
                     playersRepository.Add(newPlayer);
@@ -41,7 +41,7 @@
                 }
                 catch
                 {
-                    ModelState.AddModelError("", "The given file is not a valid player file.");
+                    ModelState.AddModelError("InvalidPlayerFileError", "The given file is not a valid player file.");
                     return View();
                 }
             }

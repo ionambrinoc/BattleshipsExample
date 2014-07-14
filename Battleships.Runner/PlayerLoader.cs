@@ -18,8 +18,7 @@
     {
         public IBattleshipsPlayer GetPlayerFromFile(string fileName)
         {
-            var file = File.ReadAllBytes(GetFullFilePath(fileName));
-            var playerType = Assembly.Load(file)
+            var playerType = Assembly.Load(File.ReadAllBytes(GetFullFilePath(fileName)))
                                      .GetTypes()
                                      .FirstOrDefault(t => t.GetInterface(typeof(IBattleshipsPlayer).FullName) != null);
 

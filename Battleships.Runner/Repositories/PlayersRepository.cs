@@ -16,7 +16,7 @@
 
         public Player GetPlayerById(int id)
         {
-            return Entities.AsQueryable().First(x => x.Id == id);
+            return Entities.AsQueryable().FirstOrDefault(x => x.Id == id);
         }
     }
 }

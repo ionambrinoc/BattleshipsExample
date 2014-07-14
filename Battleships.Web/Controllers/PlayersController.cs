@@ -11,9 +11,9 @@
         private readonly IPlayerLoader playerLoader;
         private readonly IHeadToHeadRunner headToHeadRunner;
 
-        public PlayersController(IPlayersRepository playerRepository, IPlayerLoader playerLoader, IHeadToHeadRunner headToHeadRunner)
+        public PlayersController(IPlayersRepository playersRepository, IPlayerLoader playerLoader, IHeadToHeadRunner headToHeadRunner)
         {
-            playersRepository = playerRepository;
+            this.playersRepository = playersRepository;
             this.playerLoader = playerLoader;
             this.headToHeadRunner = headToHeadRunner;
         }
