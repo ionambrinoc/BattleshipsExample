@@ -4,10 +4,9 @@
 @{
     ViewBag.Title = "Players";
 }
-@Styles.Render("~/bundles/styles/players/challenge")
+@Styles.Render("~/bundles/styles/players")
 
-@using (Html.BeginForm(MVC.Players.RunGame(), FormMethod.Post, new { id = "run-game-form" }))
-{
+@using (Html.BeginForm(MVC.Players.RunGame(), FormMethod.Post, new { id = "run-game-form" })) {
     @Html.Hidden("playerOneId")
     @Html.Hidden("playerTwoId")
 }
@@ -29,14 +28,13 @@
     <tr>
         <th>User Name</th>
         <th>Player Name</th>
-        <th class="text-center challengeTd"></th>
+        <th class="text-center actions"></th>
     </tr>
-    @foreach (var player in Model)
-    {
+    @foreach (var player in Model) {
         <tr>
             <td>@player.UserName</td>
             <td>@player.Name</td>
-            <td class="action-column">
+            <td>
                 <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">
                     Add to Game
                 </button>
@@ -48,7 +46,7 @@
 @section scripts{
     @Scripts.Render("~/bundles/scripts/players/index")
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             battleships.players.index.init();
         });
     </script>

@@ -101,7 +101,7 @@ namespace Links
             private const string URLPATH = "~/Content/Players";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string challenge_less = Url("challenge.less");
+            public static readonly string index_less = Url("index.less");
         }
     
         public static readonly string site_less = Url("site.less");

@@ -29,8 +29,8 @@
                 "~/Components/bootstrap/less/bootstrap.less",
                 "~/Content/site.less"));
 
-            bundles.Add(new CustomStyleBundle("~/bundles/styles/players/challenge").Include(
-                "~/Content/Players/challenge.less"));
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/players").Include(
+                "~/Content/Players/index.less"));
         }
     }
 }
