@@ -27,7 +27,7 @@
         private HttpPostedFileBase fakeFile;
         private IBattleshipsPlayer battleshipsPlayer1;
         private IBattleshipsPlayer battleshipsPlayer2;
-        private IGameResultsRepository fakeGameResultsRepo;
+        private IGameResultsRepository fakeGameResultsRepository;
 
         [SetUp]
         public void SetUp()
@@ -37,7 +37,8 @@
             fakePlayerRecordRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
-            controller = new PlayersController(fakePlayerRecordRepository, fakeGameResultsRepo, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            fakeGameResultsRepository = A.Fake<IGameResultsRepository>();
+            controller = new PlayersController(fakePlayerRecordRepository, fakeGameResultsRepository, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
             playerRecordOne = A.Fake<PlayerRecord>();
             playerRecordTwo = A.Fake<PlayerRecord>();
             battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();
@@ -48,8 +49,8 @@
             playerRecordTwo.Id = 2;
             playerRecordOne.Name = "Kitten";
             playerRecordTwo.Name = "KittenTwo";
-            //A.CallTo(() => fakePlayerRecordRepository.GetPlayerById(1)).Returns(playerOne);
-            //A.CallTo(() => fakePlayerRecordRepository.GetPlayerById(2)).Returns(playerTwo);
+            A.CallTo(() => fakePlayerRecordRepository.GetPlayerRecordById(1)).Returns(playerRecordOne);
+            A.CallTo(() => fakePlayerRecordRepository.GetPlayerRecordById(2)).Returns(playerRecordTwo);
             playerRecordOne.FileName = "KittenBot1.dll";
             playerRecordTwo.FileName = "KittenBot2.dll";
             A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot1.dll")).Returns(battleshipsPlayer1);
@@ -99,8 +100,8 @@
             controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
             //Then
-            A.CallTo(() => fakeGameResultsRepo.Add(A<GameResult>.That.Matches(g => g.Winner == playerRecordOne && g.Loser == playerRecordTwo))).MustHaveHappened();
-            A.CallTo(() => fakeGameResultsRepo.SaveContext()).MustHaveHappened();
+            A.CallTo(() => fakeGameResultsRepository.Add(A<GameResult>.That.Matches(g => g.Winner == playerRecordOne && g.Loser == playerRecordTwo))).MustHaveHappened();
+            A.CallTo(() => fakeGameResultsRepository.SaveContext()).MustHaveHappened();
         }
 
         private ControllerContext GetFakeControllerContext()
