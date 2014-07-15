@@ -2,6 +2,8 @@
 {
     using Battleships.Player;
     using Battleships.Runner.Models;
+    using Battleships.Runner.Repositories;
+    using System;
 
     public interface IHeadToHeadRunner
     {
@@ -12,10 +14,14 @@
     public class HeadToHeadRunner : IHeadToHeadRunner
     {
         private readonly IShipsPlacementFactory shipsPlacementFactory;
+        private readonly IPlayerRecordsRepository playerRecordsRepository;
+        private readonly IMatchHelperFactory matchHelperFactory;
 
-        public HeadToHeadRunner(IShipsPlacementFactory shipsPlacementFactory)
+        public HeadToHeadRunner(IShipsPlacementFactory shipsPlacementFactory, IMatchHelperFactory matchHelperFactory, IPlayerRecordsRepository playerRecordsRepository)
         {
             this.shipsPlacementFactory = shipsPlacementFactory;
+            this.playerRecordsRepository = playerRecordsRepository;
+            this.matchHelperFactory = matchHelperFactory;
         }
 
         public IBattleshipsPlayer FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
@@ -51,38 +57,30 @@
 
         public MatchResult GetMatchResult(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, int numberOfRounds = 100)
         {
-            var playerOneWinCount = 0;
-            var playerTwoWinCount = 0;
+            var matchHelper = matchHelperFactory.GetMatchHelper(playerOne, playerTwo);
             var playerOneFirst = true;
 
             for (var i = 0; i < numberOfRounds; i++)
             {
                 var winner = playerOneFirst ? FindWinner(playerOne, playerTwo) : FindWinner(playerTwo, playerOne);
-                if (winner == playerOne)
-                {
-                    playerOneWinCount++;
-                }
-                else
-                {
-                    playerTwoWinCount++;
-                }
+                matchHelper.IncrementWinnerCounter(winner);
 
                 playerOneFirst = !playerOneFirst;
             }
 
-            IBattleshipsPlayer matchWinner;
-            if (playerOneWinCount == playerTwoWinCount)
+            if (matchHelper.PlayerOneCounter == matchHelper.PlayerTwoCounter)
             {
-                matchWinner = FindWinner(playerOne, playerTwo);
-            }
-            else
-            {
-                matchWinner = playerOneWinCount < playerTwoWinCount ? playerTwo : playerOne;
+                matchHelper.IncrementWinnerCounter(FindWinner(playerOne, playerTwo));
             }
 
-            var matchLoser = matchWinner == playerOne ? playerTwo : playerOne;
-
-            return new MatchResult();
+            return new MatchResult
+                   {
+                       Loser = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(matchHelper.GetLoser()),
+                       Winner = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(matchHelper.GetWinner()),
+                       LoserWins = matchHelper.GetLoserCounter(),
+                       WinnerWins = matchHelper.GetWinnerCounter(),
+                       TimePlayed = DateTime.Now
+                   };
         }
 
         private static void MakeMove(IBattleshipsPlayer attacker, IBattleshipsPlayer defender, IShipsPlacement defendingShips)
