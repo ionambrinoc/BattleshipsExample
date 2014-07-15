@@ -27,6 +27,11 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Players", MVC.Players.Index())</li>
                     </ul>
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("Game Results", MVC.GameResults.Index())
+                        </li>
+                    </ul>
                     @if (Request.IsAuthenticated) {
                         <ul class="nav navbar-nav navbar-right">
                             <li>
