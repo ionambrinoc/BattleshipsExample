@@ -13,7 +13,7 @@ namespace Battleships.Runner.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201407081316230_AddUsers"; }
+            get { return "201407151013418_AddUsers"; }
         }
         
         string IMigrationMetadata.Source

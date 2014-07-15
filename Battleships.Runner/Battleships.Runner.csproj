@@ -32,7 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
@@ -71,10 +72,6 @@
     <Compile Include="Migrations\201407091434001_AddPlayers.Designer.cs">
       <DependentUpon>201407091434001_AddPlayers.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201407081316230_AddUsers.cs" />
-    <Compile Include="Migrations\201407081316230_AddUsers.Designer.cs">
-      <DependentUpon>201407081316230_AddUsers.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201407101358201_RemoveKittens.cs" />
     <Compile Include="Migrations\201407101358201_RemoveKittens.Designer.cs">
       <DependentUpon>201407101358201_RemoveKittens.cs</DependentUpon>
@@ -82,6 +79,10 @@
     <Compile Include="Migrations\201407141543032_RenamePlayerToPlayerRecord.cs" />
     <Compile Include="Migrations\201407141543032_RenamePlayerToPlayerRecord.Designer.cs">
       <DependentUpon>201407141543032_RenamePlayerToPlayerRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407151013418_AddUsers.cs" />
+    <Compile Include="Migrations\201407151013418_AddUsers.Designer.cs">
+      <DependentUpon>201407151013418_AddUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PlayerRecord.cs" />
@@ -113,9 +114,6 @@
     <EmbeddedResource Include="Migrations\201407081143177_AddFileNameToKitten.resx">
       <DependentUpon>201407081143177_AddFileNameToKitten.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407081316230_AddUsers.resx">
-      <DependentUpon>201407081316230_AddUsers.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407091434001_AddPlayers.resx">
       <DependentUpon>201407091434001_AddPlayers.cs</DependentUpon>
     </EmbeddedResource>
@@ -124,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407141543032_RenamePlayerToPlayerRecord.resx">
       <DependentUpon>201407141543032_RenamePlayerToPlayerRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407151013418_AddUsers.resx">
+      <DependentUpon>201407151013418_AddUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
