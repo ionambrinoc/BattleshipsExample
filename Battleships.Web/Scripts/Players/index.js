@@ -37,12 +37,13 @@ window.battleships.players.index = (function($, undefined) {
 
     function tog(v) { return v ? 'addClass' : 'removeClass'; }
 
-    function playGameButton() {
+    function startGame() {
+        $('#playerOneId').val(firstPlayer.data('id'));
+        $('#playerTwoId').val(secondPlayer.data('id'));
         $('#gameSetup').hide();
         $('#loading-spinner').show();
     }
 
-    //reset button function {shows to-hide-when-play, hides reset button}
     function resetGame() {
         $('#resetGameButton').hide();
         $('#gameSetup').show();
@@ -51,14 +52,12 @@ window.battleships.players.index = (function($, undefined) {
     }
 
     return {
-        init: function () {
+        init: function() {
             resetGame();
-            $('#runGameButton').click(function () {
+            $('#runGameButton').click(function() {
                 if (firstPlayer.data('id') && secondPlayer.data('id')) {
-                    $('#playerOneId').val(firstPlayer.data('id'));
-                    $('#playerTwoId').val(secondPlayer.data('id'));
-                    playGameButton();
-                    $('#run-game-form').ajaxSubmit(function (data) {
+                    startGame();
+                    $('#run-game-form').ajaxSubmit(function(data) {
                         $('#loading-spinner').hide();
                         $("#winner").text(data + " wins!").show();
                         $('#resetGameButton').show();
