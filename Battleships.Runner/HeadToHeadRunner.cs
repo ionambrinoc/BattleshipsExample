@@ -1,10 +1,12 @@
 ﻿namespace Battleships.Runner
 {
     using Battleships.Player;
+    using Battleships.Runner.Models;
 
     public interface IHeadToHeadRunner
     {
-        IBattleshipsPlayer FindWinner(IBattleshipsPlayer player1, IBattleshipsPlayer player2);
+        IBattleshipsPlayer FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo);
+        MatchResult GetMatchResult(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, int numberOfRounds);
     }
 
     public class HeadToHeadRunner : IHeadToHeadRunner
@@ -45,6 +47,42 @@
                     return playerTwo;
                 }
             }
+        }
+
+        public MatchResult GetMatchResult(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, int numberOfRounds = 100)
+        {
+            var playerOneWinCount = 0;
+            var playerTwoWinCount = 0;
+            var playerOneFirst = true;
+
+            for (var i = 0; i < numberOfRounds; i++)
+            {
+                var winner = playerOneFirst ? FindWinner(playerOne, playerTwo) : FindWinner(playerTwo, playerOne);
+                if (winner == playerOne)
+                {
+                    playerOneWinCount++;
+                }
+                else
+                {
+                    playerTwoWinCount++;
+                }
+
+                playerOneFirst = !playerOneFirst;
+            }
+
+            IBattleshipsPlayer matchWinner;
+            if (playerOneWinCount == playerTwoWinCount)
+            {
+                matchWinner = FindWinner(playerOne, playerTwo);
+            }
+            else
+            {
+                matchWinner = playerOneWinCount < playerTwoWinCount ? playerTwo : playerOne;
+            }
+
+            var matchLoser = matchWinner == playerOne ? playerTwo : playerOne;
+
+            return new MatchResult();
         }
 
         private static void MakeMove(IBattleshipsPlayer attacker, IBattleshipsPlayer defender, IShipsPlacement defendingShips)
