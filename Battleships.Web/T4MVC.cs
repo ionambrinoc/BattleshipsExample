@@ -26,6 +26,7 @@ using T4MVC;
 public static partial class MVC
 {
     public static Battleships.Web.Controllers.AddPlayerController AddPlayer = new Battleships.Web.Controllers.T4MVC_AddPlayerController();
+    public static Battleships.Web.Controllers.AccountController Account = new Battleships.Web.Controllers.T4MVC_AccountController();
     public static Battleships.Web.Controllers.HeadToHeadController HeadToHead = new Battleships.Web.Controllers.T4MVC_HeadToHeadController();
     public static Battleships.Web.Controllers.HistoryController History = new Battleships.Web.Controllers.T4MVC_HistoryController();
     public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
