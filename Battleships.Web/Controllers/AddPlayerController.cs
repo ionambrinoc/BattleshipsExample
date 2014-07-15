@@ -20,7 +20,11 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View(playerRecordsRepository.GetAll());
+            if (Request.IsAuthenticated)
+            {
+                return View(playerRecordsRepository.GetAll());
+            }
+            return RedirectToAction(MVC.Account.LogIn());
         }
 
         [HttpPost]
@@ -32,7 +36,7 @@
                 try
                 {
                     var newPlayer = playersUploadService.UploadAndGetPlayerRecord(
-                        form.Get("userName"),
+                        User.Identity.Name,
                         playerFile,
                         Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
 

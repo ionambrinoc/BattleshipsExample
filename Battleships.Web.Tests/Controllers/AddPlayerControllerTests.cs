@@ -45,13 +45,15 @@
         }
 
         [Test]
-        public void Index_returns_index_view()
+        public void Index_redirects_to_loginview_if_not_authorised()
         {
+            //TODO: fix fake user authorization
+
             // When
             var view = controller.Index();
 
             // Then
-            Assert.That(view, IsMVC.View(""));
+            Assert.That(view, IsMVC.RedirectTo(MVC.Account.LogIn()));
         }
 
         [Test]

@@ -20,7 +20,7 @@
         public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file,
                                                      string uploadDirectoryPath)
         {
-            var fileName = Path.GetFileName(file.FileName) ?? "";
+            var fileName = userName + "_" + Path.GetFileName(file.FileName) ?? "";
             var fullPath = Path.Combine(uploadDirectoryPath, fileName);
             file.SaveAs(fullPath);
             battleshipsPlayer = playerLoader.GetPlayerFromFile(fileName);
