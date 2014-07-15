@@ -1,5 +1,5 @@
 ﻿@using Battleships.Runner.Models
-@model IEnumerable<PastGame>
+@model IEnumerable<MatchResult>
 
 @Styles.Render("~/bundles/styles/history/index")
 
@@ -24,8 +24,8 @@
 
         @foreach (var pastGame in Model) {
             <tr class="tableContent">
-                <td>@pastGame.FirstPlayer</td>
-                <td>@pastGame.SecondPlayer</td>
+                <td>@pastGame.Winner</td>
+                <td>@pastGame.Loser</td>
                 <td>@pastGame.Winner wins!</td>
                 <td>@pastGame.TimePlayed</td>
             </tr>

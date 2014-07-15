@@ -8,14 +8,14 @@
 
     internal class HistoryControllerTests
     {
-        private IPastGameRepository fakeIPastGameRepository;
+        private IMatchResultsRepository fakeIMatchResultsRepository;
         private HistoryController controller;
 
         [SetUp]
         public void SetUp()
         {
-            fakeIPastGameRepository = A.Fake<IPastGameRepository>();
-            controller = new HistoryController(fakeIPastGameRepository);
+            fakeIMatchResultsRepository = A.Fake<IMatchResultsRepository>();
+            controller = new HistoryController(fakeIMatchResultsRepository);
         }
 
         [Test]
