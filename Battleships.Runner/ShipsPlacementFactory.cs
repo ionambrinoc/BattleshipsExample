@@ -11,7 +11,7 @@
     {
         public IShipsPlacement GetShipsPlacement(IBattleshipsPlayer player)
         {
-            return new ShipsPlacement(player);
+            return new ShipsPlacement(player, new ShipFactory());
         }
     }
 }

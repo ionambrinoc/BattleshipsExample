@@ -15,14 +15,15 @@
     public class ShipsPlacement : IShipsPlacement
     {
         private const int TotalNumberOfShipCells = 17;
-        private readonly IEnumerable<IShipPosition> positions;
+        private readonly List<IShip> positions;
         private readonly HashSet<IGridSquare> cellsOfShipsHit;
 
-        public ShipsPlacement(IBattleshipsPlayer player)
+        public ShipsPlacement(IBattleshipsPlayer player, IShipFactory shipFactory)
         {
             try
             {
-                positions = player.GetShipPositions();
+                var shipPositions = player.GetShipPositions();
+                positions = shipFactory.GetShips(shipPositions);
             }
             catch (Exception)
             {
@@ -35,35 +36,27 @@
         public bool IsValid()
         {
             var shipsAvailableOfSize = new Dictionary<int, int> { { 2, 1 }, { 3, 2 }, { 4, 1 }, { 5, 1 } };
-            var gridSquaresOccupied = new bool[10, 10];
+            var coordinatesAdjacentToShip = new bool[12, 12];
 
-            try
+            if (positions == null)
             {
-                foreach (var shipPosition in positions)
+                return false;
+            }
+
+            foreach (var shipPosition in positions)
+            {
+                if (shipPosition.IsValid && shipsAvailableOfSize[shipPosition.ShipLength] != 0
+                    && IsPositionValid(shipPosition, coordinatesAdjacentToShip))
                 {
-                    var shipLength = GetShipLength(shipPosition);
-                    if (shipsAvailableOfSize.ContainsKey(shipLength) && shipsAvailableOfSize[shipLength] != 0
-                        && IsNotAdjacentToPreviousShips(shipPosition, gridSquaresOccupied))
-                    {
-                        shipsAvailableOfSize[shipLength] -= 1;
-                        OccupyGridSquares(shipPosition, gridSquaresOccupied);
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    shipsAvailableOfSize[shipPosition.ShipLength] -= 1;
+                    OccupyGridSquares(shipPosition, coordinatesAdjacentToShip);
                 }
-
-                return shipsAvailableOfSize.Aggregate(true, (current, shipAvailable) => current && shipAvailable.Value == 0);
+                else
+                {
+                    return false;
+                }
             }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return false;
-            }
+            return shipsAvailableOfSize.All(ship => ship.Value == 0);
         }
 
         public bool IsHit(IGridSquare target)
@@ -81,22 +74,17 @@
             return cellsOfShipsHit.Count == TotalNumberOfShipCells;
         }
 
-        private static bool IsTargetInShip(IShipPosition shipPosition, IGridSquare target)
+        private static bool IsTargetInShip(IShip shipPosition, IGridSquare target)
         {
-            if (IsShipHorizontal(shipPosition))
+            if (shipPosition.IsHorizontal && shipPosition.StartingSquare.Row == target.Row)
             {
-                if (target.Row == shipPosition.EndingSquare.Row)
-                {
-                    return IsInRange(target.Column, shipPosition.EndingSquare.Column, shipPosition.StartingSquare.Column);
-                }
+                return IsInRange(target.Column, shipPosition.EndingSquare.Column, shipPosition.StartingSquare.Column);
             }
-            else
+            if (shipPosition.StartingSquare.Column == target.Column)
             {
-                if (target.Column == shipPosition.EndingSquare.Column)
-                {
-                    return IsInRange(target.Row, shipPosition.EndingSquare.Row, shipPosition.StartingSquare.Row);
-                }
+                return IsInRange(target.Row, shipPosition.EndingSquare.Row, shipPosition.StartingSquare.Row);
             }
+
             return false;
         }
 
@@ -105,67 +93,35 @@
             return (target <= shipEnd && target >= shipStart) || (target >= shipEnd && target <= shipStart);
         }
 
-        private static bool IsShipHorizontal(IShipPosition shipPosition)
+        private void OccupyGridSquares(IShip shipPosition, bool[,] coordinatesAdjacentToShip)
         {
-            return shipPosition.StartingSquare.Row == shipPosition.EndingSquare.Row;
-        }
-
-        private static bool IsShipVertical(IShipPosition shipPosition)
-        {
-            return shipPosition.StartingSquare.Column == shipPosition.EndingSquare.Column;
-        }
-
-        private void OccupyGridSquares(IShipPosition shipPosition, bool[,] gridSquaresOccupied)
-        {
-            var orientedShipPosition = GridSquaresInCorrectOrder(shipPosition.StartingSquare, shipPosition.EndingSquare);
-
-            for (var i = orientedShipPosition.StartingSquare.Column - 2; i <= orientedShipPosition.EndingSquare.Column; i++)
+            for (var i = shipPosition.StartingSquare.Column - 1; i <= shipPosition.EndingSquare.Column + 1; i++)
             {
-                for (var j = (orientedShipPosition.StartingSquare.Row - 'A') - 1; j <= (orientedShipPosition.EndingSquare.Row - 'A') + 1; j++)
+                for (var j = GetIndexFromChar(shipPosition.StartingSquare.Row) - 1; j <= GetIndexFromChar(shipPosition.EndingSquare.Row) + 1; j++)
                 {
-                    if (i >= 0 && j >= 0 && i < 10 && j < 10)
+                    coordinatesAdjacentToShip[i, j] = true;
+                }
+            }
+        }
+
+        private bool IsPositionValid(IShip shipPosition, bool[,] coordinatesAdjacentToShip)
+        {
+            for (var i = shipPosition.StartingSquare.Column; i <= shipPosition.EndingSquare.Column; i++)
+            {
+                for (var j = GetIndexFromChar(shipPosition.StartingSquare.Row); j <= GetIndexFromChar(shipPosition.EndingSquare.Row); j++)
+                {
+                    if (coordinatesAdjacentToShip[i, j])
                     {
-                        gridSquaresOccupied[i, j] = true;
+                        return false;
                     }
                 }
             }
+            return true;
         }
 
-        private bool IsNotAdjacentToPreviousShips(IShipPosition shipPosition, bool[,] gridSquaresOccupied)
+        private int GetIndexFromChar(char row)
         {
-            var adjacent = false;
-            var orientedShipPosition = GridSquaresInCorrectOrder(shipPosition.StartingSquare, shipPosition.EndingSquare);
-
-            for (var i = orientedShipPosition.StartingSquare.Column - 1; i <= orientedShipPosition.EndingSquare.Column - 1; i++)
-            {
-                for (var j = (orientedShipPosition.StartingSquare.Row - 'A'); j <= (orientedShipPosition.EndingSquare.Row - 'A'); j++)
-                {
-                    adjacent = gridSquaresOccupied[i, j] || adjacent;
-                }
-            }
-            return !adjacent;
-        }
-
-        private IShipPosition GridSquaresInCorrectOrder(IGridSquare firstGridSquare, IGridSquare secondGridSquare)
-        {
-            if (firstGridSquare.Column <= secondGridSquare.Column && firstGridSquare.Row <= secondGridSquare.Row)
-            {
-                return new ShipPosition(firstGridSquare, secondGridSquare);
-            }
-            return new ShipPosition(secondGridSquare, firstGridSquare);
-        }
-
-        private int GetShipLength(IShipPosition shipPosition)
-        {
-            if (IsShipHorizontal(shipPosition))
-            {
-                return Math.Abs(shipPosition.StartingSquare.Column - shipPosition.EndingSquare.Column) + 1;
-            }
-            if (IsShipVertical(shipPosition))
-            {
-                return Math.Abs(shipPosition.StartingSquare.Row - shipPosition.EndingSquare.Row) + 1;
-            }
-            return 0;
+            return row - 'A' + 1;
         }
     }
 }
