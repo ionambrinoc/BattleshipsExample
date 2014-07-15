@@ -21,7 +21,7 @@
         private PlayerRecord playerRecordOne;
         private PlayerRecord playerRecordTwo;
         private PlayersController controller;
-        private IPlayerRecordsRepository fakePlayerRecordRepository;
+        private IPlayerRecordsRepository fakePlayerRecordsRepository;
         private IPlayerLoader fakePlayerLoader;
         private IHeadToHeadRunner fakeHeadToHeadRunner;
         private HttpPostedFileBase fakeFile;
@@ -34,23 +34,23 @@
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
 
-            fakePlayerRecordRepository = A.Fake<IPlayerRecordsRepository>();
+            fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
             fakeGameResultsRepository = A.Fake<IGameResultsRepository>();
-            controller = new PlayersController(fakePlayerRecordRepository, fakeGameResultsRepository, fakePlayerLoader, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            controller = new PlayersController(fakePlayerRecordsRepository, fakeGameResultsRepository, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
             playerRecordOne = A.Fake<PlayerRecord>();
             playerRecordTwo = A.Fake<PlayerRecord>();
             battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();
             battleshipsPlayer2 = A.Fake<IBattleshipsPlayer>();
-            A.CallTo(() => fakePlayerRecordRepository.GetPlayerRecordById(1)).Returns(playerRecordOne);
-            A.CallTo(() => fakePlayerRecordRepository.GetPlayerRecordById(2)).Returns(playerRecordTwo);
+            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(1)).Returns(playerRecordOne);
+            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(2)).Returns(playerRecordTwo);
             playerRecordOne.Id = 1;
             playerRecordTwo.Id = 2;
             playerRecordOne.Name = "Kitten";
             playerRecordTwo.Name = "KittenTwo";
-            A.CallTo(() => fakePlayerRecordRepository.GetPlayerRecordById(1)).Returns(playerRecordOne);
-            A.CallTo(() => fakePlayerRecordRepository.GetPlayerRecordById(2)).Returns(playerRecordTwo);
+            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(1)).Returns(playerRecordOne);
+            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(2)).Returns(playerRecordTwo);
             playerRecordOne.FileName = "KittenBot1.dll";
             playerRecordTwo.FileName = "KittenBot2.dll";
             A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot1.dll")).Returns(battleshipsPlayer1);
@@ -79,10 +79,8 @@
         public void Run_game_returns_winner_as_json_result()
         {
             //Given
-            playerRecordOne.FileName = "KittenBot1.dll";
-            playerRecordTwo.FileName = "KittenBot2.dll";
-            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot1.dll")).Returns(battleshipsPlayer1);
-            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot2.dll")).Returns(battleshipsPlayer2);
+            A.CallTo(() => fakePlayerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(1)).Returns(battleshipsPlayer1);
+            A.CallTo(() => fakePlayerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(2)).Returns(battleshipsPlayer2);
             A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(battleshipsPlayer1);
             A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
 
@@ -96,6 +94,13 @@
         [Test]
         public void Run_game_saves_result()
         {
+            // Given
+            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(battleshipsPlayer1)).Returns(playerRecordOne);
+            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(battleshipsPlayer2)).Returns(playerRecordTwo);
+            A.CallTo(() => fakePlayerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(1)).Returns(battleshipsPlayer1);
+            A.CallTo(() => fakePlayerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(2)).Returns(battleshipsPlayer2);
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(battleshipsPlayer1);
+
             //When
             controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
