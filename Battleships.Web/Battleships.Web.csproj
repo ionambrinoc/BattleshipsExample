@@ -343,7 +343,6 @@
     <Content Include="Views\HeadToHead\Play.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
     <Content Include="Views\GameResults\Index.cshtml" />
-    <Content Include="Views\Players\Challenge.cshtml" />
     <Content Include="Views\AddPlayer\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />

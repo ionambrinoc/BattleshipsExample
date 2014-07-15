@@ -29,6 +29,7 @@
         private IBattleshipsPlayer battleshipsPlayer1;
         private IBattleshipsPlayer battleshipsPlayer2;
         private IGameResultsRepository fakeGameResultsRepository;
+
         [SetUp]
         public void SetUp()
         {
@@ -53,21 +54,6 @@
         }
 
         [Test]
-        public void Challenge_returns_challenge_view_with_correct_model()
-        {
-            // When
-            var view = controller.Challenge(playerRecordOne.Id, playerRecordTwo.Id);
-
-            // Then
-            Assert.That(view, IsMVC.View(MVC.Players.Views.Challenge));
-            var model = ((ViewResult)view).Model as ChallengeViewModel;
-            Assert.NotNull(model);
-            Assert.That(model.PlayerOneId, Is.EqualTo(1));
-            Assert.That(model.PlayerTwoId, Is.EqualTo(2));
-            Assert.That(model.PlayerOneName, Is.EqualTo("Kitten"));
-            Assert.That(model.PlayerTwoName, Is.EqualTo("KittenTwo"));
-        }
-        [Test]
         public void Run_game_returns_winner_as_json_result()
         {
             // Given
@@ -79,10 +65,10 @@
             // Then
             Assert.That(result, IsMVC.Json("Kitten"));
         }
+
         [Test]
         public void Run_game_saves_result()
         {
-
             // When
             controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
@@ -90,6 +76,7 @@
             A.CallTo(() => fakeGameResultsRepository.Add(A<GameResult>.That.Matches(g => g.Winner == playerRecordOne && g.Loser == playerRecordTwo))).MustHaveHappened();
             A.CallTo(() => fakeGameResultsRepository.SaveContext()).MustHaveHappened();
         }
+
         private PlayerRecord SetUpPlayerRecord(int id, string name, string fileName)
         {
             var playerRecord = A.Fake<PlayerRecord>();
@@ -107,6 +94,7 @@
             A.CallTo(() => fakePlayerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerRecord.Id)).Returns(battleshipsPlayer);
             A.CallTo(() => fakePlayerLoader.GetPlayerFromFile(playerRecord.FileName)).Returns(battleshipsPlayer);
         }
+
         private ControllerContext GetFakeControllerContext()
         {
             var fakeHttpContext = A.Fake<HttpContextBase>();
