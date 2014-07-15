@@ -1,13 +1,19 @@
 ﻿@successColor: #5cb85c;
 
+.large() {
+    font-size: 6em;
+    border-radius: 0.3em;
+}
+
+.medium() {
+    font-size: 2em;
+    border-radius: 0.2em;
+}
+
+
 #challenge {
     text-align: center;
-
-    .large() {
-        font-size: 6em;
-        border-radius: 0.3em;
-    }
-
+    height:520px;
     .player {
         .large;
         color: lightgray;
@@ -33,18 +39,30 @@
         .large;
         margin-top: 0.5em;
         width: 55%;
+        background-color:@successColor;
+        color:white
     }
 
     #vs {
         font-size: 4em;
         color: gray;
     }
-
     #winner {
         .large;
-        color: #3a87ad;
+        color: @successColor;
+        line-height: 3em;
+    }
+
+    #resetGameButton {
+        .medium;
+        margin-top: 0.3em;
+        width: 40%;
+        background-color:@successColor;
+        color:white
     }
 }
+
+
 
 .actions {
     width: 12%;

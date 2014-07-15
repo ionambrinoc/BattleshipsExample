@@ -260,6 +260,12 @@
     <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
     <Content Include="Components\respond\dest\respond.min.js" />
     <Content Include="Components\respond\dest\respond.src.js" />
+    <Content Include="Content\Players\index.css">
+      <DependentUpon>index.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Players\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -267,11 +273,15 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Players\index.less" />
+    <Content Include="Content\Players\index.css.map">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
     <Content Include="Components\jquery\dist\jquery.min.map" />
+    <Content Include="Images\ajax_loader_green_512.gif" />
     <Content Include="Images\remove.png" />
     <Content Include="Scripts\HeadToHead\play.js" />
     <Content Include="Scripts\Players\index.js" />
