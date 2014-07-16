@@ -102,11 +102,11 @@ namespace Links
             private const string URLPATH = "~/Content/AddPlayer";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string OverwriteBotFile_less = Url("OverwriteBotFile.less");
-            public static readonly string OverwriteBotFile_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/OverwriteBotFile.min.css") ? Url("OverwriteBotFile.min.css") : Url("OverwriteBotFile.css");
+            public static readonly string AddPlayer_less = Url("AddPlayer.less");
+            public static readonly string AddPlayer_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AddPlayer.min.css") ? Url("AddPlayer.min.css") : Url("AddPlayer.css");
                  
-            public static readonly string OverwriteBotFile_css_map = Url("OverwriteBotFile.css.map");
-            public static readonly string OverwriteBotFile_min_css = Url("OverwriteBotFile.min.css");
+            public static readonly string AddPlayer_css_map = Url("AddPlayer.css.map");
+            public static readonly string AddPlayer_min_css = Url("AddPlayer.min.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

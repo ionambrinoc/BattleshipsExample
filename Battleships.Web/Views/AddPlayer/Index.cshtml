@@ -1,13 +1,40 @@
-﻿@{
+﻿@using Battleships.Web.Models.AddPlayer
+@model AddPlayerModel
+@{
     ViewBag.Title = "Add a Player";
 }
 
-@using (Html.BeginForm(MVC.AddPlayer.Index(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
-    @Html.ValidationMessage("")
-    <span class = "field-validation-error">@TempData["ValidationMessage"]</span>
-    <div class="form-group">
-        <label for="file">File: </label>
-        <input type="file" id="file" name="file" class="form-control" />
-    </div>
-    <input class="btn" id="submit" type="submit" value="Add Player" />
+
+@Html.ValidationMessage("")
+@Html.ValidationMessageFor(m => m.File)
+
+@if (!Model.CanOverwrite) {
+    using (Html.BeginForm(MVC.AddPlayer.Index(), FormMethod.Post, new { enctype = "multipart/form-data", id = "add-player-form" })) {
+        <div class="form-group">
+            <label for="file">File: </label>
+            @Html.TextBoxFor(m => m.File, new { type = "file" })
+        </div>
+        <input class="btn" id="submit" type="submit" value="Submit" />
+    }
+}
+else {
+    <p>You already have a bot with the same file name. Do you want to overwrite it?</p>
+    @Styles.Render("~/bundles/styles/addplayer")
+    <table class="table-overwrite">
+        <tr>
+            <td>
+                @using (Html.BeginForm(MVC.AddPlayer.OverwriteYes(), FormMethod.Post)) {
+                    @Html.HiddenFor(model => model.TemporaryPath)
+                    @Html.HiddenFor(model => model.RealPath)
+                    @Html.HiddenFor(model => model.FileName)
+                    <input class="btn" id="submit" type="submit" value="Yes" />
+                }
+            </td>
+            <td>
+                @using (Html.BeginForm(MVC.AddPlayer.OverwriteNo(), FormMethod.Post)) {
+                    <input class="btn" id="submit" type="submit" value="No" />
+                }
+            </td>
+        </tr>
+    </table>
 }

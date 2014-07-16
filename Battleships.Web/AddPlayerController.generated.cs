@@ -54,6 +54,12 @@ namespace Battleships.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult OverwriteYes()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.OverwriteYes);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AddPlayerController Actions { get { return MVC.AddPlayer; } }
@@ -71,7 +77,6 @@ namespace Battleships.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string OverwriteBotFile = "OverwriteBotFile";
             public readonly string OverwriteYes = "OverwriteYes";
             public readonly string OverwriteNo = "OverwriteNo";
         }
@@ -80,7 +85,6 @@ namespace Battleships.Web.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string OverwriteBotFile = "OverwriteBotFile";
             public const string OverwriteYes = "OverwriteYes";
             public const string OverwriteNo = "OverwriteNo";
         }
@@ -92,7 +96,15 @@ namespace Battleships.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Index
         {
-            public readonly string form = "form";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_OverwriteYes s_params_OverwriteYes = new ActionParamsClass_OverwriteYes();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_OverwriteYes OverwriteYesParams { get { return s_params_OverwriteYes; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_OverwriteYes
+        {
+            public readonly string model = "model";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -105,10 +117,8 @@ namespace Battleships.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Index = "Index";
-                public readonly string OverwriteBotFile = "OverwriteBotFile";
             }
             public readonly string Index = "~/Views/AddPlayer/Index.cshtml";
-            public readonly string OverwriteBotFile = "~/Views/AddPlayer/OverwriteBotFile.cshtml";
         }
     }
 
@@ -129,36 +139,26 @@ namespace Battleships.Web.Controllers
         }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Web.Mvc.FormCollection form);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.AddPlayer.AddPlayerModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Index(System.Web.Mvc.FormCollection form)
+        public override System.Web.Mvc.ActionResult Index(Battleships.Web.Models.AddPlayer.AddPlayerModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "form", form);
-            IndexOverride(callInfo, form);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            IndexOverride(callInfo, model);
             return callInfo;
         }
 
         [NonAction]
-        partial void OverwriteBotFileOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void OverwriteYesOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.AddPlayer.AddPlayerModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult OverwriteBotFile()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.OverwriteBotFile);
-            OverwriteBotFileOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void OverwriteYesOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult OverwriteYes()
+        public override System.Web.Mvc.ActionResult OverwriteYes(Battleships.Web.Models.AddPlayer.AddPlayerModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.OverwriteYes);
-            OverwriteYesOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            OverwriteYesOverride(callInfo, model);
             return callInfo;
         }
 

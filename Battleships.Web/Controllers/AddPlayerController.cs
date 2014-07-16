@@ -1,7 +1,9 @@
 ﻿namespace Battleships.Web.Controllers
 {
     using Battleships.Runner.Repositories;
+    using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
+    using System;
     using System.Configuration;
     using System.IO;
     using System.Web.Mvc;
@@ -22,36 +24,53 @@
         {
             if (Request.IsAuthenticated)
             {
-                return View();
+                var model = new AddPlayerModel { CanOverwrite = false };
+                return View(model);
             }
             return RedirectToAction(MVC.Account.LogIn());
         }
 
-        [HttpPost]
-        public virtual ActionResult Index(FormCollection form)
+        /*[HttpPost]
+        public virtual JsonResult CheckFileName(FormCollection form)
         {
-            var playerFile = Request.Files["file"];
+
+            return Json(true);
+        }*/
+
+        [HttpPost]
+        public virtual ActionResult Index(AddPlayerModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var playerFile = model.File;
             if (playerFile != null)
             {
-                var uploadDirectoryPath = Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]);
                 var botFileName = playersUploadService.GetFileName(User.Identity.Name, playerFile);
-                TempData["botFileName"] = botFileName;
                 if (playerRecordsRepository.GivenFileNameExists(botFileName))
                 {
-                    playerFile.SaveAs(Path.Combine(uploadDirectoryPath, " temp" + botFileName));
-                    return RedirectToAction(MVC.AddPlayer.OverwriteBotFile());
+                    model.CanOverwrite = true;
+                    model.TemporaryPath = Path.GetTempFileName();
+                    model.RealPath = playersUploadService.GenerateFullPath(User.Identity.Name, playerFile, Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
+                    model.FileName = playersUploadService.GetFileName(User.Identity.Name, playerFile);
+                    System.IO.File.Delete(model.TemporaryPath);
+                    playerFile.SaveAs(model.TemporaryPath);
+                    return View(model);
                 }
                 try
                 {
                     var newPlayer = playersUploadService.UploadAndGetPlayerRecord(
                         User.Identity.Name,
                         playerFile,
-                        uploadDirectoryPath);
+                        Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
+                    ;
 
                     if (playerRecordsRepository.GivenBotNameExists(newPlayer.Name))
                     {
                         ModelState.AddModelError("", "Battleships player name '" + newPlayer.Name + "' is already taken.");
-                        return View();
+                        return View(model);
                     }
 
                     playerRecordsRepository.Add(newPlayer);
@@ -60,39 +79,30 @@
                 catch
                 {
                     ModelState.AddModelError("", "The given file is not a valid player file.");
-                    return View();
+                    return View(model);
                 }
             }
 
             return RedirectToAction(MVC.Players.Index());
         }
 
-        public virtual ActionResult OverwriteBotFile()
+        public virtual ActionResult OverwriteYes(AddPlayerModel model)
         {
-            TempData["botFileName"] = TempData["botFileName"]; // We need this for the next request if it is OverwriteYes
-            return View();
-        }
+            System.IO.File.Delete(model.RealPath);
+            System.IO.File.Move(model.TemporaryPath, model.RealPath);
 
-        public virtual ActionResult OverwriteYes()
-        {
             try
             {
-                var uploadDirectoryPath = Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]);
-                var destinationFileName = Path.GetFileName(TempData["botFileName"].ToString()) ?? "";
-                var destinationPath = Path.Combine(uploadDirectoryPath, destinationFileName);
-                var sourceFileName = " temp" + destinationFileName;
-                var sourcePath = Path.Combine(uploadDirectoryPath, sourceFileName);
-                System.IO.File.Delete(destinationPath);
-                System.IO.File.Move(sourcePath, destinationPath);
-
-                var battleshipsPlayer = playersUploadService.GetBattleshipsPlayerFromFile(destinationFileName);
-                playerRecordsRepository.UpdatePlayerRecord(destinationFileName, battleshipsPlayer.Name);
+                var battleshipsPlayer = playersUploadService.GetBattleshipsPlayerFromFile(model.FileName);
+                playerRecordsRepository.UpdatePlayerRecord(model.FileName, battleshipsPlayer.Name);
             }
-            catch
+            catch (Exception e)
             {
-                TempData["ValidationMessage"] = "The given file is not a valid player file.";
-                return RedirectToAction(MVC.AddPlayer.Index());
+                ModelState.AddModelError("", e.Message);
+                model.CanOverwrite = false;
+                return View("Index", model);
             }
+
             return RedirectToAction(MVC.Players.Index());
         }
 
