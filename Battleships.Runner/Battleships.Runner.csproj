@@ -60,8 +60,8 @@
     <Compile Include="BattleshipsInitializer.cs" />
     <Compile Include="Exceptions\InvalidPlayerException.cs" />
     <Compile Include="HeadToHeadRunner.cs" />
-    <Compile Include="IMatchHelperFactory.cs" />
-    <Compile Include="MatchHelper.cs" />
+    <Compile Include="IMatchScoreBoardFactory.cs" />
+    <Compile Include="MatchScoreBoard.cs" />
     <Compile Include="Migrations\201406261652239_InitialCreate.cs" />
     <Compile Include="Migrations\201406261652239_InitialCreate.Designer.cs">
       <DependentUpon>201406261652239_InitialCreate.cs</DependentUpon>

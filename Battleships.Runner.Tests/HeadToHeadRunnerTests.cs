@@ -1,8 +1,6 @@
 ﻿namespace Battleships.Runner.Tests
 {
     using Battleships.Player;
-    using Battleships.Runner.Models;
-    using Battleships.Runner.Repositories;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
@@ -17,22 +15,14 @@
         private IBattleshipsPlayer playerOne;
         private IBattleshipsPlayer playerTwo;
         private IShipsPlacementFactory shipsPlacementFactory;
-        private IPlayerRecordsRepository playerRecordsRepository;
-        private IMatchHelperFactory matchHelperFactory;
-        private PlayerRecord winnerPlayerRecord;
-        private PlayerRecord loserPlayerRecord;
 
         [SetUp]
         public void SetUp()
         {
-            winnerPlayerRecord = A.Fake<PlayerRecord>();
-            loserPlayerRecord = A.Fake<PlayerRecord>();
             playerOne = A.Fake<IBattleshipsPlayer>();
             playerTwo = A.Fake<IBattleshipsPlayer>();
             shipsPlacementFactory = A.Fake<IShipsPlacementFactory>();
-            playerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
-            matchHelperFactory = A.Fake<IMatchHelperFactory>();
-            runner = new HeadToHeadRunner(shipsPlacementFactory, matchHelperFactory, playerRecordsRepository);
+            runner = new HeadToHeadRunner(shipsPlacementFactory);
         }
 
         [Test]
@@ -98,86 +88,6 @@
 
         [Test]
         public void Player_loses_on_timeout() {}
-
-        [TestCaseSource("Games")]
-        public void Get_match_result_returns_correct_match_result(int expectedWinner, int expectedLoser)
-        {
-            // Given
-            var matchHelper = SetUpMatchHelper(Player(expectedWinner), Player(expectedLoser));
-            SetPlayerWinner(Player(expectedWinner), matchHelper);
-            SetPlayerWinnerCounter(69, matchHelper);
-            SetPlayerLoser(Player(expectedLoser), matchHelper);
-            SetPlayerLoserCounter(31, matchHelper);
-
-            // When
-            var result = runner.GetMatchResult(Player(expectedWinner), Player(expectedLoser));
-
-            // Then
-            result.Winner.ShouldBeEquivalentTo(winnerPlayerRecord);
-            result.Loser.ShouldBeEquivalentTo(loserPlayerRecord);
-            result.WinnerWins.Should().Be(69);
-            result.LoserWins.Should().Be(31);
-        }
-
-        private void SetPlayerLoserCounter(int playerCount, IMatchHelper matchHelper)
-        {
-            A.CallTo(() => matchHelper.GetLoserCounter()).Returns(playerCount);
-        }
-
-        private void SetPlayerWinnerCounter(int playerCount, IMatchHelper matchHelper)
-        {
-            A.CallTo(() => matchHelper.GetWinnerCounter()).Returns(playerCount);
-        }
-
-        private IMatchHelper SetUpMatchHelper(IBattleshipsPlayer winner, IBattleshipsPlayer loser)
-        {
-            var matchHelper = A.Fake<IMatchHelper>();
-            A.CallTo(() => matchHelperFactory.GetMatchHelper(winner, loser)).Returns(matchHelper);
-            return matchHelper;
-        }
-
-        private void SetPlayerWinner(IBattleshipsPlayer player, IMatchHelper matchHelper)
-        {
-            A.CallTo(() => matchHelper.GetWinner()).Returns(player);
-            A.CallTo(() => playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(player)).Returns(winnerPlayerRecord);
-        }
-
-        private void SetPlayerLoser(IBattleshipsPlayer player, IMatchHelper matchHelper)
-        {
-            A.CallTo(() => matchHelper.GetLoser()).Returns(player);
-            A.CallTo(() => playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(player)).Returns(loserPlayerRecord);
-        }
-
-        [Test]
-        public void Runs_find_winner_correct_number_of_times()
-        {
-            // Given
-            var matchHelper = SetUpMatchHelper(playerOne, playerTwo);
-            SetPlayerWinnerCounter(50, matchHelper);
-            SetPlayerLoserCounter(19, matchHelper);
-            A.CallTo(() => matchHelper.PlayerOneCounter).Returns(1);
-
-            // When
-            runner.GetMatchResult(playerOne, playerTwo, 69);
-
-            // Then
-            A.CallTo(() => matchHelper.IncrementWinnerCounter(A<IBattleshipsPlayer>._)).MustHaveHappened(Repeated.Exactly.Times(69));
-        }
-
-        [Test]
-        public void Draw_plays_one_more_round()
-        {
-            // Given
-            var matchHelper = SetUpMatchHelper(playerOne, playerTwo);
-            SetPlayerWinnerCounter(50, matchHelper);
-            SetPlayerLoserCounter(19, matchHelper);
-
-            // When
-            runner.GetMatchResult(playerOne, playerTwo, 69);
-
-            // Then
-            A.CallTo(() => matchHelper.IncrementWinnerCounter(A<IBattleshipsPlayer>._)).MustHaveHappened(Repeated.Exactly.Times(70));
-        }
 
         // ReSharper disable once UnusedMember.Local
         private static IEnumerable<int[]> Games()

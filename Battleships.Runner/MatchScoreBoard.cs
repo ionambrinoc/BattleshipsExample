@@ -2,7 +2,7 @@
 {
     using Battleships.Player;
 
-    public interface IMatchHelper
+    public interface IMatchScoreBoard
     {
         int PlayerOneCounter { get; }
         int PlayerTwoCounter { get; }
@@ -13,17 +13,19 @@
         int GetWinnerCounter();
     }
 
-    public class MatchHelper : IMatchHelper
+    public class MatchScoreBoard : IMatchScoreBoard
     {
         private readonly IBattleshipsPlayer playerOne;
         private readonly IBattleshipsPlayer playerTwo;
-        public MatchHelper(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
+
+        public MatchScoreBoard(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
             this.playerOne = playerOne;
             this.playerTwo = playerTwo;
             PlayerOneCounter = 0;
             PlayerTwoCounter = 0;
         }
+
         public int PlayerOneCounter { get; private set; }
         public int PlayerTwoCounter { get; private set; }
 
