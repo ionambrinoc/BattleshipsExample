@@ -25,6 +25,23 @@
             runner = new HeadToHeadRunner(shipsPlacementFactory);
         }
 
+        [Test]
+        public void Two_consecutive_games_do_not_interfere()
+        {
+            PlayerIsValid(player1);
+            PlayerIsValid(player2);
+
+            ShipsNotAllHit(player1);
+            ShipsAllHit(player2);
+            var firstWinner = FindWinner();
+            firstWinner.Should().Be(player1);
+
+            ShipsNotAllHit(player2);
+            ShipsAllHit(player1);
+            var secondWinner = FindWinner();
+            secondWinner.Should().Be(player2);
+        }
+
         [TestCaseSource("Games")]
         public void Player_loses_if_ship_positions_invalid(int expectedWinner, int expectedLoser)
         {

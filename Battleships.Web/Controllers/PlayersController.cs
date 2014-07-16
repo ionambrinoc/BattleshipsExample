@@ -1,44 +1,48 @@
 ﻿namespace Battleships.Web.Controllers
 {
+    using Battleships.Runner;
+    using Battleships.Runner.Models;
     using Battleships.Runner.Repositories;
-    using Battleships.Web.Services;
-    using System.Configuration;
-    using System.IO;
+    using System;
+    using System.Linq;
     using System.Web.Mvc;
 
     public partial class PlayersController : Controller
     {
-        private readonly IPlayersRepository playersRepo;
-        private readonly IPlayerUploadService playersUploadService;
+        private readonly IPlayerRecordsRepository playerRecordsRepository;
+        private readonly IHeadToHeadRunner headToHeadRunner;
+        private readonly IGameResultsRepository gameResultsRepository;
 
-        public PlayersController(IPlayersRepository playerRepo, IPlayerUploadService playerUploadService)
+        public PlayersController(IPlayerRecordsRepository playerRecordsRepository, IGameResultsRepository gameResultsRepository,
+                                 IHeadToHeadRunner headToHeadRunner)
         {
-            playersRepo = playerRepo;
-            playersUploadService = playerUploadService;
+            this.playerRecordsRepository = playerRecordsRepository;
+            this.headToHeadRunner = headToHeadRunner;
+            this.gameResultsRepository = gameResultsRepository;
         }
 
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View(playersRepo.GetAll());
+            return View(playerRecordsRepository.GetAll().Reverse());
         }
 
         [HttpPost]
-        public virtual ActionResult Index(FormCollection form)
+        public virtual ActionResult RunGame(int playerOneId, int playerTwoId)
         {
-            var codeFile = Request.Files["file"];
-            if (codeFile != null)
-            {
-                var newPlayer = playersUploadService.UploadAndGetPlayer(
-                    form.Get("userName"),
-                    form.Get("name"),
-                    codeFile,
-                    Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
-                playersRepo.Add(newPlayer);
-                playersRepo.SaveContext();
-            }
-
-            return RedirectToAction(Actions.Index());
+            var battleshipsPlayerOne = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerOneId);
+            var battleshipsPlayerTwo = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerTwoId);
+            var winner = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
+            var loser = winner == battleshipsPlayerOne ? battleshipsPlayerTwo : battleshipsPlayerOne;
+            var gameResult = new GameResult
+                             {
+                                 WinnerId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(winner).Id,
+                                 LoserId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(loser).Id,
+                                 TimePlayed = DateTime.Now
+                             };
+            gameResultsRepository.Add(gameResult);
+            gameResultsRepository.SaveContext();
+            return Json(winner.Name);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
+    using Battleships.Player;
+    using Battleships.Runner;
     using Battleships.Runner.Models;
     using Battleships.Runner.Repositories;
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
-    using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
@@ -16,72 +17,82 @@
     [TestFixture]
     public class PlayersControllerTests
     {
-        private const string TestPlayerUserName = "My Test User";
-        private const string TestPlayerName = "My Test Player";
-        private const string UserNameField = "userName";
-        private const string NameField = "name";
-        private FormCollection formInput;
+        private const string FileNameOne = "KittenBot1.dll";
+        private const string FileNameTwo = "KittenBot2.dll";
+        private PlayerRecord playerRecordOne;
+        private PlayerRecord playerRecordTwo;
         private PlayersController controller;
-        private IPlayersRepository fakePlayerRepo;
-        private IPlayerUploadService fakePlayerUploadService;
+        private IPlayerRecordsRepository fakePlayerRecordsRepository;
+        private IPlayerLoader fakePlayerLoader;
+        private IHeadToHeadRunner fakeHeadToHeadRunner;
         private HttpPostedFileBase fakeFile;
+        private IBattleshipsPlayer battleshipsPlayer1;
+        private IBattleshipsPlayer battleshipsPlayer2;
+        private IGameResultsRepository fakeGameResultsRepository;
 
         [SetUp]
         public void SetUp()
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
 
-            formInput = new FormCollection { { UserNameField, TestPlayerUserName }, { NameField, TestPlayerName } };
-            fakePlayerRepo = A.Fake<IPlayersRepository>();
-            fakePlayerUploadService = A.Fake<IPlayerUploadService>();
-            controller = new PlayersController(fakePlayerRepo, fakePlayerUploadService) { ControllerContext = GetFakeControllerContext() };
+            fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
+            fakePlayerLoader = A.Fake<IPlayerLoader>();
+            fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
+            fakeGameResultsRepository = A.Fake<IGameResultsRepository>();
+            controller = new PlayersController(fakePlayerRecordsRepository, fakeGameResultsRepository, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+
+            playerRecordOne = SetUpPlayerRecord(1, "Kitten", FileNameOne);
+            playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo", FileNameTwo);
+            battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();
+            battleshipsPlayer2 = A.Fake<IBattleshipsPlayer>();
+
+            SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayer1);
+            SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayer2);
+
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(battleshipsPlayer1);
+            A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
         }
 
         [Test]
-        public void Index_returns_index_view()
-        {
-            // When
-            var view = controller.Index();
-
-            // Then
-            Assert.That(view, IsMVC.View(""));
-        }
-
-        [Test]
-        public void Posting_to_index_redirects_to_index()
-        {
-            // When
-            var result = controller.Index(formInput);
-
-            // Then
-            Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
-        }
-
-        [Test]
-        public void Posting_code_file_delegates_to_player_upload_service()
-        {
-            // When
-            controller.Index(formInput);
-
-            // Then
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayer(TestPlayerUserName, TestPlayerName, fakeFile, TestPlayerStore.Directory))
-             .MustHaveHappened();
-        }
-
-        [Test]
-        public void Posting_code_file_saves_new_player()
+        public void Run_game_returns_winner_as_json_result()
         {
             // Given
-            var fakePlayer = A.Fake<Player>();
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayer(A<string>._, A<string>._, A<HttpPostedFileBase>._, A<string>._))
-             .Returns(fakePlayer);
+            A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
 
             // When
-            controller.Index(formInput);
+            var result = controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
             // Then
-            A.CallTo(() => fakePlayerRepo.Add(fakePlayer)).MustHaveHappened();
-            A.CallTo(() => fakePlayerRepo.SaveContext()).MustHaveHappened();
+            Assert.That(result, IsMVC.Json("Kitten"));
+        }
+
+        [Test]
+        public void Run_game_saves_result()
+        {
+            // When
+            controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
+
+            // Then
+            A.CallTo(() => fakeGameResultsRepository.Add(A<GameResult>.That.Matches(g => g.WinnerId == playerRecordOne.Id && g.LoserId == playerRecordTwo.Id))).MustHaveHappened();
+            A.CallTo(() => fakeGameResultsRepository.SaveContext()).MustHaveHappened();
+        }
+
+        private PlayerRecord SetUpPlayerRecord(int id, string name, string fileName)
+        {
+            var playerRecord = A.Fake<PlayerRecord>();
+            playerRecord.Id = id;
+            playerRecord.Name = name;
+            playerRecord.FileName = fileName;
+
+            return playerRecord;
+        }
+
+        private void SetUpPlayerRecordRepository(PlayerRecord playerRecord, IBattleshipsPlayer battleshipsPlayer)
+        {
+            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(playerRecord.Id)).Returns(playerRecord);
+            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(battleshipsPlayer)).Returns(playerRecord);
+            A.CallTo(() => fakePlayerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerRecord.Id)).Returns(battleshipsPlayer);
+            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile(playerRecord.FileName)).Returns(battleshipsPlayer);
         }
 
         private ControllerContext GetFakeControllerContext()

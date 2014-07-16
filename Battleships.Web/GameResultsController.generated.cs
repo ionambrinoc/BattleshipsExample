@@ -23,10 +23,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace Battleships.Web.Controllers
 {
-    public partial class HistoryController
+    public partial class GameResultsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected HistoryController(Dummy d) { }
+        protected GameResultsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -56,13 +56,13 @@ namespace Battleships.Web.Controllers
 
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HistoryController Actions { get { return MVC.History; } }
+        public GameResultsController Actions { get { return MVC.GameResults; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "History";
+        public readonly string Name = "GameResults";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "History";
+        public const string NameConst = "GameResults";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -92,14 +92,14 @@ namespace Battleships.Web.Controllers
             {
                 public readonly string Index = "Index";
             }
-            public readonly string Index = "~/Views/History/Index.cshtml";
+            public readonly string Index = "~/Views/GameResults/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_HistoryController : Battleships.Web.Controllers.HistoryController
+    public partial class T4MVC_GameResultsController : Battleships.Web.Controllers.GameResultsController
     {
-        public T4MVC_HistoryController() : base(Dummy.Instance) { }
+        public T4MVC_GameResultsController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);

@@ -1,39 +1,61 @@
 ﻿@using Battleships.Runner.Models
-@model IEnumerable<Player>
+@model IEnumerable<PlayerRecord>
 
 @{
     ViewBag.Title = "Players";
 }
+@Styles.Render("~/bundles/styles/players")
 
-<h3>Add a player</h3>
-
-@using (Html.BeginForm(MVC.Players.Index(), FormMethod.Post, new { enctype = "multipart/form-data" })) {
-    <div class="form-group">
-        <label for="userName">Username: </label>
-        <input id="userName" name="userName" class="form-control" type="text" placeholder="User" />
-    </div>
-    <div class="form-group">
-        <label for="name">Player name: </label>
-        <input id="name" name="name" class="form-control" type="text" placeholder="Player"/>
-    </div>
-    <div class="form-group">
-        <label for="file">File: </label>
-        <input type="file" id="file" name="file" class="form-control" />
-    </div>
-    <input class="btn" id="submit" type="submit" value="Add Player"/>
+@using (Html.BeginForm(MVC.Players.RunGame(), FormMethod.Post, new { id = "run-game-form" })) {
+    @Html.Hidden("playerOneId")
+    @Html.Hidden("playerTwoId")
 }
+
+<div id="challenge">
+    <div id="gameSetup">
+        <div id="firstPlayer" class="player" data-default-text="First player">First player</div>
+        <div id="vs">VS</div>
+        <div id="secondPlayer" class="player" data-default-text="Second player">Second player</div>
+        <button id="runGameButton" type="button" class="btn btn-success">
+            Fight!
+        </button>
+    </div>
+
+    <div id="winner"></div>
+    <button id="resetGameButton" type="button" class="btn btn-success">Want to play again?</button>
+    <div id="loading-spinner">
+        <img src="../../Images/green-loading-spinner.gif" alt="Loading...">
+    </div>
+</div>
+
+
 
 <h3>List of players</h3>
 
-<table class ="table table-striped">
+<table class="table table-striped" id="playerTable">
     <tr>
         <th>User Name</th>
         <th>Player Name</th>
+        <th class="text-center actions"></th>
     </tr>
     @foreach (var player in Model) {
         <tr>
             <td>@player.UserName</td>
             <td>@player.Name</td>
+            <td>
+                <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">
+                    Add to Game
+                </button>
+            </td>
         </tr>
     }
 </table>
+
+@section scripts{
+    @Scripts.Render("~/bundles/scripts/players/index")
+    <script type="text/javascript">
+        $(function() {
+            battleships.players.index.init();
+        });
+    </script>
+}

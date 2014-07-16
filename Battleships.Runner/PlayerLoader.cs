@@ -9,11 +9,16 @@
     using System.Linq;
     using System.Reflection;
 
-    public class PlayerLoader
+    public interface IPlayerLoader
+    {
+        IBattleshipsPlayer GetPlayerFromFile(string fileName);
+    }
+
+    public class PlayerLoader : IPlayerLoader
     {
         public IBattleshipsPlayer GetPlayerFromFile(string fileName)
         {
-            var playerType = Assembly.LoadFrom(GetFullFilePath(fileName))
+            var playerType = Assembly.Load(File.ReadAllBytes(GetFullFilePath(fileName)))
                                      .GetTypes()
                                      .FirstOrDefault(t => t.GetInterface(typeof(IBattleshipsPlayer).FullName) != null);
 
@@ -21,7 +26,6 @@
             {
                 throw new InvalidPlayerException();
             }
-
             return (IBattleshipsPlayer)Activator.CreateInstance(playerType);
         }
 

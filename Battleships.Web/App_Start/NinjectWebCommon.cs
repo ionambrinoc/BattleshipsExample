@@ -7,12 +7,17 @@ using WebActivatorEx;
 namespace Battleships.Web
 {
     using Battleships.Runner;
+    using Battleships.Runner.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.Owin.Security;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Extensions.Conventions;
     using Ninject.Web.Common;
     using System;
     using System.Data.Entity;
+    using System.Security.Principal;
     using System.Web;
 
     public static class NinjectWebCommon
@@ -53,6 +58,10 @@ namespace Battleships.Web
         {
             kernel.Bind(x => x.FromAssembliesMatching("Battleships.*").SelectAllClasses().BindDefaultInterface());
             kernel.Bind<DbContext>().To<BattleshipsContext>().InRequestScope();
+            kernel.Bind<UserManager<User>>().ToSelf().InRequestScope();
+            kernel.Bind<IUserStore<User>>().ToConstructor(c => new UserStore<User>(c.Inject<DbContext>())).InRequestScope();
+            kernel.Bind<IAuthenticationManager>().ToMethod(x => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();
+            kernel.Bind<IPrincipal>().ToMethod(x => HttpContext.Current.GetOwinContext().Authentication.User).InRequestScope();
         }
     }
 }

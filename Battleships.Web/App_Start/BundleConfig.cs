@@ -19,12 +19,20 @@
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/headToHead/play").Include(
                 "~/Scripts/HeadToHead/play.js"));
 
+            bundles.Add(new CustomScriptBundle("~/bundles/scripts/addplayer/addplayer").Include(
+                "~/Scripts/AddPlayer/addplayer.js"));
+
+            bundles.Add(new CustomScriptBundle("~/bundles/scripts/players/index").Include(
+                "~/Scripts/Players/index.js"));
+
             bundles.Add(new CustomStyleBundle("~/bundles/styles/common").Include(
                 "~/Components/bootstrap/less/bootstrap.less",
                 "~/Content/site.less"));
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/gameresults/index").Include(
+                "~/Content/GameResults/index.less"));
 
-            bundles.Add(new CustomStyleBundle("~/bundles/styles/players/index").Include(
-                "~/Content/players/index.less"));
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/players").Include(
+                "~/Content/Players/index.less"));
         }
     }
 }

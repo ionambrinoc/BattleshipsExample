@@ -1,0 +1,52 @@
+﻿@successColor: #5cb85c;
+#challenge {
+    text-align: center;
+    min-height:520px;
+    .large() {
+        font-size: 6em;
+        border-radius: 0.3em;
+    }
+    .player {
+        .large;
+        color: lightgray;
+        border: solid;
+        width: 75%;
+        margin: auto;
+        background: url(../../Images/remove.png) no-repeat right -515px center;
+        padding: 3px 4px;
+
+        &.filled {
+            color: @successColor;
+            padding-right: 100px; /* Use the same right padding in the JavaScript. */
+        }
+        &.x {
+            background-position: right 5px center;
+        }
+        &.onX {
+            cursor:pointer;
+        }
+    }
+    #runGameButton {
+        .large;
+        margin-top: 0.5em;
+        width: 55%;
+    }
+    #vs {
+        font-size: 4em;
+        color: gray;
+    }
+    #winner {
+        .large;
+        color: @successColor;
+        line-height: 3em;
+    }
+    #resetGameButton {
+        font-size: 2em;
+        border-radius: 0.2em;
+        margin-top: 0.3em;
+        width: 40%;
+    }
+}
+.actions {
+    width: 12%;
+}
