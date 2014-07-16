@@ -87,7 +87,49 @@
         }
 
         [Test]
-        public void Player_loses_on_timeout() {}
+        public void Player_loses_on_timeout_and_winType_is_timeout()
+        {
+            // Given
+            // This will cause one of the players to timeout, since neither can win with this strategy, and invalid moves are not possible
+            A.CallTo(() => player1.SelectTarget()).Returns(new GridSquare('A', 1));
+            A.CallTo(() => player2.SelectTarget()).Returns(new GridSquare('A', 1));
+            PlayerIsValid(player1);
+            PlayerIsValid(player2);
+
+            //When
+            var result = runner.FindWinner(player1, player2).WinType;
+
+            //Then
+            Assert.AreEqual(result, WinTypes.Timeout);
+        }
+
+        [Test]
+        public void Player_loses_on_invalid_move_and_winType_is_invalid()
+        {
+            //Given
+            PlayerIsInvalid(player1);
+
+            //When
+            var result = runner.FindWinner(player1, player2).WinType;
+
+            //Then
+            Assert.AreEqual(result, WinTypes.Invalid);
+        }
+
+        [Test]
+        public void A_normal_game_returns_winType_as_default()
+        {
+            //Given
+            PlayerIsValid(player1);
+            PlayerIsValid(player2);
+            ShipsAllHit(player1);
+
+            //when
+            var result = runner.FindWinner(player1, player2).WinType;
+
+            //Then
+            Assert.AreEqual(result, WinTypes.Default);
+        }
 
         // ReSharper disable once UnusedMember.Local
         private static IEnumerable<int[]> Games()
@@ -144,7 +186,7 @@
 
         private IBattleshipsPlayer FindWinner()
         {
-            return runner.FindWinner(playerOne, playerTwo);
+            return runner.FindWinner(player1, player2).Winner;
         }
 
         private Constraint IsPlayer(int number)

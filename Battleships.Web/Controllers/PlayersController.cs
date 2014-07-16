@@ -32,7 +32,8 @@
         {
             var battleshipsPlayerOne = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerOneId);
             var battleshipsPlayerTwo = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerTwoId);
-            var winner = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
+            var winnerAndWinType = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
+            var winner = winnerAndWinType.Winner;
             var loser = winner == battleshipsPlayerOne ? battleshipsPlayerTwo : battleshipsPlayerOne;
             var matchResult = new MatchResult
                               {
@@ -44,7 +45,7 @@
                               };
             matchResultsRepository.Add(matchResult);
             matchResultsRepository.SaveContext();
-            return Json(winner.Name);
+            return Json(new { winnerName = winner.Name, winType = (int)winnerAndWinType.WinType });
         }
     }
 }
