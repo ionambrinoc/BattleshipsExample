@@ -32,15 +32,24 @@
         [Test]
         public void Ship_outside_the_grid_is_not_valid()
         {
-            // Given
-            ShipIsAt('A', 0, 'A', 1);
-
             // When
-            ship = new Ship(shipPosition);
-            var valid = ship.IsValid;
+            ShipIsAt('A', 0, 'A', 1);
+            var leftOfBoardValid = IsShipValid();
+
+            ShipIsAt('d', 3, 'd', 5);
+            var aboveBoardValid = IsShipValid();
+
+            ShipIsAt('D', 100, 'D', 104);
+            var rightOfBoardValid = IsShipValid();
+
+            ShipIsAt('J', 5, 'M', 5);
+            var belowBoardValid = IsShipValid();
 
             // Then
-            valid.Should().BeFalse("because ship is outside the grid");
+            leftOfBoardValid.Should().BeFalse("because ship is left of the grid");
+            aboveBoardValid.Should().BeFalse("because ship is above the grid");
+            rightOfBoardValid.Should().BeFalse("because ship is right of the grid");
+            belowBoardValid.Should().BeFalse("because ship is below the grid");
         }
 
         [Test]
@@ -141,8 +150,8 @@
             var endingSquare = ship.EndingSquare;
 
             // Then
-            startingSquare.ShouldBeEquivalentTo(new GridSquare('B', 1));
-            endingSquare.ShouldBeEquivalentTo(new GridSquare('A', 1));
+            startingSquare.ShouldBeEquivalentTo(new GridSquare('A', 1));
+            endingSquare.ShouldBeEquivalentTo(new GridSquare('B', 1));
         }
 
         [Test]
@@ -157,7 +166,7 @@
             var isInShip = ship.IsTargetInShip(target);
 
             // Then
-            isInShip.Should().BeTrue("because the target was inbetween StartingSquare and EndingSquare");
+            isInShip.Should().BeTrue("because the target was between StartingSquare and EndingSquare");
         }
 
         [Test]
@@ -172,7 +181,13 @@
             var isInShip = ship.IsTargetInShip(target);
 
             // Then
-            isInShip.Should().BeFalse("because the target was not inbetween StartingSquare and EndingSquare");
+            isInShip.Should().BeFalse("because the target was not between StartingSquare and EndingSquare");
+        }
+
+        private bool IsShipValid()
+        {
+            ship = new Ship(shipPosition);
+            return ship.IsValid;
         }
 
         private void ShipIsAt(char startRow, int startCol, char endRow, int endCol)

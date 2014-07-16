@@ -53,7 +53,7 @@
 
         private void OrientateShipCorrectly(IShipPosition shipPosition)
         {
-            if (shipPosition.StartingSquare.Column <= shipPosition.EndingSquare.Column || shipPosition.StartingSquare.Row <= shipPosition.EndingSquare.Row)
+            if (shipPosition.StartingSquare.Column <= shipPosition.EndingSquare.Column && shipPosition.StartingSquare.Row <= shipPosition.EndingSquare.Row)
             {
                 StartingSquare = shipPosition.StartingSquare;
                 EndingSquare = shipPosition.EndingSquare;
