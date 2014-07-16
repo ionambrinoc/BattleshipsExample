@@ -197,12 +197,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AddPlayerController.cs" />
     <Compile Include="App_Start\StartUp.Auth.cs" />
+    <Compile Include="Controllers\MatchResultsController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HeadToHeadController.cs" />
-    <Compile Include="Controllers\GameResultsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="GameResultsController.generated.cs">
+    <Compile Include="MatchResultsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -267,7 +267,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Players\index.less" />
-    <Content Include="Content\GameResults\index.less" />
+    <Content Include="Content\MatchResults\index.less" />
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
@@ -341,7 +341,7 @@
     <Content Include="Views\HeadToHead\Index.cshtml" />
     <Content Include="Views\HeadToHead\Play.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
-    <Content Include="Views\GameResults\Index.cshtml" />
+    <Content Include="Views\MatchResults\Index.cshtml" />
     <Content Include="Views\AddPlayer\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />

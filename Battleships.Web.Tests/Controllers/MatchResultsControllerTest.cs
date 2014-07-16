@@ -1,24 +1,24 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Battleships.Runner.Models;
     using Battleships.Runner.Repositories;
     using Battleships.Web.Controllers;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
 
-    public class GameResultsControllerTests
+    public class MatchResultsControllerTests
     {
-        private IGameResultsRepository fakeResultsRepository;
-        private GameResultsController controller;
+        private IMatchResultsRepository fakeResultsRepository;
+        private MatchResultsController controller;
 
         [SetUp]
         public void SetUp()
         {
-            fakeResultsRepository = A.Fake<IGameResultsRepository>();
-            controller = new GameResultsController(fakeResultsRepository);
+            fakeResultsRepository = A.Fake<IMatchResultsRepository>();
+            controller = new MatchResultsController(fakeResultsRepository);
         }
 
         [Test]
@@ -35,15 +35,15 @@
         public void View_takes_all_results_from_repository_as_model()
         {
             // Given
-            var gameResults = new List<GameResult> { A.Fake<GameResult>() };
-            A.CallTo(() => fakeResultsRepository.GetAll()).Returns(gameResults);
+            var matchResults = new List<MatchResult> { A.Fake<MatchResult>() };
+            A.CallTo(() => fakeResultsRepository.GetAll()).Returns(matchResults);
 
             // When
             var view = controller.Index() as ViewResult;
 
             // Then
             Assert.IsNotNull(view);
-            Assert.That(view.ViewData.Model, Is.EqualTo(gameResults));
+            Assert.That(view.ViewData.Model, Is.EqualTo(matchResults));
         }
     }
 }

@@ -12,18 +12,18 @@
 
         public DbSet<PlayerRecord> PlayerRecords { get; set; }
 
-        public DbSet<GameResult> GameResults { get; set; }
+        public DbSet<MatchResult> MatchResults { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<GameResult>()
+            modelBuilder.Entity<MatchResult>()
                         .HasRequired<PlayerRecord>(m => m.Winner)
-                        .WithMany(t => t.WonGameResults)
+                        .WithMany(t => t.WonMatchResults)
                         .HasForeignKey(m => m.WinnerId)
                         .WillCascadeOnDelete(false);
-            modelBuilder.Entity<GameResult>()
+            modelBuilder.Entity<MatchResult>()
                         .HasRequired<PlayerRecord>(m => m.Loser)
-                        .WithMany(t => t.LostGameResults)
+                        .WithMany(t => t.LostMatchResults)
                         .HasForeignKey(m => m.LoserId)
                         .WillCascadeOnDelete(false);
 

@@ -90,9 +90,9 @@
     <Compile Include="Migrations\201407150903076_AddGameResults.Designer.cs">
       <DependentUpon>201407150903076_AddGameResults.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201407161104299_FixGameResultsForeignKey.cs" />
-    <Compile Include="Migrations\201407161104299_FixGameResultsForeignKey.Designer.cs">
-      <DependentUpon>201407161104299_FixGameResultsForeignKey.cs</DependentUpon>
+    <Compile Include="Migrations\201407161344227_RenameGameResultToMatchResult.cs" />
+    <Compile Include="Migrations\201407161344227_RenameGameResultToMatchResult.Designer.cs">
+      <DependentUpon>201407161344227_RenameGameResultToMatchResult.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PlayerRecord.cs" />
@@ -139,8 +139,8 @@
     <EmbeddedResource Include="Migrations\201407150903076_AddGameResults.resx">
       <DependentUpon>201407150903076_AddGameResults.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407161104299_FixGameResultsForeignKey.resx">
-      <DependentUpon>201407161104299_FixGameResultsForeignKey.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201407161344227_RenameGameResultToMatchResult.resx">
+      <DependentUpon>201407161344227_RenameGameResultToMatchResult.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
