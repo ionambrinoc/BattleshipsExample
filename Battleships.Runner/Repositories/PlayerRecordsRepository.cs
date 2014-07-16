@@ -2,7 +2,6 @@
 {
     using Battleships.Player;
     using Battleships.Runner.Models;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     public interface IPlayerRecordsRepository : IRepository<PlayerRecord>
@@ -12,7 +11,6 @@
         PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer);
     };
 
-    [ExcludeFromCodeCoverage]
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
     {
         private readonly IPlayerLoader playerLoader;

@@ -86,6 +86,14 @@
     <Compile Include="Migrations\201407151013418_AddUsers.Designer.cs">
       <DependentUpon>201407151013418_AddUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201407150903076_AddGameResults.cs" />
+    <Compile Include="Migrations\201407150903076_AddGameResults.Designer.cs">
+      <DependentUpon>201407150903076_AddGameResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407161104299_FixGameResultsForeignKey.cs" />
+    <Compile Include="Migrations\201407161104299_FixGameResultsForeignKey.Designer.cs">
+      <DependentUpon>201407161104299_FixGameResultsForeignKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PlayerRecord.cs" />
     <Compile Include="Models\MatchResult.cs" />
@@ -127,6 +135,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407151013418_AddUsers.resx">
       <DependentUpon>201407151013418_AddUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407150903076_AddGameResults.resx">
+      <DependentUpon>201407150903076_AddGameResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407161104299_FixGameResultsForeignKey.resx">
+      <DependentUpon>201407161104299_FixGameResultsForeignKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

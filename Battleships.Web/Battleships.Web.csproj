@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44310</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -200,15 +200,15 @@
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HeadToHeadController.cs" />
-    <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\GameResultsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="GameResultsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HeadToHeadController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HistoryController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="HomeController.generated.cs">
@@ -267,11 +267,13 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Players\index.less" />
+    <Content Include="Content\GameResults\index.less" />
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
     <Content Include="Components\jquery\dist\jquery.min.map" />
+    <Content Include="Images\green-loading-spinner.gif" />
     <Content Include="Images\remove.png" />
     <Content Include="Scripts\HeadToHead\play.js" />
     <Content Include="Scripts\Players\index.js" />
@@ -339,7 +341,7 @@
     <Content Include="Views\HeadToHead\Index.cshtml" />
     <Content Include="Views\HeadToHead\Play.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
-    <Content Include="Views\History\Index.cshtml" />
+    <Content Include="Views\GameResults\Index.cshtml" />
     <Content Include="Views\AddPlayer\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -381,11 +383,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52244</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52244/</IISUrl>
+          <IISUrl>https://localhost:44310/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

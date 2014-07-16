@@ -12,14 +12,22 @@
 }
 
 <div id="challenge">
-    <div id="firstPlayer" class="player" data-default-text="First player">First player</div>
-    <div id="vs">vs</div>
-    <div id="secondPlayer" class="player" data-default-text="Second player">Second player</div>
-    <button id="runGameButton" type="button" class="btn btn-success">
-        Fight!
-    </button>
+    <div id="gameSetup">
+        <div id="firstPlayer" class="player" data-default-text="First player">First player</div>
+        <div id="vs">VS</div>
+        <div id="secondPlayer" class="player" data-default-text="Second player">Second player</div>
+        <button id="runGameButton" type="button" class="btn btn-success">
+            Fight!
+        </button>
+    </div>
+
     <div id="winner"></div>
+    <button id="resetGameButton" type="button" class="btn btn-success">Want to play again?</button>
+    <div id="loading-spinner">
+        <img src="../../Images/green-loading-spinner.gif" alt="Loading...">
+    </div>
 </div>
+
 
 
 <h3>List of players</h3>
