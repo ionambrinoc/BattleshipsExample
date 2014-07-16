@@ -7,15 +7,14 @@
         IGridSquare StartingSquare { get; }
         IGridSquare EndingSquare { get; }
         bool IsValid { get; }
+        bool IsTargetInShip(IGridSquare target);
     }
 
     public class Ship : IShip
     {
-        private readonly IShipPosition shipPosition;
-
         public Ship(IShipPosition shipPosition)
         {
-            this.shipPosition = shipPosition;
+            OrientateShipCorrectly(shipPosition);
 
             if (!IsDiagonal() && !IsOutsideGrid() && ShipLength < 6 && ShipLength > 1)
             {
@@ -33,31 +32,38 @@
             get { return (EndingSquare.Column - StartingSquare.Column) + (EndingSquare.Row - StartingSquare.Row) + 1; }
         }
 
-        public IGridSquare StartingSquare
-        {
-            get
-            {
-                if (shipPosition.StartingSquare.Column <= shipPosition.EndingSquare.Column && shipPosition.StartingSquare.Row <= shipPosition.EndingSquare.Row)
-                {
-                    return shipPosition.StartingSquare;
-                }
-                return shipPosition.EndingSquare;
-            }
-        }
-
-        public IGridSquare EndingSquare
-        {
-            get
-            {
-                if (shipPosition.EndingSquare.Column <= shipPosition.StartingSquare.Column && shipPosition.EndingSquare.Row <= shipPosition.StartingSquare.Row)
-                {
-                    return shipPosition.EndingSquare;
-                }
-                return shipPosition.StartingSquare;
-            }
-        }
-
+        public IGridSquare StartingSquare { get; set; }
+        public IGridSquare EndingSquare { get; set; }
         public bool IsValid { get; private set; }
+
+        public bool IsTargetInShip(IGridSquare target)
+        {
+            if (IsHorizontal && StartingSquare.Row == target.Row)
+            {
+                return IsInRange(target.Column, EndingSquare.Column, StartingSquare.Column);
+            }
+
+            return StartingSquare.Column == target.Column && IsInRange(target.Row, EndingSquare.Row, StartingSquare.Row);
+        }
+
+        private bool IsInRange(int target, int shipEnd, int shipStart)
+        {
+            return (target <= shipEnd && target >= shipStart) || (target >= shipEnd && target <= shipStart);
+        }
+
+        private void OrientateShipCorrectly(IShipPosition shipPosition)
+        {
+            if (shipPosition.StartingSquare.Column <= shipPosition.EndingSquare.Column || shipPosition.StartingSquare.Row <= shipPosition.EndingSquare.Row)
+            {
+                StartingSquare = shipPosition.StartingSquare;
+                EndingSquare = shipPosition.EndingSquare;
+            }
+            else
+            {
+                StartingSquare = shipPosition.EndingSquare;
+                EndingSquare = shipPosition.StartingSquare;
+            }
+        }
 
         private bool IsDiagonal()
         {
