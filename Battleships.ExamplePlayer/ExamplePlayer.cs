@@ -8,7 +8,7 @@
     {
         public string Name
         {
-            get { return "Example Player"; }
+            get { return "New Example Player"; }
         }
 
         public IEnumerable<IShipPosition> GetShipPositions()
@@ -27,7 +27,7 @@
         {
             const string rows = "ABCDEFGHIJ";
             var random = new Random();
-            var row = rows[random.Next(1, 11)];
+            var row = rows[random.Next(0, 10)];
             var column = random.Next(1, 11);
             return new GridSquare(row, column);
         }

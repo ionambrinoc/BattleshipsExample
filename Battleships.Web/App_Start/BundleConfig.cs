@@ -31,6 +31,9 @@
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/players").Include(
                 "~/Content/Players/index.less"));
+
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/addplayer/overwritebotfile").Include(
+                "~/Content/AddPlayer/OverwriteBotFile.less"));
         }
     }
 }

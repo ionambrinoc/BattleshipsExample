@@ -73,7 +73,7 @@
             controller.Index(formInput);
 
             // Then
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(TestPlayerUserName, fakeFile, TestPlayerStore.Directory))
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord("", fakeFile, TestPlayerStore.Directory))
              .MustHaveHappened();
         }
 

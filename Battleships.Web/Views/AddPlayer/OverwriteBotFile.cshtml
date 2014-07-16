@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "OverwriteBotFile";
+}
+
+<p><b>You already have a bot with the same file name. Do you want to overwrite it?</b></p>
+
+@Styles.Render("~/bundles/styles/addplayer/overwritebotfile")
+
+<table class ="table-overwrite">
+    <tr>
+        <td>
+            @using (Html.BeginForm(MVC.AddPlayer.OverwriteYes(), FormMethod.Post)) {
+                <input class="btn" id="submit" type="submit" value="Yes" />
+            }
+        </td>
+        <td>
+            @using (Html.BeginForm(MVC.AddPlayer.OverwriteNo(), FormMethod.Post)) {
+                <input class="btn" id="submit" type="submit" value="No" />
+            }
+        </td>
+    </tr>
+</table>
