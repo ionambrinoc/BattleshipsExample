@@ -48,26 +48,26 @@
             var playerFile = model.File;
             if (playerFile != null)
             {
-                var botFileName = playersUploadService.GetFileName(User.Identity.Name, playerFile);
-                if (playerRecordsRepository.GivenFileNameExists(botFileName))
-                {
-                    model.CanOverwrite = true;
-                    model.TemporaryPath = Path.GetTempFileName();
-                    model.RealPath = playersUploadService.GenerateFullPath(User.Identity.Name, playerFile, Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
-                    model.FileName = playersUploadService.GetFileName(User.Identity.Name, playerFile);
-                    System.IO.File.Delete(model.TemporaryPath);
-                    playerFile.SaveAs(model.TemporaryPath);
-                    return View(model);
-                }
                 try
                 {
                     var newPlayer = playersUploadService.UploadAndGetPlayerRecord(
                         User.Identity.Name,
                         playerFile,
                         Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
-                    ;
 
-                    if (playerRecordsRepository.GivenBotNameExists(newPlayer.Name))
+                    var playerWithSameBot = playerRecordsRepository.GivenBotNameExists(newPlayer.Name);
+
+                    if (playerWithSameBot != null && playerWithSameBot.UserName == newPlayer.UserName)
+                    {
+                        model.CanOverwrite = true;
+                        model.TemporaryPath = Path.GetTempFileName();
+                        model.RealPath = playersUploadService.GenerateFullPath(playerFile, Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
+                        model.FileName = newPlayer.FileName;
+                        System.IO.File.Delete(model.TemporaryPath);
+                        playerFile.SaveAs(model.TemporaryPath);
+                        return View(model);
+                    }
+                    if (playerWithSameBot != null)
                     {
                         ModelState.AddModelError("", "Battleships player name '" + newPlayer.Name + "' is already taken.");
                         return View(model);

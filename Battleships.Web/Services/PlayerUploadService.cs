@@ -11,8 +11,9 @@
         PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file,
                                               string uploadDirectoryPath);
 
-        string GetFileName(string userName, HttpPostedFileBase file);
+        string GetFileName(HttpPostedFileBase file);
         IBattleshipsPlayer GetBattleshipsPlayerFromFile(string fileName);
+        string GenerateFullPath(HttpPostedFileBase file, string uploadDirectoryPath);
     }
 
     public class PlayerUploadService : IPlayerUploadService
@@ -23,9 +24,9 @@
         public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file,
                                                      string uploadDirectoryPath)
         {
-            var fullPath = GenerateFullPath(userName, file, uploadDirectoryPath);
+            var fullPath = GenerateFullPath(file, uploadDirectoryPath);
             file.SaveAs(fullPath);
-            var fileName = GetFileName(userName, file);
+            var fileName = GetFileName(file);
             battleshipsPlayer = playerLoader.GetPlayerFromFile(fileName);
             return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name, FileName = fileName };
         }
@@ -35,14 +36,19 @@
             return playerLoader.GetPlayerFromFile(fileName);
         }
 
-        public string GetFileName(string userName, HttpPostedFileBase file)
+        public string GetFileName(HttpPostedFileBase file)
         {
-            return userName + "_" + Path.GetFileName(file.FileName) ?? "";
+            var tempPath = Path.GetTempFileName();
+            File.Delete(tempPath);
+            file.SaveAs(tempPath);
+            var player = playerLoader.GetPlayerFromFile(tempPath);
+            var name = player.Name;
+            return name + ".dll";
         }
 
-        private string GenerateFullPath(string userName, HttpPostedFileBase file, string uploadDirectoryPath)
+        public string GenerateFullPath(HttpPostedFileBase file, string uploadDirectoryPath)
         {
-            return Path.Combine(uploadDirectoryPath, GetFileName(userName, file));
+            return Path.Combine(uploadDirectoryPath, GetFileName(file));
         }
     }
 }
