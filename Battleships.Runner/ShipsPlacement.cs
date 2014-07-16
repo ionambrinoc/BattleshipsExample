@@ -16,7 +16,7 @@
     {
         private const int TotalNumberOfShipCells = 17;
         private readonly List<IShip> positions;
-        private readonly HashSet<IGridSquare> cellsOfShipsHit;
+        private readonly HashSet<IGridSquare> cellsOfShipsHit = new HashSet<IGridSquare>();
 
         public ShipsPlacement(IBattleshipsPlayer player, IShipFactory shipFactory)
         {
@@ -29,8 +29,6 @@
             {
                 positions = null;
             }
-
-            cellsOfShipsHit = new HashSet<IGridSquare>();
         }
 
         public bool IsValid()
@@ -61,7 +59,7 @@
 
         public bool IsHit(IGridSquare target)
         {
-            if (positions.Any(ship => IsTargetInShip(ship, target)))
+            if (positions.Any(ship => ship.IsTargetInShip(target)))
             {
                 cellsOfShipsHit.Add(target);
                 return true;
@@ -72,25 +70,6 @@
         public bool AllHit()
         {
             return cellsOfShipsHit.Count == TotalNumberOfShipCells;
-        }
-
-        private static bool IsTargetInShip(IShip shipPosition, IGridSquare target)
-        {
-            if (shipPosition.IsHorizontal && shipPosition.StartingSquare.Row == target.Row)
-            {
-                return IsInRange(target.Column, shipPosition.EndingSquare.Column, shipPosition.StartingSquare.Column);
-            }
-            if (shipPosition.StartingSquare.Column == target.Column)
-            {
-                return IsInRange(target.Row, shipPosition.EndingSquare.Row, shipPosition.StartingSquare.Row);
-            }
-
-            return false;
-        }
-
-        private static bool IsInRange(int target, int shipEnd, int shipStart)
-        {
-            return (target <= shipEnd && target >= shipStart) || (target >= shipEnd && target <= shipStart);
         }
 
         private void OccupyGridSquares(IShip shipPosition, bool[,] coordinatesAdjacentToShip)
