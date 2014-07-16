@@ -268,7 +268,6 @@
     </None>
     <Content Include="Content\Players\index.less" />
     <Content Include="Content\GameResults\index.less" />
-    <Content Include="Content\Players\challenge.less" />
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
