@@ -46,8 +46,8 @@
             battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();
             battleshipsPlayer2 = A.Fake<IBattleshipsPlayer>();
 
-            SetUpGets(playerRecordOne, battleshipsPlayer1);
-            SetUpGets(playerRecordTwo, battleshipsPlayer2);
+            SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayer1);
+            SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayer2);
 
             A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(battleshipsPlayer1);
             A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
@@ -87,7 +87,7 @@
             return playerRecord;
         }
 
-        private void SetUpGets(PlayerRecord playerRecord, IBattleshipsPlayer battleshipsPlayer)
+        private void SetUpPlayerRecordRepository(PlayerRecord playerRecord, IBattleshipsPlayer battleshipsPlayer)
         {
             A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(playerRecord.Id)).Returns(playerRecord);
             A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(battleshipsPlayer)).Returns(playerRecord);
