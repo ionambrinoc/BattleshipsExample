@@ -73,7 +73,7 @@
             controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
             // Then
-            A.CallTo(() => fakeGameResultsRepository.Add(A<GameResult>.That.Matches(g => g.Winner == playerRecordOne && g.Loser == playerRecordTwo))).MustHaveHappened();
+            A.CallTo(() => fakeGameResultsRepository.Add(A<GameResult>.That.Matches(g => g.WinnerId == playerRecordOne.Id && g.LoserId == playerRecordTwo.Id))).MustHaveHappened();
             A.CallTo(() => fakeGameResultsRepository.SaveContext()).MustHaveHappened();
         }
 

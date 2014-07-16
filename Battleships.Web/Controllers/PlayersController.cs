@@ -3,9 +3,8 @@
     using Battleships.Runner;
     using Battleships.Runner.Models;
     using Battleships.Runner.Repositories;
-    using Battleships.Web.Models.Players;
-    using System.Linq;
     using System;
+    using System.Linq;
     using System.Web.Mvc;
 
     public partial class PlayersController : Controller
@@ -37,8 +36,8 @@
             var loser = winner == battleshipsPlayerOne ? battleshipsPlayerTwo : battleshipsPlayerOne;
             var gameResult = new GameResult
                              {
-                                 Winner = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(winner),
-                                 Loser = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(loser),
+                                 WinnerId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(winner).Id,
+                                 LoserId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(loser).Id,
                                  TimePlayed = DateTime.Now
                              };
             gameResultsRepository.Add(gameResult);
