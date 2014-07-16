@@ -15,11 +15,6 @@
         public Ship(IShipPosition shipPosition)
         {
             OrientateShipCorrectly(shipPosition);
-
-            if (!IsDiagonal() && !IsOutsideGrid() && ShipLength < 6 && ShipLength > 1)
-            {
-                IsValid = true;
-            }
         }
 
         public bool IsHorizontal
@@ -34,7 +29,11 @@
 
         public IGridSquare StartingSquare { get; set; }
         public IGridSquare EndingSquare { get; set; }
-        public bool IsValid { get; private set; }
+
+        public bool IsValid
+        {
+            get { return (!IsDiagonal() && !IsOutsideGrid() && ShipLength < 6 && ShipLength > 1); }
+        }
 
         public bool IsTargetInShip(IGridSquare target)
         {
