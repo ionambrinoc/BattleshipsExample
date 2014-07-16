@@ -22,8 +22,6 @@
         {
             this.playerOne = playerOne;
             this.playerTwo = playerTwo;
-            PlayerOneCounter = 0;
-            PlayerTwoCounter = 0;
         }
 
         public int PlayerOneCounter { get; private set; }
@@ -53,12 +51,12 @@
 
         public int GetLoserCounter()
         {
-            return PlayerOneCounter > PlayerTwoCounter ? PlayerOneCounter : PlayerTwoCounter;
+            return PlayerOneCounter < PlayerTwoCounter ? PlayerOneCounter : PlayerTwoCounter;
         }
 
         public int GetWinnerCounter()
         {
-            return PlayerOneCounter < PlayerTwoCounter ? PlayerOneCounter : PlayerTwoCounter;
+            return PlayerOneCounter > PlayerTwoCounter ? PlayerOneCounter : PlayerTwoCounter;
         }
     }
 }

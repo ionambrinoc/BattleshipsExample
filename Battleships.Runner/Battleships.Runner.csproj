@@ -61,6 +61,7 @@
     <Compile Include="Exceptions\InvalidPlayerException.cs" />
     <Compile Include="HeadToHeadRunner.cs" />
     <Compile Include="IMatchScoreBoardFactory.cs" />
+    <Compile Include="MatchRunner.cs" />
     <Compile Include="MatchScoreBoard.cs" />
     <Compile Include="Migrations\201406261652239_InitialCreate.cs" />
     <Compile Include="Migrations\201406261652239_InitialCreate.Designer.cs">
