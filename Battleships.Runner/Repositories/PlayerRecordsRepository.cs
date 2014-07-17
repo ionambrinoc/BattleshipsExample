@@ -8,8 +8,7 @@
     {
         PlayerRecord GetPlayerRecordById(int id);
         bool GivenFileNameExists(string fileName);
-        bool UpdatePlayerRecord(string fileName, string botName);
-        PlayerRecord GivenBotNameExists(string botName);
+        string UserWithGivenBotName(string botName);
     };
 
     [ExcludeFromCodeCoverage]
@@ -27,23 +26,14 @@
             return Entities.AsQueryable().FirstOrDefault(x => x.FileName == fileName) != null;
         }
 
-        public PlayerRecord GivenBotNameExists(string botName)
+        public string UserWithGivenBotName(string botName)
         {
-            return Entities.AsQueryable().FirstOrDefault(x => x.Name == botName);
-        }
-
-        public bool UpdatePlayerRecord(string fileName, string botName)
-        {
-            var playerRecord = Entities.AsQueryable().First(x => x.FileName == fileName);
+            var playerRecord = Entities.AsQueryable().FirstOrDefault(x => x.Name == botName);
             if (playerRecord != null)
             {
-                Entities.Remove(playerRecord);
-                SaveContext();
-                playerRecord.Name = botName;
-                Add(playerRecord);
-                SaveContext();
+                return playerRecord.UserName;
             }
-            return true;
+            return "";
         }
     }
 }

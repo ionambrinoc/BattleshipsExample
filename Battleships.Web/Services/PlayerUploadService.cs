@@ -11,10 +11,9 @@
         PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file,
                                               string uploadDirectoryPath);
 
-        string GetFileName(HttpPostedFileBase file);
-        IBattleshipsPlayer GetBattleshipsPlayerFromFile(string fileName);
         string GenerateFullPath(HttpPostedFileBase file, string uploadDirectoryPath);
-        string GenerateFullPath(string userName, HttpPostedFileBase file, string uploadDirectoryPath);
+        string GetFileName(HttpPostedFileBase file);
+        IBattleshipsPlayer GetBattleshipsPlayerFromHttpPostedFileBase(HttpPostedFileBase playerFile);
     }
 
     public class PlayerUploadService : IPlayerUploadService
@@ -32,23 +31,22 @@
             return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name, FileName = fileName };
         }
 
-        public IBattleshipsPlayer GetBattleshipsPlayerFromFile(string fileName)
+        public string GenerateFullPath(HttpPostedFileBase file, string uploadDirectoryPath)
         {
-            return playerLoader.GetPlayerFromFile(fileName);
+            return Path.Combine(uploadDirectoryPath, GetFileName(file));
         }
 
-        public string GetFileName(HttpPostedFileBase file)
+        public string GetFileName(HttpPostedFileBase playerFile)
+        {
+            return GetBattleshipsPlayerFromHttpPostedFileBase(playerFile).Name + ".dll";
+        }
+
+        public IBattleshipsPlayer GetBattleshipsPlayerFromHttpPostedFileBase(HttpPostedFileBase playerFile)
         {
             var tempPath = Path.GetTempFileName();
             File.Delete(tempPath);
-            file.SaveAs(tempPath);
-            var player = playerLoader.GetPlayerFromFile(tempPath);
-            var name = player.Name;
-            return name + ".dll";
-        }
-
-        private string GenerateFullPath(string userName, HttpPostedFileBase file, string uploadDirectoryPath)        {
-            return Path.Combine(uploadDirectoryPath, GetFileName(file));
+            playerFile.SaveAs(tempPath);
+            return playerLoader.GetPlayerFromFile(tempPath);
         }
     }
 }

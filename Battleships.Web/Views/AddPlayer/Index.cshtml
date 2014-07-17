@@ -18,7 +18,7 @@
     }
 }
 else {
-    <p>You already have a bot with the same name. Do you want to overwrite it?</p>
+    <p class ="field-validation-error">You already have a bot with name '@Model.BotName'. Do you want to overwrite it?</p>
     @Styles.Render("~/bundles/styles/addplayer")
     <table class="table-overwrite">
         <tr>
@@ -26,7 +26,6 @@ else {
                 @using (Html.BeginForm(MVC.AddPlayer.OverwriteYes(), FormMethod.Post)) {
                     @Html.HiddenFor(model => model.TemporaryPath)
                     @Html.HiddenFor(model => model.RealPath)
-                    @Html.HiddenFor(model => model.FileName)
                     <input class="btn" id="submit" type="submit" value="Yes" />
                 }
             </td>
