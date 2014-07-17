@@ -15,7 +15,7 @@
 
         public bool CanOverwrite { get; set; }
 
-        [Required(ErrorMessage = "Please select the bot file.")]
+        [Required(ErrorMessage = "Please select the player file.")]
         public HttpPostedFileBase File { get; set; }
     }
 }
