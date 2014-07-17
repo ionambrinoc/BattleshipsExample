@@ -20,7 +20,7 @@
         }
 
         [Test]
-        public void PlayerOneCounter_incremented_when_playerOne_wins()
+        public void PlayerOneWins_incremented_when_playerOne_wins()
         {
             // When
             matchScoreBoard.IncrementPlayerWins(playerOne);
@@ -33,7 +33,7 @@
         }
 
         [Test]
-        public void PlayerTwoCounter_incremented_when_playerTwo_wins()
+        public void PlayerTwoWins_incremented_when_playerTwo_wins()
         {
             // When
             matchScoreBoard.IncrementPlayerWins(playerTwo);

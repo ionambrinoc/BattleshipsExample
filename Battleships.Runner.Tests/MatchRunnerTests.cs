@@ -88,7 +88,7 @@
         public void Draw_plays_one_more_round()
         {
             // Given
-            SetMatchAsADraw();
+            A.CallTo(() => matchScoreBoard.IsDraw()).Returns(true);
 
             // When
             GetMatchResult(NumberOfRounds);
@@ -101,11 +101,6 @@
         {
             yield return new[] { 1, 2 };
             yield return new[] { 2, 1 };
-        }
-
-        private void SetMatchAsADraw()
-        {
-            A.CallTo(() => matchScoreBoard.IsDraw()).Returns(true);
         }
 
         private void SetPlayerLoserWins(int playerCount)
