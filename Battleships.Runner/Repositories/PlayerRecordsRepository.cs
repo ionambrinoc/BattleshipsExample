@@ -9,7 +9,7 @@
         PlayerRecord GetPlayerRecordById(int id);
         bool GivenFileNameExists(string fileName);
         bool UpdatePlayerRecord(string fileName, string botName);
-        bool GivenBotNameExists(string botName);
+        PlayerRecord GivenBotNameExists(string botName);
     };
 
     [ExcludeFromCodeCoverage]
@@ -27,9 +27,9 @@
             return Entities.AsQueryable().FirstOrDefault(x => x.FileName == fileName) != null;
         }
 
-        public bool GivenBotNameExists(string botName)
+        public PlayerRecord GivenBotNameExists(string botName)
         {
-            return Entities.AsQueryable().FirstOrDefault(x => x.Name == botName) != null;
+            return Entities.AsQueryable().FirstOrDefault(x => x.Name == botName);
         }
 
         public bool UpdatePlayerRecord(string fileName, string botName)
