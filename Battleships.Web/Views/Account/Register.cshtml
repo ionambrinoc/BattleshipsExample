@@ -14,7 +14,7 @@
     <br />
     <div class="form-group">
         <label for="Name">Username: </label>
-        <input id="Name" name="name" class="form-control" type="text" placeholder="" />
+        @Html.TextBoxFor(x => x.Name)
         @Html.ValidationMessageFor(m => m.Name)
     </div>
     <div class="form-group">

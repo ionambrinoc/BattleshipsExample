@@ -13,6 +13,7 @@
 
         string GetFileName(string userName, HttpPostedFileBase file);
         IBattleshipsPlayer GetBattleshipsPlayerFromFile(string fileName);
+        string GenerateFullPath(string userName, HttpPostedFileBase file, string uploadDirectoryPath);
     }
 
     public class PlayerUploadService : IPlayerUploadService
@@ -40,7 +41,7 @@
             return userName + "_" + Path.GetFileName(file.FileName) ?? "";
         }
 
-        private string GenerateFullPath(string userName, HttpPostedFileBase file, string uploadDirectoryPath)
+        public string GenerateFullPath(string userName, HttpPostedFileBase file, string uploadDirectoryPath)
         {
             return Path.Combine(uploadDirectoryPath, GetFileName(userName, file));
         }
