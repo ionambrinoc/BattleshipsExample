@@ -93,6 +93,7 @@
             // This will cause one of the players to timeout, since neither can win with this strategy, and invalid moves are not possible
             A.CallTo(() => player1.SelectTarget()).Returns(new GridSquare('A', 1));
             A.CallTo(() => player2.SelectTarget()).Returns(new GridSquare('A', 1));
+            A.CallTo(() => player1.HasTimedOut()).Returns(true);
             PlayerIsValid(player1);
             PlayerIsValid(player2);
 

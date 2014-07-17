@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Runner.Tests
 {
+    using Battleships.Player;
     using NUnit.Framework;
     using System.Threading;
 
@@ -30,36 +31,6 @@
             //When
             battleshipsStopwatch.Start();
             Thread.Sleep(900);
-            battleshipsStopwatch.Stop();
-
-            //Then
-            Assert.IsFalse(battleshipsStopwatch.HasTimedOut());
-        }
-
-        [Test]
-        public void Stopwatch_with_default_time_of_10000_times_out_after_time_has_elapsed()
-        {
-            //Given
-            var battleshipsStopwatch = new BattleshipsStopwatch();
-
-            //When
-            battleshipsStopwatch.Start();
-            Thread.Sleep(10100);
-            battleshipsStopwatch.Stop();
-
-            //Then
-            Assert.IsTrue(battleshipsStopwatch.HasTimedOut());
-        }
-
-        [Test]
-        public void Stopwatch_with_default_time_of_10000_does_not_time_out_if_time_has_not_yet_elapsed()
-        {
-            //Given
-            var battleshipsStopwatch = new BattleshipsStopwatch();
-
-            //When
-            battleshipsStopwatch.Start();
-            Thread.Sleep(9900);
             battleshipsStopwatch.Stop();
 
             //Then

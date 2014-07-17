@@ -1,4 +1,4 @@
-﻿namespace Battleships.Runner
+﻿namespace Battleships.Player
 {
     using System.Diagnostics;
 

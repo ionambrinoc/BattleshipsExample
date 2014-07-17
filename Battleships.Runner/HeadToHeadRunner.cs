@@ -20,8 +20,6 @@
         {
             var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
             var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
-            var playerOneBattleshipStopwatch = new BattleshipsStopwatch();
-            var playerTwoBattleshipStopwatch = new BattleshipsStopwatch();
 
             if (!playerOneShipsPlacement.IsValid())
             {
@@ -35,13 +33,13 @@
 
             while (true)
             {
-                MakeMove(playerOne, playerTwo, playerTwoShipsPlacement, playerOneBattleshipStopwatch, playerTwoBattleshipStopwatch);
+                MakeMove(playerOne, playerTwo, playerTwoShipsPlacement);
 
-                if (playerOneBattleshipStopwatch.HasTimedOut())
+                if (playerOne.HasTimedOut())
                 {
                     return new WinnerAndWinType(playerTwo, WinTypes.Timeout);
                 }
-                if (playerTwoBattleshipStopwatch.HasTimedOut())
+                if (playerTwo.HasTimedOut())
                 {
                     return new WinnerAndWinType(playerOne, WinTypes.Timeout);
                 }
@@ -51,13 +49,13 @@
                     return new WinnerAndWinType(playerOne, WinTypes.Default);
                 }
 
-                MakeMove(playerTwo, playerOne, playerOneShipsPlacement, playerTwoBattleshipStopwatch, playerOneBattleshipStopwatch);
+                MakeMove(playerTwo, playerOne, playerOneShipsPlacement);
 
-                if (playerTwoBattleshipStopwatch.HasTimedOut())
+                if (playerTwo.HasTimedOut())
                 {
                     return new WinnerAndWinType(playerOne, WinTypes.Timeout);
                 }
-                if (playerOneBattleshipStopwatch.HasTimedOut())
+                if (playerOne.HasTimedOut())
                 {
                     return new WinnerAndWinType(playerTwo, WinTypes.Timeout);
                 }
@@ -69,21 +67,12 @@
             }
         }
 
-        private static void MakeMove(IBattleshipsPlayer attacker, IBattleshipsPlayer defender, IShipsPlacement defendingShips, BattleshipsStopwatch attackerStopwatch, BattleshipsStopwatch defenderStopwatch)
+        private static void MakeMove(IBattleshipsPlayer attacker, IBattleshipsPlayer defender, IShipsPlacement defendingShips)
         {
-            attackerStopwatch.Start();
             var target = attacker.SelectTarget();
-            attackerStopwatch.Stop();
-
             var defendingIsHit = defendingShips.IsHit(target);
-
-            attackerStopwatch.Start();
             attacker.HandleShotResult(target, defendingIsHit);
-            attackerStopwatch.Stop();
-
-            defenderStopwatch.Start();
             defender.HandleOpponentsShot(target);
-            defenderStopwatch.Stop();
         }
     }
 }

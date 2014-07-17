@@ -3,7 +3,7 @@
     using Battleships.Player;
     using System.Collections.Generic;
 
-    public class ExamplePlayer : IBattleshipsPlayer
+    public class ExamplePlayer : IBattleshipsBot
     {
         internal IGridSquare LastTarget;
         private readonly HashSet<IGridSquare> shipsHit = new HashSet<IGridSquare>();

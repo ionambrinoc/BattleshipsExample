@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleshipsStopwatch.cs" />
+    <Compile Include="BattleshipsPlayer.cs" />
     <Compile Include="GridSquare.cs" />
-    <Compile Include="IBattleshipsPlayer.cs" />
+    <Compile Include="IBattleshipsBot.cs" />
     <Compile Include="IGridSquare.cs" />
     <Compile Include="IShipPosition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

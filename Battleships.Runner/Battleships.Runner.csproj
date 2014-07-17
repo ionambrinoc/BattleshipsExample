@@ -58,7 +58,6 @@
   <ItemGroup>
     <Compile Include="BattleshipsContext.cs" />
     <Compile Include="BattleshipsInitializer.cs" />
-    <Compile Include="BattleshipsStopwatch.cs" />
     <Compile Include="Exceptions\InvalidPlayerException.cs" />
     <Compile Include="HeadToHeadRunner.cs" />
     <Compile Include="IMatchScoreBoardFactory.cs" />
