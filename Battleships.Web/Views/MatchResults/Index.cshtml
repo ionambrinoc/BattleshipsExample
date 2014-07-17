@@ -12,6 +12,7 @@
         <tr>
             <th>Winner</th>
             <th>Loser</th>
+            <th>Score</th>
             <th>Time Played</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
             <tr class="tableContent">
                 <td>@matchResult.Winner.Name</td>
                 <td>@matchResult.Loser.Name</td>
+                <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
                 <td>@matchResult.TimePlayed</td>
             </tr>
         }
