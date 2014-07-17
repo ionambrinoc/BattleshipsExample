@@ -11,6 +11,7 @@
 
     internal class MatchRunnerTests
     {
+        private const int NumberOfRounds = 69;
         private IMatchRunner matchRunner;
         private IHeadToHeadRunner headToHeadRunner;
         private IPlayerRecordsRepository playerRecordsRepository;
@@ -37,8 +38,7 @@
             matchScoreBoard = A.Fake<IMatchScoreBoard>();
             A.CallTo(() => matchScoreBoardFactory.GetMatchScoreBoard(playerOne, playerTwo)).Returns(matchScoreBoard);
 
-            A.CallTo(() => matchScoreBoard.PlayerOneCounter).Returns(1);
-            A.CallTo(() => matchScoreBoard.PlayerTwoCounter).Returns(0);
+            A.CallTo(() => matchScoreBoard.IsDraw()).Returns(false);
 
             matchRunner = new MatchRunner(headToHeadRunner, playerRecordsRepository, matchScoreBoardFactory);
         }
@@ -50,8 +50,8 @@
             SetPlayerWinner(Player(expectedWinner));
             SetPlayerLoser(Player(expectedLoser));
 
-            SetPlayerWinnerCounter(69);
-            SetPlayerLoserCounter(31);
+            SetPlayerWinnerWins(69);
+            SetPlayerLoserWins(31);
 
             // When
             var result = GetMatchResult();
@@ -67,10 +67,10 @@
         public void Number_of_winners_is_the_same_as_number_of_rounds()
         {
             // When
-            GetMatchResult(69);
+            GetMatchResult(NumberOfRounds);
 
             // Then
-            A.CallTo(() => headToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._)).MustHaveHappened(Repeated.Exactly.Times(69));
+            A.CallTo(() => headToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._)).MustHaveHappened(Repeated.Exactly.Times(NumberOfRounds));
         }
 
         [Test]
@@ -91,10 +91,10 @@
             SetMatchAsADraw();
 
             // When
-            GetMatchResult(110);
+            GetMatchResult(NumberOfRounds);
 
             // Then
-            A.CallTo(() => headToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._)).MustHaveHappened(Repeated.Exactly.Times(111));
+            A.CallTo(() => headToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._)).MustHaveHappened(Repeated.Exactly.Times(NumberOfRounds + 1));
         }
 
         private static IEnumerable<int[]> Games()
@@ -105,17 +105,17 @@
 
         private void SetMatchAsADraw()
         {
-            A.CallTo(() => matchScoreBoard.PlayerOneCounter).Returns(0);
+            A.CallTo(() => matchScoreBoard.IsDraw()).Returns(true);
         }
 
-        private void SetPlayerLoserCounter(int playerCount)
+        private void SetPlayerLoserWins(int playerCount)
         {
-            A.CallTo(() => matchScoreBoard.GetLoserCounter()).Returns(playerCount);
+            A.CallTo(() => matchScoreBoard.GetLoserWins()).Returns(playerCount);
         }
 
-        private void SetPlayerWinnerCounter(int playerCount)
+        private void SetPlayerWinnerWins(int playerCount)
         {
-            A.CallTo(() => matchScoreBoard.GetWinnerCounter()).Returns(playerCount);
+            A.CallTo(() => matchScoreBoard.GetWinnerWins()).Returns(playerCount);
         }
 
         private void SetPlayerWinner(IBattleshipsPlayer player)

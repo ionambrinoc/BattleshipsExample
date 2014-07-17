@@ -4,19 +4,20 @@
 
     public interface IMatchScoreBoard
     {
-        int PlayerOneCounter { get; }
-        int PlayerTwoCounter { get; }
-        void IncrementWinnerCounter(IBattleshipsPlayer winner);
+        void IncrementPlayerWins(IBattleshipsPlayer winner);
         IBattleshipsPlayer GetWinner();
         IBattleshipsPlayer GetLoser();
-        int GetLoserCounter();
-        int GetWinnerCounter();
+        int GetLoserWins();
+        int GetWinnerWins();
+        bool IsDraw();
     }
 
     public class MatchScoreBoard : IMatchScoreBoard
     {
         private readonly IBattleshipsPlayer playerOne;
         private readonly IBattleshipsPlayer playerTwo;
+        private int playerOneWins;
+        private int playerTwoWins;
 
         public MatchScoreBoard(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
@@ -24,39 +25,41 @@
             this.playerTwo = playerTwo;
         }
 
-        public int PlayerOneCounter { get; private set; }
-        public int PlayerTwoCounter { get; private set; }
-
-        public void IncrementWinnerCounter(IBattleshipsPlayer winner)
+        public void IncrementPlayerWins(IBattleshipsPlayer winner)
         {
             if (winner == playerOne)
             {
-                PlayerOneCounter++;
+                playerOneWins++;
             }
             else
             {
-                PlayerTwoCounter++;
+                playerTwoWins++;
             }
         }
 
         public IBattleshipsPlayer GetWinner()
         {
-            return PlayerOneCounter > PlayerTwoCounter ? playerOne : playerTwo;
+            return playerOneWins > playerTwoWins ? playerOne : playerTwo;
         }
 
         public IBattleshipsPlayer GetLoser()
         {
-            return PlayerOneCounter < PlayerTwoCounter ? playerOne : playerTwo;
+            return playerOneWins < playerTwoWins ? playerOne : playerTwo;
         }
 
-        public int GetLoserCounter()
+        public int GetLoserWins()
         {
-            return PlayerOneCounter < PlayerTwoCounter ? PlayerOneCounter : PlayerTwoCounter;
+            return playerOneWins < playerTwoWins ? playerOneWins : playerTwoWins;
         }
 
-        public int GetWinnerCounter()
+        public int GetWinnerWins()
         {
-            return PlayerOneCounter > PlayerTwoCounter ? PlayerOneCounter : PlayerTwoCounter;
+            return playerOneWins > playerTwoWins ? playerOneWins : playerTwoWins;
+        }
+
+        public bool IsDraw()
+        {
+            return playerOneWins == playerTwoWins;
         }
     }
 }

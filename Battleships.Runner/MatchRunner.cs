@@ -25,28 +25,28 @@
 
         public MatchResult GetMatchResult(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, int numberOfRounds = 100)
         {
-            var matchHelper = matchScoreBoardFactory.GetMatchScoreBoard(playerOne, playerTwo);
+            var matchScoreBoard = matchScoreBoardFactory.GetMatchScoreBoard(playerOne, playerTwo);
             var playerOneFirst = true;
 
             for (var i = 0; i < numberOfRounds; i++)
             {
                 var winner = playerOneFirst ? headToHeadRunner.FindWinner(playerOne, playerTwo) : headToHeadRunner.FindWinner(playerTwo, playerOne);
-                matchHelper.IncrementWinnerCounter(winner);
+                matchScoreBoard.IncrementPlayerWins(winner);
 
                 playerOneFirst = !playerOneFirst;
             }
 
-            if (matchHelper.PlayerOneCounter == matchHelper.PlayerTwoCounter)
+            if (matchScoreBoard.IsDraw())
             {
-                matchHelper.IncrementWinnerCounter(headToHeadRunner.FindWinner(playerOne, playerTwo));
+                matchScoreBoard.IncrementPlayerWins(headToHeadRunner.FindWinner(playerOne, playerTwo));
             }
 
             return new MatchResult
                    {
-                       Loser = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(matchHelper.GetLoser()),
-                       Winner = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(matchHelper.GetWinner()),
-                       LoserWins = matchHelper.GetLoserCounter(),
-                       WinnerWins = matchHelper.GetWinnerCounter(),
+                       Loser = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(matchScoreBoard.GetLoser()),
+                       Winner = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(matchScoreBoard.GetWinner()),
+                       LoserWins = matchScoreBoard.GetLoserWins(),
+                       WinnerWins = matchScoreBoard.GetWinnerWins(),
                        TimePlayed = DateTime.Now
                    };
         }

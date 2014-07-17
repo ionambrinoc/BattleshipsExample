@@ -23,26 +23,30 @@
         public void PlayerOneCounter_incremented_when_playerOne_wins()
         {
             // When
-            matchScoreBoard.IncrementWinnerCounter(playerOne);
-            var playerOneCounter = matchScoreBoard.PlayerOneCounter;
+            matchScoreBoard.IncrementPlayerWins(playerOne);
+            var winner = matchScoreBoard.GetWinner();
+            var winnerWins = matchScoreBoard.GetWinnerWins();
 
             // Then
-            playerOneCounter.Should().Be(1);
+            winner.Should().Be(playerOne);
+            winnerWins.Should().Be(1);
         }
 
         [Test]
         public void PlayerTwoCounter_incremented_when_playerTwo_wins()
         {
             // When
-            matchScoreBoard.IncrementWinnerCounter(playerTwo);
-            var playerTwoCounter = matchScoreBoard.PlayerTwoCounter;
+            matchScoreBoard.IncrementPlayerWins(playerTwo);
+            var winner = matchScoreBoard.GetWinner();
+            var winnerWins = matchScoreBoard.GetWinnerWins();
 
             // Then
-            playerTwoCounter.Should().Be(1);
+            winner.Should().Be(playerTwo);
+            winnerWins.Should().Be(1);
         }
 
         [Test]
-        public void Winner_is_player_with_greatest_counter()
+        public void Winner_is_player_with_greatest_win_count()
         {
             // When
             RunMatchWithPlayerOneAsWinner();
@@ -53,7 +57,7 @@
         }
 
         [Test]
-        public void Loser_is_player_with_smallest_counter()
+        public void Loser_is_player_with_smallest_win_count()
         {
             // When
             RunMatchWithPlayerOneAsWinner();
@@ -68,28 +72,55 @@
         {
             // When
             RunMatchWithPlayerOneAsWinner();
-            var winnerCounter = matchScoreBoard.GetWinnerCounter();
+            var winnerCounter = matchScoreBoard.GetWinnerWins();
 
             // Then
             winnerCounter.Should().Be(2);
         }
 
         [Test]
-        public void Loser_counter_is_the_greatest_counter()
+        public void Loser_counter_is_the_smallest_counter()
         {
             // When
             RunMatchWithPlayerOneAsWinner();
-            var loserCounter = matchScoreBoard.GetLoserCounter();
+            var loserCounter = matchScoreBoard.GetLoserWins();
 
             // Then
             loserCounter.Should().Be(1);
         }
 
+        [Test]
+        public void Its_a_draw_if_its_a_draw()
+        {
+            // When
+            SetUpDraw();
+            var isDraw = matchScoreBoard.IsDraw();
+
+            // Then
+            isDraw.Should().Be(true);
+        }
+
+        [Test]
+        public void Not_a_draw_if_not_a_draw()
+        {
+            RunMatchWithPlayerOneAsWinner();
+            var isDraw = matchScoreBoard.IsDraw();
+
+            // Then
+            isDraw.Should().Be(false);
+        }
+
         private void RunMatchWithPlayerOneAsWinner()
         {
-            matchScoreBoard.IncrementWinnerCounter(playerOne);
-            matchScoreBoard.IncrementWinnerCounter(playerOne);
-            matchScoreBoard.IncrementWinnerCounter(playerTwo);
+            matchScoreBoard.IncrementPlayerWins(playerOne);
+            matchScoreBoard.IncrementPlayerWins(playerOne);
+            matchScoreBoard.IncrementPlayerWins(playerTwo);
+        }
+
+        private void SetUpDraw()
+        {
+            matchScoreBoard.IncrementPlayerWins(playerOne);
+            matchScoreBoard.IncrementPlayerWins(playerTwo);
         }
     }
 }
