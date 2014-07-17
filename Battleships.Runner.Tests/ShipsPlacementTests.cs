@@ -9,6 +9,7 @@
 
     internal class ShipsPlacementTests
     {
+        private List<IShip> ships;
         private ShipsPlacement shipsPlacement;
         private IBattleshipsPlayer player;
         private IShipFactory shipFactory;
@@ -24,9 +25,10 @@
         public void Ships_placement_is_invalid_if_overlapping_ships_provided()
         {
             // Given
-            var ship = FakeShip('F', 6, 'F', 10);
-            SetUpShip(ship);
-            FakeCallsTo(new List<IShip> { ship });
+            ships = new List<IShip>();
+            var overlappingShip = FakeShip('F', 6, 'F', 10);
+            AddToStandardShips(overlappingShip);
+            FakeCalls();
 
             //When
             var valid = shipsPlacement.IsValid();
@@ -36,12 +38,29 @@
         }
 
         [Test]
+        public void Ships_placement_is_invalid_if_adjacent_ships_provided()
+        {
+            // Given
+            ships = new List<IShip>();
+            var adjacentShip = FakeShip('H', 6, 'H', 10);
+            AddToStandardShips(adjacentShip);
+            FakeCalls();
+
+            //When
+            var valid = shipsPlacement.IsValid();
+
+            // Then
+            valid.Should().BeFalse("Should be invalid as adjacent ships were provided");
+        }
+
+        [Test]
         public void Ships_placement_is_invalid_if_not_all_ships_provided()
         {
             // Given
-            var ship = FakeShip('A', 1, 'A', 3);
-            SetUpShip(ship);
-            FakeCallsTo(new List<IShip> { ship });
+            ships = new List<IShip>();
+            var ship = FakeShip('A', 1, 'A', 5);
+            AddToShips(ship);
+            FakeCalls();
 
             // When
             var valid = shipsPlacement.IsValid();
@@ -54,13 +73,14 @@
         public void Ships_placement_is_invalid_if_too_many_ships_provided()
         {
             // Given
+            ships = new List<IShip>();
             var shipOne = FakeShip('J', 1, 'J', 5);
-            SetUpShip(shipOne);
+            AddToStandardShips(shipOne);
 
             var shipTwo = FakeShip('H', 4, 'H', 8);
-            SetUpShip(shipTwo);
+            AddToStandardShips(shipTwo);
 
-            FakeCallsTo(new List<IShip> { shipOne, shipTwo });
+            FakeCalls();
 
             //When
             var valid = shipsPlacement.IsValid();
@@ -70,31 +90,44 @@
         }
 
         [Test]
-        public void Ships_placement_is_invalid_if_ship_that_is_off_the_board_is_provided()
+        public void Ships_placement_is_invalid_if_ships_provided_with_wrong_combinations_of_lengths()
         {
             // Given
-            var ship = FakeShip('J', 0, 'J', 4);
-            SetUpShip(ship);
-            ShipIsInvalid(ship);
+            ships = new List<IShip>();
+            var shipOne = FakeShip('A', 1, 'D', 1);
+            AddToShips(shipOne, true, 4);
 
-            FakeCallsTo(new List<IShip> { ship });
+            var shipTwo = FakeShip('A', 3, 'A', 4);
+            AddToShips(shipTwo, true, 2);
+
+            var shipThree = FakeShip('E', 9, 'G', 9);
+            AddToShips(shipThree, true, 3);
+
+            var shipFour = FakeShip('D', 5, 'D', 7);
+            AddToShips(shipFour, true, 3);
+
+            var shipFive = FakeShip('H', 5, 'H', 7);
+            AddToShips(shipFive, true, 3);
+
+            FakeCalls();
 
             //When
             var valid = shipsPlacement.IsValid();
 
             // Then
-            valid.Should().BeFalse("Should be invalid as a ship that is off the board was provided");
+            valid.Should().BeFalse("Should be invalid as too many ships were provided");
         }
 
         [Test]
         public void Ships_placement_is_invalid_if_invalid_ship_provided()
         {
             // Given
-            var ship = FakeShip('J', 1, 'J', 6);
-            SetUpShip(ship);
-            ShipIsInvalid(ship);
+            ships = new List<IShip>();
+            var invalidShip = FakeShip('J', 1, 'J', 6);
+            AddToShips(invalidShip);
+            ShipIsInvalid(invalidShip);
 
-            FakeCallsTo(new List<IShip> { ship });
+            FakeCalls();
 
             //When
             var valid = shipsPlacement.IsValid();
@@ -140,11 +173,13 @@
         public void Shot_on_horizontal_ship_is_hit()
         {
             // Given
-            var ship = FakeShip('E', 1, 'E', 3);
-            FakeCallsTo(new List<IShip> { ship });
+            ships = new List<IShip>();
+            var horizontalShip = FakeShip('E', 1, 'E', 3);
+            AddToShips(horizontalShip);
+            FakeCalls();
 
             var target = new GridSquare('E', 1);
-            TargetHitsShip(target, ship);
+            TargetHitsShip(target, horizontalShip);
 
             // When
             var isHit = shipsPlacement.IsHit(target);
@@ -157,11 +192,13 @@
         public void Shot_on_vertical_ship_is_hit()
         {
             // Given
-            var ship = FakeShip('A', 1, 'C', 1);
-            FakeCallsTo(new List<IShip> { ship });
+            ships = new List<IShip>();
+            var verticalShip = FakeShip('A', 1, 'C', 1);
+            AddToShips(verticalShip);
+            FakeCalls();
 
             var target = new GridSquare('B', 1);
-            TargetHitsShip(target, ship);
+            TargetHitsShip(target, verticalShip);
 
             // When
             var isHit = shipsPlacement.IsHit(target);
@@ -174,8 +211,10 @@
         public void Shot_not_on_ship_is_miss()
         {
             // Given
+            ships = new List<IShip>();
             var ship = FakeShip('G', 1, 'G', 3);
-            FakeCallsTo(new List<IShip> { ship });
+            AddToShips(ship);
+            FakeCalls();
 
             // When
             var isHit = shipsPlacement.IsHit(new GridSquare('C', 1));
@@ -188,8 +227,10 @@
         public void Shot_in_the_middle_of_ship_hits()
         {
             // Given
+            ships = new List<IShip>();
             var ship = FakeShip('C', 1, 'C', 3);
-            FakeCallsTo(new List<IShip> { ship });
+            AddToShips(ship);
+            FakeCalls();
 
             var target = new GridSquare('C', 2);
             TargetHitsShip(target, ship);
@@ -205,8 +246,10 @@
         public void If_set_already_contains_cell_it_is_not_readded()
         {
             // Given
+            ships = new List<IShip>();
             var ship = FakeShip('A', 1, 'A', 3);
-            FakeCallsTo(new List<IShip> { ship });
+            AddToShips(ship);
+            FakeCalls();
 
             for (var i = 0; i < 17; i++)
             {
@@ -227,50 +270,49 @@
 
         private void SetUp17GridCells()
         {
-            var ships = new List<IShip>();
+            ships = new List<IShip>();
             for (var i = 0; i < 17; i++)
             {
                 var column = i;
                 var ship = FakeShip('A', column, 'B', column);
-                ships.Add(ship);
-                SetUpShip(ship, true, 2);
+                AddToShips(ship, true, 2);
                 A.CallTo(() => ship.IsTargetInShip(new GridSquare('A', column))).Returns(true);
             }
 
-            var shipPos = A.CollectionOfFake<IShipPosition>(17);
-            A.CallTo(() => player.GetShipPositions()).Returns(shipPos);
-
-            A.CallTo(() => shipFactory.GetShips(shipPos)).Returns(ships);
+            FakeCalls();
         }
 
-        private void FakeCallsTo(List<IShip> ship)
+        private void AddToStandardShips(IShip ship, bool valid = true, int length = 5)
         {
+            AddToShips(ship, valid, length);
+
             var shipOne = FakeShip('A', 1, 'D', 1);
-            SetUpShip(shipOne, true, 4);
+            AddToShips(shipOne, true, 4);
 
             var shipTwo = FakeShip('A', 3, 'A', 4);
-            SetUpShip(shipTwo, true, 2);
+            AddToShips(shipTwo, true, 2);
 
-            var shipThree = FakeShip('D', 9, 'F', 9);
-            SetUpShip(shipThree, true, 3);
+            var shipThree = FakeShip('E', 9, 'G', 9);
+            AddToShips(shipThree, true, 3);
 
             var shipFour = FakeShip('D', 5, 'D', 7);
-            SetUpShip(shipFour, true, 3);
+            AddToShips(shipFour, true, 3);
+        }
 
-            var listOfShips = new List<IShip> { shipOne, shipTwo, shipThree, shipFour };
-            listOfShips.AddRange(ship);
-
+        private void FakeCalls()
+        {
             var shipPos = A.CollectionOfFake<IShipPosition>(5);
             A.CallTo(() => player.GetShipPositions()).Returns(shipPos);
 
-            A.CallTo(() => shipFactory.GetShips(shipPos)).Returns(listOfShips);
+            A.CallTo(() => shipFactory.GetShips(shipPos)).Returns(ships);
             shipsPlacement = new ShipsPlacement(player, shipFactory);
         }
 
-        private void SetUpShip(IShip ship, bool valid = true, int length = 5)
+        private void AddToShips(IShip ship, bool valid = true, int length = 5)
         {
             SetShipValidity(ship, valid);
             ShipIsOfLength(ship, length);
+            ships.Add(ship);
         }
 
         private IShip FakeShip(char startRow, int startColumn, char endRow, int endColumn)
