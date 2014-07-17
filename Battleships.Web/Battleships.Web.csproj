@@ -268,7 +268,7 @@
     </None>
     <Content Include="Content\Players\index.less" />
     <Content Include="Content\MatchResults\index.less" />
-    <None Include="Content\site.less" />
+    <Content Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
