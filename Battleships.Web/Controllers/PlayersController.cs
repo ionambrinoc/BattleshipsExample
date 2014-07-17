@@ -11,14 +11,14 @@
     {
         private readonly IPlayerRecordsRepository playerRecordsRepository;
         private readonly IHeadToHeadRunner headToHeadRunner;
-        private readonly IGameResultsRepository gameResultsRepository;
+        private readonly IMatchResultsRepository matchResultsRepository;
 
-        public PlayersController(IPlayerRecordsRepository playerRecordsRepository, IGameResultsRepository gameResultsRepository,
+        public PlayersController(IPlayerRecordsRepository playerRecordsRepository, IMatchResultsRepository matchResultsRepository,
                                  IHeadToHeadRunner headToHeadRunner)
         {
             this.playerRecordsRepository = playerRecordsRepository;
             this.headToHeadRunner = headToHeadRunner;
-            this.gameResultsRepository = gameResultsRepository;
+            this.matchResultsRepository = matchResultsRepository;
         }
 
         [HttpGet]
@@ -34,14 +34,16 @@
             var battleshipsPlayerTwo = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerTwoId);
             var winner = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
             var loser = winner == battleshipsPlayerOne ? battleshipsPlayerTwo : battleshipsPlayerOne;
-            var gameResult = new GameResult
-                             {
-                                 WinnerId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(winner).Id,
-                                 LoserId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(loser).Id,
-                                 TimePlayed = DateTime.Now
-                             };
-            gameResultsRepository.Add(gameResult);
-            gameResultsRepository.SaveContext();
+            var matchResult = new MatchResult
+                              {
+                                  WinnerId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(winner).Id,
+                                  LoserId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(loser).Id,
+                                  WinnerWins = 1,
+                                  LoserWins = 0,
+                                  TimePlayed = DateTime.Now
+                              };
+            matchResultsRepository.Add(matchResult);
+            matchResultsRepository.SaveContext();
             return Json(winner.Name);
         }
     }

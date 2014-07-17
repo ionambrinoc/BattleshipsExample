@@ -27,7 +27,7 @@ public static partial class MVC
 {
     public static Battleships.Web.Controllers.AccountController Account = new Battleships.Web.Controllers.T4MVC_AccountController();
     public static Battleships.Web.Controllers.AddPlayerController AddPlayer = new Battleships.Web.Controllers.T4MVC_AddPlayerController();
-    public static Battleships.Web.Controllers.GameResultsController GameResults = new Battleships.Web.Controllers.T4MVC_GameResultsController();
+    public static Battleships.Web.Controllers.MatchResultsController MatchResults = new Battleships.Web.Controllers.T4MVC_MatchResultsController();
     public static Battleships.Web.Controllers.HeadToHeadController HeadToHead = new Battleships.Web.Controllers.T4MVC_HeadToHeadController();
     public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
     public static Battleships.Web.Controllers.PlayersController Players = new Battleships.Web.Controllers.T4MVC_PlayersController();
@@ -98,8 +98,8 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class GameResults {
-            private const string URLPATH = "~/Content/GameResults";
+        public static class MatchResults {
+            private const string URLPATH = "~/Content/MatchResults";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string index_less = Url("index.less");

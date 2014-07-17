@@ -28,7 +28,7 @@
         private HttpPostedFileBase fakeFile;
         private IBattleshipsPlayer battleshipsPlayer1;
         private IBattleshipsPlayer battleshipsPlayer2;
-        private IGameResultsRepository fakeGameResultsRepository;
+        private IMatchResultsRepository fakeMatchResultsRepository;
 
         [SetUp]
         public void SetUp()
@@ -38,8 +38,8 @@
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
-            fakeGameResultsRepository = A.Fake<IGameResultsRepository>();
-            controller = new PlayersController(fakePlayerRecordsRepository, fakeGameResultsRepository, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
+            controller = new PlayersController(fakePlayerRecordsRepository, fakeMatchResultsRepository, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
 
             playerRecordOne = SetUpPlayerRecord(1, "Kitten", FileNameOne);
             playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo", FileNameTwo);
@@ -73,8 +73,8 @@
             controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
             // Then
-            A.CallTo(() => fakeGameResultsRepository.Add(A<GameResult>.That.Matches(g => g.WinnerId == playerRecordOne.Id && g.LoserId == playerRecordTwo.Id))).MustHaveHappened();
-            A.CallTo(() => fakeGameResultsRepository.SaveContext()).MustHaveHappened();
+            A.CallTo(() => fakeMatchResultsRepository.Add(A<MatchResult>.That.Matches(g => g.WinnerId == playerRecordOne.Id && g.LoserId == playerRecordTwo.Id))).MustHaveHappened();
+            A.CallTo(() => fakeMatchResultsRepository.SaveContext()).MustHaveHappened();
         }
 
         private PlayerRecord SetUpPlayerRecord(int id, string name, string fileName)

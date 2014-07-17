@@ -4,7 +4,7 @@
 
     public interface IHeadToHeadRunner
     {
-        IBattleshipsPlayer FindWinner(IBattleshipsPlayer player1, IBattleshipsPlayer player2);
+        IBattleshipsPlayer FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo);
     }
 
     public class HeadToHeadRunner : IHeadToHeadRunner
