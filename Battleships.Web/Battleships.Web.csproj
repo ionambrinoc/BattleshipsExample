@@ -273,6 +273,7 @@
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
     <Content Include="Components\jquery\dist\jquery.min.map" />
+    <Content Include="Images\Explodingbattleship.gif" />
     <Content Include="Images\green-loading-spinner.gif" />
     <Content Include="Images\remove.png" />
     <Content Include="Scripts\HeadToHead\play.js" />
