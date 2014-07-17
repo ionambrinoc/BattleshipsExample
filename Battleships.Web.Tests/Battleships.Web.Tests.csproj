@@ -116,10 +116,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="Controllers\AccountControllerTests.cs" />
     <Compile Include="Controllers\PlayersControllerTests.cs" />
-    <Compile Include="Controllers\GameResultsControllerTest.cs" />
+    <Compile Include="Controllers\MatchResultsControllerTest.cs" />
     <Compile Include="Controllers\AddPlayerControllerTests.cs" />
     <Compile Include="Controllers\HeadToHeadControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

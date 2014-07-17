@@ -12,15 +12,15 @@
     public class HeadToHeadRunnerTests
     {
         private HeadToHeadRunner runner;
-        private IBattleshipsPlayer player1;
-        private IBattleshipsPlayer player2;
+        private IBattleshipsPlayer playerOne;
+        private IBattleshipsPlayer playerTwo;
         private IShipsPlacementFactory shipsPlacementFactory;
 
         [SetUp]
         public void SetUp()
         {
-            player1 = A.Fake<IBattleshipsPlayer>();
-            player2 = A.Fake<IBattleshipsPlayer>();
+            playerOne = A.Fake<IBattleshipsPlayer>();
+            playerTwo = A.Fake<IBattleshipsPlayer>();
             shipsPlacementFactory = A.Fake<IShipsPlacementFactory>();
             runner = new HeadToHeadRunner(shipsPlacementFactory);
         }
@@ -28,18 +28,18 @@
         [Test]
         public void Two_consecutive_games_do_not_interfere()
         {
-            PlayerIsValid(player1);
-            PlayerIsValid(player2);
+            PlayerIsValid(playerOne);
+            PlayerIsValid(playerTwo);
 
-            ShipsNotAllHit(player1);
-            ShipsAllHit(player2);
+            ShipsNotAllHit(playerOne);
+            ShipsAllHit(playerTwo);
             var firstWinner = FindWinner();
-            firstWinner.Should().Be(player1);
+            firstWinner.Should().Be(playerOne);
 
-            ShipsNotAllHit(player2);
-            ShipsAllHit(player1);
+            ShipsNotAllHit(playerTwo);
+            ShipsAllHit(playerOne);
             var secondWinner = FindWinner();
-            secondWinner.Should().Be(player2);
+            secondWinner.Should().Be(playerTwo);
         }
 
         [TestCaseSource("Games")]
@@ -60,14 +60,14 @@
         public void Player_two_wins_if_both_invalid()
         {
             // Given
-            PlayerIsInvalid(player1);
-            PlayerIsInvalid(player2);
+            PlayerIsInvalid(playerOne);
+            PlayerIsInvalid(playerTwo);
 
             // When
             var winner = FindWinner();
 
             // Then
-            winner.Should().Be(player2);
+            winner.Should().Be(playerTwo);
         }
 
         [TestCaseSource("Games")]
@@ -134,9 +134,9 @@
             switch (number)
             {
                 case 1:
-                    return player1;
+                    return playerOne;
                 case 2:
-                    return player2;
+                    return playerTwo;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -144,7 +144,7 @@
 
         private IBattleshipsPlayer FindWinner()
         {
-            return runner.FindWinner(player1, player2);
+            return runner.FindWinner(playerOne, playerTwo);
         }
 
         private Constraint IsPlayer(int number)

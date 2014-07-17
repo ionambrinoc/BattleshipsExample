@@ -1,0 +1,30 @@
+﻿@using Battleships.Runner.Models
+@model IEnumerable<MatchResult>
+
+@Styles.Render("~/bundles/styles/matchresults/index")
+
+@{
+    ViewBag.Title = "Match Results Log";
+}
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Winner</th>
+            <th>Loser</th>
+            <th>Score</th>
+            <th>Time Played</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var matchResult in Model) {
+            <tr class="tableContent">
+                <td>@matchResult.Winner.Name</td>
+                <td>@matchResult.Loser.Name</td>
+                <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
+                <td>@matchResult.TimePlayed</td>
+            </tr>
+        }
+    </tbody>
+</table>

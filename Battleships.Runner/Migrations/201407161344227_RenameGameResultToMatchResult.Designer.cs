@@ -7,13 +7,13 @@ namespace Battleships.Runner.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class FixGameResultsForeignKey : IMigrationMetadata
+    public sealed partial class RenameGameResultToMatchResult : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FixGameResultsForeignKey));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RenameGameResultToMatchResult));
         
         string IMigrationMetadata.Id
         {
-            get { return "201407161104299_FixGameResultsForeignKey"; }
+            get { return "201407161344227_RenameGameResultToMatchResult"; }
         }
         
         string IMigrationMetadata.Source
