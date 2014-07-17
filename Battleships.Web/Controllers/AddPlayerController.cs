@@ -41,15 +41,15 @@
             try
             {
                 var newPlayer = playersUploadService.GetBattleshipsPlayerFromHttpPostedFileBase(model.File);
-                var userWithGivenBotName = playerRecordsRepository.UserWithGivenBotName(newPlayer.Name);
+                var userWithGivenPlayerName = playerRecordsRepository.UserWithGivenPlayerName(newPlayer.Name);
 
-                if (userWithGivenBotName == User.Identity.Name)
+                if (userWithGivenPlayerName == User.Identity.Name)
                 {
-                    OverwriteBotFileInitialise(newPlayer.Name, model, model.File);
+                    OverwritePlayerFileInitialise(newPlayer.Name, model, model.File);
                     return View(model);
                 }
 
-                if (userWithGivenBotName != "")
+                if (userWithGivenPlayerName != "")
                 {
                     ModelState.AddModelError("", "Battleships player name '" + newPlayer.Name + "' is already taken.");
                     return View(model);
@@ -81,13 +81,13 @@
             return RedirectToAction(MVC.AddPlayer.Index());
         }
 
-        private void OverwriteBotFileInitialise(string botName, AddPlayerModel model, HttpPostedFileBase playerFile)
+        private void OverwritePlayerFileInitialise(string playerName, AddPlayerModel model, HttpPostedFileBase playerFile)
         {
             model.CanOverwrite = true;
             model.TemporaryPath = Path.GetTempFileName();
             model.RealPath = playersUploadService.GenerateFullPath(playerFile, GetUploadDirectoryPath());
-            model.FileName = botName + ".dll";
-            model.BotName = botName;
+            model.FileName = playerName + ".dll";
+            model.PlayerName = playerName;
             System.IO.File.Delete(model.TemporaryPath);
             playerFile.SaveAs(model.TemporaryPath);
         }

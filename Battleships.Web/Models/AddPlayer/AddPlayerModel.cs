@@ -11,7 +11,7 @@
 
         public string FileName { get; set; }
 
-        public string BotName { get; set; }
+        public string PlayerName { get; set; }
 
         public bool CanOverwrite { get; set; }
 

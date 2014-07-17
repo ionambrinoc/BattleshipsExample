@@ -89,7 +89,7 @@
         {
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
-            A.CallTo(() => fakePlayerRecordRepository.UserWithGivenBotName(fakeBattleshipsPlayer.Name)).Returns(UserName);
+            A.CallTo(() => fakePlayerRecordRepository.UserWithGivenPlayerName(fakeBattleshipsPlayer.Name)).Returns(UserName);
 
             // When
             var result = controller.Index(model);
@@ -104,7 +104,7 @@
         {
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
-            A.CallTo(() => fakePlayerRecordRepository.UserWithGivenBotName(fakeBattleshipsPlayer.Name)).Returns("otherUser");
+            A.CallTo(() => fakePlayerRecordRepository.UserWithGivenPlayerName(fakeBattleshipsPlayer.Name)).Returns("otherUser");
 
             // When
             var result = controller.Index(model);
@@ -120,7 +120,7 @@
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
             A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord("testUser", fakeFile, A<string>.Ignored)).Throws(new Exception());
-            A.CallTo(() => fakePlayerRecordRepository.UserWithGivenBotName(fakeBattleshipsPlayer.Name)).Returns("");
+            A.CallTo(() => fakePlayerRecordRepository.UserWithGivenPlayerName(fakeBattleshipsPlayer.Name)).Returns("");
 
             // When
             var result = controller.Index(model);
@@ -135,7 +135,7 @@
         {
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
-            A.CallTo(() => fakePlayerRecordRepository.UserWithGivenBotName(fakeBattleshipsPlayer.Name)).Returns("");
+            A.CallTo(() => fakePlayerRecordRepository.UserWithGivenPlayerName(fakeBattleshipsPlayer.Name)).Returns("");
             A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord("testUser", fakeFile, A<string>.Ignored)).Returns(fakePlayerRecord);
 
             // When

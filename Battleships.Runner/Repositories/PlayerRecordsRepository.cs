@@ -8,7 +8,7 @@
     {
         PlayerRecord GetPlayerRecordById(int id);
         bool GivenFileNameExists(string fileName);
-        string UserWithGivenBotName(string botName);
+        string UserWithGivenPlayerName(string botName);
     };
 
     [ExcludeFromCodeCoverage]
@@ -26,7 +26,7 @@
             return Entities.AsQueryable().FirstOrDefault(x => x.FileName == fileName) != null;
         }
 
-        public string UserWithGivenBotName(string botName)
+        public string UserWithGivenPlayerName(string botName)
         {
             var playerRecord = Entities.AsQueryable().FirstOrDefault(x => x.Name == botName);
             if (playerRecord != null)
