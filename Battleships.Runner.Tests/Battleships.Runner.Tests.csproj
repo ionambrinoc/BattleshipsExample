@@ -132,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Fakes Include="Fakes\EntityFramework.SqlServerCompact.fakes" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
