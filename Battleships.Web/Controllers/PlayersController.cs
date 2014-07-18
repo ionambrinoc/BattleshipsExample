@@ -1,11 +1,11 @@
 ﻿namespace Battleships.Web.Controllers
 {
-    using Battleships.Runner;
-    using Battleships.Runner.Models;
-    using Battleships.Runner.Repositories;
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using Battleships.Runner;
+    using Battleships.Runner.Models;
+    using Battleships.Runner.Repositories;
 
     public partial class PlayersController : Controller
     {
@@ -32,8 +32,8 @@
         {
             var battleshipsPlayerOne = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerOneId);
             var battleshipsPlayerTwo = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerTwoId);
-            var winnerAndWinType = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
-            var winner = winnerAndWinType.Winner;
+            var winnerResult = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
+            var winner = winnerResult.Winner;
             var loser = winner == battleshipsPlayerOne ? battleshipsPlayerTwo : battleshipsPlayerOne;
             var matchResult = new MatchResult
                               {
@@ -45,7 +45,7 @@
                               };
             matchResultsRepository.Add(matchResult);
             matchResultsRepository.SaveContext();
-            return Json(new { winnerName = winner.Name, winType = (int)winnerAndWinType.WinType });
+            return Json(new { winnerName = winner.Name, resultType = (int)winnerResult.ResultType });
         }
     }
 }

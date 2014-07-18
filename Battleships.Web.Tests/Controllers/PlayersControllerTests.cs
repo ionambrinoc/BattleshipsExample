@@ -50,7 +50,7 @@
             SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayer1);
             SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayer2);
 
-            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(new WinnerAndWinType(battleshipsPlayer1, WinTypes.Default));
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(new WinnerResult(battleshipsPlayer1, ResultType.Default));
             A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
         }
 
@@ -66,7 +66,7 @@
             // Then
             Assert.IsInstanceOf<JsonResult>(result);
             result.GetProperty("winnerName").Should().Be("Kitten");
-            result.GetProperty("winType").Should().Be(0);
+            result.GetProperty("resultType").Should().Be((int)ResultType.Default);
         }
 
         [Test]

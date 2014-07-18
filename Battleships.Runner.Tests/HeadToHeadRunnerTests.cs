@@ -87,49 +87,48 @@
         }
 
         [Test]
-        public void Player_loses_on_timeout_and_winType_is_timeout()
+        public void Player_loses_on_timeout_and_ResultType_is_timeout()
         {
             // Given
-            // This will cause one of the players to timeout, since neither can win with this strategy, and invalid moves are not possible
-            A.CallTo(() => player1.SelectTarget()).Returns(new GridSquare('A', 1));
-            A.CallTo(() => player2.SelectTarget()).Returns(new GridSquare('A', 1));
-            A.CallTo(() => player1.HasTimedOut()).Returns(true);
-            PlayerIsValid(player1);
-            PlayerIsValid(player2);
+            A.CallTo(() => playerOne.SelectTarget()).Returns(new GridSquare('A', 1));
+            A.CallTo(() => playerTwo.SelectTarget()).Returns(new GridSquare('A', 1));
+            A.CallTo(() => playerOne.HasTimedOut()).Returns(true);
+            PlayerIsValid(playerOne);
+            PlayerIsValid(playerTwo);
 
             //When
-            var result = runner.FindWinner(player1, player2).WinType;
+            var result = runner.FindWinner(playerOne, playerTwo).ResultType;
 
             //Then
-            Assert.AreEqual(result, WinTypes.Timeout);
+            Assert.AreEqual(result, ResultType.Timeout);
         }
 
         [Test]
-        public void Player_loses_on_invalid_move_and_winType_is_invalid()
+        public void When_invalid_ship_positions_occur_the_ResultType_is_ShipPostionInvalid()
         {
             //Given
-            PlayerIsInvalid(player1);
+            PlayerIsInvalid(playerOne);
 
             //When
-            var result = runner.FindWinner(player1, player2).WinType;
+            var result = runner.FindWinner(playerOne, playerTwo).ResultType;
 
             //Then
-            Assert.AreEqual(result, WinTypes.Invalid);
+            Assert.AreEqual(result, ResultType.ShipPositionsInvalid);
         }
 
         [Test]
-        public void A_normal_game_returns_winType_as_default()
+        public void A_normal_game_returns_ResultType_as_default()
         {
             //Given
-            PlayerIsValid(player1);
-            PlayerIsValid(player2);
-            ShipsAllHit(player1);
+            PlayerIsValid(playerOne);
+            PlayerIsValid(playerTwo);
+            ShipsAllHit(playerOne);
 
             //when
-            var result = runner.FindWinner(player1, player2).WinType;
+            var result = runner.FindWinner(playerOne, playerTwo).ResultType;
 
             //Then
-            Assert.AreEqual(result, WinTypes.Default);
+            Assert.AreEqual(result, ResultType.Default);
         }
 
         // ReSharper disable once UnusedMember.Local
@@ -187,7 +186,7 @@
 
         private IBattleshipsPlayer FindWinner()
         {
-            return runner.FindWinner(player1, player2).Winner;
+            return runner.FindWinner(playerOne, playerTwo).Winner;
         }
 
         private Constraint IsPlayer(int number)

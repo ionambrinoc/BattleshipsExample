@@ -49,7 +49,7 @@ window.battleships.players.index = (function($, undefined) {
         $('#gameSetup').show();
         $('#loading-spinner').hide();
         $('#winner').hide();
-        $('#winType').hide();
+        $('#resultType').hide();
     }
 
     return {
@@ -62,9 +62,9 @@ window.battleships.players.index = (function($, undefined) {
                         $('#loading-spinner').hide();
                         $("#winner").text(data.winnerName + " wins!").show();
                         if (data.winType === 1) {
-                            $("#winType").text("Opponent timed out!").show();
+                            $("#resultType").text("Opponent timed out!").show();
                         } else if (data.winType === 2) {
-                            $('#winType').text("Opponent's ship placement is invalid!").show();
+                            $('#resultType').text("Opponent's ship placement is invalid!").show();
                         }
                         $('#resetGameButton').show();
                     });

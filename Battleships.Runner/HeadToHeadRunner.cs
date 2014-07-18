@@ -4,7 +4,7 @@
 
     public interface IHeadToHeadRunner
     {
-        WinnerAndWinType FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo);
+        WinnerResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo);
     }
 
     public class HeadToHeadRunner : IHeadToHeadRunner
@@ -16,54 +16,42 @@
             this.shipsPlacementFactory = shipsPlacementFactory;
         }
 
-        public WinnerAndWinType FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
+        public WinnerResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
             var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
             var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
 
             if (!playerOneShipsPlacement.IsValid())
             {
-                return new WinnerAndWinType(playerTwo, WinTypes.Invalid);
+                return new WinnerResult(playerTwo, ResultType.ShipPositionsInvalid);
             }
 
             if (!playerTwoShipsPlacement.IsValid())
             {
-                return new WinnerAndWinType(playerOne, WinTypes.Invalid);
+                return new WinnerResult(playerOne, ResultType.ShipPositionsInvalid);
             }
-
-            while (true)
+            try
             {
-                MakeMove(playerOne, playerTwo, playerTwoShipsPlacement);
+                while (true)
+                {
+                    MakeMove(playerOne, playerTwo, playerTwoShipsPlacement);
 
-                if (playerOne.HasTimedOut())
-                {
-                    return new WinnerAndWinType(playerTwo, WinTypes.Timeout);
-                }
-                if (playerTwo.HasTimedOut())
-                {
-                    return new WinnerAndWinType(playerOne, WinTypes.Timeout);
-                }
+                    if (playerTwoShipsPlacement.AllHit())
+                    {
+                        return new WinnerResult(playerOne, ResultType.Default);
+                    }
 
-                if (playerTwoShipsPlacement.AllHit())
-                {
-                    return new WinnerAndWinType(playerOne, WinTypes.Default);
-                }
+                    MakeMove(playerTwo, playerOne, playerOneShipsPlacement);
 
-                MakeMove(playerTwo, playerOne, playerOneShipsPlacement);
-
-                if (playerTwo.HasTimedOut())
-                {
-                    return new WinnerAndWinType(playerOne, WinTypes.Timeout);
+                    if (playerOneShipsPlacement.AllHit())
+                    {
+                        return new WinnerResult(playerTwo, ResultType.Default);
+                    }
                 }
-                if (playerOne.HasTimedOut())
-                {
-                    return new WinnerAndWinType(playerTwo, WinTypes.Timeout);
-                }
-
-                if (playerOneShipsPlacement.AllHit())
-                {
-                    return new WinnerAndWinType(playerTwo, WinTypes.Default);
-                }
+            }
+            catch (OutOfTimeException e)
+            {
+                return new WinnerResult(e.Winner, ResultType.Timeout);
             }
         }
 
@@ -73,6 +61,19 @@
             var defendingIsHit = defendingShips.IsHit(target);
             attacker.HandleShotResult(target, defendingIsHit);
             defender.HandleOpponentsShot(target);
+            CheckTimeout(attacker, defender);
+        }
+
+        private static void CheckTimeout(IBattleshipsPlayer attacker, IBattleshipsPlayer defender)
+        {
+            if (attacker.HasTimedOut())
+            {
+                throw new OutOfTimeException(defender);
+            }
+            if (defender.HasTimedOut())
+            {
+                throw new OutOfTimeException(attacker);
+            }
         }
     }
 }
