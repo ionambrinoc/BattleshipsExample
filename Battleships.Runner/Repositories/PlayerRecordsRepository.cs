@@ -23,22 +23,12 @@
 
         public bool PlayerNameExists(string botName)
         {
-            var playerRecord = Entities.AsQueryable().FirstOrDefault(x => x.Name == botName);
-            if (playerRecord != null)
-            {
-                return true;
-            }
-            return false;
+            return Entities.AsQueryable().FirstOrDefault(x => x.Name == botName) != null;
         }
 
         public bool PlayerNameExistsForUser(string botName, string userName)
         {
-            var playerRecord = Entities.AsQueryable().FirstOrDefault(x => x.Name == botName);
-            if (playerRecord != null)
-            {
-                return playerRecord.UserName == userName;
-            }
-            return false;
+            return Entities.AsQueryable().FirstOrDefault(x => x.Name == botName) != null;
         }
     }
 }
