@@ -331,6 +331,7 @@
     <Content Include="Components\bootstrap\less\utilities.less" />
     <Content Include="Components\bootstrap\less\variables.less" />
     <Content Include="Components\bootstrap\less\wells.less" />
+    <Content Include="PlayerStore\.create-folder" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
@@ -363,7 +364,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Home\" />
-    <Folder Include="PlayerStore\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
