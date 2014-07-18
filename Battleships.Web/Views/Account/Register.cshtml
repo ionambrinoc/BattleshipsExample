@@ -19,12 +19,12 @@
     </div>
     <div class="form-group">
         <label for="Password">Password: </label>
-        <input id="Password" name="password" class="form-control" type="password" placeholder="" />
+        @Html.PasswordFor(x => x.Password)
         @Html.ValidationMessageFor(m => m.Password)
     </div>
     <div class="form-group">
         <label for="ConfirmPassword">Confirm password: </label>
-        <input id="ConfirmPassword" name="ConfirmPassword" class="form-control" type="password" placeholder="" />
+        @Html.PasswordFor(x => x.ConfirmPassword)
         @Html.ValidationMessageFor(m => m.ConfirmPassword)
     </div>
     <input class="btn" id="submit" type="submit" value="Submit" />

@@ -52,10 +52,10 @@
         public void Run_game_returns_winner_as_json_result()
         {
             //Given
-            playerRecordOne.FileName = "KittenBot1.dll";
-            playerRecordTwo.FileName = "KittenBot2.dll";
-            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot1.dll")).Returns(battleshipsPlayer1);
-            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile("KittenBot2.dll")).Returns(battleshipsPlayer2);
+            playerRecordOne.Name = "KittenBot1";
+            playerRecordTwo.Name = "KittenBot2";
+            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot1")).Returns(battleshipsPlayer1);
+            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot2")).Returns(battleshipsPlayer2);
             A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(battleshipsPlayer1);
             A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
 

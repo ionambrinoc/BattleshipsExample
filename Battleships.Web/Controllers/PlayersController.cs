@@ -29,8 +29,8 @@
         {
             var playerOne = playerRecordsRepository.GetPlayerRecordById(playerOneId);
             var playerTwo = playerRecordsRepository.GetPlayerRecordById(playerTwoId);
-            var battleshipsPlayerOne = playerLoader.GetPlayerFromFile(playerOne.FileName);
-            var battleshipsPlayerTwo = playerLoader.GetPlayerFromFile(playerTwo.FileName);
+            var battleshipsPlayerOne = playerLoader.GetBattleshipsPlayerFromPlayerName(playerOne.Name);
+            var battleshipsPlayerTwo = playerLoader.GetBattleshipsPlayerFromPlayerName(playerTwo.Name);
             var result = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
             return Json(result.Name);
         }

@@ -25,7 +25,7 @@ else {
             <td>
                 @using (Html.BeginForm(MVC.AddPlayer.OverwriteYes(), FormMethod.Post)) {
                     @Html.HiddenFor(model => model.TemporaryPath)
-                    @Html.HiddenFor(model => model.RealPath)
+                    @Html.HiddenFor(model => model.PlayerName)
                     <input class="btn" id="submit" type="submit" value="Yes" />
                 }
             </td>

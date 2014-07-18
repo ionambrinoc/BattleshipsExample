@@ -1,11 +1,12 @@
 ﻿namespace Battleships.Web.Controllers
 {
+    using Battleships.Player;
+    using Battleships.Runner.Exceptions;
     using Battleships.Runner.Repositories;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using System.Configuration;
     using System.IO;
-    using System.Web;
     using System.Web.Mvc;
 
     public partial class AddPlayerController : Controller
@@ -38,58 +39,59 @@
                 return View();
             }
 
+            IBattleshipsPlayer newPlayer;
+
             try
             {
-                var newPlayer = playersUploadService.GetBattleshipsPlayerFromHttpPostedFileBase(model.File);
-                var userWithGivenPlayerName = playerRecordsRepository.UserWithGivenPlayerName(newPlayer.Name);
-
-                if (userWithGivenPlayerName == User.Identity.Name)
-                {
-                    OverwritePlayerFileInitialise(newPlayer.Name, model, model.File);
-                    return View(model);
-                }
-
-                if (userWithGivenPlayerName != "")
-                {
-                    ModelState.AddModelError("", "Battleships player name '" + newPlayer.Name + "' is already taken.");
-                    return View(model);
-                }
-
-                var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.Name, model.File, GetUploadDirectoryPath());
-                playerRecordsRepository.Add(playerRecord);
-                playerRecordsRepository.SaveContext();
+                newPlayer = playersUploadService.LoadBattleshipsPlayerFromFile(model.File);
             }
-            catch
+            catch (InvalidPlayerException)
             {
-                ModelState.AddModelError("", "The given file is not a valid player file.");
+                ModelState.AddModelError("", "Invalid player file.");
                 return View(model);
             }
 
-            return RedirectToAction(MVC.Players.Index());
+            if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
+            {
+                var playerRecord = playersUploadService.SaveFileAndGetPlayerRecord(User.Identity.Name, model.File, GetUploadDirectoryPath(), newPlayer.Name);
+                playerRecordsRepository.Add(playerRecord);
+                playerRecordsRepository.SaveContext();
+                return RedirectToAction(MVC.Players.Index());
+            }
+
+            if (playerRecordsRepository.PlayerNameExistsForUser(newPlayer.Name, User.Identity.Name))
+            {
+                InitialiseModelForOverwritingFile(newPlayer.Name, model);
+                return View(model);
+            }
+
+            ModelState.AddModelError("", "Battleships player name '" + newPlayer.Name + "' is already taken.");
+            return View(model);
         }
 
+        [HttpPost]
         public virtual ActionResult OverwriteYes(AddPlayerModel model)
         {
-            System.IO.File.Delete(model.RealPath);
-            System.IO.File.Move(model.TemporaryPath, model.RealPath);
+            var realPath = playersUploadService.GenerateFullPath(model.PlayerName, GetUploadDirectoryPath());
+            System.IO.File.Delete(realPath);
+            System.IO.File.Move(model.TemporaryPath, realPath);
 
             return RedirectToAction(MVC.Players.Index());
         }
 
+        [HttpPost]
         public virtual ActionResult OverwriteNo()
         {
             return RedirectToAction(MVC.AddPlayer.Index());
         }
 
-        private void OverwritePlayerFileInitialise(string playerName, AddPlayerModel model, HttpPostedFileBase playerFile)
+        private void InitialiseModelForOverwritingFile(string playerName, AddPlayerModel model)
         {
             model.CanOverwrite = true;
             model.TemporaryPath = Path.GetTempFileName();
-            model.RealPath = playersUploadService.GenerateFullPath(playerFile, GetUploadDirectoryPath());
-            model.FileName = playerName + ".dll";
             model.PlayerName = playerName;
             System.IO.File.Delete(model.TemporaryPath);
-            playerFile.SaveAs(model.TemporaryPath);
+            model.File.SaveAs(model.TemporaryPath);
         }
 
         private string GetUploadDirectoryPath()

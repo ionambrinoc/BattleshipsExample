@@ -7,8 +7,8 @@
     public interface IPlayerRecordsRepository : IRepository<PlayerRecord>
     {
         PlayerRecord GetPlayerRecordById(int id);
-        bool GivenFileNameExists(string fileName);
-        string UserWithGivenPlayerName(string botName);
+        bool PlayerNameExists(string botName);
+        bool PlayerNameExistsForUser(string botName, string userName);
     };
 
     [ExcludeFromCodeCoverage]
@@ -21,19 +21,24 @@
             return Entities.AsQueryable().FirstOrDefault(x => x.Id == id);
         }
 
-        public bool GivenFileNameExists(string fileName)
-        {
-            return Entities.AsQueryable().FirstOrDefault(x => x.FileName == fileName) != null;
-        }
-
-        public string UserWithGivenPlayerName(string botName)
+        public bool PlayerNameExists(string botName)
         {
             var playerRecord = Entities.AsQueryable().FirstOrDefault(x => x.Name == botName);
             if (playerRecord != null)
             {
-                return playerRecord.UserName;
+                return true;
             }
-            return "";
+            return false;
+        }
+
+        public bool PlayerNameExistsForUser(string botName, string userName)
+        {
+            var playerRecord = Entities.AsQueryable().FirstOrDefault(x => x.Name == botName);
+            if (playerRecord != null)
+            {
+                return playerRecord.UserName == userName;
+            }
+            return false;
         }
     }
 }

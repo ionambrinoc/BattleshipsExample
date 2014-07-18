@@ -7,10 +7,6 @@
     {
         public string TemporaryPath { get; set; }
 
-        public string RealPath { get; set; }
-
-        public string FileName { get; set; }
-
         public string PlayerName { get; set; }
 
         public bool CanOverwrite { get; set; }
