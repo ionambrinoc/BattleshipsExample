@@ -197,7 +197,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AddPlayerController.cs" />
     <Compile Include="App_Start\StartUp.Auth.cs" />
-    <Compile Include="Controllers\Helpers\ControllerExtensions.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HeadToHeadController.cs" />
@@ -262,12 +261,6 @@
     <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
     <Content Include="Components\respond\dest\respond.min.js" />
     <Content Include="Components\respond\dest\respond.src.js" />
-    <Content Include="Content\AddPlayer\AddPlayer.css">
-      <DependentUpon>AddPlayer.less</DependentUpon>
-    </Content>
-    <Content Include="Content\AddPlayer\AddPlayer.min.css">
-      <DependentUpon>AddPlayer.css</DependentUpon>
-    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -276,9 +269,6 @@
     </None>
     <Content Include="Content\Players\index.less" />
     <Content Include="Content\AddPlayer\AddPlayer.less" />
-    <Content Include="Content\AddPlayer\AddPlayer.css.map">
-      <DependentUpon>AddPlayer.css</DependentUpon>
-    </Content>
     <None Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />

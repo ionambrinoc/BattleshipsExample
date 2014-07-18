@@ -21,14 +21,15 @@
             return Entities.AsQueryable().FirstOrDefault(x => x.Id == id);
         }
 
-        public bool PlayerNameExists(string botName)
+        public bool PlayerNameExists(string playerName)
         {
-            return Entities.AsQueryable().FirstOrDefault(x => x.Name == botName) != null;
+            return Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName) != null;
         }
 
-        public bool PlayerNameExistsForUser(string botName, string userName)
+        public bool PlayerNameExistsForUser(string playerName, string userName)
         {
-            return Entities.AsQueryable().FirstOrDefault(x => x.Name == botName) != null;
+            var playerRecord = Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName);
+            return playerRecord != null && playerRecord.UserName == userName;
         }
     }
 }

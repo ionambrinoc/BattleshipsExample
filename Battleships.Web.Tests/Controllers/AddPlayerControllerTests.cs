@@ -85,7 +85,7 @@
         }
 
         [Test]
-        public void Index_POST_uploading_a_bot_with_botname_this_user_already_has_updates_model_state_and_returns_view()
+        public void Index_POST_uploading_an_existing_bot_belonging_to_the_user_marks_model_as_overwriting_and_returns_view()
         {
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
