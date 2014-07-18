@@ -33,9 +33,8 @@
         [Test]
         public void Selects_next_row_when_reaching_end_of_row()
         {
-            player = new ExamplePlayer();
+            player = new ExamplePlayer { LastTarget = new GridSquare('A', 10) };
 
-            player.LastTarget = new GridSquare('A', 10);
             var secondTarget = player.SelectTarget();
 
             secondTarget.Should().Be(new GridSquare('B', 1));
