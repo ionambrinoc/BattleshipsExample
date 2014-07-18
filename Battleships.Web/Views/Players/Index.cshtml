@@ -11,6 +11,8 @@
     @Html.Hidden("playerTwoId")
 }
 
+@using (Html.BeginForm(MVC.Players.RunLeague(), FormMethod.Post, new { id = "run-league" })) {}
+
 <div id="challenge">
     <div id="gameSetup">
         <div id="firstPlayer" class="player" data-default-text="First player">First player</div>
@@ -19,6 +21,9 @@
         <button id="runGameButton" type="button" class="btn btn-success">
             Fight!
         </button>
+        <button id="runLeagueButton" type="button" class="btn btn-info">
+            Run League
+        </button>
     </div>
 
     <div id="winner"></div>
@@ -26,7 +31,10 @@
     <div id="loading-spinner">
         <img src="../../Images/Explodingbattleship.gif" alt="Loading...">
     </div>
+
 </div>
+
+
 
 
 

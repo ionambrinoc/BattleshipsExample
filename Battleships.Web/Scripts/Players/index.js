@@ -51,6 +51,11 @@ window.battleships.players.index = (function($, undefined) {
         $('#winner').hide();
     }
 
+    function startLeague() {
+        $('#gameSetup').hide();
+        $('#loading-spinner').show();
+    }
+
     return {
         init: function() {
             resetGame();
@@ -65,6 +70,15 @@ window.battleships.players.index = (function($, undefined) {
                 } else {
                     alert("You need two players to start the game.");
                 }
+            });
+
+            $('#runLeagueButton').click(function() {
+                startLeague();
+                $('#run-league').ajaxSubmit(function(data) {
+                    $('#loading-spinner').hide();
+                    $('#winner').text("League Run").show();
+                    $('#resetGameButton').show();
+                });
             });
 
             $('#resetGameButton').on('click', resetGame);

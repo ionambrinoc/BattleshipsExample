@@ -78,6 +78,7 @@ namespace Battleships.Web.Controllers
         {
             public readonly string Index = "Index";
             public readonly string RunGame = "RunGame";
+            public readonly string RunLeague = "RunLeague";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -85,6 +86,7 @@ namespace Battleships.Web.Controllers
         {
             public const string Index = "Index";
             public const string RunGame = "RunGame";
+            public const string RunLeague = "RunLeague";
         }
 
 
@@ -139,6 +141,17 @@ namespace Battleships.Web.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerOneId", playerOneId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerTwoId", playerTwoId);
             RunGameOverride(callInfo, playerOneId, playerTwoId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void RunLeagueOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult RunLeague()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunLeague);
+            RunLeagueOverride(callInfo);
             return callInfo;
         }
 

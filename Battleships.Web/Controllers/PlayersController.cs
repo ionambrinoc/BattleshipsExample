@@ -12,13 +12,15 @@
         private readonly IPlayerRecordsRepository playerRecordsRepository;
         private readonly IHeadToHeadRunner headToHeadRunner;
         private readonly IMatchResultsRepository matchResultsRepository;
+        private readonly ILeagueRunner leagueRunner;
 
         public PlayersController(IPlayerRecordsRepository playerRecordsRepository, IMatchResultsRepository matchResultsRepository,
-                                 IHeadToHeadRunner headToHeadRunner)
+                                 IHeadToHeadRunner headToHeadRunner, ILeagueRunner leagueRunner)
         {
             this.playerRecordsRepository = playerRecordsRepository;
             this.headToHeadRunner = headToHeadRunner;
             this.matchResultsRepository = matchResultsRepository;
+            this.leagueRunner = leagueRunner;
         }
 
         [HttpGet]
@@ -45,6 +47,14 @@
             matchResultsRepository.Add(matchResult);
             matchResultsRepository.SaveContext();
             return Json(winner.Name);
+        }
+
+        [HttpPost]
+        public virtual ActionResult RunLeague()
+        {
+            var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
+            leagueRunner.GetLeagueResults(battleshipsPlayers);
+            return Json("stuff");
         }
     }
 }

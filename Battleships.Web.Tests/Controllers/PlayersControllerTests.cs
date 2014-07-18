@@ -29,6 +29,7 @@
         private IBattleshipsPlayer battleshipsPlayer1;
         private IBattleshipsPlayer battleshipsPlayer2;
         private IMatchResultsRepository fakeMatchResultsRepository;
+        private ILeagueRunner fakeLeagueRunner;
 
         [SetUp]
         public void SetUp()
@@ -39,7 +40,8 @@
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
-            controller = new PlayersController(fakePlayerRecordsRepository, fakeMatchResultsRepository, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            fakeLeagueRunner = A.Fake<ILeagueRunner>();
+            controller = new PlayersController(fakePlayerRecordsRepository, fakeMatchResultsRepository, fakeHeadToHeadRunner, fakeLeagueRunner) { ControllerContext = GetFakeControllerContext() };
 
             playerRecordOne = SetUpPlayerRecord(1, "Kitten", FileNameOne);
             playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo", FileNameTwo);
