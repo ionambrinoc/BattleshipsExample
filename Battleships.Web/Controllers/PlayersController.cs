@@ -1,11 +1,11 @@
 ﻿namespace Battleships.Web.Controllers
 {
-    using System;
-    using System.Linq;
-    using System.Web.Mvc;
     using Battleships.Runner;
     using Battleships.Runner.Models;
     using Battleships.Runner.Repositories;
+    using System;
+    using System.Linq;
+    using System.Web.Mvc;
 
     public partial class PlayersController : Controller
     {
@@ -28,7 +28,7 @@
         }
 
         [HttpPost]
-        public virtual ActionResult RunGame(int playerOneId, int playerTwoId)
+        public virtual JsonResult RunGame(int playerOneId, int playerTwoId)
         {
             var battleshipsPlayerOne = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerOneId);
             var battleshipsPlayerTwo = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerTwoId);

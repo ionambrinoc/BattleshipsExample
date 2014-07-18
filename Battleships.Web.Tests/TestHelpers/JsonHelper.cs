@@ -4,9 +4,9 @@
 
     public static class JsonHelper
     {
-        public static object GetProperty(this ActionResult jsonResult, string propertyName)
+        public static object GetProperty(this JsonResult jsonResult, string propertyName)
         {
-            var data = ((JsonResult)jsonResult).Data;
+            var data = jsonResult.Data;
             var property = data.GetType().GetProperty(propertyName);
             return property != null ? property.GetValue(data) : null;
         }

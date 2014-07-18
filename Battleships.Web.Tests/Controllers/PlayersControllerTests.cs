@@ -50,7 +50,7 @@
             SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayer1);
             SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayer2);
 
-            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(new WinnerResult(battleshipsPlayer1, ResultType.Default));
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(new GameResult(battleshipsPlayer1, ResultType.Default));
             A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
         }
 

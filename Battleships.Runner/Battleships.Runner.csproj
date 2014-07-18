@@ -108,7 +108,7 @@
     <Compile Include="ShipPositionValidator.cs" />
     <Compile Include="ShipsPlacement.cs" />
     <Compile Include="ShipsPlacementFactory.cs" />
-    <Compile Include="WinnerResult.cs" />
+    <Compile Include="GameResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">

@@ -9,9 +9,9 @@
         ShipPositionsInvalid
     };
 
-    public class WinnerResult
+    public class GameResult
     {
-        public WinnerResult(IBattleshipsPlayer winner, ResultType resultType)
+        public GameResult(IBattleshipsPlayer winner, ResultType resultType)
         {
             Winner = winner;
             ResultType = resultType;

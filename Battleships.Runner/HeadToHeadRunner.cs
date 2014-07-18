@@ -4,7 +4,7 @@
 
     public interface IHeadToHeadRunner
     {
-        WinnerResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo);
+        GameResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo);
     }
 
     public class HeadToHeadRunner : IHeadToHeadRunner
@@ -16,19 +16,19 @@
             this.shipsPlacementFactory = shipsPlacementFactory;
         }
 
-        public WinnerResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
+        public GameResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
             var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
             var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
 
             if (!playerOneShipsPlacement.IsValid())
             {
-                return new WinnerResult(playerTwo, ResultType.ShipPositionsInvalid);
+                return new GameResult(playerTwo, ResultType.ShipPositionsInvalid);
             }
 
             if (!playerTwoShipsPlacement.IsValid())
             {
-                return new WinnerResult(playerOne, ResultType.ShipPositionsInvalid);
+                return new GameResult(playerOne, ResultType.ShipPositionsInvalid);
             }
             try
             {
@@ -38,20 +38,20 @@
 
                     if (playerTwoShipsPlacement.AllHit())
                     {
-                        return new WinnerResult(playerOne, ResultType.Default);
+                        return new GameResult(playerOne, ResultType.Default);
                     }
 
                     MakeMove(playerTwo, playerOne, playerOneShipsPlacement);
 
                     if (playerOneShipsPlacement.AllHit())
                     {
-                        return new WinnerResult(playerTwo, ResultType.Default);
+                        return new GameResult(playerTwo, ResultType.Default);
                     }
                 }
             }
             catch (OutOfTimeException e)
             {
-                return new WinnerResult(e.Winner, ResultType.Timeout);
+                return new GameResult(e.Winner, ResultType.Timeout);
             }
         }
 
