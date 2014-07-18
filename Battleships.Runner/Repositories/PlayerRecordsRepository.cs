@@ -28,8 +28,7 @@
 
         public bool PlayerNameExistsForUser(string playerName, string userName)
         {
-            var playerRecord = Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName);
-            return playerRecord != null && playerRecord.UserName == userName;
+            return Entities.AsQueryable().Any(x => x.Name == playerName && x.UserName == userName);
         }
     }
 }
