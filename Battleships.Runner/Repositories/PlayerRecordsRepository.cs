@@ -9,6 +9,8 @@
         PlayerRecord GetPlayerRecordById(int id);
         bool PlayerNameExists(string botName);
         bool PlayerNameExistsForUser(string botName, string userName);
+        PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer);
+        IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId);
     };
 
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
@@ -33,6 +35,17 @@
         public bool PlayerNameExistsForUser(string playerName, string userName)
         {
             return Entities.AsQueryable().Any(x => x.Name == playerName && x.UserName == userName);
+        }
+
+        public PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer)
+        {
+            return Entities.FirstOrDefault(playerRecord => playerRecord.Name == battleshipsPlayer.Name);
+        }
+
+        public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId)
+        {
+            var player = GetPlayerRecordById(playerRecordId);
+            return playerLoader.GetBattleshipsPlayerFromPlayerName(player.Name);
         }
     }
 }
