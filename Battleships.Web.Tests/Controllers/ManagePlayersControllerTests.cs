@@ -44,12 +44,12 @@
         public void Successful_player_delete_redirect_to_manageplayers_index()
         {
             // Given
-            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordByName("testPlayer")).DoesNothing();
+            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(0)).DoesNothing();
             var temporaryPath = Path.GetTempFileName();
-            A.CallTo(() => fakePlayerUploadService.GenerateFullPath("testPlayer", controller.GetUploadDirectoryPath())).Returns(temporaryPath);
+            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(A<string>.Ignored, controller.GetUploadDirectoryPath())).Returns(temporaryPath);
 
             // When
-            var result = controller.DeletePlayer("testPlayer");
+            var result = controller.DeletePlayer(0);
 
             // Then
             Assert.That(result, IsMVC.RedirectTo(MVC.ManagePlayers.Index()));
@@ -59,10 +59,10 @@
         public void Unsuccessful_player_delete_adds_model_error_and_returns_index_view()
         {
             // Given
-            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordByName("testPlayer")).Throws(new Exception());
+            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(0)).Throws(new Exception());
 
             // When
-            var result = controller.DeletePlayer("testPlayer");
+            var result = controller.DeletePlayer(0);
 
             // Then
             Assert.That(controller, HasMVC.ModelLevelErrors());

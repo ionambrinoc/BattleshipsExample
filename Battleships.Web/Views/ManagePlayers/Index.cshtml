@@ -19,7 +19,7 @@
             <td>@player.Name</td>
             <td class ="td-align">
                 @using (Html.BeginForm(MVC.ManagePlayers.DeletePlayer(), FormMethod.Post)) {
-                    @Html.Hidden("playerName", player.Name)
+                    @Html.Hidden("playerId", player.Id)
                     <input class="btn" id="submit" type="submit" value="Delete" />
                 }
             </td>

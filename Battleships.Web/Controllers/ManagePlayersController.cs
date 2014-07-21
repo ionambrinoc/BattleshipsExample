@@ -23,11 +23,12 @@
         }
 
         [HttpPost]
-        public virtual ActionResult DeletePlayer(string playerName)
+        public virtual ActionResult DeletePlayer(int playerId)
         {
+            var playerName = playerRecordsRepository.GetPlayerRecordById(playerId).Name;
             try
             {
-                playerRecordsRepository.DeletePlayerRecordByName(playerName);
+                playerRecordsRepository.DeletePlayerRecordById(playerId);
             }
             catch
             {

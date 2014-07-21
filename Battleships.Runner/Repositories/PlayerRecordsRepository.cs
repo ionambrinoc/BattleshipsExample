@@ -8,13 +8,12 @@
     public interface IPlayerRecordsRepository : IRepository<PlayerRecord>
     {
         PlayerRecord GetPlayerRecordById(int id);
-        PlayerRecord GetPlayerRecordByName(string playerName);
         bool PlayerNameExists(string botName);
         bool PlayerNameExistsForUser(string botName, string userName);
         PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer);
         IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId);
         IEnumerable<PlayerRecord> GetAllForUserName(string userName);
-        void DeletePlayerRecordByName(string playerName);
+        void DeletePlayerRecordById(int id);
     };
 
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
@@ -34,11 +33,6 @@
         public PlayerRecord GetPlayerRecordById(int id)
         {
             return Entities.AsQueryable().FirstOrDefault(x => x.Id == id);
-        }
-
-        public PlayerRecord GetPlayerRecordByName(string playerName)
-        {
-            return Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName);
         }
 
         public bool PlayerNameExists(string playerName)
@@ -67,9 +61,9 @@
             return GetAll().Where(playerRecord => playerRecord.UserName == userName);
         }
 
-        public void DeletePlayerRecordByName(string playerName)
+        public void DeletePlayerRecordById(int id)
         {
-            var playerRecord = GetPlayerRecordByName(playerName);
+            var playerRecord = GetPlayerRecordById(id);
             context.MatchResults.RemoveRange(playerRecord.WonMatchResults.Concat(playerRecord.LostMatchResults));
             context.SaveChanges();
             Entities.Remove(playerRecord);
