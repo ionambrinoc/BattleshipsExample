@@ -64,10 +64,7 @@
 
         public IEnumerable<PlayerRecord> GetAllForUserName(string userName)
         {
-            return from playerRecord in GetAll()
-                where
-                    playerRecord.UserName == userName
-                select playerRecord;
+            return GetAll().Where(playerRecord => playerRecord.UserName == userName);
         }
 
         public void DeletePlayerRecordByName(string playerName)
