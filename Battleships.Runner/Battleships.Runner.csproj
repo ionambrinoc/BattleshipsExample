@@ -95,6 +95,10 @@
     <Compile Include="Migrations\201407161344227_RenameGameResultToMatchResult.Designer.cs">
       <DependentUpon>201407161344227_RenameGameResultToMatchResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201407210933271_RemoveFileNameFromPlayerRecord.cs" />
+    <Compile Include="Migrations\201407210933271_RemoveFileNameFromPlayerRecord.Designer.cs">
+      <DependentUpon>201407210933271_RemoveFileNameFromPlayerRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PlayerRecord.cs" />
     <Compile Include="Models\MatchResult.cs" />
@@ -142,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407161344227_RenameGameResultToMatchResult.resx">
       <DependentUpon>201407161344227_RenameGameResultToMatchResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407210933271_RemoveFileNameFromPlayerRecord.resx">
+      <DependentUpon>201407210933271_RemoveFileNameFromPlayerRecord.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -28,7 +28,7 @@
         public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId)
         {
             var player = GetPlayerRecordById(playerRecordId);
-            return playerLoader.GetPlayerFromFile(player.FileName);
+            return playerLoader.GetPlayerFromFile(player.Name + ".dll");
         }
 
         public PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer)

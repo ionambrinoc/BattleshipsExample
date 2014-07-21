@@ -25,7 +25,7 @@
             file.SaveAs(fullPath);
             battleshipsPlayer = playerLoader.GetPlayerFromFile(fileName);
 
-            return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name, FileName = fileName };
+            return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name };
         }
     }
 }

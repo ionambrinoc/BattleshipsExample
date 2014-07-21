@@ -82,7 +82,6 @@
             var playerRecord = A.Fake<PlayerRecord>();
             playerRecord.Id = id;
             playerRecord.Name = name;
-            playerRecord.FileName = fileName;
 
             return playerRecord;
         }
@@ -92,7 +91,6 @@
             A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(playerRecord.Id)).Returns(playerRecord);
             A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(battleshipsPlayer)).Returns(playerRecord);
             A.CallTo(() => fakePlayerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerRecord.Id)).Returns(battleshipsPlayer);
-            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile(playerRecord.FileName)).Returns(battleshipsPlayer);
         }
 
         private ControllerContext GetFakeControllerContext()
