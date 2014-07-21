@@ -14,7 +14,7 @@
         public List<KeyValuePair<PlayerRecord, PlayerStats>> GenerateLeaderboard(List<MatchResult> results)
         {
             var playerWins = GetPlayerWins(results);
-            return playerWins.OrderBy(x => x.Value.Wins).ToList();
+            return playerWins.OrderByDescending(x => x.Value).ToList();
         }
 
         private Dictionary<PlayerRecord, PlayerStats> GetPlayerWins(IEnumerable<MatchResult> results)
@@ -25,34 +25,24 @@
                 if (playerWins.ContainsKey(result.Winner))
                 {
                     playerWins[result.Winner].Wins++;
+                    playerWins[result.Winner].RoundWins += result.WinnerWins;
                 }
                 else
                 {
-                    playerWins.Add(result.Winner, new PlayerStats(1));
+                    playerWins.Add(result.Winner, new PlayerStats(1, result.WinnerWins));
                 }
 
                 if (playerWins.ContainsKey(result.Loser))
                 {
                     playerWins[result.Loser].Losses++;
+                    playerWins[result.Loser].RoundWins += result.LoserWins;
                 }
                 else
                 {
-                    playerWins.Add(result.Loser, new PlayerStats(losses: 1));
+                    playerWins.Add(result.Loser, new PlayerStats(roundWins: result.LoserWins, losses: 1));
                 }
             }
             return playerWins;
         }
-    }
-
-    public class PlayerStats
-    {
-        public PlayerStats(int wins = 0, int losses = 0)
-        {
-            Wins = wins;
-            Losses = losses;
-        }
-
-        public int Wins { get; set; }
-        public int Losses { get; set; }
     }
 }

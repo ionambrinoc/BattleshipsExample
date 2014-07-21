@@ -95,10 +95,10 @@
             var matchResults = new List<MatchResult> { playerOneWin, playerOneWin, playerTwoWin };
             var expectedLeaderboard = new List<KeyValuePair<PlayerRecord, PlayerStats>>
                                       {
-                                          new KeyValuePair<PlayerRecord, PlayerStats>(playerRecordOne, new PlayerStats(2, 1)),
-                                          new KeyValuePair<PlayerRecord, PlayerStats>(playerRecordTwo, new PlayerStats(1, 2))
+                                          new KeyValuePair<PlayerRecord, PlayerStats>(playerRecordOne, new PlayerStats(2, 5, 1)),
+                                          new KeyValuePair<PlayerRecord, PlayerStats>(playerRecordTwo, new PlayerStats(1, 4, 2))
                                       };
-            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, 1)).Returns(matchResults);
+            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
             A.CallTo(() => fakeLeagueResults.GenerateLeaderboard(matchResults)).Returns(expectedLeaderboard);
 
             // When
@@ -113,6 +113,8 @@
             var matchResult = A.Fake<MatchResult>();
             matchResult.Winner = winner;
             matchResult.Loser = loser;
+            matchResult.WinnerWins = 2;
+            matchResult.LoserWins = 1;
 
             return matchResult;
         }

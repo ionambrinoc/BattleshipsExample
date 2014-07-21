@@ -56,7 +56,7 @@
         {
             // Linq ftw
             var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
-            var orderedPlayers = leagueResults.GenerateLeaderboard(leagueRunner.GetLeagueResults(battleshipsPlayers));
+            var orderedPlayers = leagueResults.GenerateLeaderboard(leagueRunner.GetLeagueResults(battleshipsPlayers, 3));
             return Json(orderedPlayers);
         }
     }

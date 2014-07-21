@@ -81,7 +81,7 @@ window.battleships.players.index = (function($, undefined) {
                     $('#winner').text("League Results").show();
                     for (var i = 0; i < data.length; i++) {
                         $("#leaderboard").append('<tr class="text-left"><td>' + data[i].Key.Name + '</td><td>' +
-                            data[i].Value.Wins + '</td><td>' + data[i].Value.Losses + '</td></tr>');
+                            data[i].Value.Wins + '</td><td>' + data[i].Value.Losses + '</td><td>' + data[i].Value.RoundWins + '</td></tr>');
                     }
                     $("#leaderboard").show();
                     $('#resetGameButton').show();
