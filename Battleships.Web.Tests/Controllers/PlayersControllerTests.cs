@@ -6,8 +6,9 @@
     using Battleships.Runner.Repositories;
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
-    using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
+    using Battleships.Web.Tests.TestHelpers;
     using FakeItEasy;
+    using FluentAssertions;
     using NUnit.Framework;
     using System.Configuration;
     using System.Web;
@@ -49,7 +50,7 @@
             SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayer1);
             SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayer2);
 
-            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(battleshipsPlayer1);
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(new GameResult(battleshipsPlayer1, ResultType.Default));
             A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
         }
 
@@ -68,7 +69,9 @@
             var result = controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
             // Then
-            Assert.That(result, IsMVC.Json("Kitten"));
+            Assert.IsInstanceOf<JsonResult>(result);
+            result.GetProperty("winnerName").Should().Be("Kitten");
+            result.GetProperty("resultType").Should().Be((int)ResultType.Default);
         }
 
         [Test]
