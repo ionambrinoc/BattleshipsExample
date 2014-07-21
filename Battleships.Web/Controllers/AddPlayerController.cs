@@ -3,9 +3,9 @@
     using Battleships.Player;
     using Battleships.Runner.Exceptions;
     using Battleships.Runner.Repositories;
+    using Battleships.Web.Controllers.Helpers;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
-    using System.Configuration;
     using System.IO;
     using System.Web.Mvc;
 
@@ -53,7 +53,7 @@
 
             if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
             {
-                var playerRecord = playersUploadService.SaveFileAndGetPlayerRecord(User.Identity.Name, model.File, GetUploadDirectoryPath(), newPlayer.Name);
+                var playerRecord = playersUploadService.SaveFileAndGetPlayerRecord(User.Identity.Name, model.File, this.GetUploadDirectoryPath(), newPlayer.Name);
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
                 return RedirectToAction(MVC.Players.Index());
@@ -72,7 +72,7 @@
         [HttpPost]
         public virtual ActionResult OverwriteYes(AddPlayerModel model)
         {
-            var realPath = playersUploadService.GenerateFullPath(model.PlayerName, GetUploadDirectoryPath());
+            var realPath = playersUploadService.GenerateFullPath(model.PlayerName, this.GetUploadDirectoryPath());
             System.IO.File.Delete(realPath);
             System.IO.File.Move(model.TemporaryPath, realPath);
 
@@ -92,11 +92,6 @@
             model.PlayerName = playerName;
             System.IO.File.Delete(model.TemporaryPath);
             model.File.SaveAs(model.TemporaryPath);
-        }
-
-        private string GetUploadDirectoryPath()
-        {
-            return Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]);
         }
     }
 }
