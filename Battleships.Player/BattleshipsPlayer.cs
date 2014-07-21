@@ -17,7 +17,7 @@ namespace Battleships.Player
         private readonly IBattleshipsBot player;
         private readonly BattleshipsStopwatch stopwatch;
 
-        public BattleshipsPlayer(IBattleshipsBot player, long timeout = 10000)
+        public BattleshipsPlayer(IBattleshipsBot player, long timeout = 1000)
         {
             this.player = player;
             stopwatch = new BattleshipsStopwatch(timeout);

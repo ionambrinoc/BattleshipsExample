@@ -14,7 +14,7 @@
 
         public BattleshipsStopwatch()
         {
-            timeout = 10000;
+            timeout = 1000;
         }
 
         public void Start()
