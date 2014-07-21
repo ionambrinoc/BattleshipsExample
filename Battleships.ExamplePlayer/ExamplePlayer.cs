@@ -1,11 +1,13 @@
 ﻿namespace Battleships.ExamplePlayer
 {
     using Battleships.Player;
-    using System;
     using System.Collections.Generic;
 
     public class ExamplePlayer : IBattleshipsPlayer
     {
+        internal IGridSquare LastTarget;
+        private readonly HashSet<IGridSquare> shipsHit = new HashSet<IGridSquare>();
+
         public string Name
         {
             get { return "Example Player"; }
@@ -25,20 +27,43 @@
 
         public IGridSquare SelectTarget()
         {
-            const string rows = "ABCDEFGHIJ";
-            var random = new Random();
-            var row = rows[random.Next(0, 10)];
-            var column = random.Next(1, 11);
-            return new GridSquare(row, column);
+            var nextTarget = GetNextTarget();
+            LastTarget = nextTarget;
+            return nextTarget;
         }
 
-        public void HandleShotResult(IGridSquare square, bool wasHit) {}
+        public void HandleShotResult(IGridSquare square, bool wasHit)
+        {
+            if (wasHit)
+            {
+                shipsHit.Add(square);
+            }
+        }
 
         public void HandleOpponentsShot(IGridSquare square) {}
 
         private static ShipPosition GetShipPosition(char startRow, int startColumn, char endRow, int endColumn)
         {
             return new ShipPosition(new GridSquare(startRow, startColumn), new GridSquare(endRow, endColumn));
+        }
+
+        private IGridSquare GetNextTarget()
+        {
+            if (LastTarget == null)
+            {
+                return new GridSquare('A', 1);
+            }
+
+            var row = LastTarget.Row;
+            var col = LastTarget.Column + 1;
+            if (LastTarget.Column != 10)
+            {
+                return new GridSquare(row, col);
+            }
+
+            row = (char)(row + 1);
+            col = 1;
+            return new GridSquare(row, col);
         }
     }
 }

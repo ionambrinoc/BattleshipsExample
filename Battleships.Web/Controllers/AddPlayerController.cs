@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Web.Controllers
 {
+    using Battleships.Runner.Exceptions;
     using Battleships.Runner.Repositories;
     using Battleships.Web.Services;
     using System.Configuration;
@@ -39,7 +40,7 @@
                     playerRecordsRepository.Add(newPlayer);
                     playerRecordsRepository.SaveContext();
                 }
-                catch
+                catch (InvalidPlayerException)
                 {
                     ModelState.AddModelError("InvalidPlayerFileError", "The given file is not a valid player file.");
                     return View();

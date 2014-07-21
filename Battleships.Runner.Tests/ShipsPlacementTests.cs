@@ -40,17 +40,17 @@
         [Test]
         public void Ships_placement_is_invalid_if_adjacent_ships_provided()
         {
-            // Given
-            ships = new List<IShip>();
-            var adjacentShip = FakeShip('H', 6, 'H', 10);
-            AddToStandardShips(adjacentShip);
-            FakeCalls();
+            var belowValid = TestBelow();
+            belowValid.Should().BeFalse("Should be invalid as a ship was directly below another");
 
-            //When
-            var valid = shipsPlacement.IsValid();
+            var leftValid = TestLeft();
+            leftValid.Should().BeFalse("Should be invalid as a ship was directly to the left of another");
 
-            // Then
-            valid.Should().BeFalse("Should be invalid as adjacent ships were provided");
+            var rightValid = TestRight();
+            rightValid.Should().BeFalse("Should be invalid as a ship was directly to the right of another");
+
+            var aboveValid = TestAbove();
+            aboveValid.Should().BeFalse("Should be invalid as a ship was directly above another");
         }
 
         [Test]
@@ -68,7 +68,6 @@
             // Then
             valid.Should().BeFalse("Should be invalid as not all required ships were provided");
         }
-
         [Test]
         public void Ships_placement_is_invalid_if_too_many_ships_provided()
         {
@@ -88,7 +87,6 @@
             // Then
             valid.Should().BeFalse("Should be invalid as too many ships were provided");
         }
-
         [Test]
         public void Ships_placement_is_invalid_if_ships_provided_with_wrong_combinations_of_lengths()
         {
@@ -117,7 +115,6 @@
             // Then
             valid.Should().BeFalse("Should be invalid as too many ships were provided");
         }
-
         [Test]
         public void Ships_placement_is_invalid_if_invalid_ship_provided()
         {
@@ -135,7 +132,6 @@
             // Then
             valid.Should().BeFalse("Should be invalid as an invalid ship was provided");
         }
-
         [Test]
         public void Ships_placement_is_invalid_if_player_is_invalid()
         {
@@ -149,7 +145,6 @@
             // Then
             valid.Should().BeFalse("Ships placement should be invalid if the player throws an exception");
         }
-
         [Test]
         public void All_ships_are_hit_when_17_cells_hit()
         {
@@ -168,7 +163,6 @@
             // Then
             allHit.Should().BeTrue("All ships should have been hit but were not");
         }
-
         [Test]
         public void Shot_on_horizontal_ship_is_hit()
         {
@@ -187,7 +181,6 @@
             // Then
             isHit.Should().BeTrue("Ship should have been hit but was not");
         }
-
         [Test]
         public void Shot_on_vertical_ship_is_hit()
         {
@@ -206,7 +199,6 @@
             // Then
             isHit.Should().BeTrue("Ship should have been hit but was not");
         }
-
         [Test]
         public void Shot_not_on_ship_is_miss()
         {
@@ -222,7 +214,6 @@
             // Then
             isHit.Should().BeFalse("Ship should have been missed but was hit");
         }
-
         [Test]
         public void Shot_in_the_middle_of_ship_hits()
         {
@@ -241,7 +232,6 @@
             // Then
             isHit.Should().BeTrue("Ship should have been hit but was not");
         }
-
         [Test]
         public void If_set_already_contains_cell_it_is_not_readded()
         {
@@ -262,7 +252,41 @@
             // Then
             allHit.Should().BeFalse("Hits on the same cell should be stored once but were not");
         }
+        private bool TestBelow()
+        {
+            ships = new List<IShip>();
+            var adjacentBelowShip = FakeShip('H', 6, 'H', 10);
+            AddToStandardShips(adjacentBelowShip);
+            FakeCalls();
+            return shipsPlacement.IsValid();
+        }
 
+        private bool TestLeft()
+        {
+            ships = new List<IShip>();
+            var adjacentLeftOfShip = FakeShip('G', 4, 'G', 8);
+            AddToStandardShips(adjacentLeftOfShip);
+            FakeCalls();
+            return shipsPlacement.IsValid();
+        }
+
+        private bool TestRight()
+        {
+            ships = new List<IShip>();
+            var adjacentRightOfShip = FakeShip('D', 10, 'H', 10);
+            AddToStandardShips(adjacentRightOfShip);
+            FakeCalls();
+            return shipsPlacement.IsValid();
+        }
+
+        private bool TestAbove()
+        {
+            ships = new List<IShip>();
+            var adjacentAboveShip = FakeShip('A', 9, 'D', 9);
+            AddToStandardShips(adjacentAboveShip);
+            FakeCalls();
+            return shipsPlacement.IsValid();
+        }
         private void TargetHitsShip(IGridSquare target, IShip ship)
         {
             A.CallTo(() => ship.IsTargetInShip(target)).Returns(true);

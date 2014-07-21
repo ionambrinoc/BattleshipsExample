@@ -97,6 +97,7 @@
             A.CallTo(() => headToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._)).MustHaveHappened(Repeated.Exactly.Times(NumberOfRounds + 1));
         }
 
+        // ReSharper disable once UnusedMember.Local
         private static IEnumerable<int[]> Games()
         {
             yield return new[] { 1, 2 };
