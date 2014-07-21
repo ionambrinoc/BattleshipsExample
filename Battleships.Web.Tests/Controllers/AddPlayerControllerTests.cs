@@ -26,12 +26,14 @@
         private IPlayerUploadService fakePlayerUploadService;
         private HttpPostedFileBase fakeFile;
         private IBattleshipsPlayer fakeBattleshipsPlayer;
+        private HttpPostedFileBase fakePicture;
         private PlayerRecord fakePlayerRecord;
 
         [SetUp]
         public void SetUp()
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
+            ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"] = TestPlayerStore.Directory;
             fakePlayerRecordRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             controller = new AddPlayerController(fakePlayerRecordRepository, fakePlayerUploadService) { ControllerContext = GetFakeControllerContext() };
@@ -81,6 +83,9 @@
             var result = controller.Index(model);
 
             // Then
+            
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(TestPlayerUserName, fakeFile, fakePicture, TestPlayerStore.Directory, TestPlayerStore.Directory))
+             .MustHaveHappened();
             Assert.That(result, IsMVC.View(""));
         }
 
@@ -88,6 +93,9 @@
         public void Index_POST_uploading_an_existing_bot_belonging_to_the_user_marks_model_as_overwriting_and_returns_view()
         {
             // Given
+            var fakePlayer = A.Fake<PlayerRecord>();
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(A<string>._, A<HttpPostedFileBase>._, A<HttpPostedFileBase>._, A<string>._, A<string>._))
+             .Returns(fakePlayer);
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(true);
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExistsForUser(fakeBattleshipsPlayer.Name, UserName)).Returns(true);
@@ -178,10 +186,12 @@
             var fakeRequest = A.Fake<HttpRequestBase>();
             var fileCollection = A.Fake<HttpFileCollectionBase>();
             fakeFile = A.Fake<HttpPostedFileBase>();
+            fakePicture = A.Fake<HttpPostedFileBase>();
 
             A.CallTo(() => fakeHttpContext.Request).Returns(fakeRequest);
             A.CallTo(() => fakeRequest.Files).Returns(fileCollection);
             A.CallTo(() => fileCollection["file"]).Returns(fakeFile);
+            A.CallTo(() => fileCollection["picture"]).Returns(fakePicture);
 
             return new ControllerContext(fakeHttpContext, new RouteData(), A.Fake<ControllerBase>());
         }

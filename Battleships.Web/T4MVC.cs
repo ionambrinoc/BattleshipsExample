@@ -29,6 +29,7 @@ public static partial class MVC
     public static Battleships.Web.Controllers.AddPlayerController AddPlayer = new Battleships.Web.Controllers.T4MVC_AddPlayerController();
     public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
     public static Battleships.Web.Controllers.MatchResultsController MatchResults = new Battleships.Web.Controllers.T4MVC_MatchResultsController();
+    public static Battleships.Web.Controllers.MatchResultsController MatchResults = new Battleships.Web.Controllers.T4MVC_MatchResultsController();
     public static Battleships.Web.Controllers.PlayersController Players = new Battleships.Web.Controllers.T4MVC_PlayersController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
