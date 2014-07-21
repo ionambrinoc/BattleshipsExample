@@ -49,6 +49,8 @@ window.battleships.players.index = (function($, undefined) {
         $('#gameSetup').show();
         $('#loading-spinner').hide();
         $('#winner').hide();
+        $('#leaderboard').remove("tr");
+        $('#leaderboard').remove("td");
     }
 
     function startLeague() {
@@ -77,6 +79,9 @@ window.battleships.players.index = (function($, undefined) {
                 $('#run-league').ajaxSubmit(function(data) {
                     $('#loading-spinner').hide();
                     $('#winner').text("League Run").show();
+                    for (i = 0; i < data.length; i++) {
+                        $("#leaderboard").append('<tr><td>' + data[i].Key.Name + '</td></tr>');
+                    }
                     $('#resetGameButton').show();
                 });
             });

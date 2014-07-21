@@ -52,9 +52,11 @@
         [HttpPost]
         public virtual ActionResult RunLeague()
         {
+            // Linq ftw
             var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
-            leagueRunner.GetLeagueResults(battleshipsPlayers);
-            return Json("stuff");
+            var leagueResults = new LeagueResults(leagueRunner.GetLeagueResults(battleshipsPlayers));
+            var orderedPlayers = leagueResults.GenerateLeaderboard();
+            return Json(orderedPlayers);
         }
     }
 }

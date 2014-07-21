@@ -21,7 +21,7 @@
 
         public List<MatchResult> GetLeagueResults(List<IBattleshipsPlayer> players, int numberOfRounds = 1)
         {
-            return (from playerOne in players from playerTwo in players select matchRunner.GetMatchResult(playerOne, playerTwo, numberOfRounds)).ToList();
+            return (from playerOne in players from playerTwo in players where playerOne != playerTwo select matchRunner.GetMatchResult(playerOne, playerTwo, numberOfRounds)).ToList();
         }
     }
 }
