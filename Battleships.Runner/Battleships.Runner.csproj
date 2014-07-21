@@ -84,10 +84,6 @@
     <Compile Include="Migrations\201407151013418_AddUsers.Designer.cs">
       <DependentUpon>201407151013418_AddUsers.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201407171644585_RemovedFileNameFromPlayerRecords.cs" />
-    <Compile Include="Migrations\201407171644585_RemovedFileNameFromPlayerRecords.Designer.cs">
-      <DependentUpon>201407171644585_RemovedFileNameFromPlayerRecords.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PlayerRecord.cs" />
     <Compile Include="Models\PastGame.cs" />
@@ -129,9 +125,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407151013418_AddUsers.resx">
       <DependentUpon>201407151013418_AddUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407171644585_RemovedFileNameFromPlayerRecords.resx">
-      <DependentUpon>201407171644585_RemovedFileNameFromPlayerRecords.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
