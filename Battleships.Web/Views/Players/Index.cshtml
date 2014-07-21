@@ -41,7 +41,7 @@
     @foreach (var player in Model) {
         <tr>
             <td>@player.UserName</td>
-            <td>@player.Name</td>
+            <td><a href="@player.PictureName">@player.Name</a></td>
             <td>
                 <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">
                     Add to Game

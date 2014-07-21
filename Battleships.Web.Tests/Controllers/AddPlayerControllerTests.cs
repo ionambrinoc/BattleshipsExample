@@ -26,11 +26,13 @@
         private IPlayerRecordsRepository fakePlayerRecordRepository;
         private IPlayerUploadService fakePlayerUploadService;
         private HttpPostedFileBase fakeFile;
+        private HttpPostedFileBase fakePicture;
 
         [SetUp]
         public void SetUp()
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
+            ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"] = TestPlayerStore.Directory;
 
             formInput = new FormCollection { { UserNameField, TestPlayerUserName }, { NameField, TestPlayerName } };
             fakePlayerRecordRepository = A.Fake<IPlayerRecordsRepository>();
@@ -71,7 +73,7 @@
             controller.Index(formInput);
 
             // Then
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(TestPlayerUserName, fakeFile, TestPlayerStore.Directory))
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(TestPlayerUserName, fakeFile, fakePicture, TestPlayerStore.Directory, TestPlayerStore.Directory))
              .MustHaveHappened();
         }
 
@@ -80,7 +82,7 @@
         {
             // Given
             var fakePlayer = A.Fake<PlayerRecord>();
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(A<string>._, A<HttpPostedFileBase>._, A<string>._))
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(A<string>._, A<HttpPostedFileBase>._, A<HttpPostedFileBase>._, A<string>._, A<string>._))
              .Returns(fakePlayer);
 
             // When
@@ -97,10 +99,12 @@
             var fakeRequest = A.Fake<HttpRequestBase>();
             var fileCollection = A.Fake<HttpFileCollectionBase>();
             fakeFile = A.Fake<HttpPostedFileBase>();
+            fakePicture = A.Fake<HttpPostedFileBase>();
 
             A.CallTo(() => fakeHttpContext.Request).Returns(fakeRequest);
             A.CallTo(() => fakeRequest.Files).Returns(fileCollection);
             A.CallTo(() => fileCollection["file"]).Returns(fakeFile);
+            A.CallTo(() => fileCollection["picture"]).Returns(fakePicture);
 
             return new ControllerContext(fakeHttpContext, new RouteData(), A.Fake<ControllerBase>());
         }

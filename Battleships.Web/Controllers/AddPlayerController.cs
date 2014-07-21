@@ -28,15 +28,16 @@
         public virtual ActionResult Index(FormCollection form)
         {
             var playerFile = Request.Files["file"];
+            var playerPicture = Request.Files["picture"];
             if (playerFile != null)
             {
                 try
                 {
                     var newPlayer = playersUploadService.UploadAndGetPlayerRecord(
                         form.Get("userName"),
-                        playerFile,
-                        Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
-
+                        playerFile, playerPicture,
+                        Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]),
+                        Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"]));
                     playerRecordsRepository.Add(newPlayer);
                     playerRecordsRepository.SaveContext();
                 }
