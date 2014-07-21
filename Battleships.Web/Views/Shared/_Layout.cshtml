@@ -19,10 +19,12 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Head To Head", MVC.HeadToHead.Index())</li>
+                        <li>@Html.ActionLink("Players", MVC.Players.Index())</li>
                     </ul>
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Players", MVC.Players.Index())</li>
+                        <li>
+                            @Html.ActionLink("Match Results", MVC.MatchResults.Index())
+                        </li>
                     </ul>
                     @if (Request.IsAuthenticated) {
                         <ul class="nav navbar-nav navbar-right">

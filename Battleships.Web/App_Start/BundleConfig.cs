@@ -28,6 +28,8 @@
             bundles.Add(new CustomStyleBundle("~/bundles/styles/common").Include(
                 "~/Components/bootstrap/less/bootstrap.less",
                 "~/Content/site.less"));
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/matchresults/index").Include(
+                "~/Content/MatchResults/index.less"));
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/players").Include(
                 "~/Content/Players/index.less"));

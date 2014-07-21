@@ -34,28 +34,46 @@ window.battleships.players.index = (function($, undefined) {
     function setUpButton() {
         addToGame($(this).data('player-id'), $(this).data('player-name'));
     }
+
     function tog(v) { return v ? 'addClass' : 'removeClass'; }
+
+    function startGame() {
+        $('#playerOneId').val(firstPlayer.data('id'));
+        $('#playerTwoId').val(secondPlayer.data('id'));
+        $('#gameSetup').hide();
+        $('#loading-spinner').show();
+    }
+
+    function resetGame() {
+        $('#resetGameButton').hide();
+        $('#gameSetup').show();
+        $('#loading-spinner').hide();
+        $('#winner').hide();
+    }
 
     return {
         init: function() {
+            resetGame();
             $('#runGameButton').click(function() {
                 if (firstPlayer.data('id') && secondPlayer.data('id')) {
-                    $('#playerOneId').val(firstPlayer.data('id'));
-                    $('#playerTwoId').val(secondPlayer.data('id'));
-
+                    startGame();
                     $('#run-game-form').ajaxSubmit(function(data) {
-                        $("#winner").text(data + " wins!");
+                        $('#loading-spinner').hide();
+                        $("#winner").text(data + " wins!").show();
+                        $('#resetGameButton').show();
                     });
                 } else {
                     alert("You need two players to start the game.");
                 }
             });
 
-            $('#playerTable button').each(function () { $(this).on('click', setUpButton); });
+            $('#resetGameButton').on('click', resetGame);
 
-            $(document).on('mousemove', '.x', function (e) {
+            $('#playerTable button').each(function() { $(this).on('click', setUpButton); });
+
+            $(document).on('mousemove', '.x', function(e) {
                 $(this)[tog(this.offsetWidth - 100 < e.clientX - this.getBoundingClientRect().left)]('onX');
-            }).on('click', '.onX', function () {
+            }).on('click', '.onX', function() {
                 resetPlayer(this);
             });
         }

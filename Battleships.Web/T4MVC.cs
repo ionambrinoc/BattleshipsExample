@@ -27,9 +27,8 @@ public static partial class MVC
 {
     public static Battleships.Web.Controllers.AccountController Account = new Battleships.Web.Controllers.T4MVC_AccountController();
     public static Battleships.Web.Controllers.AddPlayerController AddPlayer = new Battleships.Web.Controllers.T4MVC_AddPlayerController();
-    public static Battleships.Web.Controllers.HeadToHeadController HeadToHead = new Battleships.Web.Controllers.T4MVC_HeadToHeadController();
-    public static Battleships.Web.Controllers.HistoryController History = new Battleships.Web.Controllers.T4MVC_HistoryController();
     public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
+    public static Battleships.Web.Controllers.MatchResultsController MatchResults = new Battleships.Web.Controllers.T4MVC_MatchResultsController();
     public static Battleships.Web.Controllers.PlayersController Players = new Battleships.Web.Controllers.T4MVC_PlayersController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
@@ -106,6 +105,14 @@ namespace Links
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class MatchResults {
+            private const string URLPATH = "~/Content/MatchResults";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string index_less = Url("index.less");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class Players {
             private const string URLPATH = "~/Content/Players";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -114,6 +121,7 @@ namespace Links
         }
     
         public static readonly string site_less = Url("site.less");
+        public static readonly string site_less_ = Url("site.less");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

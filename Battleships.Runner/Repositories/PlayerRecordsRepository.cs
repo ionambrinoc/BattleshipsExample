@@ -1,7 +1,7 @@
 ﻿namespace Battleships.Runner.Repositories
 {
+    using Battleships.Player;
     using Battleships.Runner.Models;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     public interface IPlayerRecordsRepository : IRepository<PlayerRecord>
@@ -11,10 +11,14 @@
         bool PlayerNameExistsForUser(string botName, string userName);
     };
 
-    [ExcludeFromCodeCoverage]
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
     {
-        public PlayerRecordsRepository(BattleshipsContext context) : base(context) {}
+        private readonly IPlayerLoader playerLoader;
+
+        public PlayerRecordsRepository(BattleshipsContext context, IPlayerLoader playerLoader) : base(context)
+        {
+            this.playerLoader = playerLoader;
+        }
 
         public PlayerRecord GetPlayerRecordById(int id)
         {

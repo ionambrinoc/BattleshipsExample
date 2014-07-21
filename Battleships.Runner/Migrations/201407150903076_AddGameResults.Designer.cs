@@ -7,13 +7,13 @@ namespace Battleships.Runner.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class AddUsers : IMigrationMetadata
+    public sealed partial class AddGameResults : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddUsers));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddGameResults));
         
         string IMigrationMetadata.Id
         {
-            get { return "201407081316230_AddUsers"; }
+            get { return "201407150903076_AddGameResults"; }
         }
         
         string IMigrationMetadata.Source
