@@ -269,6 +269,12 @@
     <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
     <Content Include="Components\respond\dest\respond.min.js" />
     <Content Include="Components\respond\dest\respond.src.js" />
+    <Content Include="Content\Players\index.css">
+      <DependentUpon>index.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Players\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -277,6 +283,9 @@
     </None>
     <Content Include="Content\Players\index.less" />
     <Content Include="Content\AddPlayer\AddPlayer.less" />
+    <Content Include="Content\Players\index.css.map">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
     <None Include="Content\site.less" />
     <Content Include="Content\MatchResults\index.less" />
     <Content Include="Content\site.less" />
