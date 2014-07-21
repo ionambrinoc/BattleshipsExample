@@ -83,9 +83,7 @@
             var result = controller.Index(model);
 
             // Then
-            
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(TestPlayerUserName, fakeFile, fakePicture, TestPlayerStore.Directory, TestPlayerStore.Directory))
-             .MustHaveHappened();
+
             Assert.That(result, IsMVC.View(""));
         }
 
@@ -94,7 +92,7 @@
         {
             // Given
             var fakePlayer = A.Fake<PlayerRecord>();
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(A<string>._, A<HttpPostedFileBase>._, A<HttpPostedFileBase>._, A<string>._, A<string>._))
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(A<string>._, A<HttpPostedFileBase>._, A<HttpPostedFileBase>._, A<string>._, A<string>._, A<string>._))
              .Returns(fakePlayer);
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(true);
@@ -143,9 +141,9 @@
         public void Index_POST_posting_file_with_new_bot_name_succeeds_if_bot_file_is_valid()
         {
             // Given
-            var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
+            var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(false);
-            A.CallTo(() => fakePlayerUploadService.SaveFileAndGetPlayerRecord("testUser", fakeFile, A<string>.Ignored, fakeBattleshipsPlayer.Name)).Returns(fakePlayerRecord);
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(UserName, fakeFile, fakePicture, A<string>.Ignored, A<string>.Ignored, fakeBattleshipsPlayer.Name)).Returns(fakePlayerRecord);
 
             // When
             var result = controller.Index(model);

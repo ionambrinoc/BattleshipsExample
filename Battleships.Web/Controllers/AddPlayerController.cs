@@ -53,7 +53,8 @@
 
             if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
             {
-                var playerRecord = playersUploadService.SaveFileAndGetPlayerRecord(User.Identity.Name, model.File, GetUploadDirectoryPath(), newPlayer.Name);
+                var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.Name, model.File, model.Picture,
+                    GetUploadDirectoryPath(), GetPictureUploadDirectoryPath(), newPlayer.Name);
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
                 return RedirectToAction(MVC.Players.Index());
@@ -97,6 +98,11 @@
         private string GetUploadDirectoryPath()
         {
             return Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]);
+        }
+
+        private string GetPictureUploadDirectoryPath()
+        {
+            return Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"]);
         }
     }
 }

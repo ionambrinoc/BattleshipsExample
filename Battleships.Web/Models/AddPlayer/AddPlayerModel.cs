@@ -13,5 +13,7 @@
 
         [Required(ErrorMessage = "Please select the player file.")]
         public HttpPostedFileBase File { get; set; }
+
+        public HttpPostedFileBase Picture { get; set; }
     }
 }

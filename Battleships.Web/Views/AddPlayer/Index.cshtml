@@ -11,15 +11,16 @@
 @if (!Model.CanOverwrite) {
     using (Html.BeginForm(MVC.AddPlayer.Index(), FormMethod.Post, new { enctype = "multipart/form-data", id = "add-player-form" })) {
         <div class="form-group">
-            <label for="file">File: </label>
+            <label>File: </label>
             @Html.TextBoxFor(m => m.File, new { type = "file" })
         </div>
-    <div class="form-group">
-        <label for="picture">Profile picture: </label>
-@Html.TextBoxFor(m => m.File, new { type = "file" })
-    </div>
-<input class="btn" id="submit" type="submit" value="Submit" />
-}}
+        <div class="form-group">
+            <label>Profile picture: </label>
+            @Html.TextBoxFor(m => m.Picture, new { type = "file" })
+        </div>
+        <input class="btn" id="submit" type="submit" value="Submit" />
+    }
+}
 else {
     <p class ="field-validation-error">You already have a bot with name '@Model.PlayerName'. Do you want to overwrite it?</p>
     @Styles.Render("~/bundles/styles/addplayer")
@@ -38,5 +39,6 @@ else {
                 }
             </td>
         </tr>
-    </table>}
+    </table>
+
 }

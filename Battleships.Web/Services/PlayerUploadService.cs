@@ -11,9 +11,11 @@
     public interface IPlayerUploadService
     {
         PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture,
-                                              string uploadDirectoryPath, string uploadPictureDirectoryPath);
+                                              string uploadDirectoryPath, string uploadPictureDirectoryPath, string playerName);
 
         string GenerateFullPath(string playerName, string uploadDirectoryPath);
+        string GenerateFullPicturePath(string pictureName, string uploadDirectoryPath);
+        string GetPictureName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer);
         IBattleshipsPlayer LoadBattleshipsPlayerFromFile(HttpPostedFileBase playerFile);
     }
 
@@ -26,18 +28,31 @@
         {
             var fullPath = GenerateFullPath(playerName, uploadDirectoryPath);
             file.SaveAs(fullPath);
-            battleshipsPlayer = playerLoader.GetPlayerFromFile(fileName);
-            
+            var battleshipsPlayer = playerLoader.GetBattleshipsPlayerFromFullPath(fullPath);
+
+            var pictureName = GetPictureName(picture, battleshipsPlayer);
+            var picturePath = GenerateFullPicturePath(pictureName, uploadPictureDirectoryPath);
+            picture.SaveAs(picturePath);
+
+            return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name, PictureName = GenerateFullPicturePath(pictureName, ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"]) };
+        }
+
+        public string GetPictureName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer)
+        {
             var pictureName = Path.GetFileName(picture.FileName) ?? "";
             pictureName = GetExtension(pictureName);
             pictureName = String.Concat(battleshipsPlayer.Name, pictureName);
-            var picturePath = GenerateFullPath(pictureName, uploadPictureDirectoryPath);
-            picture.SaveAs(picturePath);
+            return pictureName;
+        }
 
-            return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name, FileName = fileName, PictureName = GenerateFullPath(pictureName, ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"]) };
         public string GenerateFullPath(string playerName, string uploadDirectoryPath)
         {
             return Path.Combine(uploadDirectoryPath, playerName + ".dll");
+        }
+
+        public string GenerateFullPicturePath(string pictureName, string uploadDirectoryPath)
+        {
+            return Path.Combine(uploadDirectoryPath, pictureName);
         }
 
         public IBattleshipsPlayer LoadBattleshipsPlayerFromFile(HttpPostedFileBase playerFile)
