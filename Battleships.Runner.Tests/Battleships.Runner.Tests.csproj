@@ -123,6 +123,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HeadToHeadRunnerTests.cs" />
+    <Compile Include="LeagueResultsTests.cs" />
+    <Compile Include="LeagueRunnerTests.cs" />
     <Compile Include="MatchRunnerTests.cs" />
     <Compile Include="MatchScoreBoardTests.cs" />
     <Compile Include="PlayerLoaderTests.cs" />

@@ -49,8 +49,8 @@ window.battleships.players.index = (function($, undefined) {
         $('#gameSetup').show();
         $('#loading-spinner').hide();
         $('#winner').hide();
-        $('#leaderboard').remove("tr");
-        $('#leaderboard').remove("td");
+        $('#leaderboard td').remove();
+        $('#leaderboard').hide();
     }
 
     function startLeague() {
@@ -78,10 +78,12 @@ window.battleships.players.index = (function($, undefined) {
                 startLeague();
                 $('#run-league').ajaxSubmit(function(data) {
                     $('#loading-spinner').hide();
-                    $('#winner').text("League Run").show();
-                    for (i = 0; i < data.length; i++) {
-                        $("#leaderboard").append('<tr><td>' + data[i].Key.Name + '</td></tr>');
+                    $('#winner').text("League Results").show();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#leaderboard").append('<tr class="text-left"><td>' + data[i].Key.Name + '</td><td>' +
+                            data[i].Value.Wins + '</td><td>' + data[i].Value.Losses + '</td></tr>');
                     }
+                    $("#leaderboard").show();
                     $('#resetGameButton').show();
                 });
             });
