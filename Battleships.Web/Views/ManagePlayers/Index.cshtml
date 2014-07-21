@@ -1,0 +1,28 @@
+﻿@using Battleships.Runner.Models
+@model IEnumerable<PlayerRecord>
+
+@{
+    ViewBag.Title = "My Players";
+}
+
+@Styles.Render("~/bundles/styles/manageplayers")
+
+<br/>
+@Html.ValidationMessage("")
+<table class=" table table-striped" id="playerTable">
+    <tr>
+        <th>Player Name</th>
+        <th></th>
+    </tr>
+    @foreach (var player in Model) {
+        <tr>
+            <td>@player.Name</td>
+            <td class ="td-align">
+                @using (Html.BeginForm(MVC.ManagePlayers.DeletePlayer(), FormMethod.Post)) {
+                    @Html.Hidden("playerName", player.Name)
+                    <input class="btn" id="submit" type="submit" value="Delete" />
+                }
+            </td>
+        </tr>
+    }
+</table>
