@@ -143,7 +143,6 @@ namespace Links
         }
     
         public static readonly string site_less = Url("site.less");
-        public static readonly string site_less_ = Url("site.less");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

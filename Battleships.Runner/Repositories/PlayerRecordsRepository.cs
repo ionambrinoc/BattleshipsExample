@@ -21,7 +21,7 @@
         private readonly IPlayerLoader playerLoader;
         private readonly BattleshipsContext context;
 
-        public PlayerRecordsRepository(BattleshipsContext context, IPlayerLoader playerLoader, IMatchResultsRepository matchResultsRepository)
+        public PlayerRecordsRepository(BattleshipsContext context, IPlayerLoader playerLoader)
             : base(context)
         {
             this.context = context;

@@ -10,7 +10,7 @@
 
         public string Name
         {
-            get { return "New Example Player"; }
+            get { return "Example Player"; }
         }
 
         public IEnumerable<IShipPosition> GetShipPositions()
