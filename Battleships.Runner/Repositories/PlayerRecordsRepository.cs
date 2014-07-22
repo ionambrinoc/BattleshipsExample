@@ -19,15 +19,13 @@
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
     {
         private readonly IPlayerLoader playerLoader;
-        private readonly IMatchResultsRepository matchResultsRepository;
         private readonly BattleshipsContext context;
 
-        public PlayerRecordsRepository(BattleshipsContext context, IPlayerLoader playerLoader, IMatchResultsRepository matchResultsRepository)
+        public PlayerRecordsRepository(BattleshipsContext context, IPlayerLoader playerLoader)
             : base(context)
         {
             this.context = context;
             this.playerLoader = playerLoader;
-            this.matchResultsRepository = matchResultsRepository;
         }
 
         public PlayerRecord GetPlayerRecordById(int id)
