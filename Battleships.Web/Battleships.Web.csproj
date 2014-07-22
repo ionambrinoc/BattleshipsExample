@@ -261,6 +261,10 @@
     <Content Include="Components\bootstrap\dist\js\bootstrap.js" />
     <Content Include="Components\bootstrap\dist\js\bootstrap.min.js" />
     <Content Include="Components\jquery-form\jquery.form.js" />
+    <Content Include="Components\jquery-ui\jquery-ui.js" />
+    <Content Include="Components\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Components\jquery-ui\themes\smoothness\jquery-ui.css" />
+    <Content Include="Components\jquery-ui\themes\smoothness\jquery-ui.min.css" />
     <Content Include="Components\jquery.validation\dist\additional-methods.js" />
     <Content Include="Components\jquery.validation\dist\additional-methods.min.js" />
     <Content Include="Components\jquery.validation\dist\jquery.validate.js" />
