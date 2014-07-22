@@ -289,9 +289,7 @@
     <Content Include="Content\Players\index.less" />
     <Content Include="Content\AddPlayer\AddPlayer.less" />
     <Content Include="Content\ManagePlayers\index.less" />
-    <None Include="Content\site.less" />
     <Content Include="Content\MatchResults\index.less" />
-    <Content Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
@@ -343,6 +341,7 @@
     <Content Include="Components\bootstrap\less\variables.less" />
     <Content Include="Components\bootstrap\less\wells.less" />
     <Content Include="PlayerStore\.create-folder" />
+    <Content Include="Content\site.less" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
