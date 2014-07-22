@@ -150,20 +150,28 @@
         }
 
         [Test]
-        public void OverwriteYes_redirects_to_players_index()
+        public void OverwriteYes_redirects_to_players_index_and_succeeds_overwriting_a_file()
         {
             // Given
-            var model = new AddPlayerModel { TemporaryPath = Path.GetTempFileName(), PlayerName = "testName" };
+            var tempPath = Path.GetTempFileName();
+            File.WriteAllText(tempPath, "test");
             var realPath = Path.Combine(TestPlayerStore.Directory, "testName.dll");
-            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(model.PlayerName, A<string>.Ignored)).Returns(realPath);
             var fileStream = File.Create(realPath);
             fileStream.Close();
+
+            var model = new AddPlayerModel { TemporaryPath = tempPath, PlayerName = "testName" };
+            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(model.PlayerName, A<string>.Ignored)).Returns(realPath);
 
             // When
             var result = controller.OverwriteYes(model);
 
             // Then
+            Assert.That(File.Exists(realPath));
+            Assert.That(File.ReadAllText(realPath) == "test");
+            Assert.That(!File.Exists(tempPath));
             Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
+
+            File.Delete(realPath);
         }
 
         [Test]
