@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title</title>
         @Styles.Render("~/bundles/styles/common")
-    </head>
+        <meta name="description" content="The description of my page" />
+</head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -29,12 +30,9 @@
                     @if (Request.IsAuthenticated) {
                         <ul class="nav navbar-nav navbar-right">
                             <li>@Html.ActionLink("Add Player", MVC.AddPlayer.Index())</li>
-                            <li>
-                                @Html.ActionLink("Hello " + User.Identity.Name + "!", MVC.Home.Index())
-                            </li>
-                            <li>
-                                @Html.ActionLink("Log Off", MVC.Account.LogOff())
-                            </li>
+                            <li>@Html.ActionLink("My Players", MVC.ManagePlayers.Index())</li>
+                            <li>@Html.ActionLink("Hello " + User.Identity.Name + "!", MVC.Home.Index())</li>
+                            <li>@Html.ActionLink("Log Off", MVC.Account.LogOff())</li>
                         </ul>
                     }
                     else {

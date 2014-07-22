@@ -99,9 +99,9 @@
     <Compile Include="Migrations\201407210933271_RemoveFileNameFromPlayerRecord.Designer.cs">
       <DependentUpon>201407210933271_RemoveFileNameFromPlayerRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201407211516151_AddPictureNameToPlayerRecord.cs" />
-    <Compile Include="Migrations\201407211516151_AddPictureNameToPlayerRecord.Designer.cs">
-      <DependentUpon>201407211516151_AddPictureNameToPlayerRecord.cs</DependentUpon>
+    <Compile Include="Migrations\201407211528042_AddPictureNameToPlayerRecord.cs" />
+    <Compile Include="Migrations\201407211528042_AddPictureNameToPlayerRecord.Designer.cs">
+      <DependentUpon>201407211528042_AddPictureNameToPlayerRecord.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PlayerRecord.cs" />
@@ -156,8 +156,8 @@
     <EmbeddedResource Include="Migrations\201407210933271_RemoveFileNameFromPlayerRecord.resx">
       <DependentUpon>201407210933271_RemoveFileNameFromPlayerRecord.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407211516151_AddPictureNameToPlayerRecord.resx">
-      <DependentUpon>201407211516151_AddPictureNameToPlayerRecord.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201407211528042_AddPictureNameToPlayerRecord.resx">
+      <DependentUpon>201407211528042_AddPictureNameToPlayerRecord.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

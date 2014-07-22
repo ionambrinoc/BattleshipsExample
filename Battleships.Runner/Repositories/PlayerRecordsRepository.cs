@@ -2,6 +2,7 @@
 {
     using Battleships.Player;
     using Battleships.Runner.Models;
+    using System.Collections.Generic;
     using System.Linq;
 
     public interface IPlayerRecordsRepository : IRepository<PlayerRecord>
@@ -11,14 +12,19 @@
         bool PlayerNameExistsForUser(string botName, string userName);
         PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer);
         IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId);
+        IEnumerable<PlayerRecord> GetAllForUserName(string userName);
+        void DeletePlayerRecordById(int id);
     };
 
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
     {
         private readonly IPlayerLoader playerLoader;
+        private readonly BattleshipsContext context;
 
-        public PlayerRecordsRepository(BattleshipsContext context, IPlayerLoader playerLoader) : base(context)
+        public PlayerRecordsRepository(BattleshipsContext context, IPlayerLoader playerLoader)
+            : base(context)
         {
+            this.context = context;
             this.playerLoader = playerLoader;
         }
 
@@ -46,6 +52,20 @@
         {
             var player = GetPlayerRecordById(playerRecordId);
             return playerLoader.GetBattleshipsPlayerFromPlayerName(player.Name);
+        }
+
+        public IEnumerable<PlayerRecord> GetAllForUserName(string userName)
+        {
+            return GetAll().Where(playerRecord => playerRecord.UserName == userName);
+        }
+
+        public void DeletePlayerRecordById(int id)
+        {
+            var playerRecord = GetPlayerRecordById(id);
+            context.MatchResults.RemoveRange(playerRecord.WonMatchResults.Concat(playerRecord.LostMatchResults));
+            context.SaveChanges();
+            Entities.Remove(playerRecord);
+            SaveContext();
         }
     }
 }

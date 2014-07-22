@@ -18,8 +18,6 @@
     [TestFixture]
     public class PlayersControllerTests
     {
-        private const string FileNameOne = "KittenBot1.dll";
-        private const string FileNameTwo = "KittenBot2.dll";
         private PlayerRecord playerRecordOne;
         private PlayerRecord playerRecordTwo;
         private PlayersController controller;
@@ -42,8 +40,8 @@
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
             controller = new PlayersController(fakePlayerRecordsRepository, fakeMatchResultsRepository, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
 
-            playerRecordOne = SetUpPlayerRecord(1, "Kitten", FileNameOne);
-            playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo", FileNameTwo);
+            playerRecordOne = SetUpPlayerRecord(1, "Kitten");
+            playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo");
             battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();
             battleshipsPlayer2 = A.Fake<IBattleshipsPlayer>();
 
@@ -84,7 +82,7 @@
             A.CallTo(() => fakeMatchResultsRepository.SaveContext()).MustHaveHappened();
         }
 
-        private PlayerRecord SetUpPlayerRecord(int id, string name, string fileName)
+        private PlayerRecord SetUpPlayerRecord(int id, string name)
         {
             var playerRecord = A.Fake<PlayerRecord>();
             playerRecord.Id = id;

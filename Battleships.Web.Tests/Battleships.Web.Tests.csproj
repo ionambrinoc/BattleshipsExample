@@ -117,8 +117,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountControllerTests.cs" />
+    <Compile Include="Controllers\ManagePlayersControllerTests.cs" />
     <Compile Include="Controllers\PlayersControllerTests.cs" />
-    <Compile Include="Controllers\MatchResultsControllerTest.cs" />
+    <Compile Include="Controllers\MatchResultsControllerTests.cs" />
     <Compile Include="Controllers\AddPlayerControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers\NUnitConstraints\HasMVC.cs" />

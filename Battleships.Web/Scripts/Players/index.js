@@ -61,9 +61,9 @@ window.battleships.players.index = (function($, undefined) {
                     $('#run-game-form').ajaxSubmit(function(data) {
                         $('#loading-spinner').hide();
                         $("#winner").text(data.winnerName + " wins!").show();
-                        if (data.winType === 1) {
+                        if (data.resultType === 1) {
                             $("#resultType").text("Opponent timed out!").show();
-                        } else if (data.winType === 2) {
+                        } else if (data.resultType === 2) {
                             $('#resultType').text("Opponent's ship placement is invalid!").show();
                         }
                         $('#resetGameButton').show();
