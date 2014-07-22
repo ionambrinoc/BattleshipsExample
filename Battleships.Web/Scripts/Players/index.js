@@ -49,13 +49,6 @@ window.battleships.players.index = (function($, undefined) {
         $('#gameSetup').show();
         $('#loading-spinner').hide();
         $('#winner').hide();
-        $('#leaderboard td').remove();
-        $('#leaderboard').hide();
-    }
-
-    function startLeague() {
-        $('#gameSetup').hide();
-        $('#loading-spinner').show();
     }
 
     return {
@@ -72,20 +65,6 @@ window.battleships.players.index = (function($, undefined) {
                 } else {
                     alert("You need two players to start the game.");
                 }
-            });
-
-            $('#runLeagueButton').click(function() {
-                startLeague();
-                $('#run-league').ajaxSubmit(function(data) {
-                    $('#loading-spinner').hide();
-                    $('#winner').text("League Results").show();
-                    for (var i = 0; i < data.length; i++) {
-                        $("#leaderboard").append('<tr class="text-left"><td>' + data[i].Key.Name + '</td><td>' +
-                            data[i].Value.Wins + '</td><td>' + data[i].Value.Losses + '</td><td>' + data[i].Value.RoundWins + '</td></tr>');
-                    }
-                    $("#leaderboard").show();
-                    $('#resetGameButton').show();
-                });
             });
 
             $('#resetGameButton').on('click', resetGame);

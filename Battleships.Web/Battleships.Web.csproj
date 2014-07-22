@@ -209,10 +209,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AddPlayerController.cs" />
     <Compile Include="App_Start\StartUp.Auth.cs" />
+    <Compile Include="Controllers\LeagueController.cs" />
     <Compile Include="Controllers\MatchResultsController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="LeagueController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="MatchResultsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -224,6 +228,7 @@
     </Compile>
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
     <Compile Include="Models\Players\ChallengeViewModel.cs" />
+    <Compile Include="Models\League\LeaderboardViewModel.cs" />
     <Compile Include="PlayersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -285,6 +290,7 @@
     <Content Include="Images\green-loading-spinner.gif" />
     <Content Include="Images\remove.png" />
     <Content Include="Scripts\HeadToHead\play.js" />
+    <Content Include="Scripts\League\index.js" />
     <Content Include="Scripts\Players\index.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Components\bootstrap\less\alerts.less" />
@@ -354,6 +360,7 @@
     <Content Include="Views\AddPlayer\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\League\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

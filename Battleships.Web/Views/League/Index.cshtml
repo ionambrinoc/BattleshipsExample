@@ -1,0 +1,37 @@
+﻿@using Battleships.Web.Models.League
+@model LeaderboardViewModel
+
+@{
+    ViewBag.Title = "League";
+}
+
+@using (Html.BeginForm(MVC.League.RunLeague(), FormMethod.Post, new { id = "run-league" })) {}
+
+<div id="gameSetup">
+    <br/>
+    <button id="runLeagueButton" type="button" class="btn btn-info">
+        Run League
+    </button>
+</div>
+
+<table class="table table-striped" id="leaderboard">
+    <tr>
+        <th>Player Name</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Rounds won</th>
+    </tr>
+</table>
+<button id="resetGameButton" type="button" class="btn btn-success">Want to play again?</button>
+<div id="loading-spinner">
+    <img src="../../Images/Explodingbattleship.gif" alt="Loading...">
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/scripts/league/index")
+    <script type="text/javascript">
+        $(function() {
+            battleships.league.index.init();
+        });
+    </script>
+}

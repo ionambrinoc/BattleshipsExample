@@ -12,17 +12,13 @@
         private readonly IPlayerRecordsRepository playerRecordsRepository;
         private readonly IHeadToHeadRunner headToHeadRunner;
         private readonly IMatchResultsRepository matchResultsRepository;
-        private readonly ILeagueRunner leagueRunner;
-        private readonly ILeagueResults leagueResults;
 
         public PlayersController(IPlayerRecordsRepository playerRecordsRepository, IMatchResultsRepository matchResultsRepository,
-                                 IHeadToHeadRunner headToHeadRunner, ILeagueRunner leagueRunner, ILeagueResults leagueResults)
+                                 IHeadToHeadRunner headToHeadRunner)
         {
             this.playerRecordsRepository = playerRecordsRepository;
             this.headToHeadRunner = headToHeadRunner;
             this.matchResultsRepository = matchResultsRepository;
-            this.leagueRunner = leagueRunner;
-            this.leagueResults = leagueResults;
         }
 
         [HttpGet]
@@ -49,15 +45,6 @@
             matchResultsRepository.Add(matchResult);
             matchResultsRepository.SaveContext();
             return Json(winner.Name);
-        }
-
-        [HttpPost]
-        public virtual ActionResult RunLeague()
-        {
-            // Linq ftw
-            var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
-            var orderedPlayers = leagueResults.GenerateLeaderboard(leagueRunner.GetLeagueResults(battleshipsPlayers, 3));
-            return Json(orderedPlayers);
         }
     }
 }

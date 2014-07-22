@@ -45,5 +45,16 @@
             // Then
             results.ShouldBeEquivalentTo(new List<MatchResult> { playerOneWin, playerTwoWin });
         }
+
+        [Test]
+        public void Players_dont_play_themselves()
+        {
+            // When
+            runner.GetLeagueResults(players);
+
+            // Then
+            A.CallTo(() => fakeMatchRunner.GetMatchResult(playerOne, playerOne, DefaultNumberOfRounds)).MustNotHaveHappened();
+            A.CallTo(() => fakeMatchRunner.GetMatchResult(playerTwo, playerTwo, DefaultNumberOfRounds)).MustNotHaveHappened();
+        }
     }
 }

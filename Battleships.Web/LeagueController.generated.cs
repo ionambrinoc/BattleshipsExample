@@ -23,10 +23,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace Battleships.Web.Controllers
 {
-    public partial class PlayersController
+    public partial class LeagueController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected PlayersController(Dummy d) { }
+        protected LeagueController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -54,21 +54,15 @@ namespace Battleships.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult RunGame()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunGame);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public PlayersController Actions { get { return MVC.Players; } }
+        public LeagueController Actions { get { return MVC.League; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Players";
+        public readonly string Name = "League";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Players";
+        public const string NameConst = "League";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -77,26 +71,17 @@ namespace Battleships.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string RunGame = "RunGame";
+            public readonly string RunLeague = "RunLeague";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string RunGame = "RunGame";
+            public const string RunLeague = "RunLeague";
         }
 
 
-        static readonly ActionParamsClass_RunGame s_params_RunGame = new ActionParamsClass_RunGame();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_RunGame RunGameParams { get { return s_params_RunGame; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_RunGame
-        {
-            public readonly string playerOneId = "playerOneId";
-            public readonly string playerTwoId = "playerTwoId";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -109,14 +94,14 @@ namespace Battleships.Web.Controllers
             {
                 public readonly string Index = "Index";
             }
-            public readonly string Index = "~/Views/Players/Index.cshtml";
+            public readonly string Index = "~/Views/League/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_PlayersController : Battleships.Web.Controllers.PlayersController
+    public partial class T4MVC_LeagueController : Battleships.Web.Controllers.LeagueController
     {
-        public T4MVC_PlayersController() : base(Dummy.Instance) { }
+        public T4MVC_LeagueController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
@@ -130,15 +115,13 @@ namespace Battleships.Web.Controllers
         }
 
         [NonAction]
-        partial void RunGameOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerOneId, int playerTwoId);
+        partial void RunLeagueOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult RunGame(int playerOneId, int playerTwoId)
+        public override System.Web.Mvc.ActionResult RunLeague()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunGame);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerOneId", playerOneId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerTwoId", playerTwoId);
-            RunGameOverride(callInfo, playerOneId, playerTwoId);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunLeague);
+            RunLeagueOverride(callInfo);
             return callInfo;
         }
 

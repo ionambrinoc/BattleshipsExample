@@ -9,7 +9,6 @@
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
-    using System.Collections.Generic;
     using System.Configuration;
     using System.Web;
     using System.Web.Mvc;
@@ -30,10 +29,6 @@
         private IBattleshipsPlayer battleshipsPlayerOne;
         private IBattleshipsPlayer battleshipsPlayerTwo;
         private IMatchResultsRepository fakeMatchResultsRepository;
-        private ILeagueRunner fakeLeagueRunner;
-        private ILeagueResults fakeLeagueResults;
-        private MatchResult playerOneWin;
-        private MatchResult playerTwoWin;
 
         [SetUp]
         public void SetUp()
@@ -44,10 +39,8 @@
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
-            fakeLeagueRunner = A.Fake<ILeagueRunner>();
-            fakeLeagueResults = A.Fake<ILeagueResults>();
             controller = new PlayersController(fakePlayerRecordsRepository, fakeMatchResultsRepository,
-                fakeHeadToHeadRunner, fakeLeagueRunner, fakeLeagueResults) { ControllerContext = GetFakeControllerContext() };
+                fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
 
             playerRecordOne = SetUpPlayerRecord(1, "Kitten", FileNameOne);
             playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo", FileNameTwo);
@@ -56,9 +49,6 @@
 
             SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayerOne);
             SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayerTwo);
-
-            playerOneWin = SetUpMatchResult(playerRecordOne, playerRecordTwo);
-            playerTwoWin = SetUpMatchResult(playerRecordTwo, playerRecordOne);
 
             A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo)).Returns(battleshipsPlayerOne);
             A.CallTo(() => battleshipsPlayerOne.Name).Returns("Kitten");
@@ -86,37 +76,6 @@
             // Then
             A.CallTo(() => fakeMatchResultsRepository.Add(A<MatchResult>.That.Matches(g => g.WinnerId == playerRecordOne.Id && g.LoserId == playerRecordTwo.Id))).MustHaveHappened();
             A.CallTo(() => fakeMatchResultsRepository.SaveContext()).MustHaveHappened();
-        }
-
-        [Test]
-        public void Run_league_returns_json_results()
-        {
-            // Given
-            var matchResults = new List<MatchResult> { playerOneWin, playerOneWin, playerTwoWin };
-            var expectedLeaderboard = new List<KeyValuePair<PlayerRecord, PlayerStats>>
-                                      {
-                                          new KeyValuePair<PlayerRecord, PlayerStats>(playerRecordOne, new PlayerStats(2, 5, 1)),
-                                          new KeyValuePair<PlayerRecord, PlayerStats>(playerRecordTwo, new PlayerStats(1, 4, 2))
-                                      };
-            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
-            A.CallTo(() => fakeLeagueResults.GenerateLeaderboard(matchResults)).Returns(expectedLeaderboard);
-
-            // When
-            var result = controller.RunLeague();
-
-            // Then
-            Assert.That(result, IsMVC.Json(expectedLeaderboard));
-        }
-
-        private MatchResult SetUpMatchResult(PlayerRecord winner, PlayerRecord loser)
-        {
-            var matchResult = A.Fake<MatchResult>();
-            matchResult.Winner = winner;
-            matchResult.Loser = loser;
-            matchResult.WinnerWins = 2;
-            matchResult.LoserWins = 1;
-
-            return matchResult;
         }
 
         private PlayerRecord SetUpPlayerRecord(int id, string name, string fileName)

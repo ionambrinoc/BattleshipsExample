@@ -1,20 +1,20 @@
-﻿namespace Battleships.Runner
+﻿namespace Battleships.Web.Models.League
 {
+    using Battleships.Runner;
     using Battleships.Runner.Models;
     using System.Collections.Generic;
     using System.Linq;
 
-    public interface ILeagueResults
+    public interface ILeaderboardViewModel
     {
-        List<KeyValuePair<PlayerRecord, PlayerStats>> GenerateLeaderboard(List<MatchResult> results);
+        List<PlayerStats> GenerateLeaderboard(List<MatchResult> results);
     }
 
-    public class LeagueResults : ILeagueResults
+    public class LeaderboardViewModel : ILeaderboardViewModel
     {
-        public List<KeyValuePair<PlayerRecord, PlayerStats>> GenerateLeaderboard(List<MatchResult> results)
+        public List<PlayerStats> GenerateLeaderboard(List<MatchResult> results)
         {
-            var playerWins = GetPlayerWins(results);
-            return playerWins.OrderByDescending(x => x.Value).ToList();
+            return GetPlayerWins(results).Select(x => x.Value).OrderByDescending(x => x).ToList();
         }
 
         private Dictionary<PlayerRecord, PlayerStats> GetPlayerWins(IEnumerable<MatchResult> results)
@@ -29,7 +29,7 @@
                 }
                 else
                 {
-                    playerWins.Add(result.Winner, new PlayerStats(1, result.WinnerWins));
+                    playerWins.Add(result.Winner, new PlayerStats(result.Winner, 1, result.WinnerWins));
                 }
 
                 if (playerWins.ContainsKey(result.Loser))
@@ -39,7 +39,7 @@
                 }
                 else
                 {
-                    playerWins.Add(result.Loser, new PlayerStats(roundWins: result.LoserWins, losses: 1));
+                    playerWins.Add(result.Loser, new PlayerStats(result.Loser, roundWins: result.LoserWins, losses: 1));
                 }
             }
             return playerWins;
