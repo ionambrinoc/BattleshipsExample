@@ -154,7 +154,10 @@
         {
             // Given
             var model = new AddPlayerModel { TemporaryPath = Path.GetTempFileName(), PlayerName = "testName" };
-            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(model.PlayerName, A<string>.Ignored)).Returns(Path.Combine(TestPlayerStore.Directory, "testName.dll"));
+            var realPath = Path.Combine(TestPlayerStore.Directory, "testName.dll");
+            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(model.PlayerName, A<string>.Ignored)).Returns(realPath);
+            var fileStream = File.Create(realPath);
+            fileStream.Close();
 
             // When
             var result = controller.OverwriteYes(model);
