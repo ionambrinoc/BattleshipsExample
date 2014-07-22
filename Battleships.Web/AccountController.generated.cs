@@ -54,6 +54,12 @@ namespace Battleships.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.JsonResult IsUserNameAvailable()
+        {
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsUserNameAvailable);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AccountController Actions { get { return MVC.Account; } }
@@ -73,6 +79,7 @@ namespace Battleships.Web.Controllers
             public readonly string LogOff = "LogOff";
             public readonly string LogIn = "LogIn";
             public readonly string Register = "Register";
+            public readonly string IsUserNameAvailable = "IsUserNameAvailable";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -81,6 +88,7 @@ namespace Battleships.Web.Controllers
             public const string LogOff = "LogOff";
             public const string LogIn = "LogIn";
             public const string Register = "Register";
+            public const string IsUserNameAvailable = "IsUserNameAvailable";
         }
 
 
@@ -99,6 +107,14 @@ namespace Battleships.Web.Controllers
         public class ActionParamsClass_Register
         {
             public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_IsUserNameAvailable s_params_IsUserNameAvailable = new ActionParamsClass_IsUserNameAvailable();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_IsUserNameAvailable IsUserNameAvailableParams { get { return s_params_IsUserNameAvailable; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_IsUserNameAvailable
+        {
+            public readonly string name = "name";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -177,6 +193,18 @@ namespace Battleships.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             RegisterOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void IsUserNameAvailableOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, string name);
+
+        [NonAction]
+        public override System.Web.Mvc.JsonResult IsUserNameAvailable(string name)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsUserNameAvailable);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "name", name);
+            IsUserNameAvailableOverride(callInfo, name);
             return callInfo;
         }
 

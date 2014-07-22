@@ -9,6 +9,7 @@
         IdentityResult AddUser(string userName, string password);
         User Find(string userName, string password);
         ClaimsIdentity CreateIdentity(User user, string authenticationType);
+        bool DoesUserExist(string userName);
     }
 
     public class UserService : IUserService
@@ -33,6 +34,11 @@
         public ClaimsIdentity CreateIdentity(User user, string authenticationType)
         {
             return userManager.CreateIdentity(user, authenticationType);
+        }
+
+        public bool DoesUserExist(string name)
+        {
+            return userManager.FindByName(name) != null;
         }
     }
 }
