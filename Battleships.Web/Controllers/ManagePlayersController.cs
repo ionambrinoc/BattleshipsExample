@@ -1,7 +1,6 @@
 ﻿namespace Battleships.Web.Controllers
 {
     using Battleships.Runner.Repositories;
-    using Battleships.Web.Controllers.Helpers;
     using Battleships.Web.Services;
     using System.Web.Mvc;
 
@@ -27,7 +26,7 @@
         {
             var playerName = playerRecordsRepository.GetPlayerRecordById(playerId).Name;
             playerRecordsRepository.DeletePlayerRecordById(playerId);
-            System.IO.File.Delete(playerUploadService.GenerateFullPath(playerName, this.GetUploadDirectoryPath()));
+            System.IO.File.Delete(playerUploadService.GenerateFullPath(playerName));
             return RedirectToAction(MVC.ManagePlayers.Index());
         }
     }

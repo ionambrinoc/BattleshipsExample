@@ -3,7 +3,6 @@
     using Battleships.Player;
     using Battleships.Runner.Exceptions;
     using Battleships.Runner.Repositories;
-    using Battleships.Web.Controllers.Helpers;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using System.IO;
@@ -54,14 +53,13 @@
 
             if (!IsValidImage(model.Picture))
             {
-                ModelState.AddModelError("", "Invalid image file. Accepted file formats: .jpg, .gif, .png");
+                ModelState.AddModelError("", "Invalid image file.");
                 return View(model);
             }
 
             if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
             {
-                var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.Name, model.File, model.Picture,
-                    GetUploadDirectoryPath(), GetPictureUploadDirectoryPath(), newPlayer.Name);
+                var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.Name, model.File, model.Picture, newPlayer.Name);
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
                 return RedirectToAction(MVC.Players.Index());
@@ -80,7 +78,7 @@
         [HttpPost]
         public virtual ActionResult OverwriteYes(AddPlayerModel model)
         {
-            var realPath = playersUploadService.GenerateFullPath(model.PlayerName, this.GetUploadDirectoryPath());
+            var realPath = playersUploadService.GenerateFullPath(model.PlayerName);
             System.IO.File.Delete(realPath);
             System.IO.File.Move(model.TemporaryPath, realPath);
 
@@ -105,11 +103,6 @@
             model.PlayerName = playerName;
             System.IO.File.Delete(model.TemporaryPath);
             model.File.SaveAs(model.TemporaryPath);
-        }
-
-        private string GetPictureUploadDirectoryPath()
-        {
-            return Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"]);
         }
     }
 }

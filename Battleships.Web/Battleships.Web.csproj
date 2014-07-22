@@ -209,7 +209,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AddPlayerController.cs" />
     <Compile Include="App_Start\StartUp.Auth.cs" />
-    <Compile Include="Controllers\Helpers\ControllerExtensions.cs" />
     <Compile Include="Controllers\ManagePlayersController.cs" />
     <Compile Include="Controllers\MatchResultsController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
@@ -228,6 +227,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AddPlayer\AddPlayerModel.cs" />
+    <Compile Include="Models\AddPlayer\PlayerRecordViewModel.cs" />
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
     <Compile Include="Models\Players\ChallengeViewModel.cs" />
     <Compile Include="PlayersController.generated.cs">

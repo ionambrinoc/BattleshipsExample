@@ -103,6 +103,10 @@
     <Compile Include="Migrations\201407211528042_AddPictureNameToPlayerRecord.Designer.cs">
       <DependentUpon>201407211528042_AddPictureNameToPlayerRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201407221439253_RenamePictureNameToPictureFileName.cs" />
+    <Compile Include="Migrations\201407221439253_RenamePictureNameToPictureFileName.Designer.cs">
+      <DependentUpon>201407221439253_RenamePictureNameToPictureFileName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PlayerRecord.cs" />
     <Compile Include="Models\MatchResult.cs" />
@@ -158,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407211528042_AddPictureNameToPlayerRecord.resx">
       <DependentUpon>201407211528042_AddPictureNameToPlayerRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407221439253_RenamePictureNameToPictureFileName.resx">
+      <DependentUpon>201407221439253_RenamePictureNameToPictureFileName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,7 +3,6 @@
     using Battleships.Runner.Repositories;
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
-    using Battleships.Web.Controllers.Helpers;
     using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
@@ -46,7 +45,7 @@
             // Given
             A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(TestPlayerId)).DoesNothing();
             var temporaryPath = Path.GetTempFileName();
-            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(A<string>.Ignored, controller.GetUploadDirectoryPath())).Returns(temporaryPath);
+            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(A<string>.Ignored)).Returns(temporaryPath);
 
             // When
             var result = controller.DeletePlayer(TestPlayerId);

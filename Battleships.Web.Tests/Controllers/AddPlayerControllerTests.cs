@@ -78,7 +78,7 @@
         public void Picture_is_not_required()
         {
             // Given
-            var model = new AddPlayerModel();
+            var model = new AddPlayerModel { File = fakeFile };
 
             // When
             var result = controller.Index(model);
@@ -134,7 +134,7 @@
         {
             // Given
             var fakePlayer = A.Fake<PlayerRecord>();
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(A<string>._, A<HttpPostedFileBase>._, A<HttpPostedFileBase>._, A<string>._, A<string>._, A<string>._))
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(A<string>._, A<HttpPostedFileBase>._, A<HttpPostedFileBase>._, A<string>._))
              .Returns(fakePlayer);
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(true);
@@ -185,7 +185,7 @@
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(false);
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(UserName, fakeFile, fakePicture, A<string>.Ignored, A<string>.Ignored, fakeBattleshipsPlayer.Name)).Returns(fakePlayerRecord);
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(UserName, fakeFile, fakePicture, fakeBattleshipsPlayer.Name)).Returns(fakePlayerRecord);
             A.CallTo(() => fakePicture.ContentType).Returns("image/jpg");
 
             // When
@@ -202,7 +202,7 @@
         {
             // Given
             var model = new AddPlayerModel { TemporaryPath = Path.GetTempFileName(), PlayerName = "testName" };
-            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(model.PlayerName, A<string>.Ignored)).Returns(TestPlayerStore.Directory + "testName.dll");
+            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(model.PlayerName)).Returns(TestPlayerStore.Directory + "testName.dll");
 
             // When
             var result = controller.OverwriteYes(model);
