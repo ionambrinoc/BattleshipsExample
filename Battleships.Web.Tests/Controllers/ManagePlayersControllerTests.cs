@@ -16,7 +16,7 @@
 
     public class ManagePlayersControllerTests
     {
-        private const int TestPlayerId = 0;
+        private const int TestPlayerId = 1;
         private ManagePlayersController controller;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
         private IPlayerUploadService fakePlayerUploadService;
