@@ -26,15 +26,7 @@
         public virtual ActionResult DeletePlayer(int playerId)
         {
             var playerName = playerRecordsRepository.GetPlayerRecordById(playerId).Name;
-            try
-            {
-                playerRecordsRepository.DeletePlayerRecordById(playerId);
-            }
-            catch
-            {
-                ModelState.AddModelError("", "Delete failed.");
-                return View(Views.Index);
-            }
+            playerRecordsRepository.DeletePlayerRecordById(playerId);
             System.IO.File.Delete(playerUploadService.GenerateFullPath(playerName, this.GetUploadDirectoryPath()));
             return RedirectToAction(MVC.ManagePlayers.Index());
         }
