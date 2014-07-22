@@ -26,13 +26,13 @@
         {
             var playerType = Assembly.Load(File.ReadAllBytes(path))
                                      .GetTypes()
-                                     .FirstOrDefault(t => t.GetInterface(typeof(IBattleshipsPlayer).FullName) != null);
+                                     .FirstOrDefault(t => t.GetInterface(typeof(IBattleshipsBot).FullName) != null);
 
             if (playerType == null)
             {
                 throw new InvalidPlayerException();
             }
-            return (IBattleshipsPlayer)Activator.CreateInstance(playerType);
+            return new BattleshipsPlayer((IBattleshipsBot)Activator.CreateInstance(playerType));
         }
 
         [ExcludeFromCodeCoverage]

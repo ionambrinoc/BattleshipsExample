@@ -56,9 +56,9 @@ namespace Battleships.Web.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult RunGame()
+        public virtual System.Web.Mvc.JsonResult RunGame()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunGame);
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.RunGame);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -130,12 +130,12 @@ namespace Battleships.Web.Controllers
         }
 
         [NonAction]
-        partial void RunGameOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerOneId, int playerTwoId);
+        partial void RunGameOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, int playerOneId, int playerTwoId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult RunGame(int playerOneId, int playerTwoId)
+        public override System.Web.Mvc.JsonResult RunGame(int playerOneId, int playerTwoId)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunGame);
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.RunGame);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerOneId", playerOneId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerTwoId", playerTwoId);
             RunGameOverride(callInfo, playerOneId, playerTwoId);

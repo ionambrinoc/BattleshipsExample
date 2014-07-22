@@ -87,7 +87,49 @@
         }
 
         [Test]
-        public void Player_loses_on_timeout() {}
+        public void Player_loses_on_timeout_and_ResultType_is_timeout()
+        {
+            // Given
+            A.CallTo(() => playerOne.SelectTarget()).Returns(new GridSquare('A', 1));
+            A.CallTo(() => playerTwo.SelectTarget()).Returns(new GridSquare('A', 1));
+            A.CallTo(() => playerOne.HasTimedOut()).Returns(true);
+            PlayerIsValid(playerOne);
+            PlayerIsValid(playerTwo);
+
+            //When
+            var result = runner.FindWinner(playerOne, playerTwo).ResultType;
+
+            //Then
+            Assert.AreEqual(result, ResultType.Timeout);
+        }
+
+        [Test]
+        public void When_invalid_ship_positions_occur_the_ResultType_is_ShipPostionInvalid()
+        {
+            //Given
+            PlayerIsInvalid(playerOne);
+
+            //When
+            var result = runner.FindWinner(playerOne, playerTwo).ResultType;
+
+            //Then
+            Assert.AreEqual(result, ResultType.ShipPositionsInvalid);
+        }
+
+        [Test]
+        public void A_normal_game_returns_ResultType_as_default()
+        {
+            //Given
+            PlayerIsValid(playerOne);
+            PlayerIsValid(playerTwo);
+            ShipsAllHit(playerOne);
+
+            //when
+            var result = runner.FindWinner(playerOne, playerTwo).ResultType;
+
+            //Then
+            Assert.AreEqual(result, ResultType.Default);
+        }
 
         // ReSharper disable once UnusedMember.Local
         private static IEnumerable<int[]> Games()
@@ -144,7 +186,7 @@
 
         private IBattleshipsPlayer FindWinner()
         {
-            return runner.FindWinner(playerOne, playerTwo);
+            return runner.FindWinner(playerOne, playerTwo).Winner;
         }
 
         private Constraint IsPlayer(int number)

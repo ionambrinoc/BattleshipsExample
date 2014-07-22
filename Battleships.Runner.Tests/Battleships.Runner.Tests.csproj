@@ -119,6 +119,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleshipsStopwatchTests.cs" />
     <Compile Include="HeadToHeadRunnerTests.cs" />
     <Compile Include="MatchRunnerTests.cs" />
     <Compile Include="MatchScoreBoardTests.cs" />
@@ -129,7 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
