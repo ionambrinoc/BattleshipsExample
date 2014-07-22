@@ -8,7 +8,6 @@
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
-    using System;
     using System.Configuration;
     using System.IO;
     using System.Web;
@@ -17,6 +16,7 @@
 
     public class ManagePlayersControllerTests
     {
+        private const int TestPlayerId = 0;
         private ManagePlayersController controller;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
         private IPlayerUploadService fakePlayerUploadService;
@@ -44,29 +44,16 @@
         public void Successful_player_delete_redirect_to_manageplayers_index()
         {
             // Given
-            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(0)).DoesNothing();
+            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(TestPlayerId)).DoesNothing();
             var temporaryPath = Path.GetTempFileName();
             A.CallTo(() => fakePlayerUploadService.GenerateFullPath(A<string>.Ignored, controller.GetUploadDirectoryPath())).Returns(temporaryPath);
 
             // When
-            var result = controller.DeletePlayer(0);
+            var result = controller.DeletePlayer(TestPlayerId);
 
             // Then
+            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(TestPlayerId)).MustHaveHappened();
             Assert.That(result, IsMVC.RedirectTo(MVC.ManagePlayers.Index()));
-        }
-
-        [Test]
-        public void Unsuccessful_player_delete_adds_model_error_and_returns_index_view()
-        {
-            // Given
-            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(0)).Throws(new Exception());
-
-            // When
-            var result = controller.DeletePlayer(0);
-
-            // Then
-            Assert.That(controller, HasMVC.ModelLevelErrors());
-            Assert.That(result, IsMVC.View(MVC.ManagePlayers.Views.Index));
         }
 
         private ControllerContext GetFakeControllerContext()
