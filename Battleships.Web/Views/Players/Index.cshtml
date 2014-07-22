@@ -41,7 +41,7 @@
     </tr>
     @foreach (var player in Model) {
         <tr>
-            <td>@player.UserName</td>
+            <td>@player.User.UserName</td>
             <td>@player.Name</td>
             <td>
                 <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">

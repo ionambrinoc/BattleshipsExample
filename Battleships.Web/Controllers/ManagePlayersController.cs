@@ -3,6 +3,7 @@
     using Battleships.Runner.Repositories;
     using Battleships.Web.Controllers.Helpers;
     using Battleships.Web.Services;
+    using Microsoft.AspNet.Identity;
     using System.Web.Mvc;
 
     public partial class ManagePlayersController : Controller
@@ -19,7 +20,7 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View(playerRecordsRepository.GetAllForUserName(User.Identity.Name));
+            return View(playerRecordsRepository.GetAllForUserId(User.Identity.GetUserId()));
         }
 
         [HttpPost]

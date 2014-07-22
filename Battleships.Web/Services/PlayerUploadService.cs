@@ -19,12 +19,12 @@
     {
         private readonly PlayerLoader playerLoader = new PlayerLoader();
 
-        public PlayerRecord SaveFileAndGetPlayerRecord(string userName, HttpPostedFileBase file,
+        public PlayerRecord SaveFileAndGetPlayerRecord(string userId, HttpPostedFileBase file,
                                                        string uploadDirectoryPath, string playerName)
         {
             var fullPath = GenerateFullPath(playerName, uploadDirectoryPath);
             file.SaveAs(fullPath);
-            return new PlayerRecord { UserName = userName, Name = playerName };
+            return new PlayerRecord { UserId = userId, Name = playerName };
         }
 
         public string GenerateFullPath(string playerName, string uploadDirectoryPath)

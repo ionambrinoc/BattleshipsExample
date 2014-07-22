@@ -6,6 +6,7 @@
     using Battleships.Web.Controllers.Helpers;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
+    using Microsoft.AspNet.Identity;
     using System.IO;
     using System.Web.Mvc;
 
@@ -53,13 +54,13 @@
 
             if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
             {
-                var playerRecord = playersUploadService.SaveFileAndGetPlayerRecord(User.Identity.Name, model.File, this.GetUploadDirectoryPath(), newPlayer.Name);
+                var playerRecord = playersUploadService.SaveFileAndGetPlayerRecord(User.Identity.GetUserId(), model.File, this.GetUploadDirectoryPath(), newPlayer.Name);
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
                 return RedirectToAction(MVC.Players.Index());
             }
 
-            if (playerRecordsRepository.PlayerNameExistsForUser(newPlayer.Name, User.Identity.Name))
+            if (playerRecordsRepository.PlayerNameExistsForUser(newPlayer.Name, User.Identity.GetUserId()))
             {
                 InitialiseModelForOverwritingFile(newPlayer.Name, model);
                 return View(model);

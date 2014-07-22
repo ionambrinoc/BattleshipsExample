@@ -16,11 +16,18 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<PlayerRecord>()
+                        .HasRequired<User>(m => m.User)
+                        .WithMany(m => m.PlayerRecords)
+                        .HasForeignKey(m => m.UserId)
+                        .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<MatchResult>()
                         .HasRequired<PlayerRecord>(m => m.Winner)
                         .WithMany(t => t.WonMatchResults)
                         .HasForeignKey(m => m.WinnerId)
                         .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<MatchResult>()
                         .HasRequired<PlayerRecord>(m => m.Loser)
                         .WithMany(t => t.LostMatchResults)

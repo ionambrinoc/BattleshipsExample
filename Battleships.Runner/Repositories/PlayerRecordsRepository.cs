@@ -9,17 +9,16 @@
     {
         PlayerRecord GetPlayerRecordById(int id);
         bool PlayerNameExists(string botName);
-        bool PlayerNameExistsForUser(string botName, string userName);
+        bool PlayerNameExistsForUser(string botName, string userId);
         PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer);
         IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId);
-        IEnumerable<PlayerRecord> GetAllForUserName(string userName);
+        IEnumerable<PlayerRecord> GetAllForUserId(string userId);
         void DeletePlayerRecordById(int id);
     };
 
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
     {
         private readonly IPlayerLoader playerLoader;
-        private readonly IMatchResultsRepository matchResultsRepository;
         private readonly BattleshipsContext context;
 
         public PlayerRecordsRepository(BattleshipsContext context, IPlayerLoader playerLoader, IMatchResultsRepository matchResultsRepository)
@@ -27,7 +26,6 @@
         {
             this.context = context;
             this.playerLoader = playerLoader;
-            this.matchResultsRepository = matchResultsRepository;
         }
 
         public PlayerRecord GetPlayerRecordById(int id)
@@ -40,9 +38,9 @@
             return Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName) != null;
         }
 
-        public bool PlayerNameExistsForUser(string playerName, string userName)
+        public bool PlayerNameExistsForUser(string playerName, string userId)
         {
-            return Entities.AsQueryable().Any(x => x.Name == playerName && x.UserName == userName);
+            return Entities.AsQueryable().Any(x => x.Name == playerName && x.UserId == userId);
         }
 
         public PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer)
@@ -56,9 +54,9 @@
             return playerLoader.GetBattleshipsPlayerFromPlayerName(player.Name);
         }
 
-        public IEnumerable<PlayerRecord> GetAllForUserName(string userName)
+        public IEnumerable<PlayerRecord> GetAllForUserId(string userId)
         {
-            return GetAll().Where(playerRecord => playerRecord.UserName == userName);
+            return GetAll().Where(playerRecord => playerRecord.UserId == userId);
         }
 
         public void DeletePlayerRecordById(int id)
