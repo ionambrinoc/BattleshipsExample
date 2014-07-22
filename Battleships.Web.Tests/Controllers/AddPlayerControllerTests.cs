@@ -12,6 +12,7 @@
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.IO;
     using System.Web;
@@ -43,6 +44,47 @@
             A.CallTo(() => controller.User.Identity.Name).Returns(UserName);
             A.CallTo(() => fakePlayerUploadService.LoadBattleshipsPlayerFromFile(A<HttpPostedFileBase>.Ignored)).Returns(fakeBattleshipsPlayer);
             A.CallTo(() => fakeBattleshipsPlayer.Name).Returns("testName");
+        }
+
+        [TestCaseSource("ValidFormats")]
+        public void Picture_with_valid_format_is_accepted(string format)
+        {
+            // Given
+            A.CallTo(() => fakePicture.ContentType).Returns(format);
+            var model = new AddPlayerModel { Picture = fakePicture };
+
+            // When
+            var result = controller.Index(model);
+
+            // Then
+            Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
+        }
+
+        [TestCaseSource("InvalidFormats")]
+        public void Picture_with_invalid_format_is_not_accepted(string format)
+        {
+            // Given
+            A.CallTo(() => fakePicture.ContentType).Returns(format);
+            var model = new AddPlayerModel { Picture = fakePicture };
+
+            // When
+            var result = controller.Index(model);
+
+            // Then
+            Assert.That(result, IsMVC.View(""));
+        }
+
+        [Test]
+        public void Picture_is_not_required()
+        {
+            // Given
+            var model = new AddPlayerModel();
+
+            // When
+            var result = controller.Index(model);
+
+            // Then
+            Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
         }
 
         [Test]
@@ -144,6 +186,7 @@
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(false);
             A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(UserName, fakeFile, fakePicture, A<string>.Ignored, A<string>.Ignored, fakeBattleshipsPlayer.Name)).Returns(fakePlayerRecord);
+            A.CallTo(() => fakePicture.ContentType).Returns("image/jpg");
 
             // When
             var result = controller.Index(model);
@@ -176,6 +219,20 @@
 
             // Then
             Assert.That(result, IsMVC.RedirectTo(MVC.AddPlayer.Index()));
+        }
+
+        private static IEnumerable<string> ValidFormats()
+        {
+            yield return "image/jpg";
+            yield return "image/gif";
+            yield return "image/png";
+        }
+
+        private static IEnumerable<string> InvalidFormats()
+        {
+            yield return "application/x-zip-compressed";
+            yield return "text/html";
+            yield return "application/vnd.ms-excel";
         }
 
         private ControllerContext GetFakeControllerContext()

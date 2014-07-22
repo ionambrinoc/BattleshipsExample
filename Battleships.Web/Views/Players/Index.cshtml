@@ -42,7 +42,17 @@
     @foreach (var player in Model) {
         <tr>
             <td>@player.UserName</td>
-            <td><a href="@player.PictureName">@player.Name</a></td>
+            <td>
+                @if (player.PictureName != null)
+                {
+                    <a href="@player.PictureName">@player.Name</a>
+
+                }
+                else
+                {
+                    @player.Name
+                }
+            </td>   
             <td>
                 <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">
                     Add to Game

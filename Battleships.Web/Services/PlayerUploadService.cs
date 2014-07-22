@@ -30,18 +30,22 @@
             file.SaveAs(fullPath);
             var battleshipsPlayer = playerLoader.GetBattleshipsPlayerFromFullPath(fullPath);
 
-            var pictureName = GetPictureName(picture, battleshipsPlayer);
-            var picturePath = GenerateFullPicturePath(pictureName, uploadPictureDirectoryPath);
-            picture.SaveAs(picturePath);
+            string pictureName = null;
+            if (picture != null)
+            {
+                pictureName = GetPictureName(picture, battleshipsPlayer);
+                var picturePath = GenerateFullPicturePath(pictureName, uploadPictureDirectoryPath);
+                picture.SaveAs(picturePath);
+                pictureName = Path.Combine(ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], pictureName);
+            }
 
-            return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name, PictureName = GenerateFullPicturePath(pictureName, ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"]) };
+            return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name, PictureName = pictureName };
         }
 
         public string GetPictureName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer)
         {
             var pictureName = Path.GetFileName(picture.FileName) ?? "";
-            pictureName = GetExtension(pictureName);
-            pictureName = String.Concat(battleshipsPlayer.Name, pictureName);
+            pictureName = String.Concat(battleshipsPlayer.Name, Path.GetExtension(pictureName));
             return pictureName;
         }
 
@@ -61,12 +65,6 @@
             File.Delete(tempPath);
             playerFile.SaveAs(tempPath);
             return playerLoader.GetBattleshipsPlayerFromFullPath(tempPath);
-        }
-
-        private string GetExtension(string pictureName)
-        {
-            var dot = pictureName.LastIndexOf('.');
-            return pictureName.Remove(0, dot);
         }
     }
 }

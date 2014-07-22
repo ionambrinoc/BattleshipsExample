@@ -7,6 +7,7 @@
     using Battleships.Web.Services;
     using System.Configuration;
     using System.IO;
+    using System.Web;
     using System.Web.Mvc;
 
     public partial class AddPlayerController : Controller
@@ -51,6 +52,12 @@
                 return View(model);
             }
 
+            if (!IsValidImage(model.Picture))
+            {
+                ModelState.AddModelError("", "Invalid image file. Accepted file formats: .jpg, .gif, .png");
+                return View(model);
+            }
+
             if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
             {
                 var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.Name, model.File, model.Picture,
@@ -84,6 +91,11 @@
         public virtual ActionResult OverwriteNo()
         {
             return RedirectToAction(MVC.AddPlayer.Index());
+        }
+
+        private bool IsValidImage(HttpPostedFileBase picture)
+        {
+            return picture == null || picture.ContentType.Contains("image");
         }
 
         private void InitialiseModelForOverwritingFile(string playerName, AddPlayerModel model)
