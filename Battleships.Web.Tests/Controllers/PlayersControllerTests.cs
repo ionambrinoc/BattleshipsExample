@@ -25,8 +25,8 @@
         private IPlayerLoader fakePlayerLoader;
         private IHeadToHeadRunner fakeHeadToHeadRunner;
         private HttpPostedFileBase fakeFile;
-        private IBattleshipsPlayer battleshipsPlayer1;
-        private IBattleshipsPlayer battleshipsPlayer2;
+        private IBattleshipsPlayer battleshipsPlayerOne;
+        private IBattleshipsPlayer battleshipsPlayerTwo;
         private IMatchResultsRepository fakeMatchResultsRepository;
 
         [SetUp]
@@ -38,18 +38,19 @@
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
-            controller = new PlayersController(fakePlayerRecordsRepository, fakeMatchResultsRepository, fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            controller = new PlayersController(fakePlayerRecordsRepository, fakeMatchResultsRepository,
+                fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
 
             playerRecordOne = SetUpPlayerRecord(1, "Kitten");
             playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo");
-            battleshipsPlayer1 = A.Fake<IBattleshipsPlayer>();
-            battleshipsPlayer2 = A.Fake<IBattleshipsPlayer>();
+            battleshipsPlayerOne = A.Fake<IBattleshipsPlayer>();
+            battleshipsPlayerTwo = A.Fake<IBattleshipsPlayer>();
 
-            SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayer1);
-            SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayer2);
+            SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayerOne);
+            SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayerTwo);
 
-            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayer1, battleshipsPlayer2)).Returns(new GameResult(battleshipsPlayer1, ResultType.Default));
-            A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo)).Returns(battleshipsPlayerOne, ResultType.Default);
+            A.CallTo(() => battleshipsPlayerOne.Name).Returns("Kitten");
         }
 
         [Test]
@@ -60,7 +61,7 @@
             playerRecordTwo.Name = "KittenBot2";
             A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot1")).Returns(battleshipsPlayer1);
             A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot2")).Returns(battleshipsPlayer2);
-            A.CallTo(() => battleshipsPlayer1.Name).Returns("Kitten");
+            A.CallTo(() => battleshipsPlayerOne.Name).Returns("Kitten");
 
             // When
             var result = controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);

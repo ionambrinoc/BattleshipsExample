@@ -3,6 +3,7 @@
     using Battleships.Player;
     using Battleships.Runner.Models;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
 
     public interface IPlayerRecordsRepository : IRepository<PlayerRecord>
@@ -19,9 +20,9 @@
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
     {
         private readonly IPlayerLoader playerLoader;
-        private readonly BattleshipsContext context;
+        private readonly DbContext context;
 
-        public PlayerRecordsRepository(BattleshipsContext context, IPlayerLoader playerLoader)
+        public PlayerRecordsRepository(DbContext context, IPlayerLoader playerLoader)
             : base(context)
         {
             this.context = context;
@@ -62,7 +63,7 @@
         public void DeletePlayerRecordById(int id)
         {
             var playerRecord = GetPlayerRecordById(id);
-            context.MatchResults.RemoveRange(playerRecord.WonMatchResults.Concat(playerRecord.LostMatchResults));
+            context.Set<MatchResult>().RemoveRange(playerRecord.WonMatchResults.Concat(playerRecord.LostMatchResults));
             context.SaveChanges();
             Entities.Remove(playerRecord);
             SaveContext();

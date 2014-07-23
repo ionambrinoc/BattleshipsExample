@@ -28,6 +28,7 @@ public static partial class MVC
     public static Battleships.Web.Controllers.AccountController Account = new Battleships.Web.Controllers.T4MVC_AccountController();
     public static Battleships.Web.Controllers.AddPlayerController AddPlayer = new Battleships.Web.Controllers.T4MVC_AddPlayerController();
     public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
+    public static Battleships.Web.Controllers.LeagueController League = new Battleships.Web.Controllers.T4MVC_LeagueController();
     public static Battleships.Web.Controllers.ManagePlayersController ManagePlayers = new Battleships.Web.Controllers.T4MVC_ManagePlayersController();
     public static Battleships.Web.Controllers.MatchResultsController MatchResults = new Battleships.Web.Controllers.T4MVC_MatchResultsController();
     public static Battleships.Web.Controllers.PlayersController Players = new Battleships.Web.Controllers.T4MVC_PlayersController();
@@ -93,6 +94,14 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string play_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/play.min.js") ? Url("play.min.js") : Url("play.js");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class League {
+            private const string URLPATH = "~/Scripts/League";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string index_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/index.min.js") ? Url("index.min.js") : Url("index.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

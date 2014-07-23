@@ -12,9 +12,9 @@
 
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        private readonly BattleshipsContext context;
+        private readonly DbContext context;
 
-        protected Repository(BattleshipsContext context)
+        protected Repository(DbContext context)
         {
             this.context = context;
         }

@@ -25,6 +25,9 @@
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/players/index").Include(
                 "~/Scripts/Players/index.js"));
 
+            bundles.Add(new CustomScriptBundle("~/bundles/scripts/league/index").Include(
+                "~/Scripts/League/index.js"));
+
             bundles.Add(new CustomStyleBundle("~/bundles/styles/common").Include(
                 "~/Components/bootstrap/less/bootstrap.less",
                 "~/Content/site.less"));

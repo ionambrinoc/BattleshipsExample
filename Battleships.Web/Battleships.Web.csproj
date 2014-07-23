@@ -210,11 +210,15 @@
     <Compile Include="Controllers\AddPlayerController.cs" />
     <Compile Include="App_Start\StartUp.Auth.cs" />
     <Compile Include="Controllers\Helpers\ControllerExtensions.cs" />
+    <Compile Include="Controllers\LeagueController.cs" />
     <Compile Include="Controllers\ManagePlayersController.cs" />
     <Compile Include="Controllers\MatchResultsController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="LeagueController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ManagePlayersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -229,7 +233,10 @@
     </Compile>
     <Compile Include="Models\AddPlayer\AddPlayerModel.cs" />
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
+    <Compile Include="Models\League\RoundStats.cs" />
+    <Compile Include="Models\League\PlayerStats.cs" />
     <Compile Include="Models\Players\ChallengeViewModel.cs" />
+    <Compile Include="Factories\LeaderboardFactory.cs" />
     <Compile Include="PlayersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -262,6 +269,10 @@
     <Content Include="Components\bootstrap\dist\js\bootstrap.js" />
     <Content Include="Components\bootstrap\dist\js\bootstrap.min.js" />
     <Content Include="Components\jquery-form\jquery.form.js" />
+    <Content Include="Components\jquery-ui\jquery-ui.js" />
+    <Content Include="Components\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Components\jquery-ui\themes\smoothness\jquery-ui.css" />
+    <Content Include="Components\jquery-ui\themes\smoothness\jquery-ui.min.css" />
     <Content Include="Components\jquery.validation\dist\additional-methods.js" />
     <Content Include="Components\jquery.validation\dist\additional-methods.min.js" />
     <Content Include="Components\jquery.validation\dist\jquery.validate.js" />
@@ -292,6 +303,7 @@
     <Content Include="Images\green-loading-spinner.gif" />
     <Content Include="Images\remove.png" />
     <Content Include="Scripts\HeadToHead\play.js" />
+    <Content Include="Scripts\League\index.js" />
     <Content Include="Scripts\Players\index.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Components\bootstrap\less\alerts.less" />
@@ -362,6 +374,7 @@
     <Content Include="Views\AddPlayer\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\League\Index.cshtml" />
     <Content Include="Views\ManagePlayers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

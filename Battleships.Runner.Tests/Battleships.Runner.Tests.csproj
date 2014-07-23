@@ -121,6 +121,7 @@
   <ItemGroup>
     <Compile Include="BattleshipsStopwatchTests.cs" />
     <Compile Include="HeadToHeadRunnerTests.cs" />
+    <Compile Include="LeagueRunnerTests.cs" />
     <Compile Include="MatchRunnerTests.cs" />
     <Compile Include="MatchScoreBoardTests.cs" />
     <Compile Include="PlayerLoaderTests.cs" />
