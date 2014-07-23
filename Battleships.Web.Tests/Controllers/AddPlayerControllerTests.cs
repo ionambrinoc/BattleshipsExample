@@ -14,7 +14,6 @@
     using NUnit.Framework;
     using System.Collections.Generic;
     using System.Configuration;
-    using System.IO;
     using System.Security.Claims;
     using System.Web;
     using System.Web.Mvc;
@@ -186,7 +185,7 @@
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(false);
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(UserName, fakeFile, fakePicture, fakeBattleshipsPlayer.Name)).Returns(fakePlayerRecord);
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(UserId, fakeFile, fakePicture, fakeBattleshipsPlayer.Name)).Returns(fakePlayerRecord);
             A.CallTo(() => fakePicture.ContentType).Returns("image/jpg");
 
             // When
@@ -196,31 +195,6 @@
             A.CallTo(() => fakePlayerRecordRepository.Add(fakePlayerRecord)).MustHaveHappened();
             A.CallTo(() => fakePlayerRecordRepository.SaveContext()).MustHaveHappened();
             Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
-        }
-
-        [Test]
-        public void OverwriteYes_redirects_to_players_index_and_succeeds_overwriting_a_file()
-        {
-            // Given
-            var tempPath = Path.GetTempFileName();
-            File.WriteAllText(tempPath, "test");
-            var realPath = Path.Combine(TestPlayerStore.Directory, "testName.dll");
-            var fileStream = File.Create(realPath);
-            fileStream.Close();
-
-            var model = new AddPlayerModel { TemporaryPath = tempPath, PlayerName = "testName" };
-            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(model.PlayerName, A<string>.Ignored)).Returns(realPath);
-
-            // When
-            var result = controller.OverwriteYes(model);
-
-            // Then
-            Assert.That(File.Exists(realPath));
-            Assert.That(File.ReadAllText(realPath) == "test");
-            Assert.That(!File.Exists(tempPath));
-            Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
-
-            File.Delete(realPath);
         }
 
         [Test]

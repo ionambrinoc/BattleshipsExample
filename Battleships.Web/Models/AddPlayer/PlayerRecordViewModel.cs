@@ -18,9 +18,14 @@
             get { return playerRecord.Id; }
         }
 
-        public string UserName
+        public string UserId
         {
-            get { return playerRecord.UserName; }
+            get { return playerRecord.UserId; }
+        }
+
+        public virtual User User
+        {
+            get { return playerRecord.User; }
         }
 
         public string Name

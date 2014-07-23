@@ -60,7 +60,7 @@
 
             if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
             {
-                var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.Name, model.File, model.Picture, newPlayer.Name);
+                var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.GetUserId(), model.File, model.Picture, newPlayer.Name);
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
                 return RedirectToAction(MVC.Players.Index());

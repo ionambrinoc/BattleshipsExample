@@ -28,7 +28,7 @@
             var battleshipsPlayer = SaveAndReturnPlayer(file, playerName);
             var pictureName = SaveAndReturnPictureFileName(picture, battleshipsPlayer);
 
-            return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name, PictureFileName = pictureName };
+            return new PlayerRecord { UserId = userName, Name = battleshipsPlayer.Name, PictureFileName = pictureName };
         }
 
         public string GetPictureName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer)
