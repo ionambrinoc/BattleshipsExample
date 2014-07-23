@@ -49,7 +49,7 @@
             SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayerOne);
             SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayerTwo);
 
-            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo)).Returns(battleshipsPlayerOne, ResultType.Default);
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo)).Returns(new GameResult(battleshipsPlayerOne, ResultType.Default));
             A.CallTo(() => battleshipsPlayerOne.Name).Returns("Kitten");
         }
 
@@ -59,8 +59,8 @@
             //Given
             playerRecordOne.Name = "KittenBot1";
             playerRecordTwo.Name = "KittenBot2";
-            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot1")).Returns(battleshipsPlayer1);
-            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot2")).Returns(battleshipsPlayer2);
+            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot1")).Returns(battleshipsPlayerOne);
+            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot2")).Returns(battleshipsPlayerTwo);
             A.CallTo(() => battleshipsPlayerOne.Name).Returns("Kitten");
 
             // When
