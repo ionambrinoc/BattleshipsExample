@@ -13,17 +13,17 @@
     <div>@Html.ValidationSummary(true)</div>
     <br />
     <div class="form-group">
-        <label for="Name">Username: </label>
+        @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Name)
     </div>
     <div class="form-group">
-        <label for="Password">Password: </label>
+        @Html.LabelFor(m => m.Password)
         @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Password)
     </div>
     <div class="form-group">
-        <label for="ConfirmPassword">Confirm password: </label>
+        @Html.LabelFor(m => m.ConfirmPassword)
         @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.ConfirmPassword)
     </div>

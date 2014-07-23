@@ -185,8 +185,7 @@
             var result = controller.IsUserNameAvailable(UserName);
 
             // Then
-            Assert.IsInstanceOf<JsonResult>(result);
-            Assert.AreEqual(true, result.Data);
+            Assert.That(result, IsMVC.Json(true));
             result.JsonRequestBehavior.Should().Be(JsonRequestBehavior.AllowGet);
         }
 
@@ -200,8 +199,7 @@
             var result = controller.IsUserNameAvailable(UserName);
 
             // Then
-            Assert.IsInstanceOf<JsonResult>(result);
-            Assert.AreEqual(String.Format("Username {0} is already taken", UserName), result.Data);
+            Assert.That(result, IsMVC.Json(String.Format("Username {0} is already taken", UserName)));
             result.JsonRequestBehavior.Should().Be(JsonRequestBehavior.AllowGet);
         }
     }
