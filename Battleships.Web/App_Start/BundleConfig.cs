@@ -14,8 +14,7 @@
                 "~/Components/Microsoft.jQuery.Unobtrusive.Validation/jquery.validate.unobtrusive.js",
                 "~/Components/bootstrap/dist/js/bootstrap.js",
                 "~/Components/jquery-form/jquery.form.js",
-                "~/Components/respond/dest/respond.src.js",
-                "~/Components/jquery-ui/jquery-ui.js"));
+                "~/Components/respond/dest/respond.src.js"));
 
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/headToHead/play").Include(
                 "~/Scripts/HeadToHead/play.js"));
@@ -31,9 +30,7 @@
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/common").Include(
                 "~/Components/bootstrap/less/bootstrap.less",
-                "~/Content/site.less",
-                "~/Components/jquery-ui/themes/smoothness/jquery-ui.css"));
-
+                "~/Content/site.less"));
             bundles.Add(new CustomStyleBundle("~/bundles/styles/matchresults/index").Include(
                 "~/Content/MatchResults/index.less"));
 
