@@ -60,7 +60,6 @@
                                           Id = playerOne.Id,
                                           Name = playerOne.Name,
                                           Wins = 2,
-                                          RoundWins = 5,
                                           Losses = 1,
                                           RoundStats = new List<RoundStats> { playerOneWinRoundStats, playerOneWinRoundStats, playerOneLoseRoundStats }
                                       },
@@ -69,7 +68,6 @@
                                           Id = playerTwo.Id,
                                           Name = playerTwo.Name,
                                           Wins = 1,
-                                          RoundWins = 4,
                                           Losses = 2,
                                           RoundStats = new List<RoundStats> { playerTwoWinRoundStats, playerTwoLoseRoundStats, playerTwoLoseRoundStats }
                                       }
@@ -95,7 +93,7 @@
 
             // Then
             results[0].Wins.Should().Be(results[1].Wins);
-            results.Should().BeInDescendingOrder(x => x.RoundWins);
+            results.Should().BeInDescendingOrder(x => x.TotalRoundWins);
         }
 
         private void WinnerRoundWinsWhenPlayerOneWins(int wins)

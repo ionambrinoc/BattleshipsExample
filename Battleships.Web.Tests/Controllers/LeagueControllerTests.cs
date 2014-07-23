@@ -52,7 +52,6 @@
                                               Id = playerRecordOne.Id,
                                               Name = playerRecordOne.Name,
                                               Wins = 2,
-                                              RoundWins = 5,
                                               Losses = 1
                                           },
                                           new PlayerStats
@@ -60,7 +59,6 @@
                                               Id = playerRecordTwo.Id,
                                               Name = playerRecordTwo.Name,
                                               Wins = 1,
-                                              RoundWins = 4,
                                               Losses = 2
                                           }
                                       };

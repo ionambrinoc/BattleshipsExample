@@ -22,37 +22,27 @@
             var statsByPlayer = new Dictionary<PlayerRecord, PlayerStats>();
             foreach (var result in results)
             {
-                AddWin(statsByPlayer, result.Winner, result.WinnerWins);
-                AddLoss(statsByPlayer, result.Loser, result.LoserWins);
-                AddRoundStats(statsByPlayer, result);
+                AddWin(statsByPlayer, result.Winner, result.Loser.Name, result.WinnerWins, result.LoserWins);
+                AddLoss(statsByPlayer, result.Loser, result.Winner.Name, result.LoserWins, result.WinnerWins);
             }
             return statsByPlayer.Select(x => x.Value).ToList();
         }
 
-        private static void AddRoundStats(Dictionary<PlayerRecord, PlayerStats> statsByPlayer, MatchResult result)
+        private static void AddRoundStats(IDictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord player, string opponentName, int playerRoundWins, int opponentRoundWins)
         {
-            var winnerRoundStats = new RoundStats
-                                   {
-                                       OpponentName = result.Loser.Name,
-                                       Wins = result.WinnerWins,
-                                       Losses = result.LoserWins
-                                   };
-            var loserRoundStats = new RoundStats
-                                  {
-                                      OpponentName = result.Winner.Name,
-                                      Wins = result.LoserWins,
-                                      Losses = result.WinnerWins
-                                  };
-            statsByPlayer[result.Winner].RoundStats.Add(winnerRoundStats);
-            statsByPlayer[result.Loser].RoundStats.Add(loserRoundStats);
+            statsByPlayer[player].RoundStats.Add(new RoundStats
+                                                 {
+                                                     OpponentName = opponentName,
+                                                     Wins = playerRoundWins,
+                                                     Losses = opponentRoundWins
+                                                 });
         }
 
-        private static void AddLoss(IDictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord loser, int roundWins)
+        private static void AddLoss(Dictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord loser, string opponentName, int loserRoundWins, int winnerRoundWins)
         {
             if (statsByPlayer.ContainsKey(loser))
             {
                 statsByPlayer[loser].Losses++;
-                statsByPlayer[loser].RoundWins += roundWins;
             }
             else
             {
@@ -60,19 +50,17 @@
                                          {
                                              Id = loser.Id,
                                              Name = loser.Name,
-                                             Losses = 1,
-                                             RoundWins = roundWins,
-                                             RoundStats = new List<RoundStats>()
+                                             Losses = 1
                                          });
             }
+            AddRoundStats(statsByPlayer, loser, opponentName, loserRoundWins, winnerRoundWins);
         }
 
-        private static void AddWin(IDictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord winner, int roundWins)
+        private static void AddWin(Dictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord winner, string opponentName, int winnerRoundWins, int loserRoundWins)
         {
             if (statsByPlayer.ContainsKey(winner))
             {
                 statsByPlayer[winner].Wins++;
-                statsByPlayer[winner].RoundWins += roundWins;
             }
             else
             {
@@ -80,11 +68,10 @@
                                           {
                                               Id = winner.Id,
                                               Name = winner.Name,
-                                              Wins = 1,
-                                              RoundWins = roundWins,
-                                              RoundStats = new List<RoundStats>()
+                                              Wins = 1
                                           });
             }
+            AddRoundStats(statsByPlayer, winner, opponentName, winnerRoundWins, loserRoundWins);
         }
     }
 }
