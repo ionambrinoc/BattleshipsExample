@@ -8,7 +8,7 @@
         public string UserId { get; set; }
         public virtual User User { get; set; }
         public string Name { get; set; }
-        public string PictureName { get; set; }
+        public string PictureFileName { get; set; }
 
         public virtual ICollection<MatchResult> WonMatchResults { get; set; }
         public virtual ICollection<MatchResult> LostMatchResults { get; set; }
