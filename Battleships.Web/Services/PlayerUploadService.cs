@@ -3,6 +3,7 @@
     using Battleships.Player;
     using Battleships.Runner;
     using Battleships.Runner.Models;
+    using Battleships.Web.Models.AddPlayer;
     using System;
     using System.Configuration;
     using System.IO;
@@ -12,11 +13,10 @@
     public interface IPlayerUploadService
     {
         PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName);
-
-        string GenerateFullPath(string playerName);
-        string GenerateFullPicturePath(string pictureName);
         string GetPictureName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer);
         IBattleshipsPlayer LoadBattleshipsPlayerFromFile(HttpPostedFileBase playerFile);
+        void OverwritePlayer(AddPlayerModel model);
+        void DeletePlayer(string playerName, string pictureFileName);
     }
 
     public class PlayerUploadService : IPlayerUploadService
@@ -37,22 +37,35 @@
             return String.Concat(battleshipsPlayer.Name, Path.GetExtension(pictureName));
         }
 
-        public string GenerateFullPath(string playerName)
-        {
-            return Path.Combine(GetUploadDirectoryPath(), playerName + ".dll");
-        }
-
-        public string GenerateFullPicturePath(string pictureName)
-        {
-            return Path.Combine(GetPictureUploadDirectoryPath(), pictureName);
-        }
-
         public IBattleshipsPlayer LoadBattleshipsPlayerFromFile(HttpPostedFileBase playerFile)
         {
             var tempPath = Path.GetTempFileName();
             File.Delete(tempPath);
             playerFile.SaveAs(tempPath);
             return playerLoader.GetBattleshipsPlayerFromFullPath(tempPath);
+        }
+
+        public void DeletePlayer(string playerName, string pictureFileName)
+        {
+            File.Delete(GenerateFullPath(playerName));
+            File.Delete(GenerateFullPicturePath(pictureFileName));
+        }
+
+        public void OverwritePlayer(AddPlayerModel model)
+        {
+            var realPath = GenerateFullPath(model.PlayerName);
+            File.Delete(realPath);
+            File.Move(model.TemporaryPath, realPath);
+        }
+
+        private string GenerateFullPath(string playerName)
+        {
+            return Path.Combine(GetUploadDirectoryPath(), playerName + ".dll");
+        }
+
+        private string GenerateFullPicturePath(string pictureName)
+        {
+            return Path.Combine(GetPictureUploadDirectoryPath(), pictureName);
         }
 
         private string SaveAndReturnPictureFileName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer)

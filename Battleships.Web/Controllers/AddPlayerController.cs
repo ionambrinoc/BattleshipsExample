@@ -78,9 +78,7 @@
         [HttpPost]
         public virtual ActionResult OverwriteYes(AddPlayerModel model)
         {
-            var realPath = playersUploadService.GenerateFullPath(model.PlayerName);
-            System.IO.File.Delete(realPath);
-            System.IO.File.Move(model.TemporaryPath, realPath);
+            playersUploadService.OverwritePlayer(model);
 
             return RedirectToAction(MVC.Players.Index());
         }
