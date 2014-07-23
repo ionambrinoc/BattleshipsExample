@@ -5,6 +5,7 @@
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
     using Microsoft.Owin.Security;
+    using System;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -75,6 +76,15 @@
                 return RedirectToAction(MVC.Home.Index());
             }
             return View(Views.Register);
+        }
+
+        public virtual JsonResult IsUserNameAvailable(string name)
+        {
+            if (userService.DoesUserExist(name))
+            {
+                return Json(String.Format("Username {0} is already taken", name), JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         private void SignIn(User user)

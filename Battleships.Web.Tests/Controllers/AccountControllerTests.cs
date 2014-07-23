@@ -6,15 +6,18 @@
     using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
+    using FluentAssertions;
     using Microsoft.AspNet.Identity;
     using Microsoft.Owin.Security;
     using NUnit.Framework;
+    using System;
     using System.Security.Claims;
     using System.Web.Mvc;
 
     [TestFixture]
     public class AccountControllerTests
     {
+        private const string UserName = "testUser";
         private AccountController controller;
         private IUserService userService;
         private IAuthenticationManager authenticationManager;
@@ -170,6 +173,34 @@
 
             // Then
             Assert.That(result, IsMVC.View(MVC.Account.Views.Register));
+        }
+
+        [Test]
+        public void Username_is_available_if_there_is_no_other_user_with_the_same_name()
+        {
+            // Given
+            A.CallTo(() => userService.DoesUserExist(UserName)).Returns(false);
+
+            // When
+            var result = controller.IsUserNameAvailable(UserName);
+
+            // Then
+            Assert.That(result, IsMVC.Json(true));
+            result.JsonRequestBehavior.Should().Be(JsonRequestBehavior.AllowGet);
+        }
+
+        [Test]
+        public void If_username_is_not_available_correct_error_message_is_displayed()
+        {
+            // Given
+            A.CallTo(() => userService.DoesUserExist(UserName)).Returns(true);
+
+            // When
+            var result = controller.IsUserNameAvailable(UserName);
+
+            // Then
+            Assert.That(result, IsMVC.Json(String.Format("Username {0} is already taken", UserName)));
+            result.JsonRequestBehavior.Should().Be(JsonRequestBehavior.AllowGet);
         }
     }
 }

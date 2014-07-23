@@ -10,21 +10,21 @@
 
 
 @using (Html.BeginForm(MVC.Account.Register(), FormMethod.Post)) {
-    <div>@Html.ValidationMessage("")</div>
+    <div>@Html.ValidationSummary(true)</div>
     <br />
     <div class="form-group">
-        <label for="Name">Username: </label>
-        @Html.TextBoxFor(x => x.Name)
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Name)
     </div>
     <div class="form-group">
-        <label for="Password">Password: </label>
-        @Html.PasswordFor(x => x.Password)
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Password)
     </div>
     <div class="form-group">
-        <label for="ConfirmPassword">Confirm password: </label>
-        @Html.PasswordFor(x => x.ConfirmPassword)
+        @Html.LabelFor(m => m.ConfirmPassword)
+        @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.ConfirmPassword)
     </div>
     <input class="btn" id="submit" type="submit" value="Submit" />
