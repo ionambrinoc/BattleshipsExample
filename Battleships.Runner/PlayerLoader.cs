@@ -16,8 +16,6 @@
 
     public class PlayerLoader : IPlayerLoader
     {
-        private static readonly DirectoryPath DirectoryPath = new DirectoryPath();
-
         public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerName(string playerName)
         {
             return GetBattleshipsPlayerFromFullPath(GetFullFilePath(playerName + ".dll"));
@@ -39,7 +37,7 @@
         [ExcludeFromCodeCoverage]
         private static string GetFullFilePath(string fileName)
         {
-            return Path.Combine(DirectoryPath.GetDirectoryPath("PlayerStoreDirectory"), fileName);
+            return Path.Combine(DirectoryPath.GetFromAppSettings("PlayerStoreDirectory"), fileName);
         }
     }
 }

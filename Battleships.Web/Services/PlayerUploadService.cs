@@ -20,7 +20,6 @@
     public class PlayerUploadService : IPlayerUploadService
     {
         private readonly PlayerLoader playerLoader = new PlayerLoader();
-        private readonly DirectoryPath directoryPath = new DirectoryPath();
 
         public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName)
         {
@@ -57,16 +56,24 @@
             File.Move(model.TemporaryPath, realPath);
         }
 
-        private string GenerateFullPath(string playerName)
+        private static string GenerateFullPath(string playerName)
         {
             return Path.Combine(GetUploadDirectoryPath(), playerName + ".dll");
         }
 
-        private string GenerateFullPicturePath(string pictureName)
+        private static string GenerateFullPicturePath(string pictureName)
         {
             return Path.Combine(GetPictureUploadDirectoryPath(), pictureName);
         }
 
+        private static string GetUploadDirectoryPath()
+        {
+            return DirectoryPath.GetFromAppSettings("PlayerStoreDirectory");
+        }
+        private static string GetPictureUploadDirectoryPath()
+        {
+            return DirectoryPath.GetFromAppSettings("PlayerProfilePictureStoreDirectory");
+        }
         private string SaveAndReturnPictureFileName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer)
         {
             if (picture == null)
@@ -85,16 +92,6 @@
             var fullPath = GenerateFullPath(playerName);
             file.SaveAs(fullPath);
             return playerLoader.GetBattleshipsPlayerFromFullPath(fullPath);
-        }
-
-        private string GetUploadDirectoryPath()
-        {
-            return directoryPath.GetDirectoryPath("PlayerStoreDirectory");
-        }
-
-        private string GetPictureUploadDirectoryPath()
-        {
-            return directoryPath.GetDirectoryPath("PlayerProfilePictureStoreDirectory");
         }
     }
 }

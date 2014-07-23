@@ -22,20 +22,24 @@
         public void Overwrite_succeeds_in_overwriting_a_file()
         {
             // Given
+            const string testTileName = "testName.dll";
+            const string testPlayerName = "testName";
+            const string testText = "test";
+
             var tempPath = Path.GetTempFileName();
-            File.WriteAllText(tempPath, "test");
-            var realPath = Path.Combine(TestPlayerStore.Directory, "testName.dll");
+            File.WriteAllText(tempPath, testText);
+            var realPath = Path.Combine(TestPlayerStore.Directory, testTileName);
             var fileStream = File.Create(realPath);
             fileStream.Close();
 
-            var model = new AddPlayerModel { TemporaryPath = tempPath, PlayerName = "testName" };
+            var model = new AddPlayerModel { TemporaryPath = tempPath, PlayerName = testPlayerName };
 
             // When
             playerUploadService.OverwritePlayer(model);
 
             // Then
             Assert.That(File.Exists(realPath));
-            Assert.That(File.ReadAllText(realPath) == "test");
+            Assert.That(File.ReadAllText(realPath) == testText);
             Assert.That(!File.Exists(tempPath));
 
             File.Delete(realPath);
