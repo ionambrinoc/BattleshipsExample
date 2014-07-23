@@ -22,13 +22,13 @@
         public void Overwrite_succeeds_in_overwriting_a_file()
         {
             // Given
-            const string testTileName = "testName.dll";
+            const string testFileName = "testName.dll";
             const string testPlayerName = "testName";
             const string testText = "test";
 
             var tempPath = Path.GetTempFileName();
             File.WriteAllText(tempPath, testText);
-            var realPath = Path.Combine(TestPlayerStore.Directory, testTileName);
+            var realPath = Path.Combine(TestPlayerStore.Directory, testFileName);
             var fileStream = File.Create(realPath);
             fileStream.Close();
 

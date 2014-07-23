@@ -70,10 +70,12 @@
         {
             return DirectoryPath.GetFromAppSettings("PlayerStoreDirectory");
         }
+
         private static string GetPictureUploadDirectoryPath()
         {
             return DirectoryPath.GetFromAppSettings("PlayerProfilePictureStoreDirectory");
         }
+
         private string SaveAndReturnPictureFileName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer)
         {
             if (picture == null)
