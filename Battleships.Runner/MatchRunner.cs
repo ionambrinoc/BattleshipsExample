@@ -31,14 +31,14 @@
             for (var i = 0; i < numberOfRounds; i++)
             {
                 var winner = playerOneFirst ? headToHeadRunner.FindWinner(playerOne, playerTwo) : headToHeadRunner.FindWinner(playerTwo, playerOne);
-                matchScoreBoard.IncrementPlayerWins(winner);
+                matchScoreBoard.IncrementPlayerWins(winner.Winner);
 
                 playerOneFirst = !playerOneFirst;
             }
 
             if (matchScoreBoard.IsDraw())
             {
-                matchScoreBoard.IncrementPlayerWins(headToHeadRunner.FindWinner(playerOne, playerTwo));
+                matchScoreBoard.IncrementPlayerWins(headToHeadRunner.FindWinner(playerOne, playerTwo).Winner);
             }
 
             return new MatchResult

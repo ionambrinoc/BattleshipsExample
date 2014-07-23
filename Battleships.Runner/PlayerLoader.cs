@@ -11,22 +11,28 @@
 
     public interface IPlayerLoader
     {
-        IBattleshipsPlayer GetPlayerFromFile(string fileName);
+        IBattleshipsPlayer GetBattleshipsPlayerFromPlayerName(string playerName);
+        IBattleshipsPlayer GetBattleshipsPlayerFromFullPath(string path);
     }
 
     public class PlayerLoader : IPlayerLoader
     {
-        public IBattleshipsPlayer GetPlayerFromFile(string fileName)
+        public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerName(string playerName)
         {
-            var playerType = Assembly.Load(File.ReadAllBytes(GetFullFilePath(fileName)))
+            return GetBattleshipsPlayerFromFullPath(GetFullFilePath(playerName + ".dll"));
+        }
+
+        public IBattleshipsPlayer GetBattleshipsPlayerFromFullPath(string path)
+        {
+            var playerType = Assembly.Load(File.ReadAllBytes(path))
                                      .GetTypes()
-                                     .FirstOrDefault(t => t.GetInterface(typeof(IBattleshipsPlayer).FullName) != null);
+                                     .FirstOrDefault(t => t.GetInterface(typeof(IBattleshipsBot).FullName) != null);
 
             if (playerType == null)
             {
                 throw new InvalidPlayerException();
             }
-            return (IBattleshipsPlayer)Activator.CreateInstance(playerType);
+            return new BattleshipsPlayer((IBattleshipsBot)Activator.CreateInstance(playerType));
         }
 
         [ExcludeFromCodeCoverage]

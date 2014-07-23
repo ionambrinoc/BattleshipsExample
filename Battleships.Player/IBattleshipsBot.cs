@@ -23,7 +23,7 @@
     ///     If a player fails to provide valid ship positions or throws an exception
     ///     that player immediately forfeits the game.
     /// </summary>
-    public interface IBattleshipsPlayer
+    public interface IBattleshipsBot
     {
         /// <summary>
         ///     The name of the bot.

@@ -1,9 +1,12 @@
 ﻿namespace Battleships.Web.Controllers
 {
+    using Battleships.Player;
     using Battleships.Runner.Exceptions;
     using Battleships.Runner.Repositories;
+    using Battleships.Web.Controllers.Helpers;
+    using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
-    using System.Configuration;
+    using Microsoft.AspNet.Identity;
     using System.IO;
     using System.Web.Mvc;
 
@@ -21,33 +24,75 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View(playerRecordsRepository.GetAll());
+            if (Request.IsAuthenticated)
+            {
+                var model = new AddPlayerModel { CanOverwrite = false };
+                return View(model);
+            }
+            return RedirectToAction(MVC.Account.LogIn());
         }
 
         [HttpPost]
-        public virtual ActionResult Index(FormCollection form)
+        public virtual ActionResult Index(AddPlayerModel model)
         {
-            var playerFile = Request.Files["file"];
-            if (playerFile != null)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    var newPlayer = playersUploadService.UploadAndGetPlayerRecord(
-                        form.Get("userName"),
-                        playerFile,
-                        Path.Combine(Server.MapPath("~/"), ConfigurationManager.AppSettings["PlayerStoreDirectory"]));
-
-                    playerRecordsRepository.Add(newPlayer);
-                    playerRecordsRepository.SaveContext();
-                }
-                catch (InvalidPlayerException)
-                {
-                    ModelState.AddModelError("InvalidPlayerFileError", "The given file is not a valid player file.");
-                    return View();
-                }
+                return View();
             }
 
+            IBattleshipsPlayer newPlayer;
+
+            try
+            {
+                newPlayer = playersUploadService.LoadBattleshipsPlayerFromFile(model.File);
+            }
+            catch (InvalidPlayerException)
+            {
+                ModelState.AddModelError("", "Invalid player file.");
+                return View(model);
+            }
+
+            if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
+            {
+                var playerRecord = playersUploadService.SaveFileAndGetPlayerRecord(User.Identity.GetUserId(), model.File, this.GetUploadDirectoryPath(), newPlayer.Name);
+                playerRecordsRepository.Add(playerRecord);
+                playerRecordsRepository.SaveContext();
+                return RedirectToAction(MVC.Players.Index());
+            }
+
+            if (playerRecordsRepository.PlayerNameExistsForUser(newPlayer.Name, User.Identity.GetUserId()))
+            {
+                InitialiseModelForOverwritingFile(newPlayer.Name, model);
+                return View(model);
+            }
+
+            ModelState.AddModelError("", "Battleships player name '" + newPlayer.Name + "' is already taken.");
+            return View(model);
+        }
+
+        [HttpPost]
+        public virtual ActionResult OverwriteYes(AddPlayerModel model)
+        {
+            var realPath = playersUploadService.GenerateFullPath(model.PlayerName, this.GetUploadDirectoryPath());
+            System.IO.File.Delete(realPath);
+            System.IO.File.Move(model.TemporaryPath, realPath);
+
             return RedirectToAction(MVC.Players.Index());
+        }
+
+        [HttpPost]
+        public virtual ActionResult OverwriteNo()
+        {
+            return RedirectToAction(MVC.AddPlayer.Index());
+        }
+
+        private void InitialiseModelForOverwritingFile(string playerName, AddPlayerModel model)
+        {
+            model.CanOverwrite = true;
+            model.TemporaryPath = Path.GetTempFileName();
+            model.PlayerName = playerName;
+            System.IO.File.Delete(model.TemporaryPath);
+            model.File.SaveAs(model.TemporaryPath);
         }
     }
 }

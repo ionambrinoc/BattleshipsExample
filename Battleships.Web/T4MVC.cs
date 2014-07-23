@@ -29,6 +29,7 @@ public static partial class MVC
     public static Battleships.Web.Controllers.AddPlayerController AddPlayer = new Battleships.Web.Controllers.T4MVC_AddPlayerController();
     public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
     public static Battleships.Web.Controllers.LeagueController League = new Battleships.Web.Controllers.T4MVC_LeagueController();
+    public static Battleships.Web.Controllers.ManagePlayersController ManagePlayers = new Battleships.Web.Controllers.T4MVC_ManagePlayersController();
     public static Battleships.Web.Controllers.MatchResultsController MatchResults = new Battleships.Web.Controllers.T4MVC_MatchResultsController();
     public static Battleships.Web.Controllers.PlayersController Players = new Battleships.Web.Controllers.T4MVC_PlayersController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
@@ -57,6 +58,19 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
     }
      
     public override void ExecuteResult(System.Web.Mvc.ControllerContext context) { }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_JsonResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
     
     public string Controller { get; set; }
     public string Action { get; set; }
@@ -105,6 +119,22 @@ namespace Links
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class AddPlayer {
+            private const string URLPATH = "~/Content/AddPlayer";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string AddPlayer_less = Url("AddPlayer.less");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class ManagePlayers {
+            private const string URLPATH = "~/Content/ManagePlayers";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string index_less = Url("index.less");
+        }
+    
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class MatchResults {
             private const string URLPATH = "~/Content/MatchResults";

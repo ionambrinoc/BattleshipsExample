@@ -22,6 +22,7 @@
     </div>
 
     <div id="winner"></div>
+    <div id="resultType"></div>
     <button id="resetGameButton" type="button" class="btn btn-success">Want to play again?</button>
     <div id="loading-spinner">
         <img src="../../Images/Explodingbattleship.gif" alt="Loading...">
@@ -38,7 +39,7 @@
     </tr>
     @foreach (var player in Model) {
         <tr>
-            <td>@player.UserName</td>
+            <td>@player.User.UserName</td>
             <td>@player.Name</td>
             <td>
                 <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">

@@ -96,10 +96,27 @@
     <Compile Include="Migrations\201407161344227_RenameGameResultToMatchResult.Designer.cs">
       <DependentUpon>201407161344227_RenameGameResultToMatchResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201407210933271_RemoveFileNameFromPlayerRecord.cs" />
+    <Compile Include="Migrations\201407210933271_RemoveFileNameFromPlayerRecord.Designer.cs">
+      <DependentUpon>201407210933271_RemoveFileNameFromPlayerRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407211528042_AddPictureNameToPlayerRecord.cs" />
+    <Compile Include="Migrations\201407211528042_AddPictureNameToPlayerRecord.Designer.cs">
+      <DependentUpon>201407211528042_AddPictureNameToPlayerRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407221259100_AddedForeignKeyToUsersTableInPlayerRecords.cs" />
+    <Compile Include="Migrations\201407221259100_AddedForeignKeyToUsersTableInPlayerRecords.Designer.cs">
+      <DependentUpon>201407221259100_AddedForeignKeyToUsersTableInPlayerRecords.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407231457533_RenamePictureNameToPictureFileName.cs" />
+    <Compile Include="Migrations\201407231457533_RenamePictureNameToPictureFileName.Designer.cs">
+      <DependentUpon>201407231457533_RenamePictureNameToPictureFileName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PlayerRecord.cs" />
     <Compile Include="Models\MatchResult.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="OutOfTimeException.cs" />
     <Compile Include="PlayerLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\PlayerRecordsRepository.cs" />
@@ -108,6 +125,7 @@
     <Compile Include="ShipPositionValidator.cs" />
     <Compile Include="ShipsPlacement.cs" />
     <Compile Include="ShipsPlacementFactory.cs" />
+    <Compile Include="GameResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
@@ -143,6 +161,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407161344227_RenameGameResultToMatchResult.resx">
       <DependentUpon>201407161344227_RenameGameResultToMatchResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407210933271_RemoveFileNameFromPlayerRecord.resx">
+      <DependentUpon>201407210933271_RemoveFileNameFromPlayerRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407211528042_AddPictureNameToPlayerRecord.resx">
+      <DependentUpon>201407211528042_AddPictureNameToPlayerRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407221259100_AddedForeignKeyToUsersTableInPlayerRecords.resx">
+      <DependentUpon>201407221259100_AddedForeignKeyToUsersTableInPlayerRecords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407231457533_RenamePictureNameToPictureFileName.resx">
+      <DependentUpon>201407231457533_RenamePictureNameToPictureFileName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

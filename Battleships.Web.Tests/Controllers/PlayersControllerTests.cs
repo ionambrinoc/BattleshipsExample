@@ -6,8 +6,9 @@
     using Battleships.Runner.Repositories;
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
-    using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
+    using Battleships.Web.Tests.TestHelpers;
     using FakeItEasy;
+    using FluentAssertions;
     using NUnit.Framework;
     using System.Configuration;
     using System.Web;
@@ -17,8 +18,6 @@
     [TestFixture]
     public class PlayersControllerTests
     {
-        private const string FileNameOne = "KittenBot1.dll";
-        private const string FileNameTwo = "KittenBot2.dll";
         private PlayerRecord playerRecordOne;
         private PlayerRecord playerRecordTwo;
         private PlayersController controller;
@@ -42,29 +41,35 @@
             controller = new PlayersController(fakePlayerRecordsRepository, fakeMatchResultsRepository,
                 fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
 
-            playerRecordOne = SetUpPlayerRecord(1, "Kitten", FileNameOne);
-            playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo", FileNameTwo);
+            playerRecordOne = SetUpPlayerRecord(1, "Kitten");
+            playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo");
             battleshipsPlayerOne = A.Fake<IBattleshipsPlayer>();
             battleshipsPlayerTwo = A.Fake<IBattleshipsPlayer>();
 
             SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayerOne);
             SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayerTwo);
 
-            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo)).Returns(battleshipsPlayerOne);
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo)).Returns(battleshipsPlayerOne, ResultType.Default);
             A.CallTo(() => battleshipsPlayerOne.Name).Returns("Kitten");
         }
 
         [Test]
         public void Run_game_returns_winner_as_json_result()
         {
-            // Given
+            //Given
+            playerRecordOne.Name = "KittenBot1";
+            playerRecordTwo.Name = "KittenBot2";
+            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot1")).Returns(battleshipsPlayer1);
+            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot2")).Returns(battleshipsPlayer2);
             A.CallTo(() => battleshipsPlayerOne.Name).Returns("Kitten");
 
             // When
             var result = controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
             // Then
-            Assert.That(result, IsMVC.Json("Kitten"));
+            Assert.IsInstanceOf<JsonResult>(result);
+            result.GetProperty("winnerName").Should().Be("Kitten");
+            result.GetProperty("resultType").Should().Be((int)ResultType.Default);
         }
 
         [Test]
@@ -78,12 +83,11 @@
             A.CallTo(() => fakeMatchResultsRepository.SaveContext()).MustHaveHappened();
         }
 
-        private PlayerRecord SetUpPlayerRecord(int id, string name, string fileName)
+        private PlayerRecord SetUpPlayerRecord(int id, string name)
         {
             var playerRecord = A.Fake<PlayerRecord>();
             playerRecord.Id = id;
             playerRecord.Name = name;
-            playerRecord.FileName = fileName;
 
             return playerRecord;
         }
@@ -93,7 +97,6 @@
             A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(playerRecord.Id)).Returns(playerRecord);
             A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(battleshipsPlayer)).Returns(playerRecord);
             A.CallTo(() => fakePlayerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerRecord.Id)).Returns(battleshipsPlayer);
-            A.CallTo(() => fakePlayerLoader.GetPlayerFromFile(playerRecord.FileName)).Returns(battleshipsPlayer);
         }
 
         private ControllerContext GetFakeControllerContext()

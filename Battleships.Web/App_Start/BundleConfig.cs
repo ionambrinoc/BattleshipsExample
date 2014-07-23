@@ -36,6 +36,11 @@
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/players").Include(
                 "~/Content/Players/index.less"));
+
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/addplayer").Include(
+                "~/Content/AddPlayer/AddPlayer.less"));
+
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/manageplayers").Include("~/Content/ManagePlayers/index.less"));
         }
     }
 }

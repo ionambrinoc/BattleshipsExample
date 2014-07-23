@@ -209,12 +209,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AddPlayerController.cs" />
     <Compile Include="App_Start\StartUp.Auth.cs" />
+    <Compile Include="Controllers\Helpers\ControllerExtensions.cs" />
     <Compile Include="Controllers\LeagueController.cs" />
+    <Compile Include="Controllers\ManagePlayersController.cs" />
     <Compile Include="Controllers\MatchResultsController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="LeagueController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ManagePlayersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="MatchResultsController.generated.cs">
@@ -226,6 +231,7 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddPlayer\AddPlayerModel.cs" />
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
     <Compile Include="Models\League\RoundStats.cs" />
     <Compile Include="Models\League\PlayerStats.cs" />
@@ -286,8 +292,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Players\index.less" />
+    <Content Include="Content\AddPlayer\AddPlayer.less" />
+    <Content Include="Content\ManagePlayers\index.less" />
     <Content Include="Content\MatchResults\index.less" />
-    <Content Include="Content\site.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
@@ -340,6 +347,7 @@
     <Content Include="Components\bootstrap\less\variables.less" />
     <Content Include="Components\bootstrap\less\wells.less" />
     <Content Include="PlayerStore\.create-folder" />
+    <Content Include="Content\site.less" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
@@ -367,6 +375,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\League\Index.cshtml" />
+    <Content Include="Views\ManagePlayers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -376,7 +385,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

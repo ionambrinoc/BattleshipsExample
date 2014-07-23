@@ -42,9 +42,6 @@
     <Reference Include="EntityFramework.SqlServerCompact">
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.1\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServerCompact.Fakes">
-      <HintPath>FakesAssemblies\EntityFramework.SqlServerCompact.Fakes.dll</HintPath>
-    </Reference>
     <Reference Include="FakeItEasy, Version=1.22.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FakeItEasy.1.22.0\lib\net40\FakeItEasy.dll</HintPath>
@@ -122,6 +119,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleshipsStopwatchTests.cs" />
     <Compile Include="HeadToHeadRunnerTests.cs" />
     <Compile Include="LeagueRunnerTests.cs" />
     <Compile Include="MatchRunnerTests.cs" />
@@ -133,7 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">

@@ -8,24 +8,36 @@
 
     public interface IPlayerUploadService
     {
-        PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file,
-                                              string uploadDirectoryPath);
+        PlayerRecord SaveFileAndGetPlayerRecord(string userName, HttpPostedFileBase file,
+                                                string uploadDirectoryPath, string playerName);
+
+        string GenerateFullPath(string playerName, string uploadDirectoryPath);
+        IBattleshipsPlayer LoadBattleshipsPlayerFromFile(HttpPostedFileBase playerFile);
     }
 
     public class PlayerUploadService : IPlayerUploadService
     {
         private readonly PlayerLoader playerLoader = new PlayerLoader();
-        private IBattleshipsPlayer battleshipsPlayer;
 
-        public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file,
-                                                     string uploadDirectoryPath)
+        public PlayerRecord SaveFileAndGetPlayerRecord(string userId, HttpPostedFileBase file,
+                                                       string uploadDirectoryPath, string playerName)
         {
-            var fileName = Path.GetFileName(file.FileName) ?? "";
-            var fullPath = Path.Combine(uploadDirectoryPath, fileName);
+            var fullPath = GenerateFullPath(playerName, uploadDirectoryPath);
             file.SaveAs(fullPath);
-            battleshipsPlayer = playerLoader.GetPlayerFromFile(fileName);
+            return new PlayerRecord { UserId = userId, Name = playerName };
+        }
 
-            return new PlayerRecord { UserName = userName, Name = battleshipsPlayer.Name, FileName = fileName };
+        public string GenerateFullPath(string playerName, string uploadDirectoryPath)
+        {
+            return Path.Combine(uploadDirectoryPath, playerName + ".dll");
+        }
+
+        public IBattleshipsPlayer LoadBattleshipsPlayerFromFile(HttpPostedFileBase playerFile)
+        {
+            var tempPath = Path.GetTempFileName();
+            File.Delete(tempPath);
+            playerFile.SaveAs(tempPath);
+            return playerLoader.GetBattleshipsPlayerFromFullPath(tempPath);
         }
     }
 }

@@ -28,11 +28,12 @@
         }
 
         [HttpPost]
-        public virtual ActionResult RunGame(int playerOneId, int playerTwoId)
+        public virtual JsonResult RunGame(int playerOneId, int playerTwoId)
         {
             var battleshipsPlayerOne = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerOneId);
             var battleshipsPlayerTwo = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerTwoId);
-            var winner = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
+            var winnerResult = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
+            var winner = winnerResult.Winner;
             var loser = winner == battleshipsPlayerOne ? battleshipsPlayerTwo : battleshipsPlayerOne;
             var matchResult = new MatchResult
                               {
@@ -44,7 +45,7 @@
                               };
             matchResultsRepository.Add(matchResult);
             matchResultsRepository.SaveContext();
-            return Json(winner.Name);
+            return Json(new { winnerName = winner.Name, resultType = (int)winnerResult.ResultType });
         }
     }
 }

@@ -30,7 +30,7 @@
         public void Returns_correct_player_if_file_exists()
         {
             // When
-            var player = loader.GetPlayerFromFile("example_player.dll");
+            var player = loader.GetBattleshipsPlayerFromPlayerName("example_player");
 
             // Then
             player.Should().BeAssignableTo<IBattleshipsPlayer>();
@@ -40,7 +40,7 @@
         public void Throws_exception_if_file_not_found()
         {
             // When
-            Action getPlayer = () => loader.GetPlayerFromFile("not_a_real_file.dll");
+            Action getPlayer = () => loader.GetBattleshipsPlayerFromPlayerName("not_a_real_file");
 
             // Then
             getPlayer.ShouldThrow<FileNotFoundException>();
@@ -50,7 +50,7 @@
         public void Throws_exception_if_file_is_not_a_battleships_player()
         {
             // When
-            Action getPlayer = () => loader.GetPlayerFromFile("not_a_real_player.dll");
+            Action getPlayer = () => loader.GetBattleshipsPlayerFromPlayerName("not_a_real_player");
 
             // Then
             getPlayer.ShouldThrow<InvalidPlayerException>();
