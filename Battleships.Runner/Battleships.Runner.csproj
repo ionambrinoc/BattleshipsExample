@@ -60,7 +60,7 @@
     <Compile Include="BattleshipsInitializer.cs" />
     <Compile Include="Exceptions\InvalidPlayerException.cs" />
     <Compile Include="HeadToHeadRunner.cs" />
-    <Compile Include="IMatchScoreBoardFactory.cs" />
+    <Compile Include="Factories\MatchScoreBoardFactory.cs" />
     <Compile Include="LeagueRunner.cs" />
     <Compile Include="MatchRunner.cs" />
     <Compile Include="MatchScoreBoard.cs" />
@@ -116,15 +116,14 @@
     <Compile Include="Models\PlayerRecord.cs" />
     <Compile Include="Models\MatchResult.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="OutOfTimeException.cs" />
+    <Compile Include="Exceptions\OutOfTimeException.cs" />
     <Compile Include="PlayerLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\PlayerRecordsRepository.cs" />
     <Compile Include="Repositories\MatchResultsRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
-    <Compile Include="ShipPositionValidator.cs" />
     <Compile Include="ShipsPlacement.cs" />
-    <Compile Include="ShipsPlacementFactory.cs" />
+    <Compile Include="Factories\ShipsPlacementFactory.cs" />
     <Compile Include="GameResult.cs" />
   </ItemGroup>
   <ItemGroup>
