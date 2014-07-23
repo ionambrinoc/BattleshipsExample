@@ -28,14 +28,22 @@
             return statsByPlayer.Select(x => x.Value).ToList();
         }
 
-        private static void AddRoundStats(IDictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord player, string opponentName, int playerRoundWins, int opponentRoundWins)
+        private static void AddWin(Dictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord winner, string opponentName, int winnerRoundWins, int loserRoundWins)
         {
-            statsByPlayer[player].RoundStats.Add(new RoundStats
-                                                 {
-                                                     OpponentName = opponentName,
-                                                     Wins = playerRoundWins,
-                                                     Losses = opponentRoundWins
-                                                 });
+            if (statsByPlayer.ContainsKey(winner))
+            {
+                statsByPlayer[winner].Wins++;
+            }
+            else
+            {
+                statsByPlayer.Add(winner, new PlayerStats
+                                          {
+                                              Id = winner.Id,
+                                              Name = winner.Name,
+                                              Wins = 1
+                                          });
+            }
+            AddRoundStats(statsByPlayer, winner, opponentName, winnerRoundWins, loserRoundWins);
         }
 
         private static void AddLoss(Dictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord loser, string opponentName, int loserRoundWins, int winnerRoundWins)
@@ -56,22 +64,14 @@
             AddRoundStats(statsByPlayer, loser, opponentName, loserRoundWins, winnerRoundWins);
         }
 
-        private static void AddWin(Dictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord winner, string opponentName, int winnerRoundWins, int loserRoundWins)
+        private static void AddRoundStats(IDictionary<PlayerRecord, PlayerStats> statsByPlayer, PlayerRecord player, string opponentName, int playerRoundWins, int opponentRoundWins)
         {
-            if (statsByPlayer.ContainsKey(winner))
-            {
-                statsByPlayer[winner].Wins++;
-            }
-            else
-            {
-                statsByPlayer.Add(winner, new PlayerStats
-                                          {
-                                              Id = winner.Id,
-                                              Name = winner.Name,
-                                              Wins = 1
-                                          });
-            }
-            AddRoundStats(statsByPlayer, winner, opponentName, winnerRoundWins, loserRoundWins);
+            statsByPlayer[player].RoundStats.Add(new RoundStats
+                                                 {
+                                                     OpponentName = opponentName,
+                                                     Wins = playerRoundWins,
+                                                     Losses = opponentRoundWins
+                                                 });
         }
     }
 }
