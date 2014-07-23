@@ -15,13 +15,14 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.IO;
+    using System.Security.Claims;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
 
     internal class AddPlayerControllerTests
     {
-        private const string UserName = "testUser";
+        private const string UserId = "testId";
         private AddPlayerController controller;
         private IPlayerRecordsRepository fakePlayerRecordRepository;
         private IPlayerUploadService fakePlayerUploadService;
@@ -41,7 +42,7 @@
             fakeBattleshipsPlayer = A.Fake<IBattleshipsPlayer>();
             fakeFile = A.Fake<HttpPostedFileBase>();
             fakePlayerRecord = A.Fake<PlayerRecord>();
-            A.CallTo(() => controller.User.Identity.Name).Returns(UserName);
+            A.CallTo(() => controller.User.Identity).Returns(new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, UserId) }));
             A.CallTo(() => fakePlayerUploadService.LoadBattleshipsPlayerFromFile(A<HttpPostedFileBase>.Ignored)).Returns(fakeBattleshipsPlayer);
             A.CallTo(() => fakeBattleshipsPlayer.Name).Returns("testName");
         }
@@ -138,7 +139,7 @@
              .Returns(fakePlayer);
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(true);
-            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExistsForUser(fakeBattleshipsPlayer.Name, UserName)).Returns(true);
+            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExistsForUser(fakeBattleshipsPlayer.Name, UserId)).Returns(true);
 
             // When
             var result = controller.Index(model);
@@ -154,7 +155,7 @@
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
             A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(true);
-            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExistsForUser(fakeBattleshipsPlayer.Name, UserName)).Returns(false);
+            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExistsForUser(fakeBattleshipsPlayer.Name, UserId)).Returns(false);
 
             // When
             var result = controller.Index(model);
@@ -198,16 +199,28 @@
         }
 
         [Test]
-        public void OverwriteYes_redirects_to_players_index()
+        public void OverwriteYes_redirects_to_players_index_and_succeeds_overwriting_a_file()
         {
             // Given
-            var model = new AddPlayerModel { TemporaryPath = Path.GetTempFileName(), PlayerName = "testName" };
+            var tempPath = Path.GetTempFileName();
+            File.WriteAllText(tempPath, "test");
+            var realPath = Path.Combine(TestPlayerStore.Directory, "testName.dll");
+            var fileStream = File.Create(realPath);
+            fileStream.Close();
+
+            var model = new AddPlayerModel { TemporaryPath = tempPath, PlayerName = "testName" };
+            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(model.PlayerName, A<string>.Ignored)).Returns(realPath);
 
             // When
             var result = controller.OverwriteYes(model);
 
             // Then
+            Assert.That(File.Exists(realPath));
+            Assert.That(File.ReadAllText(realPath) == "test");
+            Assert.That(!File.Exists(tempPath));
             Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
+
+            File.Delete(realPath);
         }
 
         [Test]

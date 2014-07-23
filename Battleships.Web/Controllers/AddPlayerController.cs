@@ -5,6 +5,7 @@
     using Battleships.Runner.Repositories;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
+    using Microsoft.AspNet.Identity;
     using System.IO;
     using System.Web;
     using System.Web.Mvc;
@@ -65,7 +66,7 @@
                 return RedirectToAction(MVC.Players.Index());
             }
 
-            if (playerRecordsRepository.PlayerNameExistsForUser(newPlayer.Name, User.Identity.Name))
+            if (playerRecordsRepository.PlayerNameExistsForUser(newPlayer.Name, User.Identity.GetUserId()))
             {
                 InitialiseModelForOverwritingFile(newPlayer.Name, model);
                 return View(model);

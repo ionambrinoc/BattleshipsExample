@@ -41,7 +41,7 @@
     </tr>
     @foreach (var player in Model) {
         <tr>
-            <td>@player.UserName</td>
+            <td>@player.User.UserName</td>
             <td>
                 @if (player.PictureFileName != null) {
                     <a href="@player.PictureFileName">@player.Name</a>
