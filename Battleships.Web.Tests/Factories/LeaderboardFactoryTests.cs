@@ -1,12 +1,12 @@
 ﻿namespace Battleships.Web.Tests.Factories
 {
-    using System.Collections.Generic;
     using Battleships.Runner.Models;
     using Battleships.Web.Factories;
     using Battleships.Web.Models.League;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
+    using System.Collections.Generic;
 
     public class LeaderboardFactoryTests
     {
@@ -16,6 +16,10 @@
         private MatchResult matchWhenPlayerTwoWins;
         private List<MatchResult> matchResults;
         private LeaderboardFactory leaderboardFactory;
+        private RoundStats playerOneWinRoundStats;
+        private RoundStats playerTwoWinRoundStats;
+        private RoundStats playerOneLoseRoundStats;
+        private RoundStats playerTwoLoseRoundStats;
 
         [SetUp]
         public void SetUp()
@@ -32,6 +36,11 @@
             matchWhenPlayerOneWins.Loser = playerTwo;
             matchWhenPlayerTwoWins.Winner = playerTwo;
             matchWhenPlayerTwoWins.Loser = playerOne;
+
+            playerOneWinRoundStats = new RoundStats { Losses = 1, Wins = 2, OpponentName = playerTwo.Name };
+            playerTwoWinRoundStats = new RoundStats { Losses = 1, Wins = 2, OpponentName = playerOne.Name };
+            playerOneLoseRoundStats = new RoundStats { Losses = 2, Wins = 1, OpponentName = playerTwo.Name };
+            playerTwoLoseRoundStats = new RoundStats { Losses = 2, Wins = 1, OpponentName = playerOne.Name };
 
             leaderboardFactory = new LeaderboardFactory();
         }
@@ -52,7 +61,8 @@
                                           Name = playerOne.Name,
                                           Wins = 2,
                                           RoundWins = 5,
-                                          Losses = 1
+                                          Losses = 1,
+                                          RoundStats = new List<RoundStats> { playerOneWinRoundStats, playerOneWinRoundStats, playerOneLoseRoundStats }
                                       },
                                       new PlayerStats
                                       {
@@ -60,7 +70,8 @@
                                           Name = playerTwo.Name,
                                           Wins = 1,
                                           RoundWins = 4,
-                                          Losses = 2
+                                          Losses = 2,
+                                          RoundStats = new List<RoundStats> { playerTwoWinRoundStats, playerTwoLoseRoundStats, playerTwoLoseRoundStats }
                                       }
                                   };
 

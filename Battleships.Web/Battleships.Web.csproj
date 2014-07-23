@@ -227,6 +227,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
+    <Compile Include="Models\League\RoundStats.cs" />
     <Compile Include="Models\League\PlayerStats.cs" />
     <Compile Include="Models\Players\ChallengeViewModel.cs" />
     <Compile Include="Factories\LeaderboardFactory.cs" />
