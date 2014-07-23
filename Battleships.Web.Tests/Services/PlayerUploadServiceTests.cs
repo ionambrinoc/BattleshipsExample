@@ -4,6 +4,7 @@
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using NUnit.Framework;
+    using System.Configuration;
     using System.IO;
 
     internal class PlayerUploadServiceTests
@@ -14,8 +15,10 @@
         public void SetUp()
         {
             playerUploadService = new PlayerUploadService();
+            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
         }
 
+        [Test]
         public void Overwrite_succeeds_in_overwriting_a_file()
         {
             // Given

@@ -3,7 +3,6 @@
     using Battleships.Player;
     using Battleships.Runner.Exceptions;
     using System;
-    using System.Configuration;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
@@ -17,6 +16,8 @@
 
     public class PlayerLoader : IPlayerLoader
     {
+        private static readonly DirectoryPath DirectoryPath = new DirectoryPath();
+
         public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerName(string playerName)
         {
             return GetBattleshipsPlayerFromFullPath(GetFullFilePath(playerName + ".dll"));
@@ -38,13 +39,7 @@
         [ExcludeFromCodeCoverage]
         private static string GetFullFilePath(string fileName)
         {
-            var playerStoreDirectory = ConfigurationManager.AppSettings["PlayerStoreDirectory"];
-            if (!Path.IsPathRooted(playerStoreDirectory))
-            {
-                playerStoreDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, playerStoreDirectory);
-            }
-
-            return Path.Combine(playerStoreDirectory, fileName);
+            return Path.Combine(DirectoryPath.GetDirectoryPath("PlayerStoreDirectory"), fileName);
         }
     }
 }

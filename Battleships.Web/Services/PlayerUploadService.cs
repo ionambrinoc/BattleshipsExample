@@ -5,10 +5,8 @@
     using Battleships.Runner.Models;
     using Battleships.Web.Models.AddPlayer;
     using System;
-    using System.Configuration;
     using System.IO;
     using System.Web;
-    using System.Web.Hosting;
 
     public interface IPlayerUploadService
     {
@@ -22,6 +20,7 @@
     public class PlayerUploadService : IPlayerUploadService
     {
         private readonly PlayerLoader playerLoader = new PlayerLoader();
+        private readonly DirectoryPath directoryPath = new DirectoryPath();
 
         public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName)
         {
@@ -90,12 +89,12 @@
 
         private string GetUploadDirectoryPath()
         {
-            return Path.Combine(HostingEnvironment.ApplicationPhysicalPath, ConfigurationManager.AppSettings["PlayerStoreDirectory"]);
+            return directoryPath.GetDirectoryPath("PlayerStoreDirectory");
         }
 
         private string GetPictureUploadDirectoryPath()
         {
-            return Path.Combine(HostingEnvironment.ApplicationPhysicalPath, ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"]);
+            return directoryPath.GetDirectoryPath("PlayerProfilePictureStoreDirectory");
         }
     }
 }
