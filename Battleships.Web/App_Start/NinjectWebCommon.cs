@@ -57,7 +57,7 @@ namespace Battleships.Web
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind(x => x.FromAssembliesMatching("Battleships.*").SelectAllClasses().BindDefaultInterface());
-            kernel.Bind<BattleshipsContext>().ToSelf().InRequestScope();
+            kernel.Bind<DbContext>().To<BattleshipsContext>().InRequestScope();
             kernel.Bind<UserManager<User>>().ToSelf().InRequestScope();
             kernel.Bind<IUserStore<User>>().ToConstructor(c => new UserStore<User>(c.Inject<DbContext>())).InRequestScope();
             kernel.Bind<IAuthenticationManager>().ToMethod(x => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();

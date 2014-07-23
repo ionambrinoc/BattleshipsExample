@@ -2,6 +2,7 @@
 {
     using Battleships.Runner.Models;
     using System.Collections.Generic;
+    using System.Data.Entity;
 
     public interface IMatchResultsRepository : IRepository<MatchResult>
     {
@@ -10,7 +11,7 @@
 
     public class MatchResultsRepository : Repository<MatchResult>, IMatchResultsRepository
     {
-        public MatchResultsRepository(BattleshipsContext context)
+        public MatchResultsRepository(DbContext context)
             : base(context) {}
 
         public void AddResults(List<MatchResult> results)
