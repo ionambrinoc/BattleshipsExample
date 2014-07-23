@@ -227,8 +227,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
+    <Compile Include="Models\League\PlayerStats.cs" />
     <Compile Include="Models\Players\ChallengeViewModel.cs" />
-    <Compile Include="Models\League\LeaderboardViewModel.cs" />
+    <Compile Include="Factories\LeaderboardFactory.cs" />
     <Compile Include="PlayersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

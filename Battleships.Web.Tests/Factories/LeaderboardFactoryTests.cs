@@ -1,41 +1,43 @@
-﻿namespace Battleships.Web.Tests
+﻿namespace Battleships.Web.Tests.Factories
 {
-    using Battleships.Runner;
+    using System.Collections.Generic;
     using Battleships.Runner.Models;
+    using Battleships.Web.Factories;
     using Battleships.Web.Models.League;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
-    using System.Collections.Generic;
 
-    internal class LeaderboardViewModelTests
+    public class LeaderboardFactoryTests
     {
         private PlayerRecord playerOne;
         private PlayerRecord playerTwo;
         private MatchResult matchWhenPlayerOneWins;
         private MatchResult matchWhenPlayerTwoWins;
         private List<MatchResult> matchResults;
-        private LeaderboardViewModel leaderboardViewModel;
+        private LeaderboardFactory leaderboardFactory;
 
         [SetUp]
         public void SetUp()
         {
             playerOne = A.Fake<PlayerRecord>();
             playerTwo = A.Fake<PlayerRecord>();
+            playerOne.Id = 1;
+            playerTwo.Id = 2;
 
             matchWhenPlayerOneWins = A.Fake<MatchResult>();
             matchWhenPlayerTwoWins = A.Fake<MatchResult>();
 
-            A.CallTo(() => matchWhenPlayerOneWins.Winner).Returns(playerOne);
-            A.CallTo(() => matchWhenPlayerOneWins.Loser).Returns(playerTwo);
-            A.CallTo(() => matchWhenPlayerTwoWins.Winner).Returns(playerTwo);
-            A.CallTo(() => matchWhenPlayerTwoWins.Loser).Returns(playerOne);
+            matchWhenPlayerOneWins.Winner = playerOne;
+            matchWhenPlayerOneWins.Loser = playerTwo;
+            matchWhenPlayerTwoWins.Winner = playerTwo;
+            matchWhenPlayerTwoWins.Loser = playerOne;
 
-            leaderboardViewModel = new LeaderboardViewModel();
+            leaderboardFactory = new LeaderboardFactory();
         }
 
         [Test]
-        public void Leaderboard_returned_with_player_one_on_top()
+        public void Leaderboard_returned_with_player_with_most_wins_on_top()
         {
             // Given
             matchResults = new List<MatchResult> { matchWhenPlayerOneWins, matchWhenPlayerOneWins, matchWhenPlayerTwoWins };
@@ -44,12 +46,26 @@
 
             var expectedResults = new List<PlayerStats>
                                   {
-                                      new PlayerStats(playerOne, 2, 5, 1),
-                                      new PlayerStats(playerTwo, 1, 4, 2)
+                                      new PlayerStats
+                                      {
+                                          Id = playerOne.Id,
+                                          Name = playerOne.Name,
+                                          Wins = 2,
+                                          RoundWins = 5,
+                                          Losses = 1
+                                      },
+                                      new PlayerStats
+                                      {
+                                          Id = playerTwo.Id,
+                                          Name = playerTwo.Name,
+                                          Wins = 1,
+                                          RoundWins = 4,
+                                          Losses = 2
+                                      }
                                   };
 
             // When
-            var results = leaderboardViewModel.GenerateLeaderboard(matchResults);
+            var results = leaderboardFactory.GenerateLeaderboard(matchResults);
 
             // Then
             results.ShouldBeEquivalentTo(expectedResults);
@@ -64,11 +80,10 @@
             WinnerRoundWinsWhenPlayerTwoWins(3);
 
             // When
-            var results = leaderboardViewModel.GenerateLeaderboard(matchResults);
-            var totalWinsTheSame = results[0].Wins == results[1].Wins;
+            var results = leaderboardFactory.GenerateLeaderboard(matchResults);
 
             // Then
-            totalWinsTheSame.Should().BeTrue();
+            results[0].Wins.Should().Be(results[1].Wins);
             results.Should().BeInDescendingOrder(x => x.RoundWins);
         }
 

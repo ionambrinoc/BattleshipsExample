@@ -34,6 +34,9 @@
             winnerPlayerRecord = A.Fake<PlayerRecord>();
             loserPlayerRecord = A.Fake<PlayerRecord>();
 
+            winnerPlayerRecord.Id = 1;
+            loserPlayerRecord.Id = 2;
+
             matchScoreBoardFactory = A.Fake<IMatchScoreBoardFactory>();
             matchScoreBoard = A.Fake<IMatchScoreBoard>();
             A.CallTo(() => matchScoreBoardFactory.GetMatchScoreBoard(playerOne, playerTwo)).Returns(matchScoreBoard);

@@ -121,7 +121,7 @@
     <Compile Include="Controllers\PlayersControllerTests.cs" />
     <Compile Include="Controllers\MatchResultsControllerTest.cs" />
     <Compile Include="Controllers\AddPlayerControllerTests.cs" />
-    <Compile Include="LeaderboardViewModelTests.cs" />
+    <Compile Include="Factories\LeaderboardFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers\NUnitConstraints\HasMVC.cs" />
     <Compile Include="TestHelpers\NUnitConstraints\IsMVC.cs" />

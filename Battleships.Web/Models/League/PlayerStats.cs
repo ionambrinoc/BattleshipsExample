@@ -1,18 +1,10 @@
-﻿namespace Battleships.Runner
+﻿namespace Battleships.Web.Models.League
 {
-    using Battleships.Runner.Models;
     using System;
 
     public class PlayerStats : IComparable<PlayerStats>
     {
-        public PlayerStats(PlayerRecord player, int wins = 0, int roundWins = 0, int losses = 0)
-        {
-            Name = player.Name;
-            Wins = wins;
-            RoundWins = roundWins;
-            Losses = losses;
-        }
-
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Wins { get; set; }
         public int RoundWins { get; set; }

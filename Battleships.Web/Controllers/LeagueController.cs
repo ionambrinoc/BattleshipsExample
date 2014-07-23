@@ -2,7 +2,7 @@
 {
     using Battleships.Runner;
     using Battleships.Runner.Repositories;
-    using Battleships.Web.Models.League;
+    using Battleships.Web.Factories;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -10,14 +10,16 @@
     {
         private readonly IPlayerRecordsRepository playerRecordsRepository;
         private readonly ILeagueRunner leagueRunner;
-        private readonly ILeaderboardViewModel leaderboardViewModel;
+        private readonly ILeaderboardFactory leaderboardFactory;
+        private readonly IMatchResultsRepository matchResultsRepository;
 
         public LeagueController(IPlayerRecordsRepository playerRecordsRepository, ILeagueRunner leagueRunner,
-                                ILeaderboardViewModel leaderboardViewModel)
+                                ILeaderboardFactory leaderboardFactory, IMatchResultsRepository matchResultsRepository)
         {
             this.playerRecordsRepository = playerRecordsRepository;
             this.leagueRunner = leagueRunner;
-            this.leaderboardViewModel = leaderboardViewModel;
+            this.leaderboardFactory = leaderboardFactory;
+            this.matchResultsRepository = matchResultsRepository;
         }
 
         [HttpGet]
@@ -30,7 +32,10 @@
         public virtual ActionResult RunLeague()
         {
             var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
-            return Json(leaderboardViewModel.GenerateLeaderboard(leagueRunner.GetLeagueResults(battleshipsPlayers, 3)));
+            var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers, 3);
+            matchResultsRepository.AddResults(matchResults);
+            var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
+            return Json(leaderboard);
         }
     }
 }

@@ -5,6 +5,7 @@
     using Battleships.Runner.Models;
     using Battleships.Runner.Repositories;
     using Battleships.Web.Controllers;
+    using Battleships.Web.Factories;
     using Battleships.Web.Models.League;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
@@ -15,20 +16,22 @@
     {
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
         private ILeagueRunner fakeLeagueRunner;
-        private ILeaderboardViewModel fakeLeaderboardViewModel;
+        private ILeaderboardFactory fakeLeaderboardFactory;
         private LeagueController controller;
         private PlayerRecord playerRecordOne;
         private PlayerRecord playerRecordTwo;
         private MatchResult playerOneWin;
         private MatchResult playerTwoWin;
+        private IMatchResultsRepository fakeMatchResultsRepository;
 
         [SetUp]
         public void SetUp()
         {
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakeLeagueRunner = A.Fake<ILeagueRunner>();
-            fakeLeaderboardViewModel = A.Fake<ILeaderboardViewModel>();
-            controller = new LeagueController(fakePlayerRecordsRepository, fakeLeagueRunner, fakeLeaderboardViewModel);
+            fakeLeaderboardFactory = A.Fake<ILeaderboardFactory>();
+            fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
+            controller = new LeagueController(fakePlayerRecordsRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository);
 
             playerRecordOne = A.Fake<PlayerRecord>();
             playerRecordTwo = A.Fake<PlayerRecord>();
@@ -44,11 +47,25 @@
             var matchResults = new List<MatchResult> { playerOneWin, playerOneWin, playerTwoWin };
             var expectedLeaderboard = new List<PlayerStats>
                                       {
-                                          new PlayerStats(playerRecordOne, 2, 5, 1),
-                                          new PlayerStats(playerRecordTwo, 1, 4, 2)
+                                          new PlayerStats
+                                          {
+                                              Id = playerRecordOne.Id,
+                                              Name = playerRecordOne.Name,
+                                              Wins = 2,
+                                              RoundWins = 5,
+                                              Losses = 1
+                                          },
+                                          new PlayerStats
+                                          {
+                                              Id = playerRecordTwo.Id,
+                                              Name = playerRecordTwo.Name,
+                                              Wins = 1,
+                                              RoundWins = 4,
+                                              Losses = 2
+                                          }
                                       };
             A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
-            A.CallTo(() => fakeLeaderboardViewModel.GenerateLeaderboard(matchResults)).Returns(expectedLeaderboard);
+            A.CallTo(() => fakeLeaderboardFactory.GenerateLeaderboard(matchResults)).Returns(expectedLeaderboard);
 
             // When
             var result = controller.RunLeague();
