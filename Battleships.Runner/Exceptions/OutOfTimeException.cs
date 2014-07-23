@@ -1,4 +1,4 @@
-﻿namespace Battleships.Runner
+﻿namespace Battleships.Runner.Exceptions
 {
     using Battleships.Player;
     using System;

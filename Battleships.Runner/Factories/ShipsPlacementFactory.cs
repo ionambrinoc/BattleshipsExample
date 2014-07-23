@@ -1,4 +1,4 @@
-﻿namespace Battleships.Runner
+﻿namespace Battleships.Runner.Factories
 {
     using Battleships.Player;
 

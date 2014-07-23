@@ -1,6 +1,8 @@
 ﻿namespace Battleships.Runner
 {
     using Battleships.Player;
+    using Battleships.Runner.Exceptions;
+    using Battleships.Runner.Factories;
 
     public interface IHeadToHeadRunner
     {
