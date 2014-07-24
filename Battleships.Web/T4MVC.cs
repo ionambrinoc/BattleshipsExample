@@ -127,6 +127,15 @@ namespace Links
             public static readonly string AddPlayer_less = Url("AddPlayer.less");
         }
     
+        public static readonly string large_less = Url("large.less");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class League {
+            private const string URLPATH = "~/Content/League";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string index_less = Url("index.less");
+        }
+    
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class ManagePlayers {
             private const string URLPATH = "~/Content/ManagePlayers";

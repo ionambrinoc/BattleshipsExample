@@ -31,6 +31,7 @@
             bundles.Add(new CustomStyleBundle("~/bundles/styles/common").Include(
                 "~/Components/bootstrap/less/bootstrap.less",
                 "~/Content/site.less"));
+
             bundles.Add(new CustomStyleBundle("~/bundles/styles/matchresults/index").Include(
                 "~/Content/MatchResults/index.less"));
 
@@ -40,7 +41,11 @@
             bundles.Add(new CustomStyleBundle("~/bundles/styles/addplayer").Include(
                 "~/Content/AddPlayer/AddPlayer.less"));
 
-            bundles.Add(new CustomStyleBundle("~/bundles/styles/manageplayers").Include("~/Content/ManagePlayers/index.less"));
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/manageplayers").Include(
+                "~/Content/ManagePlayers/index.less"));
+
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/league").Include(
+                "~/Content/League/index.less"));
         }
     }
 }

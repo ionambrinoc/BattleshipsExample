@@ -1,5 +1,6 @@
 ﻿@using Battleships.Web.Factories
 @model LeaderboardFactory
+@Styles.Render("~/bundles/styles/league")
 
 @{
     ViewBag.Title = "League";
@@ -8,21 +9,22 @@
 @using (Html.BeginForm(MVC.League.RunLeague(), FormMethod.Post, new { id = "run-league" })) {}
 
 <div id="gameSetup">
-    <br/>
     <button id="runLeagueButton" type="button" class="btn btn-info">
         Run League
     </button>
 </div>
 
-<table class="table table-striped" id="leaderboard">
-    <tr>
-        <th>Player Name</th>
-        <th>Wins</th>
-        <th>Losses</th>
-        <th>Rounds won</th>
-    </tr>
+<table class="table table-hover" id="leaderboard">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Match Wins</th>
+            <th>Match Losses</th>
+            <th>Total rounds won</th>
+        </tr>
+    </thead>
 </table>
-<button id="resetGameButton" type="button" class="btn btn-success">Want to play again?</button>
+<button id="resetGameButton" type="button" class="btn btn-success">Play again?</button>
 <div id="loading-spinner">
     <img src="../../Images/Explodingbattleship.gif" alt="Loading...">
 </div>
