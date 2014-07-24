@@ -9,6 +9,9 @@
 
     internal class PlayerUploadServiceTests
     {
+        private const string TestPlayerName = "testName";
+        private const string TempFileContent = "test";
+        private const string TestFileName = TestPlayerName + ".dll";
         private IPlayerUploadService playerUploadService;
 
         [SetUp]
@@ -22,24 +25,21 @@
         public void Overwrite_succeeds_in_overwriting_a_file()
         {
             // Given
-            const string testFileName = "testName.dll";
-            const string testPlayerName = "testName";
-            const string testText = "test";
 
             var tempPath = Path.GetTempFileName();
-            File.WriteAllText(tempPath, testText);
-            var realPath = Path.Combine(TestPlayerStore.Directory, testFileName);
+            File.WriteAllText(tempPath, TempFileContent);
+            var realPath = Path.Combine(TestPlayerStore.Directory, TestFileName);
             var fileStream = File.Create(realPath);
             fileStream.Close();
 
-            var model = new AddPlayerModel { TemporaryPath = tempPath, PlayerName = testPlayerName };
+            var model = new AddPlayerModel { TemporaryPath = tempPath, PlayerName = TestPlayerName };
 
             // When
             playerUploadService.OverwritePlayer(model);
 
             // Then
             Assert.That(File.Exists(realPath));
-            Assert.That(File.ReadAllText(realPath) == testText);
+            Assert.That(File.ReadAllText(realPath) == TempFileContent);
             Assert.That(!File.Exists(tempPath));
 
             File.Delete(realPath);
