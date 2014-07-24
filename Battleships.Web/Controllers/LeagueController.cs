@@ -32,7 +32,7 @@
         public virtual ActionResult RunLeague()
         {
             var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
-            var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers, 3);
+            var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers);
             matchResultsRepository.AddResults(matchResults);
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
             return Json(leaderboard);

@@ -31,7 +31,7 @@
             {
                 throw new InvalidPlayerException();
             }
-            return new BattleshipsPlayer((IBattleshipsBot)Activator.CreateInstance(playerType));
+            return new BattleshipsPlayer((IBattleshipsBot)Activator.CreateInstance(playerType), 20000);
         }
 
         [ExcludeFromCodeCoverage]
