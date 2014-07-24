@@ -65,8 +65,12 @@
             A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
             A.CallTo(() => fakeLeaderboardFactory.GenerateLeaderboard(matchResults)).Returns(expectedLeaderboard);
 
+            var model = new List<LeaguePlayerRecordViewModel>();
+            model.Add(new LeaguePlayerRecordViewModel { Checked = true, PlayerId = playerRecordOne.Id, PlayerName = playerRecordOne.Name });
+            model.Add(new LeaguePlayerRecordViewModel { Checked = true, PlayerId = playerRecordTwo.Id, PlayerName = playerRecordTwo.Name });
+
             // When
-            var result = controller.RunLeague();
+            var result = controller.RunLeague(model);
 
             // Then
             Assert.That(result, IsMVC.Json(expectedLeaderboard));

@@ -6,8 +6,17 @@ window.battleships.league.index = (function($, undefined) {
     var gameSetup = $('#gameSetup');
     var resetButton = $('#resetGameButton');
     var leaderboard = $('#leaderboard');
+    var playerTable = $('#playerTable');
+    var setAllCheckBoxesCheckBox = $('#setAll');
+
+    function setAllCheckBoxes() {
+        setAllCheckBoxesCheckBox.change(function () {
+            $("input:checkbox").prop('checked', $(this).prop("checked"));
+        });
+    }
 
     function resetGame() {
+        playerTable.show();
         gameSetup.show();
         loadingSpinner.hide();
         leaderboard.find('.player, .round-stats').remove();
@@ -17,6 +26,7 @@ window.battleships.league.index = (function($, undefined) {
 
     function startLeague() {
         gameSetup.hide();
+        playerTable.hide();
         loadingSpinner.show();
     }
 
@@ -40,17 +50,17 @@ window.battleships.league.index = (function($, undefined) {
                 '<tr>' +
                 '<td>vs. ' + roundStats[j].OpponentName + ' - ' + roundStats[j].Wins + ':' + roundStats[j].Losses + '</td>' +
                 '<td></td><td></td><td></td>' +
-                '</tr>'
-            ;
+                '</tr>';
         }
         roundStatsHtml += '</tbody>';
         return roundStatsHtml;
     }
 
     return {
-        init: function() {
+        init: function () {
             resetGame();
             resetButton.on('click', resetGame);
+            setAllCheckBoxes();
 
             $('#runLeagueButton').click(function() {
                 startLeague();

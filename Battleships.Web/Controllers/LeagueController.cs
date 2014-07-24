@@ -3,6 +3,8 @@
     using Battleships.Runner;
     using Battleships.Runner.Repositories;
     using Battleships.Web.Factories;
+    using Battleships.Web.Models.League;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -25,13 +27,22 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View();
+            var playerRecords = playerRecordsRepository.GetAll();
+            var model = playerRecords.Select(playerRecord => new LeaguePlayerRecordViewModel
+                                                             {
+                                                                 PlayerName = playerRecord.Name,
+                                                                 PlayerId = playerRecord.Id,
+                                                                 PictureFileName = playerRecord.PictureFileName,
+                                                                 UserName = playerRecord.User.UserName,
+                                                                 Checked = false
+                                                             }).ToList();
+            return View(model);
         }
 
         [HttpPost]
-        public virtual ActionResult RunLeague()
+        public virtual ActionResult RunLeague(IEnumerable<LeaguePlayerRecordViewModel> model)
         {
-            var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
+            var battleshipsPlayers = model.Where(m => m.Checked).Select(m => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(m.PlayerId)).ToList();
             var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers, 3);
             matchResultsRepository.AddResults(matchResults);
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
