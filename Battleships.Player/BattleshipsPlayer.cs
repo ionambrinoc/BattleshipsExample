@@ -10,6 +10,7 @@ namespace Battleships.Player
         void HandleShotResult(IGridSquare square, bool wasHit);
         void HandleOpponentsShot(IGridSquare square);
         bool HasTimedOut();
+        void ResetStopwatch();
     }
 
     public class BattleshipsPlayer : IBattleshipsPlayer
@@ -61,6 +62,11 @@ namespace Battleships.Player
         public bool HasTimedOut()
         {
             return stopwatch.HasTimedOut();
+        }
+
+        public void ResetStopwatch()
+        {
+            stopwatch.Reset();
         }
     }
 }

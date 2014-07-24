@@ -12,11 +12,6 @@
             this.timeout = timeout;
         }
 
-        public BattleshipsStopwatch()
-        {
-            timeout = 1000;
-        }
-
         public void Start()
         {
             stopwatch.Start();
@@ -30,6 +25,11 @@
         public bool HasTimedOut()
         {
             return stopwatch.ElapsedMilliseconds > timeout;
+        }
+
+        public void Reset()
+        {
+            stopwatch.Reset();
         }
     }
 }

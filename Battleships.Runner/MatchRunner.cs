@@ -26,6 +26,8 @@
 
         public MatchResult GetMatchResult(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, int numberOfRounds = 100)
         {
+            playerOne.ResetStopwatch();
+            playerTwo.ResetStopwatch();
             var matchScoreBoard = matchScoreBoardFactory.GetMatchScoreBoard(playerOne, playerTwo);
             var playerOneFirst = true;
 
