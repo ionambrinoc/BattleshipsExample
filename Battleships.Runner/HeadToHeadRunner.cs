@@ -55,6 +55,10 @@
             {
                 return new GameResult(e.Winner, ResultType.Timeout);
             }
+            catch (PlayerException e)
+            {
+                return new GameResult(e.Player == playerOne ? playerTwo : playerOne, ResultType.OpponentThrewException);
+            }
         }
 
         private static void MakeMove(IBattleshipsPlayer attacker, IBattleshipsPlayer defender, IShipsPlacement defendingShips)

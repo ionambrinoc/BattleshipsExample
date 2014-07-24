@@ -1,5 +1,6 @@
 namespace Battleships.Player
 {
+    using System;
     using System.Collections.Generic;
 
     public interface IBattleshipsPlayer
@@ -39,8 +40,17 @@ namespace Battleships.Player
 
         public IGridSquare SelectTarget()
         {
+            IGridSquare target;
             stopwatch.Start();
-            var target = player.SelectTarget();
+            try
+            {
+                target = player.SelectTarget();
+            }
+            catch (Exception e)
+            {
+                throw new PlayerException(String.Format("{0} has thrown an exception while selecting a target", player.Name), e, this);
+            }
+
             stopwatch.Stop();
             return target;
         }
@@ -48,14 +58,29 @@ namespace Battleships.Player
         public void HandleShotResult(IGridSquare square, bool wasHit)
         {
             stopwatch.Start();
-            player.HandleShotResult(square, wasHit);
+            try
+            {
+                player.HandleShotResult(square, wasHit);
+            }
+            catch (Exception e)
+            {
+                throw new PlayerException(String.Format("{0} has thrown an exception while handling shot result", player.Name), e, this);
+            }
             stopwatch.Stop();
         }
 
         public void HandleOpponentsShot(IGridSquare square)
         {
             stopwatch.Start();
-            player.HandleOpponentsShot(square);
+            try
+            {
+                player.HandleOpponentsShot(square);
+            }
+
+            catch (Exception e)
+            {
+                throw new PlayerException(String.Format("{0} has thrown an exception while handling opponent's shot", player.Name), e, this);
+            }
             stopwatch.Stop();
         }
 

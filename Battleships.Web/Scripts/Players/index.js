@@ -65,6 +65,8 @@ window.battleships.players.index = (function($, undefined) {
                             $("#resultType").text("Opponent timed out!").show();
                         } else if (data.resultType === 2) {
                             $('#resultType').text("Opponent's ship placement is invalid!").show();
+                        } else if (data.resultType === 3) {
+                            $('#resultType').text("Opponent threw an exception!").show();
                         }
                         $('#resetGameButton').show();
                     });
