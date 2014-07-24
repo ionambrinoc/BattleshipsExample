@@ -35,7 +35,14 @@
 
         public string PictureFileName
         {
-            get { return Path.Combine(ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], playerRecord.PictureFileName); }
+            get
+            {
+                if (playerRecord.PictureFileName != null)
+                {
+                    return Path.Combine(ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], playerRecord.PictureFileName);
+                }
+                return null;
+            }
         }
     }
 }
