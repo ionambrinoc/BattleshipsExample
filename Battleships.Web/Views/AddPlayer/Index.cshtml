@@ -14,11 +14,15 @@
             @Html.LabelFor(m => m.File)
             @Html.TextBoxFor(m => m.File, new { type = "file" })
         </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Picture)
+            @Html.TextBoxFor(m => m.Picture, new { type = "file" })
+        </div>
         <input class="btn" id="submit" type="submit" value="Submit" />
     }
 }
 else {
-    <p class ="field-validation-error">You already have a bot with name '@Model.PlayerName'. Do you want to overwrite it?</p>
+    <p class="field-validation-error">You already have a bot with name '@Model.PlayerName'. Do you want to overwrite it?</p>
     @Styles.Render("~/bundles/styles/addplayer")
     <table class="table-overwrite">
         <tr>

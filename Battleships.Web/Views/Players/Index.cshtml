@@ -1,5 +1,5 @@
-﻿@using Battleships.Runner.Models
-@model IEnumerable<PlayerRecord>
+﻿@using Battleships.Web.Models.AddPlayer
+@model IEnumerable<PlayerRecordViewModel>
 
 @{
     ViewBag.Title = "Players";
@@ -40,7 +40,14 @@
     @foreach (var player in Model) {
         <tr>
             <td>@player.User.UserName</td>
-            <td>@player.Name</td>
+            <td>
+                @if (player.PictureFileName != null) {
+                    <a href="@player.PictureFileName">@player.Name</a>
+                }
+                else {
+                    @player.Name
+                }
+            </td>
             <td>
                 <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">
                     Add to Game

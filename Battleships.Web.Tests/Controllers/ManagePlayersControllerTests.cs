@@ -1,18 +1,17 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
-    using Battleships.Runner.Repositories;
-    using Battleships.Runner.Tests.TestHelpers;
-    using Battleships.Web.Controllers;
-    using Battleships.Web.Controllers.Helpers;
-    using Battleships.Web.Services;
-    using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
-    using FakeItEasy;
-    using NUnit.Framework;
     using System.Configuration;
     using System.IO;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Battleships.Runner.Repositories;
+    using Battleships.Runner.Tests.TestHelpers;
+    using Battleships.Web.Controllers;
+    using Battleships.Web.Services;
+    using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
+    using FakeItEasy;
+    using NUnit.Framework;
 
     public class ManagePlayersControllerTests
     {
@@ -46,7 +45,6 @@
             // Given
             A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(TestPlayerId)).DoesNothing();
             var temporaryPath = Path.GetTempFileName();
-            A.CallTo(() => fakePlayerUploadService.GenerateFullPath(A<string>.Ignored, controller.GetUploadDirectoryPath())).Returns(temporaryPath);
 
             // When
             var result = controller.DeletePlayer(TestPlayerId);

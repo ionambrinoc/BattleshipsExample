@@ -3,11 +3,11 @@
     using Battleships.Player;
     using Battleships.Runner.Exceptions;
     using Battleships.Runner.Repositories;
-    using Battleships.Web.Controllers.Helpers;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
     using System.IO;
+    using System.Web;
     using System.Web.Mvc;
 
     public partial class AddPlayerController : Controller
@@ -52,9 +52,15 @@
                 return View(model);
             }
 
+            if (!IsValidImage(model.Picture))
+            {
+                ModelState.AddModelError("", "Invalid image file.");
+                return View(model);
+            }
+
             if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
             {
-                var playerRecord = playersUploadService.SaveFileAndGetPlayerRecord(User.Identity.GetUserId(), model.File, this.GetUploadDirectoryPath(), newPlayer.Name);
+                var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.GetUserId(), model.File, model.Picture, newPlayer.Name);
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
                 return RedirectToAction(MVC.Players.Index());
@@ -73,9 +79,7 @@
         [HttpPost]
         public virtual ActionResult OverwriteYes(AddPlayerModel model)
         {
-            var realPath = playersUploadService.GenerateFullPath(model.PlayerName, this.GetUploadDirectoryPath());
-            System.IO.File.Delete(realPath);
-            System.IO.File.Move(model.TemporaryPath, realPath);
+            playersUploadService.OverwritePlayer(model);
 
             return RedirectToAction(MVC.Players.Index());
         }
@@ -84,6 +88,11 @@
         public virtual ActionResult OverwriteNo()
         {
             return RedirectToAction(MVC.AddPlayer.Index());
+        }
+
+        private bool IsValidImage(HttpPostedFileBase picture)
+        {
+            return picture == null || picture.ContentType.Contains("image");
         }
 
         private void InitialiseModelForOverwritingFile(string playerName, AddPlayerModel model)

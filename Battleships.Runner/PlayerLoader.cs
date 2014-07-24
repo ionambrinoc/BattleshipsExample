@@ -3,7 +3,6 @@
     using Battleships.Player;
     using Battleships.Runner.Exceptions;
     using System;
-    using System.Configuration;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
@@ -38,13 +37,7 @@
         [ExcludeFromCodeCoverage]
         private static string GetFullFilePath(string fileName)
         {
-            var playerStoreDirectory = ConfigurationManager.AppSettings["PlayerStoreDirectory"];
-            if (!Path.IsPathRooted(playerStoreDirectory))
-            {
-                playerStoreDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, playerStoreDirectory);
-            }
-
-            return Path.Combine(playerStoreDirectory, fileName);
+            return Path.Combine(DirectoryPath.GetFromAppSettings("PlayerStoreDirectory"), fileName);
         }
     }
 }
