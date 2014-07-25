@@ -46,7 +46,10 @@
         public void DeletePlayer(string playerName, string pictureFileName)
         {
             File.Delete(GenerateFullPath(playerName));
-            File.Delete(GenerateFullPicturePath(pictureFileName));
+            if (pictureFileName != null)
+            {
+                File.Delete(GenerateFullPicturePath(pictureFileName));
+            }
         }
 
         public void OverwritePlayer(AddPlayerModel model)
@@ -63,7 +66,11 @@
 
         private static string GenerateFullPicturePath(string pictureName)
         {
-            return Path.Combine(GetPictureUploadDirectoryPath(), pictureName);
+            if (pictureName != null)
+            {
+                return Path.Combine(GetPictureUploadDirectoryPath(), pictureName);
+            }
+            return null;
         }
 
         private static string GetUploadDirectoryPath()

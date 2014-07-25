@@ -6,7 +6,8 @@
     {
         Default,
         Timeout,
-        ShipPositionsInvalid
+        ShipPositionsInvalid,
+        OpponentThrewException
     };
 
     public class GameResult

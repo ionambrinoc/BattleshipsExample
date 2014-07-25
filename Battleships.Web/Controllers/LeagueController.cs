@@ -27,6 +27,7 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
+
             var playerRecords = playerRecordsRepository.GetAll();
             var model = playerRecords.Select(playerRecord => new LeaguePlayerRecordViewModel
                                                              {
@@ -40,8 +41,10 @@
         }
 
         [HttpPost]
+
         public virtual ActionResult RunLeague(IEnumerable<LeaguePlayerRecordViewModel> model)
         {
+
             var battleshipsPlayers = model.Where(m => m.Checked).Select(m => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(m.PlayerId)).ToList();
             var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers, 3);
             matchResultsRepository.AddResults(matchResults);
