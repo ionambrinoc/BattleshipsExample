@@ -61,6 +61,8 @@ window.battleships.league.index = (function($, undefined) {
             resetGame();
             resetButton.on('click', resetGame);
             setAllCheckBoxes();
+            setAllCheckBoxesCheckBox.prop('checked', true);
+            setAllCheckBoxesCheckBox.trigger('change');
 
             $('#runLeagueButton').click(function() {
                 startLeague();
