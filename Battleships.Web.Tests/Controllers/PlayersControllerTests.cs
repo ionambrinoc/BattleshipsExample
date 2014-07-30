@@ -2,10 +2,10 @@
 {
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
+    using Battleships.Core.Tests.TestHelpers;
     using Battleships.Player;
     using Battleships.Runner.Models;
     using Battleships.Runner.Services;
-    using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Tests.TestHelpers;
     using FakeItEasy;

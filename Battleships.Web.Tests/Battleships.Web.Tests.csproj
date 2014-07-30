@@ -134,6 +134,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Battleships.Core.Tests\Battleships.Core.Tests.csproj">
+      <Project>{E84E80EC-F9C7-41D1-BE1A-5640392AACF8}</Project>
+      <Name>Battleships.Core.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battleships.Core\Battleships.Core.csproj">
       <Project>{4917B8EB-581C-4459-9575-0CFBD96AA0DD}</Project>
       <Name>Battleships.Core</Name>

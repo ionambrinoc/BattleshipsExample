@@ -3,8 +3,8 @@
     using Battleships.Core.Exceptions;
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
+    using Battleships.Core.Tests.TestHelpers;
     using Battleships.Player;
-    using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;

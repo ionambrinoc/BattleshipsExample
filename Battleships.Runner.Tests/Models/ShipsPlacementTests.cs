@@ -1,4 +1,4 @@
-﻿namespace Battleships.Runner.Tests
+﻿namespace Battleships.Runner.Tests.Models
 {
     using Battleships.Player;
     using Battleships.Runner.Models;
@@ -8,7 +8,7 @@
     using System;
     using System.Collections.Generic;
 
-    internal class ShipsPlacementTests
+    public class ShipsPlacementTests
     {
         private List<IShip> ships;
         private ShipsPlacement shipsPlacement;

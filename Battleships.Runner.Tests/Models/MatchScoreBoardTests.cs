@@ -1,4 +1,4 @@
-﻿namespace Battleships.Runner.Tests
+﻿namespace Battleships.Runner.Tests.Models
 {
     using Battleships.Player;
     using Battleships.Runner.Models;
@@ -6,7 +6,7 @@
     using FluentAssertions;
     using NUnit.Framework;
 
-    internal class MatchScoreBoardTests
+    public class MatchScoreBoardTests
     {
         private IBattleshipsPlayer playerOne;
         private IBattleshipsPlayer playerTwo;

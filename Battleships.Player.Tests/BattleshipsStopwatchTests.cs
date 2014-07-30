@@ -1,6 +1,5 @@
-﻿namespace Battleships.Runner.Tests
+﻿namespace Battleships.Player.Tests
 {
-    using Battleships.Player;
     using NUnit.Framework;
     using System.Threading;
 
