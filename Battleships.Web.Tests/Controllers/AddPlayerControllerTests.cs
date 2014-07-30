@@ -1,10 +1,9 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
-    using Battleships.Core.Exceptions;
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
-    using Battleships.Core.Tests.TestHelpers;
     using Battleships.Player;
+    using Battleships.Player.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
@@ -19,7 +18,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
-    internal class AddPlayerControllerTests
+    public class AddPlayerControllerTests
     {
         private const string UserId = "testId";
         private AddPlayerController controller;

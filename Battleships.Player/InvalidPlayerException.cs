@@ -1,4 +1,4 @@
-﻿namespace Battleships.Core.Exceptions
+﻿namespace Battleships.Player
 {
     using System;
 

@@ -1,6 +1,6 @@
 ﻿namespace Battleships.ExamplePlayer
 {
-    using Battleships.Player;
+    using Battleships.Player.Interface;
     using System.Collections.Generic;
 
     public class ExamplePlayer : IBattleshipsBot

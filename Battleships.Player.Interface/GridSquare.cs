@@ -1,6 +1,6 @@
-﻿namespace Battleships.Player
+﻿namespace Battleships.Player.Interface
 {
-    public class GridSquare : IGridSquare
+    public sealed class GridSquare : IGridSquare
     {
         public GridSquare(char row, int column)
         {

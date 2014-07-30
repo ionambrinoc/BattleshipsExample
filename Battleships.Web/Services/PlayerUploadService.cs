@@ -1,8 +1,6 @@
 ﻿namespace Battleships.Web.Services
 {
-    using Battleships.Core.Helpers;
     using Battleships.Core.Models;
-    using Battleships.Core.Services;
     using Battleships.Player;
     using Battleships.Web.Models.AddPlayer;
     using System;

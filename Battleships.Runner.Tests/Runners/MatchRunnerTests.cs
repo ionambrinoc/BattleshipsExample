@@ -1,7 +1,6 @@
 ﻿namespace Battleships.Runner.Tests
 {
     using Battleships.Core.Models;
-    using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Runner.Factories;
     using Battleships.Runner.Models;
@@ -17,7 +16,7 @@
         private const int NumberOfRounds = 69;
         private IMatchRunner matchRunner;
         private IHeadToHeadRunner headToHeadRunner;
-        private IPlayerRecordsRepository playerRecordsRepository;
+        private IBattleshipsPlayerRepository playerRecordsRepository;
         private IMatchScoreBoardFactory matchScoreBoardFactory;
         private IBattleshipsPlayer playerOne;
         private IBattleshipsPlayer playerTwo;
@@ -33,7 +32,7 @@
             playerOne = A.Fake<IBattleshipsPlayer>();
             playerTwo = A.Fake<IBattleshipsPlayer>();
 
-            playerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
+            playerRecordsRepository = A.Fake<IBattleshipsPlayerRepository>();
             winnerPlayerRecord = A.Fake<PlayerRecord>();
             loserPlayerRecord = A.Fake<PlayerRecord>();
 

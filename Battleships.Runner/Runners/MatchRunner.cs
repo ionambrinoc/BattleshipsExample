@@ -1,7 +1,6 @@
 ﻿namespace Battleships.Runner.Services
 {
     using Battleships.Core.Models;
-    using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Runner.Factories;
     using System;
@@ -13,14 +12,14 @@
 
     public class MatchRunner : IMatchRunner
     {
-        private readonly IPlayerRecordsRepository playerRecordsRepository;
+        private readonly IBattleshipsPlayerRepository battleshipsPlayerRepository;
         private readonly IMatchScoreBoardFactory matchScoreBoardFactory;
         private readonly IHeadToHeadRunner headToHeadRunner;
 
-        public MatchRunner(IHeadToHeadRunner headToHeadRunner, IPlayerRecordsRepository playerRecordsRepository, IMatchScoreBoardFactory matchScoreBoardFactory)
+        public MatchRunner(IHeadToHeadRunner headToHeadRunner, IBattleshipsPlayerRepository battleshipsPlayerRepository, IMatchScoreBoardFactory matchScoreBoardFactory)
         {
             this.headToHeadRunner = headToHeadRunner;
-            this.playerRecordsRepository = playerRecordsRepository;
+            this.battleshipsPlayerRepository = battleshipsPlayerRepository;
             this.matchScoreBoardFactory = matchScoreBoardFactory;
         }
 
@@ -46,8 +45,8 @@
 
             return new MatchResult
                    {
-                       Loser = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(matchScoreBoard.GetLoser()),
-                       Winner = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(matchScoreBoard.GetWinner()),
+                       Loser = battleshipsPlayerRepository.GetPlayerRecordFromBattleshipsPlayer(matchScoreBoard.GetLoser()),
+                       Winner = battleshipsPlayerRepository.GetPlayerRecordFromBattleshipsPlayer(matchScoreBoard.GetWinner()),
                        LoserWins = matchScoreBoard.GetLoserWins(),
                        WinnerWins = matchScoreBoard.GetWinnerWins(),
                        TimePlayed = DateTime.Now

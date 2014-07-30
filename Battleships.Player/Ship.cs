@@ -1,5 +1,7 @@
 ﻿namespace Battleships.Player
 {
+    using Battleships.Player.Interface;
+
     public interface IShip
     {
         bool IsHorizontal { get; }

@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Runner.Models
 {
     using Battleships.Player;
+    using Battleships.Player.Interface;
     using System;
     using System.Collections.Generic;
     using System.Linq;

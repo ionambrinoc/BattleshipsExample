@@ -50,10 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\HeadToHeadRunner.cs" />
+    <Compile Include="Runners\HeadToHeadRunner.cs" />
     <Compile Include="Factories\MatchScoreBoardFactory.cs" />
-    <Compile Include="Services\LeagueRunner.cs" />
-    <Compile Include="Services\MatchRunner.cs" />
+    <Compile Include="Runners\LeagueRunner.cs" />
+    <Compile Include="Runners\MatchRunner.cs" />
     <Compile Include="Models\MatchScoreBoard.cs" />
     <Compile Include="Exceptions\OutOfTimeException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +65,10 @@
     <ProjectReference Include="..\Battleships.Core\Battleships.Core.csproj">
       <Project>{4917B8EB-581C-4459-9575-0CFBD96AA0DD}</Project>
       <Name>Battleships.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battleships.Player.Interface\Battleships.Player.Interface.csproj">
+      <Project>{E12D571A-3135-4D8D-A590-816BC9B02AEA}</Project>
+      <Name>Battleships.Player.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
       <Project>{59E0E326-4953-4D40-A556-70E29F9172B4}</Project>

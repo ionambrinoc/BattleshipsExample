@@ -23,6 +23,7 @@
         private MatchResult playerOneWin;
         private MatchResult playerTwoWin;
         private IMatchResultsRepository fakeMatchResultsRepository;
+        private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepository;
 
         [SetUp]
         public void SetUp()
@@ -31,7 +32,8 @@
             fakeLeagueRunner = A.Fake<ILeagueRunner>();
             fakeLeaderboardFactory = A.Fake<ILeaderboardFactory>();
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
-            controller = new LeagueController(fakePlayerRecordsRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository);
+            fakeBattleshipsPlayerRepository = A.Fake<IBattleshipsPlayerRepository>();
+            controller = new LeagueController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository);
 
             playerRecordOne = A.Fake<PlayerRecord>();
             playerRecordTwo = A.Fake<PlayerRecord>();

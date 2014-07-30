@@ -1,7 +1,7 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
     using Battleships.Core.Repositories;
-    using Battleships.Core.Tests.TestHelpers;
+    using Battleships.Player.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;

@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Player.Tests
 {
+    using Battleships.Player.Interface;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;

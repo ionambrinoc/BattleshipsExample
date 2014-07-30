@@ -21,20 +21,20 @@
 
         public GameResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
-            var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
-            var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
-
-            if (!playerOneShipsPlacement.IsValid())
-            {
-                return new GameResult(playerTwo, ResultType.ShipPositionsInvalid);
-            }
-
-            if (!playerTwoShipsPlacement.IsValid())
-            {
-                return new GameResult(playerOne, ResultType.ShipPositionsInvalid);
-            }
             try
             {
+                var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
+                var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
+
+                if (!playerOneShipsPlacement.IsValid())
+                {
+                    return new GameResult(playerTwo, ResultType.ShipPositionsInvalid);
+                }
+
+                if (!playerTwoShipsPlacement.IsValid())
+                {
+                    return new GameResult(playerOne, ResultType.ShipPositionsInvalid);
+                }
                 while (true)
                 {
                     MakeMove(playerOne, playerTwo, playerTwoShipsPlacement);

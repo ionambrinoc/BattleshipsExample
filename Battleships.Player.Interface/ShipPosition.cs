@@ -1,6 +1,6 @@
-﻿namespace Battleships.Player
+﻿namespace Battleships.Player.Interface
 {
-    public class ShipPosition : IShipPosition
+    public sealed class ShipPosition : IShipPosition
     {
         public ShipPosition(IGridSquare startingSquare, IGridSquare endingSquare)
         {

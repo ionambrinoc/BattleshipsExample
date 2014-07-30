@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Web.Controllers
 {
     using Battleships.Core.Repositories;
+    using Battleships.Player;
     using Battleships.Runner.Services;
     using Battleships.Web.Factories;
     using System.Linq;
@@ -9,14 +10,16 @@
     public partial class LeagueController : Controller
     {
         private readonly IPlayerRecordsRepository playerRecordsRepository;
+        private readonly IBattleshipsPlayerRepository battleshipsPlayerRepository;
         private readonly ILeagueRunner leagueRunner;
         private readonly ILeaderboardFactory leaderboardFactory;
         private readonly IMatchResultsRepository matchResultsRepository;
 
-        public LeagueController(IPlayerRecordsRepository playerRecordsRepository, ILeagueRunner leagueRunner,
+        public LeagueController(IPlayerRecordsRepository playerRecordsRepository, IBattleshipsPlayerRepository battleshipsPlayerRepository, ILeagueRunner leagueRunner,
                                 ILeaderboardFactory leaderboardFactory, IMatchResultsRepository matchResultsRepository)
         {
             this.playerRecordsRepository = playerRecordsRepository;
+            this.battleshipsPlayerRepository = battleshipsPlayerRepository;
             this.leagueRunner = leagueRunner;
             this.leaderboardFactory = leaderboardFactory;
             this.matchResultsRepository = matchResultsRepository;
@@ -31,7 +34,7 @@
         [HttpPost]
         public virtual ActionResult RunLeague()
         {
-            var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
+            var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
             var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers);
             matchResultsRepository.AddResults(matchResults);
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);

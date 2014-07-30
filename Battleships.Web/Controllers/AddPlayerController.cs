@@ -1,6 +1,5 @@
 ﻿namespace Battleships.Web.Controllers
 {
-    using Battleships.Core.Exceptions;
     using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Web.Models.AddPlayer;

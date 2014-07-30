@@ -1,13 +1,11 @@
-﻿namespace Battleships.Core.Services
+﻿namespace Battleships.Player
 {
-    using Battleships.Core.Exceptions;
-    using Battleships.Core.Helpers;
-    using Battleships.Player;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using Battleships.Player.Interface;
 
     public interface IPlayerLoader
     {

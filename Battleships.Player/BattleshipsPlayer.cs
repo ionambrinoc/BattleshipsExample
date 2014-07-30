@@ -1,5 +1,6 @@
 namespace Battleships.Player
 {
+    using Battleships.Player.Interface;
     using System;
     using System.Collections.Generic;
 

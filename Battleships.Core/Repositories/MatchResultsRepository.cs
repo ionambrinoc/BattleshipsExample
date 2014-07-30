@@ -11,8 +11,7 @@
 
     public class MatchResultsRepository : Repository<MatchResult>, IMatchResultsRepository
     {
-        public MatchResultsRepository(DbContext context)
-            : base(context) {}
+        public MatchResultsRepository(DbContext context) : base(context) {}
 
         public void AddResults(List<MatchResult> results)
         {

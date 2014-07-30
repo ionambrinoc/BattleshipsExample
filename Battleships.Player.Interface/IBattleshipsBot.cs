@@ -1,4 +1,4 @@
-﻿namespace Battleships.Player
+﻿namespace Battleships.Player.Interface
 {
     using System.Collections.Generic;
 

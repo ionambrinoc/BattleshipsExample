@@ -2,8 +2,8 @@
 {
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
-    using Battleships.Core.Tests.TestHelpers;
     using Battleships.Player;
+    using Battleships.Player.Tests.TestHelpers;
     using Battleships.Runner.Models;
     using Battleships.Runner.Services;
     using Battleships.Web.Controllers;
@@ -15,7 +15,6 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using IPlayerLoader = Battleships.Core.Services.IPlayerLoader;
 
     [TestFixture]
     public class PlayersControllerTests
@@ -30,6 +29,7 @@
         private IBattleshipsPlayer battleshipsPlayerOne;
         private IBattleshipsPlayer battleshipsPlayerTwo;
         private IMatchResultsRepository fakeMatchResultsRepository;
+        private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepo;
 
         [SetUp]
         public void SetUp()
@@ -37,10 +37,11 @@
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
 
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
+            fakeBattleshipsPlayerRepo = A.Fake<IBattleshipsPlayerRepository>();
             fakePlayerLoader = A.Fake<IPlayerLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
-            controller = new PlayersController(fakePlayerRecordsRepository, fakeMatchResultsRepository,
+            controller = new PlayersController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepo, fakeMatchResultsRepository,
                 fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
 
             playerRecordOne = SetUpPlayerRecord(1, "Kitten");
@@ -97,8 +98,8 @@
         private void SetUpPlayerRecordRepository(PlayerRecord playerRecord, IBattleshipsPlayer battleshipsPlayer)
         {
             A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(playerRecord.Id)).Returns(playerRecord);
-            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(battleshipsPlayer)).Returns(playerRecord);
-            A.CallTo(() => fakePlayerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerRecord.Id)).Returns(battleshipsPlayer);
+            A.CallTo(() => fakeBattleshipsPlayerRepo.GetPlayerRecordFromBattleshipsPlayer(battleshipsPlayer)).Returns(playerRecord);
+            A.CallTo(() => fakeBattleshipsPlayerRepo.GetBattleshipsPlayerFromPlayerRecordId(playerRecord.Id)).Returns(battleshipsPlayer);
         }
 
         private ControllerContext GetFakeControllerContext()

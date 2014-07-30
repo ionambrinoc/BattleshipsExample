@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Web.Tests.Services
 {
-    using Battleships.Core.Tests.TestHelpers;
+    using Battleships.Player.Tests.TestHelpers;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using NUnit.Framework;

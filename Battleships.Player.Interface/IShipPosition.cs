@@ -1,4 +1,4 @@
-﻿namespace Battleships.Player
+﻿namespace Battleships.Player.Interface
 {
     /// <summary>
     ///     Objects returned by GetShipPositions must implement this interface. Each

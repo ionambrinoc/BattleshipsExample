@@ -2,6 +2,7 @@
 {
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
+    using Battleships.Player;
     using Battleships.Runner.Services;
     using Battleships.Web.Models.AddPlayer;
     using System;
@@ -11,14 +12,17 @@
     public partial class PlayersController : Controller
     {
         private readonly IPlayerRecordsRepository playerRecordsRepository;
+        private readonly IBattleshipsPlayerRepository battleshipsPlayerRepository;
         private readonly IHeadToHeadRunner headToHeadRunner;
         private readonly IMatchResultsRepository matchResultsRepository;
 
-        public PlayersController(IPlayerRecordsRepository playerRecordsRepository, IMatchResultsRepository matchResultsRepository,
+        public PlayersController(IPlayerRecordsRepository playerRecordsRepository, IBattleshipsPlayerRepository battleshipsPlayerRepository, IMatchResultsRepository matchResultsRepository,
                                  IHeadToHeadRunner headToHeadRunner)
         {
             this.playerRecordsRepository = playerRecordsRepository;
+            this.battleshipsPlayerRepository = battleshipsPlayerRepository;
             this.headToHeadRunner = headToHeadRunner;
+            this.matchResultsRepository = matchResultsRepository;
             this.matchResultsRepository = matchResultsRepository;
         }
 
@@ -31,15 +35,15 @@
         [HttpPost]
         public virtual JsonResult RunGame(int playerOneId, int playerTwoId)
         {
-            var battleshipsPlayerOne = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerOneId);
-            var battleshipsPlayerTwo = playerRecordsRepository.GetBattleshipsPlayerFromPlayerRecordId(playerTwoId);
+            var battleshipsPlayerOne = battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecordId(playerOneId);
+            var battleshipsPlayerTwo = battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecordId(playerTwoId);
             var winnerResult = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
             var winner = winnerResult.Winner;
             var loser = winner == battleshipsPlayerOne ? battleshipsPlayerTwo : battleshipsPlayerOne;
             var matchResult = new MatchResult
                               {
-                                  WinnerId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(winner).Id,
-                                  LoserId = playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(loser).Id,
+                                  WinnerId = battleshipsPlayerRepository.GetPlayerRecordFromBattleshipsPlayer(winner).Id,
+                                  LoserId = battleshipsPlayerRepository.GetPlayerRecordFromBattleshipsPlayer(loser).Id,
                                   WinnerWins = 1,
                                   LoserWins = 0,
                                   TimePlayed = DateTime.Now

@@ -58,9 +58,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
-      <Project>{59e0e326-4953-4d40-a556-70e29f9172b4}</Project>
-      <Name>Battleships.Player</Name>
+    <ProjectReference Include="..\Battleships.Player.Interface\Battleships.Player.Interface.csproj">
+      <Project>{E12D571A-3135-4D8D-A590-816BC9B02AEA}</Project>
+      <Name>Battleships.Player.Interface</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

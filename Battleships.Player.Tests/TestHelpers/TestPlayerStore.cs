@@ -1,4 +1,4 @@
-﻿namespace Battleships.Core.Tests.TestHelpers
+﻿namespace Battleships.Player.Tests.TestHelpers
 {
     using NCrunch.Framework;
     using NUnit.Framework;

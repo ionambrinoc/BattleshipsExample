@@ -91,9 +91,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\HeadToHeadRunnerTests.cs" />
-    <Compile Include="Services\LeagueRunnerTests.cs" />
-    <Compile Include="Services\MatchRunnerTests.cs" />
+    <Compile Include="Runners\HeadToHeadRunnerTests.cs" />
+    <Compile Include="Runners\LeagueRunnerTests.cs" />
+    <Compile Include="Runners\MatchRunnerTests.cs" />
     <Compile Include="Models\MatchScoreBoardTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\ShipsPlacementTests.cs" />
@@ -108,6 +108,10 @@
     <ProjectReference Include="..\Battleships.Core\Battleships.Core.csproj">
       <Project>{4917B8EB-581C-4459-9575-0CFBD96AA0DD}</Project>
       <Name>Battleships.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battleships.Player.Interface\Battleships.Player.Interface.csproj">
+      <Project>{E12D571A-3135-4D8D-A590-816BC9B02AEA}</Project>
+      <Name>Battleships.Player.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
       <Project>{59E0E326-4953-4D40-A556-70E29F9172B4}</Project>

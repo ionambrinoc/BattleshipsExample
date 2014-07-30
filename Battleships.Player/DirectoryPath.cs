@@ -1,4 +1,4 @@
-namespace Battleships.Core.Helpers
+namespace Battleships.Player
 {
     using System.Configuration;
     using System.Diagnostics.CodeAnalysis;

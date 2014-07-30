@@ -1,8 +1,6 @@
 ﻿namespace Battleships.Core.Repositories
 {
     using Battleships.Core.Models;
-    using Battleships.Core.Services;
-    using Battleships.Player;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
@@ -12,22 +10,18 @@
         PlayerRecord GetPlayerRecordById(int id);
         bool PlayerNameExists(string botName);
         bool PlayerNameExistsForUser(string botName, string userId);
-        PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer);
-        IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId);
         IEnumerable<PlayerRecord> GetAllForUserId(string userId);
         void DeletePlayerRecordById(int id);
     };
 
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
     {
-        private readonly IPlayerLoader playerLoader;
         private readonly DbContext context;
 
-        public PlayerRecordsRepository(DbContext context, IPlayerLoader playerLoader)
+        public PlayerRecordsRepository(DbContext context)
             : base(context)
         {
             this.context = context;
-            this.playerLoader = playerLoader;
         }
 
         public PlayerRecord GetPlayerRecordById(int id)
@@ -43,17 +37,6 @@
         public bool PlayerNameExistsForUser(string playerName, string userId)
         {
             return Entities.AsQueryable().Any(x => x.Name == playerName && x.UserId == userId);
-        }
-
-        public PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer)
-        {
-            return Entities.FirstOrDefault(playerRecord => playerRecord.Name == battleshipsPlayer.Name);
-        }
-
-        public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId)
-        {
-            var player = GetPlayerRecordById(playerRecordId);
-            return playerLoader.GetBattleshipsPlayerFromPlayerName(player.Name);
         }
 
         public IEnumerable<PlayerRecord> GetAllForUserId(string userId)
