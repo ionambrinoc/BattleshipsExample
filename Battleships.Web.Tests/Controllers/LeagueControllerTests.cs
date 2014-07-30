@@ -1,9 +1,9 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
+    using Battleships.Core.Models;
+    using Battleships.Core.Repositories;
     using Battleships.Player;
-    using Battleships.Runner;
-    using Battleships.Runner.Models;
-    using Battleships.Runner.Repositories;
+    using Battleships.Runner.Services;
     using Battleships.Web.Controllers;
     using Battleships.Web.Factories;
     using Battleships.Web.Models.League;

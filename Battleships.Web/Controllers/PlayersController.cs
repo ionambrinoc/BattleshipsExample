@@ -1,8 +1,8 @@
 ﻿namespace Battleships.Web.Controllers
 {
-    using Battleships.Runner;
-    using Battleships.Runner.Models;
-    using Battleships.Runner.Repositories;
+    using Battleships.Core.Models;
+    using Battleships.Core.Repositories;
+    using Battleships.Runner.Services;
     using Battleships.Web.Models.AddPlayer;
     using System;
     using System.Linq;

@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Web.Factories
 {
-    using Battleships.Runner.Models;
+    using Battleships.Core.Models;
     using Battleships.Web.Models.League;
     using System.Collections.Generic;
     using System.Linq;

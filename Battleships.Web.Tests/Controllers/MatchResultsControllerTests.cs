@@ -1,13 +1,13 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using Battleships.Runner.Models;
-    using Battleships.Runner.Repositories;
+    using Battleships.Core.Models;
+    using Battleships.Core.Repositories;
     using Battleships.Web.Controllers;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
 
     public class MatchResultsControllerTests
     {

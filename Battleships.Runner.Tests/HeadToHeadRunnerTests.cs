@@ -2,6 +2,8 @@
 {
     using Battleships.Player;
     using Battleships.Runner.Factories;
+    using Battleships.Runner.Models;
+    using Battleships.Runner.Services;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;

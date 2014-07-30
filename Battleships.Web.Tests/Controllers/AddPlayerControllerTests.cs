@@ -1,9 +1,9 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
+    using Battleships.Core.Exceptions;
+    using Battleships.Core.Models;
+    using Battleships.Core.Repositories;
     using Battleships.Player;
-    using Battleships.Runner.Exceptions;
-    using Battleships.Runner.Models;
-    using Battleships.Runner.Repositories;
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Models.AddPlayer;

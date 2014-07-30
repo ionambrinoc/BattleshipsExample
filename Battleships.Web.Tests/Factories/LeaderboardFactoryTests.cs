@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Web.Tests.Factories
 {
-    using Battleships.Runner.Models;
+    using Battleships.Core.Models;
     using Battleships.Web.Factories;
     using Battleships.Web.Models.League;
     using FakeItEasy;

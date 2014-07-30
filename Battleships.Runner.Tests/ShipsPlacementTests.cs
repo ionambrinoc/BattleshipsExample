@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Runner.Tests
 {
     using Battleships.Player;
+    using Battleships.Runner.Models;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
@@ -68,6 +69,7 @@
             // Then
             valid.Should().BeFalse("Should be invalid as not all required ships were provided");
         }
+
         [Test]
         public void Ships_placement_is_invalid_if_too_many_ships_provided()
         {
@@ -87,6 +89,7 @@
             // Then
             valid.Should().BeFalse("Should be invalid as too many ships were provided");
         }
+
         [Test]
         public void Ships_placement_is_invalid_if_ships_provided_with_wrong_combinations_of_lengths()
         {
@@ -115,6 +118,7 @@
             // Then
             valid.Should().BeFalse("Should be invalid as too many ships were provided");
         }
+
         [Test]
         public void Ships_placement_is_invalid_if_invalid_ship_provided()
         {
@@ -132,6 +136,7 @@
             // Then
             valid.Should().BeFalse("Should be invalid as an invalid ship was provided");
         }
+
         [Test]
         public void Ships_placement_is_invalid_if_player_is_invalid()
         {
@@ -145,6 +150,7 @@
             // Then
             valid.Should().BeFalse("Ships placement should be invalid if the player throws an exception");
         }
+
         [Test]
         public void All_ships_are_hit_when_17_cells_hit()
         {
@@ -163,6 +169,7 @@
             // Then
             allHit.Should().BeTrue("All ships should have been hit but were not");
         }
+
         [Test]
         public void Shot_on_horizontal_ship_is_hit()
         {
@@ -181,6 +188,7 @@
             // Then
             isHit.Should().BeTrue("Ship should have been hit but was not");
         }
+
         [Test]
         public void Shot_on_vertical_ship_is_hit()
         {
@@ -199,6 +207,7 @@
             // Then
             isHit.Should().BeTrue("Ship should have been hit but was not");
         }
+
         [Test]
         public void Shot_not_on_ship_is_miss()
         {
@@ -214,6 +223,7 @@
             // Then
             isHit.Should().BeFalse("Ship should have been missed but was hit");
         }
+
         [Test]
         public void Shot_in_the_middle_of_ship_hits()
         {
@@ -232,6 +242,7 @@
             // Then
             isHit.Should().BeTrue("Ship should have been hit but was not");
         }
+
         [Test]
         public void If_set_already_contains_cell_it_is_not_readded()
         {
@@ -252,6 +263,7 @@
             // Then
             allHit.Should().BeFalse("Hits on the same cell should be stored once but were not");
         }
+
         private bool TestBelow()
         {
             ships = new List<IShip>();
@@ -287,6 +299,7 @@
             FakeCalls();
             return shipsPlacement.IsValid();
         }
+
         private void TargetHitsShip(IGridSquare target, IShip ship)
         {
             A.CallTo(() => ship.IsTargetInShip(target)).Returns(true);

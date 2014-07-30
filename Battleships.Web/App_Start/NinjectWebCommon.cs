@@ -6,8 +6,8 @@ using WebActivatorEx;
 
 namespace Battleships.Web
 {
-    using Battleships.Runner;
-    using Battleships.Runner.Models;
+    using Battleships.Core;
+    using Battleships.Core.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security;

@@ -1,7 +1,8 @@
 ﻿namespace Battleships.Runner.Tests
 {
+    using Battleships.Core.Exceptions;
+    using Battleships.Core.Services;
     using Battleships.Player;
-    using Battleships.Runner.Exceptions;
     using Battleships.Runner.Tests.TestHelpers;
     using FluentAssertions;
     using NUnit.Framework;

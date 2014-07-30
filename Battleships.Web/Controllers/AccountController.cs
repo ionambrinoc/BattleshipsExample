@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Web.Controllers
 {
-    using Battleships.Runner.Models;
+    using Battleships.Core.Models;
     using Battleships.Web.Models.Account;
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;

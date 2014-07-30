@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Web.Models.AddPlayer
 {
-    using Battleships.Runner.Models;
+    using Battleships.Core.Models;
     using System.Configuration;
     using System.IO;
 

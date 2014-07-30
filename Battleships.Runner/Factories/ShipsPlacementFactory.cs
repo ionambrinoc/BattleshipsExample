@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Runner.Factories
 {
     using Battleships.Player;
+    using Battleships.Runner.Models;
 
     public interface IShipsPlacementFactory
     {

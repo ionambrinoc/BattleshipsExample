@@ -1,6 +1,6 @@
 ﻿namespace Battleships.Web.Controllers
 {
-    using Battleships.Runner.Repositories;
+    using Battleships.Core.Repositories;
     using System.Web.Mvc;
 
     public partial class MatchResultsController : Controller

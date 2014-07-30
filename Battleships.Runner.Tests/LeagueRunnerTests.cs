@@ -1,7 +1,8 @@
 ﻿namespace Battleships.Runner.Tests
 {
+    using Battleships.Core.Models;
     using Battleships.Player;
-    using Battleships.Runner.Models;
+    using Battleships.Runner.Services;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;

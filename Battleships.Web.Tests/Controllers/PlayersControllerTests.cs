@@ -1,9 +1,10 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
+    using Battleships.Core.Models;
+    using Battleships.Core.Repositories;
     using Battleships.Player;
-    using Battleships.Runner;
     using Battleships.Runner.Models;
-    using Battleships.Runner.Repositories;
+    using Battleships.Runner.Services;
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Tests.TestHelpers;
@@ -14,6 +15,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using IPlayerLoader = Battleships.Core.Services.IPlayerLoader;
 
     [TestFixture]
     public class PlayersControllerTests

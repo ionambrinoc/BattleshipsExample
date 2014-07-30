@@ -1,17 +1,17 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
-    using System.Configuration;
-    using System.IO;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
-    using Battleships.Runner.Repositories;
+    using Battleships.Core.Repositories;
     using Battleships.Runner.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
+    using System.Configuration;
+    using System.IO;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
 
     public class ManagePlayersControllerTests
     {
