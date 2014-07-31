@@ -24,7 +24,7 @@
         private PlayerRecord playerRecordTwo;
         private PlayersController controller;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
-        private IPlayerLoader fakePlayerLoader;
+        private IBotLoader fakeBotLoader;
         private IHeadToHeadRunner fakeHeadToHeadRunner;
         private HttpPostedFileBase fakeFile;
         private IBattleshipsPlayer battleshipsPlayerOne;
@@ -41,7 +41,7 @@
 
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakeBattleshipsPlayerRepo = A.Fake<IBattleshipsPlayerRepository>();
-            fakePlayerLoader = A.Fake<IPlayerLoader>();
+            fakeBotLoader = A.Fake<IBotLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
             controller = new PlayersController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepo, fakeMatchResultsRepository,
@@ -67,8 +67,8 @@
             //Given
             playerRecordOne.Name = "KittenBot1";
             playerRecordTwo.Name = "KittenBot2";
-            A.CallTo(() => fakePlayerLoader.LoadBotByName("KittenBot1")).Returns(botOne);
-            A.CallTo(() => fakePlayerLoader.LoadBotByName("KittenBot2")).Returns(botTwo);
+            A.CallTo(() => fakeBotLoader.LoadBotByName("KittenBot1")).Returns(botOne);
+            A.CallTo(() => fakeBotLoader.LoadBotByName("KittenBot2")).Returns(botTwo);
             A.CallTo(() => battleshipsPlayerOne.Name).Returns("Kitten");
 
             // When

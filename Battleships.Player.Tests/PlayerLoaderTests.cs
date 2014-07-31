@@ -11,7 +11,7 @@
     [TestFixture]
     public class PlayerLoaderTests
     {
-        private PlayerLoader loader;
+        private BotLoader loader;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
@@ -22,7 +22,7 @@
         [SetUp]
         public void SetUp()
         {
-            loader = new PlayerLoader();
+            loader = new BotLoader();
         }
 
         [Test]

@@ -6,13 +6,13 @@
     using System.Linq;
     using System.Reflection;
 
-    public interface IPlayerLoader
+    public interface IBotLoader
     {
         IBattleshipsBot LoadBotFromFullPath(string path);
         IBattleshipsBot LoadBotByName(string name);
     }
 
-    public class PlayerLoader : IPlayerLoader
+    public class BotLoader : IBotLoader
     {
         public IBattleshipsBot LoadBotFromFullPath(string path)
         {

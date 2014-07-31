@@ -12,17 +12,17 @@
     public class BattleshipsPlayerRepository : IBattleshipsPlayerRepository
     {
         private readonly IPlayerRecordsRepository playerRecordsRepo;
-        private readonly IPlayerLoader playerLoader;
+        private readonly IBotLoader botLoader;
 
-        public BattleshipsPlayerRepository(IPlayerRecordsRepository playerRecordsRepo, IPlayerLoader playerLoader)
+        public BattleshipsPlayerRepository(IPlayerRecordsRepository playerRecordsRepo, IBotLoader botLoader)
         {
             this.playerRecordsRepo = playerRecordsRepo;
-            this.playerLoader = playerLoader;
+            this.botLoader = botLoader;
         }
 
         public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecord(PlayerRecord playerRecord)
         {
-            return new BattleshipsPlayer(playerLoader.LoadBotByName(playerRecord.Name), playerRecord);
+            return new BattleshipsPlayer(botLoader.LoadBotByName(playerRecord.Name), playerRecord);
         }
 
         public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId)

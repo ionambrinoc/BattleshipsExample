@@ -18,7 +18,7 @@
 
     public class PlayerUploadService : IPlayerUploadService
     {
-        private readonly PlayerLoader playerLoader = new PlayerLoader();
+        private readonly BotLoader botLoader = new BotLoader();
 
         public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName)
         {
@@ -33,7 +33,7 @@
             var tempPath = Path.GetTempFileName();
             File.Delete(tempPath);
             playerFile.SaveAs(tempPath);
-            return playerLoader.LoadBotFromFullPath(tempPath);
+            return botLoader.LoadBotFromFullPath(tempPath);
         }
 
         public void DeletePlayer(string playerName, string pictureFileName)
@@ -96,7 +96,7 @@
         {
             var fullPath = GenerateFullPath(playerName);
             file.SaveAs(fullPath);
-            return playerLoader.LoadBotFromFullPath(fullPath);
+            return botLoader.LoadBotFromFullPath(fullPath);
         }
     }
 }
