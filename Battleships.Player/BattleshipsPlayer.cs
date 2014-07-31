@@ -19,12 +19,12 @@ namespace Battleships.Player
 
     public class BattleshipsPlayer : IBattleshipsPlayer
     {
-        private readonly IBattleshipsBot player;
+        private readonly IBattleshipsBot bot;
         private readonly BattleshipsStopwatch stopwatch;
 
-        public BattleshipsPlayer(IBattleshipsBot player, PlayerRecord playerRecord, long timeout = 1000)
+        public BattleshipsPlayer(IBattleshipsBot bot, PlayerRecord playerRecord, long timeout = 1000)
         {
-            this.player = player;
+            this.bot = bot;
             PlayerRecord = playerRecord;
             stopwatch = new BattleshipsStopwatch(timeout);
         }
@@ -39,7 +39,7 @@ namespace Battleships.Player
         public IEnumerable<IShipPosition> GetShipPositions()
         {
             stopwatch.Start();
-            var positions = player.GetShipPositions();
+            var positions = bot.GetShipPositions();
             stopwatch.Stop();
             return positions;
         }
@@ -50,11 +50,11 @@ namespace Battleships.Player
             stopwatch.Start();
             try
             {
-                target = player.SelectTarget();
+                target = bot.SelectTarget();
             }
             catch (Exception e)
             {
-                throw new PlayerException(String.Format("{0} has thrown an exception while selecting a target", player.Name), e, this);
+                throw new PlayerException(String.Format("{0} has thrown an exception while selecting a target", bot.Name), e, this);
             }
 
             stopwatch.Stop();
@@ -66,11 +66,11 @@ namespace Battleships.Player
             stopwatch.Start();
             try
             {
-                player.HandleShotResult(square, wasHit);
+                bot.HandleShotResult(square, wasHit);
             }
             catch (Exception e)
             {
-                throw new PlayerException(String.Format("{0} has thrown an exception while handling shot result", player.Name), e, this);
+                throw new PlayerException(String.Format("{0} has thrown an exception while handling shot result", bot.Name), e, this);
             }
             stopwatch.Stop();
         }
@@ -80,12 +80,12 @@ namespace Battleships.Player
             stopwatch.Start();
             try
             {
-                player.HandleOpponentsShot(square);
+                bot.HandleOpponentsShot(square);
             }
 
             catch (Exception e)
             {
-                throw new PlayerException(String.Format("{0} has thrown an exception while handling opponent's shot", player.Name), e, this);
+                throw new PlayerException(String.Format("{0} has thrown an exception while handling opponent's shot", bot.Name), e, this);
             }
             stopwatch.Stop();
         }
