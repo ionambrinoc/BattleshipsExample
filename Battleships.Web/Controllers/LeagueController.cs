@@ -1,11 +1,11 @@
 ﻿namespace Battleships.Web.Controllers
 {
+    using System.Linq;
+    using System.Web.Mvc;
     using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Runner.Services;
     using Battleships.Web.Factories;
-    using System.Linq;
-    using System.Web.Mvc;
 
     public partial class LeagueController : Controller
     {
@@ -37,6 +37,7 @@
             var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(p)).ToList();
             var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers);
             matchResultsRepository.AddResults(matchResults);
+            matchResultsRepository.SaveContext();
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
             return Json(leaderboard);
         }

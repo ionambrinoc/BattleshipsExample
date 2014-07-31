@@ -16,7 +16,6 @@
         public void AddResults(List<MatchResult> results)
         {
             Entities.AddRange(results);
-            SaveContext();
         }
     }
 }
