@@ -56,7 +56,7 @@
             {
                 return new GameResult(e.Winner, ResultType.Timeout);
             }
-            catch (PlayerException e)
+            catch (BotException e)
             {
                 return new GameResult(e.Player == playerOne ? playerTwo : playerOne, ResultType.OpponentThrewException);
             }

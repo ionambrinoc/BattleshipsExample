@@ -2,9 +2,9 @@ namespace Battleships.Player
 {
     using System;
 
-    public class PlayerException : Exception
+    public class BotException : Exception
     {
-        public PlayerException(string message, Exception innerException, IBattleshipsPlayer player) : base(message, innerException)
+        public BotException(string message, Exception innerException, IBattleshipsPlayer player) : base(message, innerException)
         {
             Player = player;
         }

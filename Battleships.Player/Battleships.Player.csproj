@@ -46,7 +46,7 @@
     <Compile Include="BattleshipsPlayer.cs" />
     <Compile Include="DirectoryPath.cs" />
     <Compile Include="InvalidPlayerException.cs" />
-    <Compile Include="PlayerException.cs" />
+    <Compile Include="BotException.cs" />
     <Compile Include="BotLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
