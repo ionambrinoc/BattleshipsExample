@@ -54,12 +54,6 @@ namespace Battleships.Web.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult RunLeague()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunLeague);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public LeagueController Actions { get { return MVC.League; } }
@@ -88,14 +82,6 @@ namespace Battleships.Web.Controllers
         }
 
 
-        static readonly ActionParamsClass_RunLeague s_params_RunLeague = new ActionParamsClass_RunLeague();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_RunLeague RunLeagueParams { get { return s_params_RunLeague; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_RunLeague
-        {
-            public readonly string model = "model";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -129,14 +115,13 @@ namespace Battleships.Web.Controllers
         }
 
         [NonAction]
-        partial void RunLeagueOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Collections.Generic.IEnumerable<Battleships.Web.Models.League.LeaguePlayerRecordViewModel> model);
+        partial void RunLeagueOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult RunLeague(System.Collections.Generic.IEnumerable<Battleships.Web.Models.League.LeaguePlayerRecordViewModel> model)
+        public override System.Web.Mvc.ActionResult RunLeague()
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunLeague);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            RunLeagueOverride(callInfo, model);
+            RunLeagueOverride(callInfo);
             return callInfo;
         }
 

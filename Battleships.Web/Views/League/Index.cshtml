@@ -1,11 +1,12 @@
-﻿@using Battleships.Web.Models.League
-@model IEnumerable<LeaguePlayerRecordViewModel>
-
+﻿@using Battleships.Web.Factories
+@model LeaderboardFactory
 @Styles.Render("~/bundles/styles/league")
 
 @{
     ViewBag.Title = "League";
 }
+
+@using (Html.BeginForm(MVC.League.RunLeague(), FormMethod.Post, new { id = "run-league" })) {}
 
 <div id="gameSetup">
     <button id="runLeagueButton" type="button" class="btn btn-info">
@@ -27,24 +28,6 @@
 <div id="loading-spinner">
     <img src="../../Images/Explodingbattleship.gif" alt="Loading...">
 </div>
-
-
-@using (Html.BeginForm(MVC.League.RunLeague(), FormMethod.Post, new { id = "run-league" })) {
-    <div>
-        <br/><br/>
-        <table class="table table-striped" id="playerTable">
-            <tr>
-                <th>User Name</th>
-                <th>Player Name</th>
-                <th class="text-center actions">
-                    <input type="checkbox" name ="setAll" id="setAll">
-                </th>
-            </tr>
-            @Html.EditorForModel()
-        </table>
-    </div>
-}
-
 
 @section scripts{
     @Scripts.Render("~/bundles/scripts/league/index")
