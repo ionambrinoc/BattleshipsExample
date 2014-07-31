@@ -9,7 +9,7 @@
     using System.IO;
 
     [TestFixture]
-    public class PlayerLoaderTests
+    public class BotLoaderTests
     {
         private BotLoader loader;
 

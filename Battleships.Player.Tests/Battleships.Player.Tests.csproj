@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleshipsStopwatchTests.cs" />
-    <Compile Include="PlayerLoaderTests.cs" />
+    <Compile Include="BotLoaderTests.cs" />
     <Compile Include="ShipTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestHelpers\TestPlayerStore.cs" />
