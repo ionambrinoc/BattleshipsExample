@@ -138,6 +138,10 @@
       <Project>{4917B8EB-581C-4459-9575-0CFBD96AA0DD}</Project>
       <Name>Battleships.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battleships.Player.Interface\Battleships.Player.Interface.csproj">
+      <Project>{E12D571A-3135-4D8D-A590-816BC9B02AEA}</Project>
+      <Name>Battleships.Player.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battleships.Player.Tests\Battleships.Player.Tests.csproj">
       <Project>{4A1701C7-1E01-4998-9E29-00C201ECF7D3}</Project>
       <Name>Battleships.Player.Tests</Name>

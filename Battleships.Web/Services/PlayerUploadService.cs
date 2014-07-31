@@ -2,6 +2,7 @@
 {
     using Battleships.Core.Models;
     using Battleships.Player;
+    using Battleships.Player.Interface;
     using Battleships.Web.Models.AddPlayer;
     using System;
     using System.IO;
@@ -10,8 +11,7 @@
     public interface IPlayerUploadService
     {
         PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName);
-        string GetPictureName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer);
-        IBattleshipsPlayer LoadBattleshipsPlayerFromFile(HttpPostedFileBase playerFile);
+        IBattleshipsBot LoadBotFromFile(HttpPostedFileBase playerFile);
         void OverwritePlayer(AddPlayerModel model);
         void DeletePlayer(string playerName, string pictureFileName);
     }
@@ -28,18 +28,12 @@
             return new PlayerRecord { UserId = userName, Name = battleshipsPlayer.Name, PictureFileName = pictureName };
         }
 
-        public string GetPictureName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer)
-        {
-            var pictureName = Path.GetFileName(picture.FileName) ?? "";
-            return String.Concat(battleshipsPlayer.Name, Path.GetExtension(pictureName));
-        }
-
-        public IBattleshipsPlayer LoadBattleshipsPlayerFromFile(HttpPostedFileBase playerFile)
+        public IBattleshipsBot LoadBotFromFile(HttpPostedFileBase playerFile)
         {
             var tempPath = Path.GetTempFileName();
             File.Delete(tempPath);
             playerFile.SaveAs(tempPath);
-            return playerLoader.GetBattleshipsPlayerFromFullPath(tempPath);
+            return playerLoader.LoadBotFromFullPath(tempPath);
         }
 
         public void DeletePlayer(string playerName, string pictureFileName)
@@ -76,13 +70,16 @@
         {
             return DirectoryPath.GetFromAppSettings("PlayerStoreDirectory");
         }
-
         private static string GetPictureUploadDirectoryPath()
         {
             return DirectoryPath.GetFromAppSettings("PlayerProfilePictureStoreDirectory");
         }
-
-        private string SaveAndReturnPictureFileName(HttpPostedFileBase picture, IBattleshipsPlayer battleshipsPlayer)
+        private string GetPictureName(HttpPostedFileBase picture, IBattleshipsBot battleshipsPlayer)
+        {
+            var pictureName = Path.GetFileName(picture.FileName) ?? "";
+            return String.Concat(battleshipsPlayer.Name, Path.GetExtension(pictureName));
+        }
+        private string SaveAndReturnPictureFileName(HttpPostedFileBase picture, IBattleshipsBot battleshipsPlayer)
         {
             if (picture == null)
             {
@@ -95,11 +92,11 @@
             return pictureName;
         }
 
-        private IBattleshipsPlayer SaveAndReturnPlayer(HttpPostedFileBase file, string playerName)
+        private IBattleshipsBot SaveAndReturnPlayer(HttpPostedFileBase file, string playerName)
         {
             var fullPath = GenerateFullPath(playerName);
             file.SaveAs(fullPath);
-            return playerLoader.GetBattleshipsPlayerFromFullPath(fullPath);
+            return playerLoader.LoadBotFromFullPath(fullPath);
         }
     }
 }

@@ -34,7 +34,7 @@
         [HttpPost]
         public virtual ActionResult RunLeague()
         {
-            var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecordId(p.Id)).ToList();
+            var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(p)).ToList();
             var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers);
             matchResultsRepository.AddResults(matchResults);
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);

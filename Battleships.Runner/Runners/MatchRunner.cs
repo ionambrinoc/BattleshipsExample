@@ -12,14 +12,12 @@
 
     public class MatchRunner : IMatchRunner
     {
-        private readonly IBattleshipsPlayerRepository battleshipsPlayerRepository;
         private readonly IMatchScoreBoardFactory matchScoreBoardFactory;
         private readonly IHeadToHeadRunner headToHeadRunner;
 
-        public MatchRunner(IHeadToHeadRunner headToHeadRunner, IBattleshipsPlayerRepository battleshipsPlayerRepository, IMatchScoreBoardFactory matchScoreBoardFactory)
+        public MatchRunner(IHeadToHeadRunner headToHeadRunner, IMatchScoreBoardFactory matchScoreBoardFactory)
         {
             this.headToHeadRunner = headToHeadRunner;
-            this.battleshipsPlayerRepository = battleshipsPlayerRepository;
             this.matchScoreBoardFactory = matchScoreBoardFactory;
         }
 
@@ -45,8 +43,8 @@
 
             return new MatchResult
                    {
-                       Loser = battleshipsPlayerRepository.GetPlayerRecordFromBattleshipsPlayer(matchScoreBoard.GetLoser()),
-                       Winner = battleshipsPlayerRepository.GetPlayerRecordFromBattleshipsPlayer(matchScoreBoard.GetWinner()),
+                       Loser = matchScoreBoard.GetLoser().PlayerRecord,
+                       Winner = matchScoreBoard.GetWinner().PlayerRecord,
                        LoserWins = matchScoreBoard.GetLoserWins(),
                        WinnerWins = matchScoreBoard.GetWinnerWins(),
                        TimePlayed = DateTime.Now

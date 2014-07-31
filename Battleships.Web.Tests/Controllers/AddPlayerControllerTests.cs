@@ -3,6 +3,7 @@
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
     using Battleships.Player;
+    using Battleships.Player.Interface;
     using Battleships.Player.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Models.AddPlayer;
@@ -25,7 +26,7 @@
         private IPlayerRecordsRepository fakePlayerRecordRepository;
         private IPlayerUploadService fakePlayerUploadService;
         private HttpPostedFileBase fakeFile;
-        private IBattleshipsPlayer fakeBattleshipsPlayer;
+        private IBattleshipsBot fakeBot;
         private HttpPostedFileBase fakePicture;
         private PlayerRecord fakePlayerRecord;
 
@@ -37,12 +38,12 @@
             fakePlayerRecordRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             controller = new AddPlayerController(fakePlayerRecordRepository, fakePlayerUploadService) { ControllerContext = GetFakeControllerContext() };
-            fakeBattleshipsPlayer = A.Fake<IBattleshipsPlayer>();
+            fakeBot = A.Fake<IBattleshipsBot>();
             fakeFile = A.Fake<HttpPostedFileBase>();
             fakePlayerRecord = A.Fake<PlayerRecord>();
             A.CallTo(() => controller.User.Identity).Returns(new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, UserId) }));
-            A.CallTo(() => fakePlayerUploadService.LoadBattleshipsPlayerFromFile(A<HttpPostedFileBase>.Ignored)).Returns(fakeBattleshipsPlayer);
-            A.CallTo(() => fakeBattleshipsPlayer.Name).Returns("testName");
+            A.CallTo(() => fakePlayerUploadService.LoadBotFromFile(A<HttpPostedFileBase>.Ignored)).Returns(fakeBot);
+            A.CallTo(() => fakeBot.Name).Returns("testName");
         }
 
         [TestCaseSource("ValidFormats")]
@@ -136,8 +137,8 @@
             A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(A<string>._, A<HttpPostedFileBase>._, A<HttpPostedFileBase>._, A<string>._))
              .Returns(fakePlayer);
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
-            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(true);
-            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExistsForUser(fakeBattleshipsPlayer.Name, UserId)).Returns(true);
+            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBot.Name)).Returns(true);
+            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExistsForUser(fakeBot.Name, UserId)).Returns(true);
 
             // When
             var result = controller.Index(model);
@@ -152,8 +153,8 @@
         {
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
-            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(true);
-            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExistsForUser(fakeBattleshipsPlayer.Name, UserId)).Returns(false);
+            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBot.Name)).Returns(true);
+            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExistsForUser(fakeBot.Name, UserId)).Returns(false);
 
             // When
             var result = controller.Index(model);
@@ -168,7 +169,7 @@
         {
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile };
-            A.CallTo(() => fakePlayerUploadService.LoadBattleshipsPlayerFromFile(A<HttpPostedFileBase>.Ignored)).Throws(new InvalidPlayerException());
+            A.CallTo(() => fakePlayerUploadService.LoadBotFromFile(A<HttpPostedFileBase>.Ignored)).Throws(new InvalidPlayerException());
 
             // When
             var result = controller.Index(model);
@@ -183,8 +184,8 @@
         {
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
-            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBattleshipsPlayer.Name)).Returns(false);
-            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(UserId, fakeFile, fakePicture, fakeBattleshipsPlayer.Name)).Returns(fakePlayerRecord);
+            A.CallTo(() => fakePlayerRecordRepository.PlayerNameExists(fakeBot.Name)).Returns(false);
+            A.CallTo(() => fakePlayerUploadService.UploadAndGetPlayerRecord(UserId, fakeFile, fakePicture, fakeBot.Name)).Returns(fakePlayerRecord);
             A.CallTo(() => fakePicture.ContentType).Returns("image/jpg");
 
             // When

@@ -45,7 +45,7 @@
 
             A.CallTo(() => matchScoreBoard.IsDraw()).Returns(false);
 
-            matchRunner = new MatchRunner(headToHeadRunner, playerRecordsRepository, matchScoreBoardFactory);
+            matchRunner = new MatchRunner(headToHeadRunner, matchScoreBoardFactory);
         }
 
         [TestCaseSource("Games")]
@@ -122,13 +122,13 @@
         private void SetPlayerWinner(IBattleshipsPlayer player)
         {
             A.CallTo(() => matchScoreBoard.GetWinner()).Returns(player);
-            A.CallTo(() => playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(player)).Returns(winnerPlayerRecord);
+            A.CallTo(() => player.PlayerRecord).Returns(winnerPlayerRecord);
         }
 
         private void SetPlayerLoser(IBattleshipsPlayer player)
         {
             A.CallTo(() => matchScoreBoard.GetLoser()).Returns(player);
-            A.CallTo(() => playerRecordsRepository.GetPlayerRecordFromBattleshipsPlayer(player)).Returns(loserPlayerRecord);
+            A.CallTo(() => player.PlayerRecord).Returns(loserPlayerRecord);
         }
 
         private MatchResult GetMatchResult(int rounds = 100)

@@ -42,8 +42,8 @@
             var loser = winner == battleshipsPlayerOne ? battleshipsPlayerTwo : battleshipsPlayerOne;
             var matchResult = new MatchResult
                               {
-                                  WinnerId = battleshipsPlayerRepository.GetPlayerRecordFromBattleshipsPlayer(winner).Id,
-                                  LoserId = battleshipsPlayerRepository.GetPlayerRecordFromBattleshipsPlayer(loser).Id,
+                                  Winner = winner.PlayerRecord,
+                                  Loser = loser.PlayerRecord,
                                   WinnerWins = 1,
                                   LoserWins = 0,
                                   TimePlayed = DateTime.Now

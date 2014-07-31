@@ -3,6 +3,7 @@
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
     using Battleships.Player;
+    using Battleships.Player.Interface;
     using Battleships.Player.Tests.TestHelpers;
     using Battleships.Runner.Models;
     using Battleships.Runner.Services;
@@ -30,6 +31,8 @@
         private IBattleshipsPlayer battleshipsPlayerTwo;
         private IMatchResultsRepository fakeMatchResultsRepository;
         private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepo;
+        private IBattleshipsBot botOne;
+        private IBattleshipsBot botTwo;
 
         [SetUp]
         public void SetUp()
@@ -48,6 +51,8 @@
             playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo");
             battleshipsPlayerOne = A.Fake<IBattleshipsPlayer>();
             battleshipsPlayerTwo = A.Fake<IBattleshipsPlayer>();
+            botOne = A.Fake<IBattleshipsBot>();
+            botTwo = A.Fake<IBattleshipsBot>();
 
             SetUpPlayerRecordRepository(playerRecordOne, battleshipsPlayerOne);
             SetUpPlayerRecordRepository(playerRecordTwo, battleshipsPlayerTwo);
@@ -62,8 +67,8 @@
             //Given
             playerRecordOne.Name = "KittenBot1";
             playerRecordTwo.Name = "KittenBot2";
-            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot1")).Returns(battleshipsPlayerOne);
-            A.CallTo(() => fakePlayerLoader.GetBattleshipsPlayerFromPlayerName("KittenBot2")).Returns(battleshipsPlayerTwo);
+            A.CallTo(() => fakePlayerLoader.LoadBotByName("KittenBot1")).Returns(botOne);
+            A.CallTo(() => fakePlayerLoader.LoadBotByName("KittenBot2")).Returns(botTwo);
             A.CallTo(() => battleshipsPlayerOne.Name).Returns("Kitten");
 
             // When
@@ -82,7 +87,7 @@
             controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
 
             // Then
-            A.CallTo(() => fakeMatchResultsRepository.Add(A<MatchResult>.That.Matches(g => g.WinnerId == playerRecordOne.Id && g.LoserId == playerRecordTwo.Id))).MustHaveHappened();
+            A.CallTo(() => fakeMatchResultsRepository.Add(A<MatchResult>.That.Matches(g => g.Winner == playerRecordOne && g.Loser == playerRecordTwo))).MustHaveHappened();
             A.CallTo(() => fakeMatchResultsRepository.SaveContext()).MustHaveHappened();
         }
 
@@ -98,7 +103,8 @@
         private void SetUpPlayerRecordRepository(PlayerRecord playerRecord, IBattleshipsPlayer battleshipsPlayer)
         {
             A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(playerRecord.Id)).Returns(playerRecord);
-            A.CallTo(() => fakeBattleshipsPlayerRepo.GetPlayerRecordFromBattleshipsPlayer(battleshipsPlayer)).Returns(playerRecord);
+            A.CallTo(() => battleshipsPlayer.PlayerRecord).Returns(playerRecord);
+            A.CallTo(() => fakeBattleshipsPlayerRepo.GetBattleshipsPlayerFromPlayerRecord(playerRecord)).Returns(battleshipsPlayer);
             A.CallTo(() => fakeBattleshipsPlayerRepo.GetBattleshipsPlayerFromPlayerRecordId(playerRecord.Id)).Returns(battleshipsPlayer);
         }
 

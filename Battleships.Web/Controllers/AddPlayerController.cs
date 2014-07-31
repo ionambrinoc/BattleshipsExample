@@ -2,6 +2,7 @@
 {
     using Battleships.Core.Repositories;
     using Battleships.Player;
+    using Battleships.Player.Interface;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
@@ -39,11 +40,11 @@
                 return View();
             }
 
-            IBattleshipsPlayer newPlayer;
+            IBattleshipsBot uploadedBot;
 
             try
             {
-                newPlayer = playersUploadService.LoadBattleshipsPlayerFromFile(model.File);
+                uploadedBot = playersUploadService.LoadBotFromFile(model.File);
             }
             catch (InvalidPlayerException)
             {
@@ -57,21 +58,21 @@
                 return View(model);
             }
 
-            if (!playerRecordsRepository.PlayerNameExists(newPlayer.Name))
+            if (!playerRecordsRepository.PlayerNameExists(uploadedBot.Name))
             {
-                var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.GetUserId(), model.File, model.Picture, newPlayer.Name);
+                var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.GetUserId(), model.File, model.Picture, uploadedBot.Name);
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
                 return RedirectToAction(MVC.Players.Index());
             }
 
-            if (playerRecordsRepository.PlayerNameExistsForUser(newPlayer.Name, User.Identity.GetUserId()))
+            if (playerRecordsRepository.PlayerNameExistsForUser(uploadedBot.Name, User.Identity.GetUserId()))
             {
-                InitialiseModelForOverwritingFile(newPlayer.Name, model);
+                InitialiseModelForOverwritingFile(uploadedBot.Name, model);
                 return View(model);
             }
 
-            ModelState.AddModelError("", "Battleships player name '" + newPlayer.Name + "' is already taken.");
+            ModelState.AddModelError("", "Battleships player name '" + uploadedBot.Name + "' is already taken.");
             return View(model);
         }
 

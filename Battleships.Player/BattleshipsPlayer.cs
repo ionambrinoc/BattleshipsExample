@@ -1,5 +1,6 @@
 namespace Battleships.Player
 {
+    using Battleships.Core.Models;
     using Battleships.Player.Interface;
     using System;
     using System.Collections.Generic;
@@ -7,6 +8,7 @@ namespace Battleships.Player
     public interface IBattleshipsPlayer
     {
         string Name { get; }
+        PlayerRecord PlayerRecord { get; }
         IEnumerable<IShipPosition> GetShipPositions();
         IGridSquare SelectTarget();
         void HandleShotResult(IGridSquare square, bool wasHit);
@@ -20,16 +22,19 @@ namespace Battleships.Player
         private readonly IBattleshipsBot player;
         private readonly BattleshipsStopwatch stopwatch;
 
-        public BattleshipsPlayer(IBattleshipsBot player, long timeout = 1000)
+        public BattleshipsPlayer(IBattleshipsBot player, PlayerRecord playerRecord, long timeout = 1000)
         {
             this.player = player;
+            PlayerRecord = playerRecord;
             stopwatch = new BattleshipsStopwatch(timeout);
         }
 
         public string Name
         {
-            get { return player.Name; }
+            get { return PlayerRecord.Name; }
         }
+
+        public PlayerRecord PlayerRecord { get; private set; }
 
         public IEnumerable<IShipPosition> GetShipPositions()
         {

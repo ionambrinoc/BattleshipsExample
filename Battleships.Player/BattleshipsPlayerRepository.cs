@@ -1,24 +1,33 @@
 ﻿namespace Battleships.Player
 {
     using Battleships.Core.Models;
-    using System;
+    using Battleships.Core.Repositories;
 
     public interface IBattleshipsPlayerRepository
     {
-        PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer);
+        IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecord(PlayerRecord playerRecord);
         IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId);
     }
 
     public class BattleshipsPlayerRepository : IBattleshipsPlayerRepository
     {
-        public PlayerRecord GetPlayerRecordFromBattleshipsPlayer(IBattleshipsPlayer battleshipsPlayer)
+        private readonly IPlayerRecordsRepository playerRecordsRepo;
+        private readonly IPlayerLoader playerLoader;
+
+        public BattleshipsPlayerRepository(IPlayerRecordsRepository playerRecordsRepo, IPlayerLoader playerLoader)
         {
-            throw new NotImplementedException();
+            this.playerRecordsRepo = playerRecordsRepo;
+            this.playerLoader = playerLoader;
+        }
+
+        public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecord(PlayerRecord playerRecord)
+        {
+            return new BattleshipsPlayer(playerLoader.LoadBotByName(playerRecord.Name), playerRecord);
         }
 
         public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerRecordId(int playerRecordId)
         {
-            throw new NotImplementedException();
+            return GetBattleshipsPlayerFromPlayerRecord(playerRecordsRepo.GetPlayerRecordById(playerRecordId));
         }
     }
 }

@@ -1,26 +1,20 @@
 ﻿namespace Battleships.Player
 {
+    using Battleships.Player.Interface;
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using Battleships.Player.Interface;
 
     public interface IPlayerLoader
     {
-        IBattleshipsPlayer GetBattleshipsPlayerFromPlayerName(string playerName);
-        IBattleshipsPlayer GetBattleshipsPlayerFromFullPath(string path);
+        IBattleshipsBot LoadBotFromFullPath(string path);
+        IBattleshipsBot LoadBotByName(string name);
     }
 
     public class PlayerLoader : IPlayerLoader
     {
-        public IBattleshipsPlayer GetBattleshipsPlayerFromPlayerName(string playerName)
-        {
-            return GetBattleshipsPlayerFromFullPath(GetFullFilePath(playerName + ".dll"));
-        }
-
-        public IBattleshipsPlayer GetBattleshipsPlayerFromFullPath(string path)
+        public IBattleshipsBot LoadBotFromFullPath(string path)
         {
             var playerType = Assembly.Load(File.ReadAllBytes(path))
                                      .GetTypes()
@@ -30,10 +24,14 @@
             {
                 throw new InvalidPlayerException();
             }
-            return new BattleshipsPlayer((IBattleshipsBot)Activator.CreateInstance(playerType), 20000);
+            return (IBattleshipsBot)Activator.CreateInstance(playerType);
         }
 
-        [ExcludeFromCodeCoverage]
+        public IBattleshipsBot LoadBotByName(string name)
+        {
+            return LoadBotFromFullPath(GetFullFilePath(name + ".dll"));
+        }
+
         private static string GetFullFilePath(string fileName)
         {
             return Path.Combine(DirectoryPath.GetFromAppSettings("PlayerStoreDirectory"), fileName);
