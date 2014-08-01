@@ -1,4 +1,4 @@
-﻿namespace Battleships.Runner.Services
+﻿namespace Battleships.Runner.Runners
 {
     using Battleships.Core.Models;
     using Battleships.Player;

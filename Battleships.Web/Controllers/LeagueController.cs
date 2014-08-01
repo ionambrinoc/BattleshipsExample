@@ -1,11 +1,11 @@
 ﻿namespace Battleships.Web.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
     using Battleships.Core.Repositories;
     using Battleships.Player;
-    using Battleships.Runner.Services;
+    using Battleships.Runner.Runners;
     using Battleships.Web.Factories;
+    using System.Linq;
+    using System.Web.Mvc;
 
     public partial class LeagueController : Controller
     {

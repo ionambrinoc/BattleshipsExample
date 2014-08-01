@@ -1,10 +1,10 @@
-﻿namespace Battleships.Runner.Tests
+﻿namespace Battleships.Runner.Tests.Runners
 {
     using Battleships.Core.Models;
     using Battleships.Player;
     using Battleships.Runner.Factories;
     using Battleships.Runner.Models;
-    using Battleships.Runner.Services;
+    using Battleships.Runner.Runners;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
@@ -16,7 +16,6 @@
         private const int NumberOfRounds = 69;
         private IMatchRunner matchRunner;
         private IHeadToHeadRunner headToHeadRunner;
-        private IBattleshipsPlayerRepository playerRecordsRepository;
         private IMatchScoreBoardFactory matchScoreBoardFactory;
         private IBattleshipsPlayer playerOne;
         private IBattleshipsPlayer playerTwo;
@@ -32,7 +31,6 @@
             playerOne = A.Fake<IBattleshipsPlayer>();
             playerTwo = A.Fake<IBattleshipsPlayer>();
 
-            playerRecordsRepository = A.Fake<IBattleshipsPlayerRepository>();
             winnerPlayerRecord = A.Fake<PlayerRecord>();
             loserPlayerRecord = A.Fake<PlayerRecord>();
 

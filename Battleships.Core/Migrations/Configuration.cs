@@ -1,6 +1,5 @@
-namespace Battleships.Runner.Migrations
+namespace Battleships.Core.Migrations
 {
-    using Battleships.Core;
     using System.Data.Entity.Migrations;
 
     public sealed class Configuration : DbMigrationsConfiguration<BattleshipsContext>

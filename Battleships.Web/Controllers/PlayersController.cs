@@ -3,7 +3,7 @@
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
     using Battleships.Player;
-    using Battleships.Runner.Services;
+    using Battleships.Runner.Runners;
     using Battleships.Web.Models.AddPlayer;
     using System;
     using System.Linq;

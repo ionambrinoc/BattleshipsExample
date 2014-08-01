@@ -6,7 +6,7 @@
     using Battleships.Player.Interface;
     using Battleships.Player.Tests.TestHelpers;
     using Battleships.Runner.Models;
-    using Battleships.Runner.Services;
+    using Battleships.Runner.Runners;
     using Battleships.Web.Controllers;
     using Battleships.Web.Tests.TestHelpers;
     using FakeItEasy;
