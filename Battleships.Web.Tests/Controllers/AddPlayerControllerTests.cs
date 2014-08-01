@@ -208,6 +208,7 @@
             Assert.That(result, IsMVC.RedirectTo(MVC.AddPlayer.Index()));
         }
 
+        // ReSharper disable once UnusedMember.Local
         private static IEnumerable<string> ValidFormats()
         {
             yield return "image/jpg";
@@ -215,6 +216,7 @@
             yield return "image/png";
         }
 
+        // ReSharper disable once UnusedMember.Local
         private static IEnumerable<string> InvalidFormats()
         {
             yield return "application/x-zip-compressed";

@@ -8,7 +8,6 @@
     using FakeItEasy;
     using NUnit.Framework;
     using System.Configuration;
-    using System.IO;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -45,7 +44,6 @@
         {
             // Given
             A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(TestPlayerId)).DoesNothing();
-            var temporaryPath = Path.GetTempFileName();
 
             // When
             var result = controller.DeletePlayer(TestPlayerId);

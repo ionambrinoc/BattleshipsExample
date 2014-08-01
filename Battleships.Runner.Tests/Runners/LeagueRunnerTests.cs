@@ -63,7 +63,7 @@
         }
 
         [Test]
-        public void Players_dont_play_each_other_twice()
+        public void Players_do_not_play_each_other_twice()
         {
             // When
             runner.GetLeagueResults(players, NumberOfRounds);
