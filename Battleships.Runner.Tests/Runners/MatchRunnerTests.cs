@@ -11,7 +11,8 @@
     using System;
     using System.Collections.Generic;
 
-    internal class MatchRunnerTests
+    [TestFixture]
+    public class MatchRunnerTests
     {
         private const int NumberOfRounds = 69;
         private IMatchRunner matchRunner;

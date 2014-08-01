@@ -7,7 +7,8 @@
     using System.Configuration;
     using System.IO;
 
-    internal class PlayerUploadServiceTests
+    [TestFixture]
+    public class PlayerUploadServiceTests
     {
         private const string TestPlayerName = "testName";
         private const string TempFileContent = "test";

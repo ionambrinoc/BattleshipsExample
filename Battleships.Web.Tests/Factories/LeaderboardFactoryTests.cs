@@ -8,6 +8,7 @@
     using NUnit.Framework;
     using System.Collections.Generic;
 
+    [TestFixture]
     public class LeaderboardFactoryTests
     {
         private PlayerRecord playerOne;

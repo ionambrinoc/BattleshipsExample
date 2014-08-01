@@ -13,6 +13,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
+    [TestFixture]
     public class ManagePlayersControllerTests
     {
         private const int TestPlayerId = 1;

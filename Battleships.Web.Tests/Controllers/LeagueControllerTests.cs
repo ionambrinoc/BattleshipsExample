@@ -12,7 +12,8 @@
     using NUnit.Framework;
     using System.Collections.Generic;
 
-    internal class LeagueControllerTests
+    [TestFixture]
+    public class LeagueControllerTests
     {
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
         private ILeagueRunner fakeLeagueRunner;

@@ -9,6 +9,7 @@
     using System;
     using System.Collections.Generic;
 
+    [TestFixture]
     public class ShipsPlacementTests
     {
         private List<IShip> ships;

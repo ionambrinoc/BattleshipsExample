@@ -19,6 +19,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
+    [TestFixture]
     public class AddPlayerControllerTests
     {
         private const string UserId = "testId";

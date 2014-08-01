@@ -9,6 +9,7 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
 
+    [TestFixture]
     public class MatchResultsControllerTests
     {
         private IMatchResultsRepository fakeResultsRepository;

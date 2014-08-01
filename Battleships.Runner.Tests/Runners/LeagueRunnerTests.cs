@@ -8,6 +8,7 @@
     using NUnit.Framework;
     using System.Collections.Generic;
 
+    [TestFixture]
     public class LeagueRunnerTests
     {
         private const int NumberOfRounds = 3;

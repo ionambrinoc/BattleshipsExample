@@ -6,6 +6,7 @@
     using FluentAssertions;
     using NUnit.Framework;
 
+    [TestFixture]
     public class MatchScoreBoardTests
     {
         private IBattleshipsPlayer playerOne;
