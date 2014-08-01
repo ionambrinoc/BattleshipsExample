@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleshipsPlayerTests.cs" />
     <Compile Include="BattleshipsStopwatchTests.cs" />
     <Compile Include="BotLoaderTests.cs" />
     <Compile Include="ShipTests.cs" />
@@ -68,6 +69,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Battleships.Core\Battleships.Core.csproj">
+      <Project>{4917B8EB-581C-4459-9575-0CFBD96AA0DD}</Project>
+      <Name>Battleships.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battleships.Player.Interface\Battleships.Player.Interface.csproj">
       <Project>{E12D571A-3135-4D8D-A590-816BC9B02AEA}</Project>
       <Name>Battleships.Player.Interface</Name>

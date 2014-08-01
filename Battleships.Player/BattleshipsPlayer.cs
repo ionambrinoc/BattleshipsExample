@@ -9,11 +9,17 @@ namespace Battleships.Player
     {
         string Name { get; }
         PlayerRecord PlayerRecord { get; }
+
         IEnumerable<IShipPosition> GetShipPositions();
+
         IGridSquare SelectTarget();
+
         void HandleShotResult(IGridSquare square, bool wasHit);
+
         void HandleOpponentsShot(IGridSquare square);
+
         bool HasTimedOut();
+
         void ResetStopwatch();
     }
 
@@ -54,7 +60,7 @@ namespace Battleships.Player
             }
             catch (Exception e)
             {
-                throw new BotException(String.Format("{0} has thrown an exception while selecting a target", bot.Name), e, this);
+                throw new BotException(String.Format("{0} has thrown an exception while selecting a target", Name), e, this);
             }
 
             stopwatch.Stop();
@@ -70,7 +76,7 @@ namespace Battleships.Player
             }
             catch (Exception e)
             {
-                throw new BotException(String.Format("{0} has thrown an exception while handling shot result", bot.Name), e, this);
+                throw new BotException(String.Format("{0} has thrown an exception while handling shot result", Name), e, this);
             }
             stopwatch.Stop();
         }
@@ -85,7 +91,7 @@ namespace Battleships.Player
 
             catch (Exception e)
             {
-                throw new BotException(String.Format("{0} has thrown an exception while handling opponent's shot", bot.Name), e, this);
+                throw new BotException(String.Format("{0} has thrown an exception while handling opponent's shot", Name), e, this);
             }
             stopwatch.Stop();
         }
