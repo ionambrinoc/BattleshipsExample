@@ -29,7 +29,6 @@
         private HttpPostedFileBase fakeFile;
         private IBattleshipsPlayer battleshipsPlayerOne;
         private IBattleshipsPlayer battleshipsPlayerTwo;
-        private IMatchResultsRepository fakeMatchResultsRepository;
         private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepo;
         private IBattleshipsBot botOne;
         private IBattleshipsBot botTwo;
@@ -43,9 +42,10 @@
             fakeBattleshipsPlayerRepo = A.Fake<IBattleshipsPlayerRepository>();
             fakeBotLoader = A.Fake<IBotLoader>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
-            fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
-            controller = new PlayersController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepo, fakeMatchResultsRepository,
-                fakeHeadToHeadRunner) { ControllerContext = GetFakeControllerContext() };
+            controller = new PlayersController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepo, fakeHeadToHeadRunner)
+                         {
+                             ControllerContext = GetFakeControllerContext()
+                         };
 
             playerRecordOne = SetUpPlayerRecord(1, "Kitten");
             playerRecordTwo = SetUpPlayerRecord(2, "KittenTwo");
@@ -78,17 +78,6 @@
             Assert.IsInstanceOf<JsonResult>(result);
             result.GetProperty("winnerName").Should().Be("Kitten");
             result.GetProperty("resultType").Should().Be((int)ResultType.Default);
-        }
-
-        [Test]
-        public void Run_game_saves_result()
-        {
-            // When
-            controller.RunGame(playerRecordOne.Id, playerRecordTwo.Id);
-
-            // Then
-            A.CallTo(() => fakeMatchResultsRepository.Add(A<MatchResult>.That.Matches(g => g.Winner == playerRecordOne && g.Loser == playerRecordTwo))).MustHaveHappened();
-            A.CallTo(() => fakeMatchResultsRepository.SaveContext()).MustHaveHappened();
         }
 
         private PlayerRecord SetUpPlayerRecord(int id, string name)
