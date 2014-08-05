@@ -1,8 +1,61 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "";
 }
 
 <div class="jumbotron">
-    <h1>BATTLESHIPS!</h1>
-    
+    <h1>BATTLESHIP!</h1>
 </div>
+
+<p>
+    A player must implement <a href="https://github.com/Softwire/Battleships/blob/master/Battleships.Player.Interface/IBattleshipsBot.cs" target="_blank">this interface</a> (you need to be a member of Softwire GitHub to see this page). The methods on this interface will be called in turn by an adjudicator that controls two players at a time to run a match.
+</p>
+<p>
+    A match is made up of one or more games. The player that wins the most games wins the match. A single player object is created and used for the entire match.
+</p>
+
+<h2>
+    Object of the game
+</h2>
+<p>
+    Be the first to sink all 5 of your opponent's ships.
+</p>
+
+<h2>
+    Prepare for battle
+</h2>
+<p>
+    At the start of the game, each player declares the positions of their own ships to the adjudicator.
+</p>
+<p>
+    Ships are arranged on a board with rows labelled 'A' to 'J' and columns labelled '1' to '10'. Ships must be arranged according to these rules:
+</p>
+<p>
+    <ul>
+        <li>
+            One of each of the following ships must be present:
+            <ul>
+                <li>Aircraft Carrier (5 spaces)</li>
+                <li>Battleship (4 spaces)</li>
+                <li>Destroyer (3 spaces)</li>
+                <li>Submarine (3 spaces)</li>
+                <li>Patrol boat (2 spaces)</li>
+            </ul>
+        </li>
+        <li>
+            Ships can only be placed horizontally or vertically
+        </li>
+        <li>
+            No ship can be adjacent to another ship horizontally, vertically, or diagonally.
+        </li>
+    </ul>
+</p>
+
+<h2>
+    Shoot!
+</h2>
+<p>
+    One player is asked to choose a square to fire on and is notified of the result of their shot. Their opponent then gets a chance to fire. This continues until all of one player's ships are sunk. A ship is sunk when every square it occupies has been hit by their opponent.
+</p>
+<p>
+    If a player fails to provide valid ship positions or throws an exception that player immediately forfeits the game. A player also may not take more than one second over the whole match to select ship positions, select targets and handle results, or it immediately forfeits the game.
+</p>

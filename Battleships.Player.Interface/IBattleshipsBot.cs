@@ -51,7 +51,7 @@
         ///     This method is called whenever it is your turn.
         ///     It should return the coordinates of the square you wish to
         ///     target. The result of your shot will be indicated by the adjudicator
-        ///     calling ShotResult()
+        ///     calling HandleShotResult()
         /// </summary>
         IGridSquare SelectTarget();
 
