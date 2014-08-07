@@ -17,7 +17,7 @@
             var result = controller.Index();
 
             // Then
-            Assert.That(controller.Index(), IsMVC.View(MVC.Home.Views.Index));
+            Assert.That(result, IsMVC.View(MVC.Home.Views.Index));
         }
     }
 }
