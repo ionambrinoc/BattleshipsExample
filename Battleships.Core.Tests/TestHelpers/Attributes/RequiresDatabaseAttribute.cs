@@ -11,10 +11,7 @@
             get { return ActionTargets.Test; }
         }
 
-        public void BeforeTest(TestDetails testDetails)
-        {
-            TestDb.Delete();
-        }
+        public void BeforeTest(TestDetails testDetails) {}
 
         public void AfterTest(TestDetails testDetails)
         {
