@@ -125,6 +125,7 @@
     <Compile Include="Factories\LeaderboardFactoryTests.cs" />
     <Compile Include="FilterConfigTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteConfigTests.cs" />
     <Compile Include="Services\PlayerUploadServiceTests.cs" />
     <Compile Include="TestHelpers\NUnitConstraints\HasMVC.cs" />
     <Compile Include="TestHelpers\NUnitConstraints\IsMVC.cs" />

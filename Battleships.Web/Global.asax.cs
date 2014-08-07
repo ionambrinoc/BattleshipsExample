@@ -14,6 +14,7 @@
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RouteTable.Routes.MapMvcAttributeRoutes();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
