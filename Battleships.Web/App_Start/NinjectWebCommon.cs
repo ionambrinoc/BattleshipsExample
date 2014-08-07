@@ -17,9 +17,11 @@ namespace Battleships.Web
     using Ninject.Web.Common;
     using System;
     using System.Data.Entity;
+    using System.Diagnostics.CodeAnalysis;
     using System.Security.Principal;
     using System.Web;
 
+    [ExcludeFromCodeCoverage]
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper Bootstrapper = new Bootstrapper();

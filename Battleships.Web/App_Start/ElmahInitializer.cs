@@ -8,7 +8,9 @@ namespace Battleships.Web
     using Elmah.SqlServer.EFInitializer;
     using System.Collections;
     using System.Configuration;
+    using System.Diagnostics.CodeAnalysis;
 
+    [ExcludeFromCodeCoverage]
     public static class ElmahInitializer
     {
         public static void Initialize()
