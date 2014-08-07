@@ -2,16 +2,21 @@
 {
     using Battleships.Core.Models;
     using Microsoft.AspNet.Identity;
+    using System.Diagnostics.CodeAnalysis;
     using System.Security.Claims;
 
     public interface IUserService
     {
         IdentityResult AddUser(string userName, string password);
+
         User Find(string userName, string password);
+
         ClaimsIdentity CreateIdentity(User user, string authenticationType);
+
         bool DoesUserExist(string userName);
     }
 
+    [ExcludeFromCodeCoverage]
     public class UserService : IUserService
     {
         private readonly UserManager<User> userManager;

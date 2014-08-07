@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Runner.Tests.Models
 {
     using Battleships.Player;
+    using Battleships.Runner.Factories;
     using Battleships.Runner.Models;
     using FakeItEasy;
     using FluentAssertions;
@@ -18,7 +19,8 @@
         {
             playerOne = A.Fake<IBattleshipsPlayer>();
             playerTwo = A.Fake<IBattleshipsPlayer>();
-            matchScoreBoard = new MatchScoreBoard(playerOne, playerTwo);
+            var factory = new MatchScoreBoardFactory();
+            matchScoreBoard = factory.GetMatchScoreBoard(playerOne, playerTwo);
         }
 
         [Test]
