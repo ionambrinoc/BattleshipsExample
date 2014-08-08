@@ -6,7 +6,7 @@
 
     public class PlayerRecordViewModel
     {
-        private readonly PlayerRecord playerRecord = new PlayerRecord();
+        private readonly PlayerRecord playerRecord;
 
         public PlayerRecordViewModel(PlayerRecord playerRecord)
         {
