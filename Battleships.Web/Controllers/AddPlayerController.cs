@@ -1,15 +1,14 @@
 ﻿namespace Battleships.Web.Controllers
 {
-    using System;
-    using System.IO;
-    using System.Web;
-    using System.Web.Mvc;
     using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Player.Interface;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
+    using System.IO;
+    using System.Web;
+    using System.Web.Mvc;
 
     public partial class AddPlayerController : Controller
     {
@@ -81,8 +80,7 @@
         public virtual ActionResult OverwriteYes(AddPlayerModel model)
         {
             playersUploadService.OverwritePlayer(model);
-            playerRecordsRepository.GetByPlayerName(model.PlayerName).LastUpdated = DateTime.Now;
-            playerRecordsRepository.SaveContext();
+            playerRecordsRepository.MarkPlayerAsUpdated(model.PlayerName);
             return RedirectToAction(MVC.Players.Index());
         }
 
