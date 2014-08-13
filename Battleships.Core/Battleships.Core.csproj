@@ -106,6 +106,10 @@
     <Compile Include="Migrations\201407231457533_RenamePictureNameToPictureFileName.Designer.cs">
       <DependentUpon>201407231457533_RenamePictureNameToPictureFileName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201408131139458_AddLastUpdatedToPlayerRecords.cs" />
+    <Compile Include="Migrations\201408131139458_AddLastUpdatedToPlayerRecords.Designer.cs">
+      <DependentUpon>201408131139458_AddLastUpdatedToPlayerRecords.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\MatchResult.cs" />
     <Compile Include="Models\PlayerRecord.cs" />
@@ -155,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407231457533_RenamePictureNameToPictureFileName.resx">
       <DependentUpon>201407231457533_RenamePictureNameToPictureFileName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201408131139458_AddLastUpdatedToPlayerRecords.resx">
+      <DependentUpon>201408131139458_AddLastUpdatedToPlayerRecords.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

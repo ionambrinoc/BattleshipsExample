@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Core.Models
 {
+    using System;
     using System.Collections.Generic;
 
     public class PlayerRecord
@@ -9,6 +10,7 @@
         public virtual User User { get; set; }
         public string Name { get; set; }
         public string PictureFileName { get; set; }
+        public DateTime LastUpdated { get; set; }
 
         public virtual ICollection<MatchResult> WonMatchResults { get; set; }
         public virtual ICollection<MatchResult> LostMatchResults { get; set; }
