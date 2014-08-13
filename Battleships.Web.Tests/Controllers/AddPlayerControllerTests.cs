@@ -208,6 +208,19 @@
             Assert.That(result, IsMVC.RedirectTo(MVC.AddPlayer.Index()));
         }
 
+        [Test]
+        public void OverwriteYes_redirects_to_players_index()
+        {
+            // Given
+            var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
+
+            // When
+            var result = controller.OverwriteYes(model);
+
+            // Then
+            Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
+        }
+
         // ReSharper disable once UnusedMember.Local
         private static IEnumerable<string> ValidFormats()
         {
