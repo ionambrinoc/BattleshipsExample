@@ -6,6 +6,7 @@
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
+    using System;
     using System.IO;
     using System.Web;
     using System.Web.Mvc;
@@ -61,6 +62,7 @@
             if (!playerRecordsRepository.PlayerNameExists(uploadedBot.Name))
             {
                 var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.GetUserId(), model.File, model.Picture, uploadedBot.Name);
+                playerRecord.LastUpdated = DateTime.Now;
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
                 return RedirectToAction(MVC.Players.Index());
