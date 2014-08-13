@@ -7,6 +7,7 @@
     using Battleships.Core.Tests.TestHelpers.Database;
     using FluentAssertions;
     using NUnit.Framework;
+    using System;
     using System.Linq;
 
     [TestFixture]
@@ -69,7 +70,7 @@
             var names = new[] { "name1", "name2", "name3" };
             foreach (var name in names)
             {
-                repo.Add(new PlayerRecord { Name = name, UserId = validUserId2 });
+                repo.Add(new PlayerRecord { Name = name, UserId = validUserId2, LastUpdated = DateTime.Now });
             }
             repo.SaveContext();
 
@@ -82,7 +83,7 @@
 
         private void AddPlayerRecordForUser1()
         {
-            repo.Add(new PlayerRecord { Name = PlayerForUser1, UserId = validUserId1 });
+            repo.Add(new PlayerRecord { Name = PlayerForUser1, UserId = validUserId1, LastUpdated = DateTime.Now });
             repo.SaveContext();
         }
     }
