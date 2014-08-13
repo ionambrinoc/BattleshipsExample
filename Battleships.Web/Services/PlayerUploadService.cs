@@ -25,7 +25,7 @@
             var battleshipsPlayer = SaveAndReturnPlayer(file, playerName);
             var pictureName = SaveAndReturnPictureFileName(picture, battleshipsPlayer);
 
-            return new PlayerRecord { UserId = userName, Name = battleshipsPlayer.Name, PictureFileName = pictureName };
+            return new PlayerRecord { UserId = userName, Name = battleshipsPlayer.Name, PictureFileName = pictureName, LastUpdated = DateTime.Now };
         }
 
         public IBattleshipsBot LoadBotFromFile(HttpPostedFileBase playerFile)
@@ -70,15 +70,18 @@
         {
             return DirectoryPath.GetFromAppSettings("PlayerStoreDirectory");
         }
+
         private static string GetPictureUploadDirectoryPath()
         {
             return DirectoryPath.GetFromAppSettings("PlayerProfilePictureStoreDirectory");
         }
+
         private string GetPictureName(HttpPostedFileBase picture, IBattleshipsBot battleshipsPlayer)
         {
             var pictureName = Path.GetFileName(picture.FileName) ?? "";
             return String.Concat(battleshipsPlayer.Name, Path.GetExtension(pictureName));
         }
+
         private string SaveAndReturnPictureFileName(HttpPostedFileBase picture, IBattleshipsBot battleshipsPlayer)
         {
             if (picture == null)
