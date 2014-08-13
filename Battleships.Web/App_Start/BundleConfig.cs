@@ -18,6 +18,10 @@
                 "~/Components/jquery-form/jquery.form.js",
                 "~/Components/respond/dest/respond.src.js"));
 
+            bundles.Add(new CustomScriptBundle("~/bundles/scripts/index").Include(
+                "~/Components/jquery-ui/jquery-ui.js",
+                "~/Scripts/Home/index.js"));
+
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/headToHead/play").Include(
                 "~/Scripts/HeadToHead/play.js"));
 
@@ -32,7 +36,8 @@
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/common").Include(
                 "~/Components/bootstrap/less/bootstrap.less",
-                "~/Content/site.less"));
+                "~/Content/site.less",
+                "~/Components/jquery-ui/themes/smoothness/jquery-ui.css"));
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/matchresults/index").Include(
                 "~/Content/MatchResults/index.less"));
@@ -48,6 +53,9 @@
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/league").Include(
                 "~/Content/League/index.less"));
+
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/index").Include(
+                "~/Content/Home/index.less"));
         }
     }
 }

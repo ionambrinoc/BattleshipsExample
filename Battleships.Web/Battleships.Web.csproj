@@ -302,6 +302,7 @@
     <Content Include="Images\green-loading-spinner.gif" />
     <Content Include="Images\remove.png" />
     <Content Include="Scripts\HeadToHead\play.js" />
+    <Content Include="Scripts\Home\index.js" />
     <Content Include="Scripts\League\index.js" />
     <Content Include="Scripts\Players\index.js" />
     <Content Include="Scripts\_references.js" />
@@ -349,6 +350,7 @@
     <Content Include="Content\site.less" />
     <Content Include="Content\League\index.less" />
     <Content Include="Content\large.less" />
+    <Content Include="Content\Home\index.less" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">

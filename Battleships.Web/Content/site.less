@@ -9,6 +9,10 @@
     padding-right: 15px;
 }
 
+* {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -16,3 +20,21 @@ textarea {
     max-width: 280px;
 }
 .field-validation-error { color: red; }
+
+:not(.navbar) {
+    a {
+        color: #428bca;
+    }
+
+    a:hover,
+    a:focus {
+        color: #2a6496;
+        text-decoration: underline;
+    }
+
+    a:focus {
+        outline: thin dotted;
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+    }
+}

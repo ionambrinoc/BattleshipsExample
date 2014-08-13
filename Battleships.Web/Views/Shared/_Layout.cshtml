@@ -6,7 +6,7 @@
         <title>@ViewBag.Title</title>
         @Styles.Render("~/bundles/styles/common")
         <meta name="description" content="The description of my page" />
-</head>
+    </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -55,7 +55,10 @@
             @RenderBody()
             <hr />
             <footer>
-                <p>&copy; @DateTime.Now.Year - Softwire</p>
+                <p>
+                    &copy; @DateTime.Now.Year - Softwire.
+                    Project available on GitHub (private, for Softwire users only) <a href="https://github.com/Softwire/Battleships">here</a>.
+                </p>
             </footer>
         </div>
 
