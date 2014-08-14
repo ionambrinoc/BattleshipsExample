@@ -36,7 +36,7 @@
         {
             var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(p)).ToList();
             var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers);
-            matchResultsRepository.AddResults(matchResults);
+            matchResultsRepository.UpdateResults(matchResults);
             matchResultsRepository.SaveContext();
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
             return Json(leaderboard);
