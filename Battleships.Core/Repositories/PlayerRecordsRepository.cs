@@ -39,7 +39,6 @@
         public void MarkPlayerAsUpdated(string playerName)
         {
             GetByPlayerName(playerName).MarkAsUpdated();
-            SaveContext();
         }
 
         public bool PlayerNameExists(string playerName)

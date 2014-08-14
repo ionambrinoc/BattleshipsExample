@@ -221,6 +221,32 @@
             Assert.That(result, IsMVC.RedirectTo(MVC.Players.Index()));
         }
 
+        [Test]
+        public void OverwriteYes_marks_player_as_updated()
+        {
+            // Given
+            var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
+
+            // When
+            var result = controller.OverwriteYes(model);
+
+            // Then
+            A.CallTo(() => fakePlayerRecordRepository.MarkPlayerAsUpdated(model.PlayerName)).MustHaveHappened();
+        }
+
+        [Test]
+        public void OverwriteYes_saves_context()
+        {
+            // Given
+            var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
+
+            // When
+            var result = controller.OverwriteYes(model);
+
+            // Then
+            A.CallTo(() => fakePlayerRecordRepository.SaveContext()).MustHaveHappened();
+        }
+
         // ReSharper disable once UnusedMember.Local
         private static IEnumerable<string> ValidFormats()
         {

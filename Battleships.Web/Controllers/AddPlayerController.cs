@@ -81,6 +81,7 @@
         {
             playersUploadService.OverwritePlayer(model);
             playerRecordsRepository.MarkPlayerAsUpdated(model.PlayerName);
+            playerRecordsRepository.SaveContext();
             return RedirectToAction(MVC.Players.Index());
         }
 
