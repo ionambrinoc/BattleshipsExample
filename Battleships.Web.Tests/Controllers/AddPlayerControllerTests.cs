@@ -222,28 +222,16 @@
         }
 
         [Test]
-        public void OverwriteYes_marks_player_as_updated()
+        public void OverwriteYes_marks_player_as_updated_and_saves_context()
         {
             // Given
             var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
 
             // When
-            var result = controller.OverwriteYes(model);
+            controller.OverwriteYes(model);
 
             // Then
             A.CallTo(() => fakePlayerRecordRepository.MarkPlayerAsUpdated(model.PlayerName)).MustHaveHappened();
-        }
-
-        [Test]
-        public void OverwriteYes_saves_context()
-        {
-            // Given
-            var model = new AddPlayerModel { CanOverwrite = false, File = fakeFile, Picture = fakePicture };
-
-            // When
-            var result = controller.OverwriteYes(model);
-
-            // Then
             A.CallTo(() => fakePlayerRecordRepository.SaveContext()).MustHaveHappened();
         }
 
