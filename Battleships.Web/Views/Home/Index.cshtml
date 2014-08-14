@@ -2,60 +2,105 @@
     ViewBag.Title = "";
 }
 
-<div class="jumbotron">
-    <h1>BATTLESHIP!</h1>
+@Styles.Render("~/bundles/styles/index")
+
+<div class="banner">
+    <img src="@Url.Content("~/Images/banner.jpg")" id="bannerImage" />
 </div>
 
+
 <p>
-    A player must implement <a href="https://github.com/Softwire/Battleships/blob/master/Battleships.Player.Interface/IBattleshipsBot.cs" target="_blank">this interface</a> (you need to be a member of Softwire GitHub to see this page). The methods on this interface will be called in turn by an adjudicator that controls two players at a time to run a match.
+    A player must implement <a href="https://github.com/Softwire/Battleships/blob/master/Battleships.Player.Interface/IBattleshipsBot.cs" target="_blank">this interface</a>
+    (you need to be a member of Softwire GitHub to see this page). The methods on this interface will be called in turn by an adjudicator that controls two players at a time to run a match.
 </p>
 <p>
-    A match is made up of one or more games. The player that wins the most games wins the match. A single player object is created and used for the entire match.
+    You can also
+    <a href="@Url.Content("~/Sample/Battleships.Player.Interface.dll")">download a DLL of the above interface</a> or a
+    <a href="@Url.Content("~/Sample/Battleships.ExamplePlayer.zip")"> full ZIP archive of an example bot project</a>.
 </p>
 
-<h2>
-    Object of the game
-</h2>
-<p>
-    Be the first to sink all 5 of your opponent's ships.
-</p>
+<div id="accordion">
+    <h3 class="accordionHead">Game Rules</h3>
+    <div class="insideAccordion">
+        <p>
+            A match is made up of one or more games. The player that wins the most games wins the match. A single player object is created and used for the entire match.
+        </p>
 
-<h2>
-    Prepare for battle
-</h2>
-<p>
-    At the start of the game, each player declares the positions of their own ships to the adjudicator.
-</p>
-<p>
-    Ships are arranged on a board with rows labelled 'A' to 'J' and columns labelled '1' to '10'. Ships must be arranged according to these rules:
-</p>
-<p>
-    <ul>
-        <li>
-            One of each of the following ships must be present:
+        <h4>
+            Object of the game
+        </h4>
+        <p>
+            Be the first to sink all 5 of your opponent's ships.
+        </p>
+
+        <h4>
+            Prepare for battle
+        </h4>
+        <p>
+            At the start of the game, each player declares the positions of their own ships to the adjudicator.
+        </p>
+        <p>
+            Ships are arranged on a board with rows labelled 'A' to 'J' and columns labelled '1' to '10'. Ships must be arranged according to these rules:
+        </p>
+        <p>
             <ul>
-                <li>Aircraft Carrier (5 spaces)</li>
-                <li>Battleship (4 spaces)</li>
-                <li>Destroyer (3 spaces)</li>
-                <li>Submarine (3 spaces)</li>
-                <li>Patrol boat (2 spaces)</li>
+                <li>
+                    One of each of the following ships must be present:
+                    <ul>
+                        <li>Aircraft Carrier (5 spaces)</li>
+                        <li>Battleship (4 spaces)</li>
+                        <li>Destroyer (3 spaces)</li>
+                        <li>Submarine (3 spaces)</li>
+                        <li>Patrol boat (2 spaces)</li>
+                    </ul>
+                </li>
+                <li>
+                    Ships can only be placed horizontally or vertically
+                </li>
+                <li>
+                    No ship can be adjacent to another ship horizontally, vertically, or diagonally.
+                </li>
             </ul>
-        </li>
-        <li>
-            Ships can only be placed horizontally or vertically
-        </li>
-        <li>
-            No ship can be adjacent to another ship horizontally, vertically, or diagonally.
-        </li>
-    </ul>
-</p>
+        </p>
 
-<h2>
-    Shoot!
-</h2>
-<p>
-    One player is asked to choose a square to fire on and is notified of the result of their shot. Their opponent then gets a chance to fire. This continues until all of one player's ships are sunk. A ship is sunk when every square it occupies has been hit by their opponent.
-</p>
-<p>
-    If a player fails to provide valid ship positions or throws an exception that player immediately forfeits the game. A player also may not take more than one second over the whole match to select ship positions, select targets and handle results, or it immediately forfeits the game.
-</p>
+        <h4>
+            Shoot!
+        </h4>
+        <p>
+            One player is asked to choose a square to fire on and is notified of the result of their shot. Their opponent then gets a chance to fire. This continues until all of one player's ships are sunk. A ship is sunk when every square it occupies has been hit by their opponent.
+        </p>
+
+        <p>
+            If a player fails to provide valid ship positions or throws an exception that player immediately forfeits the game. A player also may not take more than one second over the whole match to select ship positions, select targets and handle results, or it immediately forfeits the game.
+        </p>
+    </div>
+
+    <h3 class="accordionHead"> <div class="littleButton"></div> Getting Started</h3>
+    <div class="insideAccordion">
+        <h4> Registering </h4>
+        <p>
+            First you'll want to register your player. Click the '@Html.ActionLink("Register", MVC.Account.Register())' button at
+            the top of the page and create a new account with a username and a password.
+            You can then enter your bots in the competition!
+        </p>
+        <h4> Adding bots to the competition </h4>
+        <p>
+            You can upload bots using the "@Html.ActionLink("Add Player", MVC.AddPlayer.Index())" page (at the top), and you can also add profile pictures to each.
+        </p>
+        <p>
+            To see a list of your bots, use the "@Html.ActionLink("My Players", MVC.ManagePlayers.Index())" page.
+        </p>
+        <h4> Running a game </h4>
+        <p> Click the "@Html.ActionLink("League", MVC.League.Index())" link at the top of the page, and then click the "Run League" button. Easy!</p>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/scripts/index")
+
+    <script type="text/javascript">
+        $(function() {
+            battleships.index.init();
+        });
+    </script>
+}

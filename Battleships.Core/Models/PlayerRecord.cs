@@ -14,5 +14,10 @@
 
         public virtual ICollection<MatchResult> WonMatchResults { get; set; }
         public virtual ICollection<MatchResult> LostMatchResults { get; set; }
+
+        public void MarkAsUpdated()
+        {
+            LastUpdated = DateTime.Now;
+        }
     }
 }

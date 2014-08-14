@@ -81,6 +81,20 @@
             playersOfUser1.Select(x => x.Name).Should().BeEquivalentTo(names);
         }
 
+        [Test]
+        public void Marking_player_as_updated_gives_new_lastUpdated_time()
+        {
+            // Given
+            var oldTime = repo.GetByPlayerName(PlayerForUser1).LastUpdated;
+
+            // When
+            repo.MarkPlayerAsUpdated(PlayerForUser1);
+            var newTime = repo.GetByPlayerName(PlayerForUser1).LastUpdated;
+
+            // Then
+            newTime.Should().NotBe(oldTime);
+        }
+
         private void AddPlayerRecordForUser1()
         {
             repo.Add(new PlayerRecord { Name = PlayerForUser1, UserId = validUserId1, LastUpdated = DateTime.Now });

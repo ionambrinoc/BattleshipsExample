@@ -13,6 +13,7 @@
         IEnumerable<PlayerRecord> GetAllForUserId(string userId);
         void DeletePlayerRecordById(int id);
         PlayerRecord GetByPlayerName(string playerName);
+        void MarkPlayerAsUpdated(string playerName);
     };
 
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
@@ -33,6 +34,11 @@
         public PlayerRecord GetByPlayerName(string playerName)
         {
             return Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName);
+        }
+
+        public void MarkPlayerAsUpdated(string playerName)
+        {
+            GetByPlayerName(playerName).MarkAsUpdated();
         }
 
         public bool PlayerNameExists(string playerName)

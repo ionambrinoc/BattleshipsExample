@@ -11,11 +11,13 @@
 <table class=" table table-striped" id="playerTable">
     <tr>
         <th>Player Name</th>
+        <th>Last Updated</th>
         <th></th>
     </tr>
     @foreach (var player in Model) {
         <tr>
             <td>@player.Name</td>
+            <td>@player.LastUpdated</td>
             <td class ="td-align">
                 @using (Html.BeginForm(MVC.ManagePlayers.DeletePlayer(), FormMethod.Post)) {
                     @Html.Hidden("playerId", player.Id)
