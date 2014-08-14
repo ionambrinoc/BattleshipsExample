@@ -38,7 +38,7 @@
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
             IBattleshipsBot uploadedBot;

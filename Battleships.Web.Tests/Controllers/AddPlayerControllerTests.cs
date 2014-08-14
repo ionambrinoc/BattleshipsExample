@@ -1,5 +1,11 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Security.Claims;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
     using Battleships.Player;
@@ -12,12 +18,6 @@
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Security.Claims;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
 
     [TestFixture]
     public class AddPlayerControllerTests
