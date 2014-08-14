@@ -12,6 +12,7 @@
         bool PlayerNameExistsForUser(string botName, string userId);
         IEnumerable<PlayerRecord> GetAllForUserId(string userId);
         void DeletePlayerRecordById(int id);
+        PlayerRecord GetByPlayerName(string playerName);
     };
 
     public class PlayerRecordsRepository : Repository<PlayerRecord>, IPlayerRecordsRepository
@@ -27,6 +28,11 @@
         public PlayerRecord GetPlayerRecordById(int id)
         {
             return Entities.AsQueryable().FirstOrDefault(x => x.Id == id);
+        }
+
+        public PlayerRecord GetByPlayerName(string playerName)
+        {
+            return Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName);
         }
 
         public bool PlayerNameExists(string playerName)
