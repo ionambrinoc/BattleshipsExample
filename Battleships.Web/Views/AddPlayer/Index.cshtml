@@ -6,65 +6,68 @@
 @Styles.Render("~/bundles/styles/addplayer")
 
 <p>
-    Upload your players below to battle against other players.
-    Please Upload Player Files as .dll and Avatar pictures as gif or jpeg
-    <div>
-        To overwrite upload a player with the same name.
+    <div class="addPlayerTips">
+        Please Upload Player Files as .dll and Avatar pictures as gif or jpeg.
+    </div>
+    <div class="addPlayerTips">
+        To overwrite a player upload a new player with the same name.
     </div>
 </p>
+
 @Html.ValidationMessage("")
 @Html.ValidationMessageFor(m => m.File)
 @if (!Model.CanOverwrite) {
     using (Html.BeginForm(MVC.AddPlayer.Index(), FormMethod.Post, new { enctype = "multipart/form-data", id = "add-player-form" })) {
-        <table class=" table-responsive">
-            <tr>
-                <td>
-                    <div>
-                        <input id="photoCover1" class="input-large" type="text">
-                        <a class="btn btn-default" id="uploadPlayerFileBtn">Upload Player File</a>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <input id="photoCover2" class="input-large" type="text">
-                        <a class="btn btn-default" id="uploadAvatarBtn">Upload Player Avatar</a>
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <div class="jumbotron" id="newPlayerBox">
+            <H3>
+                New Player
+            </H3>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="uploadPlayerFileBtn" type="button">Upload Player File</button>
+                        </span>
+                        <input id="photoCover1" type="text" class="form-control">
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input id="photoCover2" type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="uploadAvatarBtn" type="button">Upload Player Avatar</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.File, new { type = "file" })
+            </div>
 
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.File, new { type = "file" })
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Picture, new { type = "file" })
+            </div>
+
+            <input class="btn" id="submit" type="submit" value="Create Player" />
         </div>
-
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.Picture, new { type = "file" })
-        </div>
-
-        <input class="btn" id="submit" type="submit" value="Create Player" />
+        <!--/jumbotron-->
     }
 }
 else {
-    <p class="field-validation-error">You already have a bot with name '@Model.PlayerName'. Do you want to overwrite it?</p>
-    <table class="table-overwrite">
-        <tr>
-            <td>
-                @using (Html.BeginForm(MVC.AddPlayer.OverwriteYes(), FormMethod.Post)) {
-                    @Html.HiddenFor(model => model.TemporaryPath)
-                    @Html.HiddenFor(model => model.PlayerName)
-                    <input class="btn" id="submit" type="submit" value="Yes" />
-                }
-            </td>
-            <td>
-                @using (Html.BeginForm(MVC.AddPlayer.OverwriteNo(), FormMethod.Post)) {
-                    <input class="btn" id="submit" type="submit" value="No" />
-                }
-            </td>
-        </tr>
-    </table>
-    <p>
-        To overwrite upload a player with the same name.
-    </p>
+    <div class="jumbotron" id="newPlayerBox">
+        <p id="sameNameWarningMessage" class="field-validation-error">You already have a bot with name '@Model.PlayerName'. Do you want to overwrite it?</p>
+        <table id="overwritePlayerCheck" class="span5 center-table">
+            @using (Html.BeginForm(MVC.AddPlayer.OverwriteYes(), FormMethod.Post)) {
+                @Html.HiddenFor(model => model.TemporaryPath)
+                @Html.HiddenFor(model => model.PlayerName)
+                <input class="btn btn-danger btn-block" id="submit1" type="submit" value="Yes" />
+            }
+            @using (Html.BeginForm(MVC.AddPlayer.OverwriteNo(), FormMethod.Post)) {
+                <input class="btn btn btn-block" id="submit2" type="submit" value="No" />
+            }
+        </table>
+    </div>
+    <!--/jumbotron-->
 }
 
 @section scripts {
@@ -79,7 +82,4 @@ else {
             $('#photoCover2').val($(this).val());
         });
     </script>
-
-
-
 }
