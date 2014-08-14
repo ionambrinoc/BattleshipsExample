@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Core.Repositories
 {
     using Battleships.Core.Models;
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
@@ -8,6 +9,7 @@
     public interface IMatchResultsRepository : IRepository<MatchResult>
     {
         void UpdateResults(List<MatchResult> results);
+        DateTime GetMostRecentMatchTime();
     }
 
     public class MatchResultsRepository : Repository<MatchResult>, IMatchResultsRepository
@@ -16,16 +18,13 @@
 
         public void UpdateResults(List<MatchResult> results)
         {
-            var newResults = new List<MatchResult>();
-            var updatedResults = new List<MatchResult>();
-            foreach (var result in results)
-            {
-                if (!TryUpdateResult(result))
-                {
-                    newResults.Add(result);
-                }
-            }
+            var newResults = results.Where(result => !TryUpdateResult(result)).ToList();
             AddResults(newResults);
+        }
+
+        public DateTime GetMostRecentMatchTime()
+        {
+            return GetAll().Max(x => x.TimePlayed);
         }
 
         private bool TryUpdateResult(MatchResult result)

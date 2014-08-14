@@ -65,7 +65,7 @@
                                               Losses = 2
                                           }
                                       };
-            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
+            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
             A.CallTo(() => fakeLeaderboardFactory.GenerateLeaderboard(matchResults)).Returns(expectedLeaderboard);
 
             // When
