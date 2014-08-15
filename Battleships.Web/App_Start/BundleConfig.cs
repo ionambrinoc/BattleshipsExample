@@ -16,7 +16,8 @@
                 "~/Components/Microsoft.jQuery.Unobtrusive.Validation/jquery.validate.unobtrusive.js",
                 "~/Components/bootstrap/dist/js/bootstrap.js",
                 "~/Components/jquery-form/jquery.form.js",
-                "~/Components/respond/dest/respond.src.js"));
+                "~/Components/respond/dest/respond.src.js",
+                "~/Scripts/Shared/index.js"));
 
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/index").Include(
                 "~/Components/jquery-ui/jquery-ui.js",

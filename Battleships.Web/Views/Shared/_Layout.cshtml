@@ -50,7 +50,13 @@
                 </div>
             </div>
         </div>
+        @if (TempData["showPopup"] != null) {
+            <div id="PopupBanner">
+                @TempData["showPopup"]
+            </div>
+        }
         <div class="container body-content">
+
             <h2>@ViewBag.Title</h2>
             @RenderBody()
             <hr />
@@ -64,5 +70,11 @@
 
         @Scripts.Render("~/bundles/scripts/common")
         @RenderSection("scripts", false)
+        <script type="text/javascript">
+            $(function() {
+                battleships.common.index.fade();
+            });
+        </script>
+
     </body>
 </html>

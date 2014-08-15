@@ -215,6 +215,7 @@
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Helper\PopupHelper.cs" />
     <Compile Include="LeagueController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -301,6 +302,7 @@
     <Content Include="Images\Explodingbattleship.gif" />
     <Content Include="Images\green-loading-spinner.gif" />
     <Content Include="Images\remove.png" />
+    <Content Include="Scripts\Shared\index.js" />
     <Content Include="Scripts\HeadToHead\play.js" />
     <Content Include="Scripts\Home\index.js" />
     <Content Include="Scripts\League\index.js" />

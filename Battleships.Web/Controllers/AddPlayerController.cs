@@ -3,6 +3,7 @@
     using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Player.Interface;
+    using Battleships.Web.Helper;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
@@ -65,6 +66,7 @@
                 playerRecord.LastUpdated = DateTime.Now;
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
+                TempData.AddAlert("Player Created!");
                 return RedirectToAction(MVC.Players.Index());
             }
 
@@ -84,6 +86,8 @@
             playersUploadService.OverwritePlayer(model);
             playerRecordsRepository.MarkPlayerAsUpdated(model.PlayerName);
             playerRecordsRepository.SaveContext();
+            TempData.AddAlert("Player Updated!");
+
             return RedirectToAction(MVC.Players.Index());
         }
 
