@@ -24,7 +24,14 @@
 
         public DateTime GetMostRecentMatchTime()
         {
-            return GetAll().Max(x => x.TimePlayed);
+            try
+            {
+                return GetAll().Max(x => x.TimePlayed);
+            }
+            catch (InvalidOperationException)
+            {
+                return DateTime.MinValue;
+            }
         }
 
         private bool TryUpdateResult(MatchResult result)
