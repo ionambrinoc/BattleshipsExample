@@ -24,34 +24,24 @@
 
         public DateTime GetMostRecentMatchTime()
         {
-            try
-            {
-                return GetAll().Max(x => x.TimePlayed);
-            }
-            catch (InvalidOperationException)
+            if (!GetAll().Any())
             {
                 return DateTime.MinValue;
             }
+            return GetAll().Max(x => x.TimePlayed);
         }
 
-        private bool TryUpdateResult(MatchResult result)
+        private bool TryUpdateResult(MatchResult newResult)
         {
-            foreach (var existingResult in Entities.Where(entity => result.Winner.Id == entity.Winner.Id || result.Winner.Id == entity.Loser.Id))
+            foreach (var existingResult in Entities.ToList().Where(entity => entity.SamePlayers(newResult)))
             {
-                if (result.Loser.Id == existingResult.Winner.Id || result.Loser.Id == existingResult.Loser.Id)
-                {
-                    existingResult.Winner = result.Winner;
-                    existingResult.Loser = result.Loser;
-                    existingResult.WinnerWins = result.WinnerWins;
-                    existingResult.LoserWins = result.LoserWins;
-                    existingResult.TimePlayed = result.TimePlayed;
-                    return true;
-                }
+                existingResult.CopyFrom(newResult);
+                return true;
             }
             return false;
         }
 
-        private void AddResults(List<MatchResult> newResults)
+        private void AddResults(IEnumerable<MatchResult> newResults)
         {
             Entities.AddRange(newResults);
         }

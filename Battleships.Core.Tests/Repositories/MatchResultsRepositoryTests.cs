@@ -15,14 +15,12 @@
     [RequiresDatabase]
     public class MatchResultsRepositoryTests
     {
-        private readonly DateTime date1 = new DateTime(2001, 1, 1);
-        private readonly DateTime date2 = new DateTime(2002, 1, 1);
+        private readonly DateTime earlierDate = new DateTime(2001, 1, 1);
+        private readonly DateTime laterDate = new DateTime(2002, 1, 1);
         private MatchResultsRepository repo;
         private PlayerRecord player1;
         private PlayerRecord player2;
         private PlayerRecord player3;
-        private MatchResult matchResult1;
-        private MatchResult matchResult2;
         private string userId;
 
         [SetUp]
@@ -34,53 +32,68 @@
             player1 = CreatePlayer("Player1");
             player2 = CreatePlayer("Player2");
             player3 = CreatePlayer("Player3");
-            matchResult1 = CreateMatchResult(player1, player2, date1);
-            matchResult2 = CreateMatchResult(player1, player3, date2);
-            repo.Add(matchResult1);
-            repo.Add(matchResult2);
-            repo.SaveContext();
         }
 
         [Test]
         public void Can_get_most_recent_time()
         {
+            // Given
+            repo.Add(CreateMatchResult(player1, player2, earlierDate));
+            repo.Add(CreateMatchResult(player1, player3, laterDate));
+            repo.SaveContext();
+
             // When
             var result = repo.GetMostRecentMatchTime();
 
             // Then
-            result.Should().Be(date2);
+            result.Should().Be(laterDate);
         }
 
         [Test]
         public void Will_overwrite_result_if_players_already_played_each_other()
         {
             // Given
-            var newMatch = matchResult1;
-            newMatch.TimePlayed = date2;
-
-            // When
-            repo.UpdateResults(new List<MatchResult> { newMatch });
+            repo.Add(CreateMatchResult(player1, player2, earlierDate));
             repo.SaveContext();
 
+            // When
+            repo.UpdateResults(new List<MatchResult> { CreateMatchResult(player1, player2, laterDate) });
+            repo.SaveContext();
+
+            var listOfResults = repo.GetAll().Where(match => match.Winner == player1 && match.Loser == player2).ToArray();
+
             // Then
-            repo.GetAll().Count().Should().Be(2);
-            repo.GetAll().Count(match => match.TimePlayed == date2 && match.Winner == player1 && match.Loser == player2).Should().Be(1);
-            repo.GetAll().Count(match => match == newMatch).Should().Be(1);
+            listOfResults.Count().Should().Be(1);
+            listOfResults[0].TimePlayed.Should().Be(laterDate);
         }
 
         [Test]
         public void Will_add_result_if_players_have_not_played_each_other()
         {
             // Given
-            var newMatch = CreateMatchResult(player2, player3, DateTime.Now);
+            repo.Add(CreateMatchResult(player1, player2, earlierDate));
+            repo.SaveContext();
 
             // When
-            repo.UpdateResults(new List<MatchResult> { newMatch });
+            repo.UpdateResults(new List<MatchResult> { CreateMatchResult(player1, player3, laterDate) });
             repo.SaveContext();
 
             // Then
-            repo.GetAll().Count().Should().Be(3);
-            repo.GetAll().Count(match => match.Winner == player2 && match.Loser == player3).Should().Be(1);
+            repo.GetAll().Count().Should().Be(2);
+            repo.GetAll().Count(match => match.Winner == player1 && match.Loser == player3).Should().Be(1);
+        }
+
+        [Test]
+        public void Returns_minimum_datetime_if_empty_repo()
+        {
+            // Given
+            repo.SaveContext();
+
+            //When
+            var result = repo.GetMostRecentMatchTime();
+
+            //Then
+            result.Should().Be(DateTime.MinValue);
         }
 
         private PlayerRecord CreatePlayer(string name)
