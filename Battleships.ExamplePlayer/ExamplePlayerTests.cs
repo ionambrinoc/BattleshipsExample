@@ -9,34 +9,45 @@
     {
         private ExamplePlayer player;
 
+        [SetUp]
+        public void SetUp()
+        {
+            player = new ExamplePlayer();
+        }
+
         [Test]
         public void First_square_is_A_1()
         {
-            player = new ExamplePlayer();
-
+            // When
             var firstTarget = player.SelectTarget();
 
+            // Then
             firstTarget.Should().Be(new GridSquare('A', 1));
         }
 
         [Test]
         public void Second_square_is_A_2()
         {
-            player = new ExamplePlayer();
-
+            // Given
             player.SelectTarget();
+
+            // When
             var secondTarget = player.SelectTarget();
 
+            // Then
             secondTarget.Should().Be(new GridSquare('A', 2));
         }
 
         [Test]
         public void Selects_next_row_when_reaching_end_of_row()
         {
-            player = new ExamplePlayer { LastTarget = new GridSquare('A', 10) };
+            // Given
+            player.LastTarget = new GridSquare('A', 10);
 
+            // When
             var secondTarget = player.SelectTarget();
 
+            // Then
             secondTarget.Should().Be(new GridSquare('B', 1));
         }
     }
