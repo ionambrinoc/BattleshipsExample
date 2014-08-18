@@ -35,7 +35,7 @@
         public virtual ActionResult RunLeague()
         {
             var players = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(p)).ToList();
-            var updatedPlayers = players.Where(player => player.PlayerRecord.LastUpdated >= matchResultsRepository.GetMostRecentMatchTime()).ToList();
+            var updatedPlayers = players.Where(player => player.PlayerRecord.LastUpdated >= player.PlayerRecord.GetLastTimePlayed()).ToList();
 
             var matchResults = leagueRunner.GetLeagueResults(players, updatedPlayers);
 

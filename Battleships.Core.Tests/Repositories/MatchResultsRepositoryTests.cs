@@ -35,21 +35,6 @@
         }
 
         [Test]
-        public void Can_get_most_recent_time()
-        {
-            // Given
-            repo.Add(CreateMatchResult(player1, player2, earlierDate));
-            repo.Add(CreateMatchResult(player1, player3, laterDate));
-            repo.SaveContext();
-
-            // When
-            var result = repo.GetMostRecentMatchTime();
-
-            // Then
-            result.Should().Be(laterDate);
-        }
-
-        [Test]
         public void Will_overwrite_result_if_players_already_played_each_other()
         {
             // Given
@@ -81,19 +66,6 @@
             // Then
             repo.GetAll().Count().Should().Be(2);
             repo.GetAll().Count(match => match.Winner == player1 && match.Loser == player3).Should().Be(1);
-        }
-
-        [Test]
-        public void Returns_minimum_datetime_if_empty_repo()
-        {
-            // Given
-            repo.SaveContext();
-
-            //When
-            var result = repo.GetMostRecentMatchTime();
-
-            //Then
-            result.Should().Be(DateTime.MinValue);
         }
 
         private PlayerRecord CreatePlayer(string name)

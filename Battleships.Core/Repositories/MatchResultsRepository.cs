@@ -1,7 +1,6 @@
 ﻿namespace Battleships.Core.Repositories
 {
     using Battleships.Core.Models;
-    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
@@ -19,15 +18,6 @@
         {
             var newResults = results.Where(result => !TryUpdateResult(result)).ToList();
             AddResults(newResults);
-        }
-
-        public DateTime GetMostRecentMatchTime()
-        {
-            if (!GetAll().Any())
-            {
-                return DateTime.MinValue;
-            }
-            return GetAll().Max(x => x.TimePlayed);
         }
 
         private bool TryUpdateResult(MatchResult newResult)

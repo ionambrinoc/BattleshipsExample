@@ -28,6 +28,7 @@
         private MatchResult playerTwoWin;
         private IMatchResultsRepository fakeMatchResultsRepository;
         private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepository;
+
         [SetUp]
         public void SetUp()
         {
@@ -82,6 +83,7 @@
         {
             // Given
             var earlierDate = new DateTime(2001, 1, 1);
+            var middleDate = new DateTime(2001, 6, 1);
             var laterDate = new DateTime(2002, 1, 1);
             playerRecordOne.LastUpdated = earlierDate;
             playerRecordTwo.LastUpdated = laterDate;
@@ -95,8 +97,8 @@
 
             A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordOne)).Returns(playerOne);
             A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordTwo)).Returns(playerTwo);
-
-            A.CallTo(() => fakeMatchResultsRepository.GetMostRecentMatchTime()).Returns(laterDate);
+            A.CallTo(() => playerRecordOne.GetLastTimePlayed()).Returns(middleDate);
+            A.CallTo(() => playerRecordTwo.GetLastTimePlayed()).Returns(middleDate);
 
             // When
             var result = controller.RunLeague();
@@ -104,7 +106,6 @@
             // Then
             A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>.That.Contains(playerOne), A<List<IBattleshipsPlayer>>.That.Contains(playerTwo), NumberOfRounds)).MustHaveHappened();
             A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>.That.Contains(playerTwo), A<List<IBattleshipsPlayer>>.That.Not.Contains(playerOne), NumberOfRounds)).MustHaveHappened();
-
         }
 
         private MatchResult SetUpMatchResult(PlayerRecord winner, PlayerRecord loser)
