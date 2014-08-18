@@ -77,7 +77,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factories\GameLogFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\GameLogRepositoryTests.cs" />
     <Compile Include="Repositories\PlayerRecordsRepositoryTests.cs" />
     <Compile Include="Repositories\RepositoryTests.cs" />
     <Compile Include="TestHelpers\Attributes\RequiresDatabaseAttribute.cs" />
@@ -97,6 +99,10 @@
       <Project>{4917B8EB-581C-4459-9575-0CFBD96AA0DD}</Project>
       <Name>Battleships.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battleships.Player.Interface\Battleships.Player.Interface.csproj">
+      <Project>{E12D571A-3135-4D8D-A590-816BC9B02AEA}</Project>
+      <Name>Battleships.Player.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
       <Project>{59E0E326-4953-4D40-A556-70E29F9172B4}</Project>
       <Name>Battleships.Player</Name>
@@ -104,6 +110,10 @@
     <ProjectReference Include="..\Battleships.Runner.Tests\Battleships.Runner.Tests.csproj">
       <Project>{6C4DF483-2210-4CC0-A5CF-5673018DC2EC}</Project>
       <Name>Battleships.Runner.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battleships.Runner\Battleships.Runner.csproj">
+      <Project>{97020B4B-5BB9-4181-95B7-521C3A4B1BF7}</Project>
+      <Name>Battleships.Runner</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
