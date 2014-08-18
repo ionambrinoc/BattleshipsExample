@@ -89,7 +89,7 @@
         }
 
         [Test]
-        public void New_players_play_one_match_against_each_other_player_not_yet_played()
+        public void New_players_play_exactly_one_match_against_every_other_player()
         {
             // Given
             var onePlayerList = new List<IBattleshipsPlayer> { playerOne };

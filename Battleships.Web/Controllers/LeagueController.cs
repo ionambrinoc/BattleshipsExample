@@ -34,12 +34,14 @@
         [HttpPost]
         public virtual ActionResult RunLeague()
         {
-            var mostRecentLeagueTime = matchResultsRepository.GetMostRecentMatchTime();
-            var battleshipsPlayers = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(p)).ToList();
-            var recentlyUpdatedBattleshipsPlayers = battleshipsPlayers.Where(battleshipsPlayer => battleshipsPlayer.PlayerRecord.LastUpdated > mostRecentLeagueTime).ToList();
-            var matchResults = leagueRunner.GetLeagueResults(battleshipsPlayers, recentlyUpdatedBattleshipsPlayers);
+            var players = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(p)).ToList();
+            var updatedPlayers = players.Where(player => player.PlayerRecord.LastUpdated >= matchResultsRepository.GetMostRecentMatchTime()).ToList();
+
+            var matchResults = leagueRunner.GetLeagueResults(players, updatedPlayers);
+
             matchResultsRepository.UpdateResults(matchResults);
             matchResultsRepository.SaveContext();
+
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
             return Json(leaderboard);
         }
