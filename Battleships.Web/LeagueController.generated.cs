@@ -21,66 +21,10 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace Battleships.Web.Controllers
+namespace T4MVC
 {
-    public partial class LeagueController
+    public class LeagueController
     {
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected LeagueController(Dummy d) { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoute(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
-        {
-            return RedirectToAction(taskResult.Result);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
-        {
-            return RedirectToActionPermanent(taskResult.Result);
-        }
-
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public LeagueController Actions { get { return MVC.League; } }
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Area = "";
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "League";
-        [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "League";
-
-        static readonly ActionNamesClass s_actions = new ActionNamesClass();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionNamesClass ActionNames { get { return s_actions; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass
-        {
-            public readonly string Index = "Index";
-            public readonly string RunLeague = "RunLeague";
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants
-        {
-            public const string Index = "Index";
-            public const string RunLeague = "RunLeague";
-        }
-
 
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -98,34 +42,6 @@ namespace Battleships.Web.Controllers
         }
     }
 
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_LeagueController : Battleships.Web.Controllers.LeagueController
-    {
-        public T4MVC_LeagueController() : base(Dummy.Instance) { }
-
-        [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Index()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            IndexOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void RunLeagueOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult RunLeague()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RunLeague);
-            RunLeagueOverride(callInfo);
-            return callInfo;
-        }
-
-    }
 }
 
 #endregion T4MVC

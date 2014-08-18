@@ -63,10 +63,10 @@
             if (!playerRecordsRepository.PlayerNameExists(uploadedBot.Name))
             {
                 var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.GetUserId(), model.File, model.Picture, uploadedBot.Name);
-                playerRecord.LastUpdated = DateTime.Now;
+                playerRecord.LastUpdated = DateTime.Now; //is this necessary? should it be in OverwriteYes too?
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
-                TempData.AddAlert("Player Created!");
+                TempData.AddPopup("Player Created!");
                 return RedirectToAction(MVC.Players.Index());
             }
 
@@ -86,7 +86,7 @@
             playersUploadService.OverwritePlayer(model);
             playerRecordsRepository.MarkPlayerAsUpdated(model.PlayerName);
             playerRecordsRepository.SaveContext();
-            TempData.AddAlert("Player Updated!");
+            TempData.AddPopup("Player Updated!");
 
             return RedirectToAction(MVC.Players.Index());
         }

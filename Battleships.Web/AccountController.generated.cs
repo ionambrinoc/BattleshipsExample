@@ -21,101 +21,11 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace Battleships.Web.Controllers
+namespace T4MVC
 {
-    public partial class AccountController
+    public class AccountController
     {
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected AccountController(Dummy d) { }
 
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoute(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
-        {
-            return RedirectToAction(taskResult.Result);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
-        {
-            return RedirectToActionPermanent(taskResult.Result);
-        }
-
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.JsonResult IsUserNameAvailable()
-        {
-            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsUserNameAvailable);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public AccountController Actions { get { return MVC.Account; } }
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Area = "";
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Account";
-        [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Account";
-
-        static readonly ActionNamesClass s_actions = new ActionNamesClass();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionNamesClass ActionNames { get { return s_actions; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass
-        {
-            public readonly string LogOff = "LogOff";
-            public readonly string LogIn = "LogIn";
-            public readonly string Register = "Register";
-            public readonly string IsUserNameAvailable = "IsUserNameAvailable";
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants
-        {
-            public const string LogOff = "LogOff";
-            public const string LogIn = "LogIn";
-            public const string Register = "Register";
-            public const string IsUserNameAvailable = "IsUserNameAvailable";
-        }
-
-
-        static readonly ActionParamsClass_LogIn s_params_LogIn = new ActionParamsClass_LogIn();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_LogIn LogInParams { get { return s_params_LogIn; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_LogIn
-        {
-            public readonly string model = "model";
-        }
-        static readonly ActionParamsClass_Register s_params_Register = new ActionParamsClass_Register();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Register RegisterParams { get { return s_params_Register; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Register
-        {
-            public readonly string model = "model";
-        }
-        static readonly ActionParamsClass_IsUserNameAvailable s_params_IsUserNameAvailable = new ActionParamsClass_IsUserNameAvailable();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_IsUserNameAvailable IsUserNameAvailableParams { get { return s_params_IsUserNameAvailable; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_IsUserNameAvailable
-        {
-            public readonly string name = "name";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -134,81 +44,6 @@ namespace Battleships.Web.Controllers
         }
     }
 
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_AccountController : Battleships.Web.Controllers.AccountController
-    {
-        public T4MVC_AccountController() : base(Dummy.Instance) { }
-
-        [NonAction]
-        partial void LogOffOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult LogOff()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOff);
-            LogOffOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void LogInOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult LogIn()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
-            LogInOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void LogInOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.Account.LogInViewModel model);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult LogIn(Battleships.Web.Models.Account.LogInViewModel model)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            LogInOverride(callInfo, model);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Register()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
-            RegisterOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.Account.CreateAccountViewModel model);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Register(Battleships.Web.Models.Account.CreateAccountViewModel model)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            RegisterOverride(callInfo, model);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void IsUserNameAvailableOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, string name);
-
-        [NonAction]
-        public override System.Web.Mvc.JsonResult IsUserNameAvailable(string name)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsUserNameAvailable);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "name", name);
-            IsUserNameAvailableOverride(callInfo, name);
-            return callInfo;
-        }
-
-    }
 }
 
 #endregion T4MVC

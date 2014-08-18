@@ -27,7 +27,7 @@
                 "~/Scripts/HeadToHead/play.js"));
 
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/addplayer/addplayer").Include(
-                "~/Scripts/AddPlayer/addplayer.js"));
+                "~/Scripts/AddPlayer/addplayer.js", "~/Scripts/AddPlayer/index.js"));
 
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/players/index").Include(
                 "~/Scripts/Players/index.js"));

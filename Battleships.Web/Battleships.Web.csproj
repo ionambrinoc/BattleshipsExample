@@ -355,6 +355,7 @@
     <Content Include="Content\Home\index.less" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Scripts\AddPlayer\index.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

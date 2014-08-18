@@ -4,7 +4,7 @@
 
     public static class PopupHelper
     {
-        public static void AddAlert(this TempDataDictionary tempData, string message)
+        public static void AddPopup(this TempDataDictionary tempData, string message)
         {
             tempData.Add("showPopup", message);
         }

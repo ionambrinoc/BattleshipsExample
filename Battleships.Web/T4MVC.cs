@@ -25,13 +25,13 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
-    public static Battleships.Web.Controllers.AccountController Account = new Battleships.Web.Controllers.T4MVC_AccountController();
-    public static Battleships.Web.Controllers.AddPlayerController AddPlayer = new Battleships.Web.Controllers.T4MVC_AddPlayerController();
-    public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
-    public static Battleships.Web.Controllers.LeagueController League = new Battleships.Web.Controllers.T4MVC_LeagueController();
-    public static Battleships.Web.Controllers.ManagePlayersController ManagePlayers = new Battleships.Web.Controllers.T4MVC_ManagePlayersController();
-    public static Battleships.Web.Controllers.MatchResultsController MatchResults = new Battleships.Web.Controllers.T4MVC_MatchResultsController();
-    public static Battleships.Web.Controllers.PlayersController Players = new Battleships.Web.Controllers.T4MVC_PlayersController();
+    public static T4MVC.AccountController Account = new T4MVC.AccountController();
+    public static T4MVC.AddPlayerController AddPlayer = new T4MVC.AddPlayerController();
+    public static T4MVC.HomeController Home = new T4MVC.HomeController();
+    public static T4MVC.LeagueController League = new T4MVC.LeagueController();
+    public static T4MVC.ManagePlayersController ManagePlayers = new T4MVC.ManagePlayersController();
+    public static T4MVC.MatchResultsController MatchResults = new T4MVC.MatchResultsController();
+    public static T4MVC.PlayersController Players = new T4MVC.PlayersController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -49,34 +49,6 @@ namespace T4MVC
     }
 }
 
-[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResult
-{
-    public T4MVC_System_Web_Mvc_ActionResult(string area, string controller, string action, string protocol = null): base()
-    {
-        this.InitMVCT4Result(area, controller, action, protocol);
-    }
-     
-    public override void ExecuteResult(System.Web.Mvc.ControllerContext context) { }
-    
-    public string Controller { get; set; }
-    public string Action { get; set; }
-    public string Protocol { get; set; }
-    public RouteValueDictionary RouteValueDictionary { get; set; }
-}
-[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult
-{
-    public T4MVC_System_Web_Mvc_JsonResult(string area, string controller, string action, string protocol = null): base()
-    {
-        this.InitMVCT4Result(area, controller, action, protocol);
-    }
-    
-    public string Controller { get; set; }
-    public string Action { get; set; }
-    public string Protocol { get; set; }
-    public RouteValueDictionary RouteValueDictionary { get; set; }
-}
 
 
 
@@ -88,6 +60,14 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class AddPlayer {
+            private const string URLPATH = "~/Scripts/AddPlayer";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string index_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/index.min.js") ? Url("index.min.js") : Url("index.js");
+        }
+    
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class HeadToHead {
             private const string URLPATH = "~/Scripts/HeadToHead";

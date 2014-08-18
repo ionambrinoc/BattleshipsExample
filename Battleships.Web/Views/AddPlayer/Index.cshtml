@@ -28,17 +28,17 @@
                         <span class="input-group-btn">
                             <button class="btn btn-default" id="uploadPlayerFileBtn" type="button">Upload Player File</button>
                         </span>
-                        <input id="photoCover1" type="text" class="form-control">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
+                        <input id="textBoxCoverLeft" type="text" class="form-control">
+                    </div>
+                </div>
                 <div class="col-lg-6">
                     <div class="input-group">
-                        <input id="photoCover2" type="text" class="form-control">
+                        <input id="textBoxCoverRight" type="text" class="form-control">
                         <span class="input-group-btn">
                             <button class="btn btn-default" id="uploadAvatarBtn" type="button">Upload Player Avatar</button>
                         </span>
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 @Html.TextBoxFor(m => m.File, new { type = "file" })
@@ -50,7 +50,6 @@
 
             <input class="btn" id="submit" type="submit" value="Create Player" />
         </div>
-        <!--/jumbotron-->
     }
 }
 else {
@@ -65,19 +64,14 @@ else {
             <input class="btn btn btn-block" id="submit2" type="submit" value="No" />
         }
     </div>
-    <!--/jumbotron-->
 }
 
 @section scripts {
+    @Scripts.Render("~/bundles/scripts/addplayer/addplayer")
 
     <script type="text/javascript">
-        $('#uploadPlayerFileBtn').on('click', function() { $('input[id=File]').click(); });
-        $('input[id=File]').change(function() {
-            $('#photoCover1').val($(this).val());
-        });
-        $('#uploadAvatarBtn').on('click', function() { $('input[id=Picture]').click(); });
-        $('input[id=Picture]').change(function() {
-            $('#photoCover2').val($(this).val());
+        $(function() {
+            battleships.index.buttonOpen();
         });
     </script>
 }

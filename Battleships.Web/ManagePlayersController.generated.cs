@@ -21,81 +21,11 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace Battleships.Web.Controllers
+namespace T4MVC
 {
-    public partial class ManagePlayersController
+    public class ManagePlayersController
     {
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ManagePlayersController(Dummy d) { }
 
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoute(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
-        {
-            return RedirectToAction(taskResult.Result);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
-        {
-            return RedirectToActionPermanent(taskResult.Result);
-        }
-
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult DeletePlayer()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeletePlayer);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ManagePlayersController Actions { get { return MVC.ManagePlayers; } }
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Area = "";
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "ManagePlayers";
-        [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "ManagePlayers";
-
-        static readonly ActionNamesClass s_actions = new ActionNamesClass();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionNamesClass ActionNames { get { return s_actions; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass
-        {
-            public readonly string Index = "Index";
-            public readonly string DeletePlayer = "DeletePlayer";
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants
-        {
-            public const string Index = "Index";
-            public const string DeletePlayer = "DeletePlayer";
-        }
-
-
-        static readonly ActionParamsClass_DeletePlayer s_params_DeletePlayer = new ActionParamsClass_DeletePlayer();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_DeletePlayer DeletePlayerParams { get { return s_params_DeletePlayer; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DeletePlayer
-        {
-            public readonly string playerId = "playerId";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -112,35 +42,6 @@ namespace Battleships.Web.Controllers
         }
     }
 
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_ManagePlayersController : Battleships.Web.Controllers.ManagePlayersController
-    {
-        public T4MVC_ManagePlayersController() : base(Dummy.Instance) { }
-
-        [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Index()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            IndexOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void DeletePlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerId);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult DeletePlayer(int playerId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeletePlayer);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerId", playerId);
-            DeletePlayerOverride(callInfo, playerId);
-            return callInfo;
-        }
-
-    }
 }
 
 #endregion T4MVC
