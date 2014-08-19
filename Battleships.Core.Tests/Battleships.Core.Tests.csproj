@@ -77,7 +77,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factories\GameLogFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\LeagueRecordsRepositoryTests.cs" />
     <Compile Include="Repositories\MatchResultsRepositoryTests.cs" />

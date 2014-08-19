@@ -91,6 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factories\GameLogFactoryTests.cs" />
     <Compile Include="Runners\HeadToHeadRunnerTests.cs" />
     <Compile Include="Runners\LeagueRunnerTests.cs" />
     <Compile Include="Runners\MatchRunnerTests.cs" />

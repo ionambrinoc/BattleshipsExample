@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factories\GameLogFactory.cs" />
+    <Compile Include="Helper\GridSquareStringConverter.cs" />
     <Compile Include="Runners\HeadToHeadRunner.cs" />
     <Compile Include="Factories\MatchScoreBoardFactory.cs" />
     <Compile Include="Runners\LeagueRunner.cs" />
