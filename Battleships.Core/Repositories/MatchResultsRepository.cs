@@ -22,7 +22,7 @@
 
         private bool TryUpdateResult(MatchResult newResult)
         {
-            foreach (var existingResult in Entities.ToList().Where(entity => entity.SamePlayers(newResult)))
+            foreach (var existingResult in Entities.AsEnumerable().Where(entity => entity.SamePlayers(newResult)))
             {
                 existingResult.CopyFrom(newResult);
                 return true;
