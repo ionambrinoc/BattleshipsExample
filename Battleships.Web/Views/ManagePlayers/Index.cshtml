@@ -18,6 +18,13 @@
         <tr>
             <td>@player.Name</td>
             <td>@player.LastUpdated</td>
+            <td class="td-align">
+                @using (Html.BeginForm(MVC.ManagePlayers.ClickPlayer(), FormMethod.Post))
+                {
+                    @Html.Hidden("playerId", player.Id)
+                    <input class="btn" id="submit" type="submit" value="Profile" />
+                }
+            </td>
             <td class ="td-align">
                 @using (Html.BeginForm(MVC.ManagePlayers.DeletePlayer(), FormMethod.Post)) {
                     @Html.Hidden("playerId", player.Id)

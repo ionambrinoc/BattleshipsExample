@@ -23,10 +23,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace Battleships.Web.Controllers
 {
-    public partial class ManagePlayersController
+    public partial class PlayerProfileController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ManagePlayersController(Dummy d) { }
+        protected PlayerProfileController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -56,25 +56,19 @@ namespace Battleships.Web.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult DeletePlayer()
+        public virtual System.Web.Mvc.ActionResult Index()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeletePlayer);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult ClickPlayer()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ClickPlayer);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ManagePlayersController Actions { get { return MVC.ManagePlayers; } }
+        public PlayerProfileController Actions { get { return MVC.PlayerProfile; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "ManagePlayers";
+        public readonly string Name = "PlayerProfile";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "ManagePlayers";
+        public const string NameConst = "PlayerProfile";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -83,32 +77,20 @@ namespace Battleships.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string DeletePlayer = "DeletePlayer";
-            public readonly string ClickPlayer = "ClickPlayer";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string DeletePlayer = "DeletePlayer";
-            public const string ClickPlayer = "ClickPlayer";
         }
 
 
-        static readonly ActionParamsClass_DeletePlayer s_params_DeletePlayer = new ActionParamsClass_DeletePlayer();
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_DeletePlayer DeletePlayerParams { get { return s_params_DeletePlayer; } }
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DeletePlayer
-        {
-            public readonly string playerId = "playerId";
-        }
-        static readonly ActionParamsClass_ClickPlayer s_params_ClickPlayer = new ActionParamsClass_ClickPlayer();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_ClickPlayer ClickPlayerParams { get { return s_params_ClickPlayer; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_ClickPlayer
+        public class ActionParamsClass_Index
         {
             public readonly string playerId = "playerId";
         }
@@ -122,49 +104,26 @@ namespace Battleships.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Index = "Index";
+                public readonly string index = "index";
             }
-            public readonly string Index = "~/Views/ManagePlayers/Index.cshtml";
+            public readonly string index = "~/Views/PlayerProfile/index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_ManagePlayersController : Battleships.Web.Controllers.ManagePlayersController
+    public partial class T4MVC_PlayerProfileController : Battleships.Web.Controllers.PlayerProfileController
     {
-        public T4MVC_ManagePlayersController() : base(Dummy.Instance) { }
+        public T4MVC_PlayerProfileController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Web.Mvc.ActionResult Index(int playerId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            IndexOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void DeletePlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerId);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult DeletePlayer(int playerId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeletePlayer);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerId", playerId);
-            DeletePlayerOverride(callInfo, playerId);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void ClickPlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerId);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult ClickPlayer(int playerId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ClickPlayer);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerId", playerId);
-            ClickPlayerOverride(callInfo, playerId);
+            IndexOverride(callInfo, playerId);
             return callInfo;
         }
 

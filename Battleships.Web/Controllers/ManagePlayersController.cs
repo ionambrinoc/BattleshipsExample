@@ -30,5 +30,14 @@
             playerUploadService.DeletePlayer(player.Name, player.PictureFileName);
             return RedirectToAction(MVC.ManagePlayers.Index());
         }
+
+        [HttpPost]
+        public virtual ActionResult ClickPlayer(int playerId)
+        {
+            return RedirectToAction(MVC.PlayerProfile.Index(playerId));
+        }
+
+
+
     }
 }

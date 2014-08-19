@@ -212,6 +212,7 @@
     <Compile Include="Controllers\LeagueController.cs" />
     <Compile Include="Controllers\ManagePlayersController.cs" />
     <Compile Include="Controllers\MatchResultsController.cs" />
+    <Compile Include="Controllers\PlayerProfileController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -236,6 +237,9 @@
     <Compile Include="Models\League\RoundStats.cs" />
     <Compile Include="Models\League\PlayerStats.cs" />
     <Compile Include="Factories\LeaderboardFactory.cs" />
+    <Compile Include="PlayerProfileController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="PlayersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -382,6 +386,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\League\Index.cshtml" />
     <Content Include="Views\ManagePlayers\Index.cshtml" />
+    <Content Include="Views\PlayerProfile\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
