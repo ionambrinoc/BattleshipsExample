@@ -1,17 +1,24 @@
 ﻿namespace Battleships.Runner.Models
 {
-    using System;
+    using Battleships.Player;
+
+    public enum ResultType
+    {
+        Default,
+        Timeout,
+        ShipPositionsInvalid,
+        OpponentThrewException
+    };
 
     public class GameResult
     {
-        public int Id { get; set; }
+        public GameResult(IBattleshipsPlayer winner, ResultType resultType)
+        {
+            Winner = winner;
+            ResultType = resultType;
+        }
 
-        public int WinnerId { get; set; }
-
-        public int LoserId { get; set; }
-
-        public virtual PlayerRecord Winner { get; set; }
-        public virtual PlayerRecord Loser { get; set; }
-        public DateTime TimePlayed { get; set; }
+        public IBattleshipsPlayer Winner { get; set; }
+        public ResultType ResultType { get; set; }
     }
 }
