@@ -28,16 +28,18 @@
         private MatchResult playerTwoWin;
         private IMatchResultsRepository fakeMatchResultsRepository;
         private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepository;
+        private ILeagueRecordsRepository fakeLeagueRecordsRepository;
 
         [SetUp]
         public void SetUp()
         {
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
+            fakeLeagueRecordsRepository = A.Fake<ILeagueRecordsRepository>();
             fakeLeagueRunner = A.Fake<ILeagueRunner>();
             fakeLeaderboardFactory = A.Fake<ILeaderboardFactory>();
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
             fakeBattleshipsPlayerRepository = A.Fake<IBattleshipsPlayerRepository>();
-            controller = new LeagueController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository);
+            controller = new LeagueController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository, fakeLeagueRecordsRepository);
 
             playerRecordOne = A.Fake<PlayerRecord>();
             playerRecordTwo = A.Fake<PlayerRecord>();
@@ -97,8 +99,7 @@
 
             A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordOne)).Returns(playerOne);
             A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordTwo)).Returns(playerTwo);
-            A.CallTo(() => playerRecordOne.GetLastTimePlayed()).Returns(middleDate);
-            A.CallTo(() => playerRecordTwo.GetLastTimePlayed()).Returns(middleDate);
+            A.CallTo(() => fakeLeagueRecordsRepository.GetLatestLeagueTime()).Returns(middleDate);
 
             // When
             var result = controller.RunLeague();

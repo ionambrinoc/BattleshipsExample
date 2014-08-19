@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class PlayerRecord
     {
@@ -19,14 +18,6 @@
         public void MarkAsUpdated()
         {
             LastUpdated = DateTime.Now;
-        }
-
-        public virtual DateTime GetLastTimePlayed()
-        {
-            var timeOfLastWonMatch = WonMatchResults.Count != 0 ? WonMatchResults.Max(result => result.TimePlayed) : DateTime.MinValue;
-            var timeOfLastLostMatch = LostMatchResults.Count != 0 ? LostMatchResults.Max(result => result.TimePlayed) : DateTime.MinValue;
-
-            return timeOfLastWonMatch > timeOfLastLostMatch ? timeOfLastWonMatch : timeOfLastLostMatch;
         }
     }
 }
