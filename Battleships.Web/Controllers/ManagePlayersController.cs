@@ -23,21 +23,18 @@
         }
 
         [HttpPost]
-        public virtual ActionResult DeletePlayer(int playerId)
+        public virtual ActionResult DeletePlayer(int id)
         {
-            var player = playerRecordsRepository.GetPlayerRecordById(playerId);
-            playerRecordsRepository.DeletePlayerRecordById(playerId);
+            var player = playerRecordsRepository.GetPlayerRecordById(id);
+            playerRecordsRepository.DeletePlayerRecordById(id);
             playerUploadService.DeletePlayer(player.Name, player.PictureFileName);
             return RedirectToAction(MVC.ManagePlayers.Index());
         }
 
-        [HttpPost]
-        public virtual ActionResult ClickPlayer(int playerId)
+        [HttpGet]
+        public virtual ActionResult ClickPlayer(int id)
         {
-            return RedirectToAction(MVC.PlayerProfile.Index(playerId));
+            return RedirectToAction(MVC.PlayerProfile.Index(id));
         }
-
-
-
     }
 }

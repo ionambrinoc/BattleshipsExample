@@ -102,7 +102,7 @@ namespace Battleships.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_DeletePlayer
         {
-            public readonly string playerId = "playerId";
+            public readonly string id = "id";
         }
         static readonly ActionParamsClass_ClickPlayer s_params_ClickPlayer = new ActionParamsClass_ClickPlayer();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -110,7 +110,7 @@ namespace Battleships.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_ClickPlayer
         {
-            public readonly string playerId = "playerId";
+            public readonly string id = "id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -145,26 +145,26 @@ namespace Battleships.Web.Controllers
         }
 
         [NonAction]
-        partial void DeletePlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerId);
+        partial void DeletePlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult DeletePlayer(int playerId)
+        public override System.Web.Mvc.ActionResult DeletePlayer(int id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeletePlayer);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerId", playerId);
-            DeletePlayerOverride(callInfo, playerId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            DeletePlayerOverride(callInfo, id);
             return callInfo;
         }
 
         [NonAction]
-        partial void ClickPlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerId);
+        partial void ClickPlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult ClickPlayer(int playerId)
+        public override System.Web.Mvc.ActionResult ClickPlayer(int id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ClickPlayer);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerId", playerId);
-            ClickPlayerOverride(callInfo, playerId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ClickPlayerOverride(callInfo, id);
             return callInfo;
         }
 

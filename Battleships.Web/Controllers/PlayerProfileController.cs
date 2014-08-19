@@ -13,9 +13,9 @@
         }
 
         [HttpGet]
-        public virtual ActionResult Index(int playerId)
+        public virtual ActionResult Index(int id)
         {
-            return View(playerRecordsRepository.GetPlayerRecordById(playerId));
+            return View(playerRecordsRepository.GetPlayerRecordById(id));
         }
     }
 }
