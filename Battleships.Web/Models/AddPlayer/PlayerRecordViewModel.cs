@@ -11,6 +11,7 @@
         public PlayerRecordViewModel(PlayerRecord playerRecord)
         {
             this.playerRecord = playerRecord;
+            //playerRecord.WonMatchResults
         }
 
         public int Id

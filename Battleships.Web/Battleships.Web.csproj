@@ -237,6 +237,7 @@
     <Compile Include="Models\League\RoundStats.cs" />
     <Compile Include="Models\League\PlayerStats.cs" />
     <Compile Include="Factories\LeaderboardFactory.cs" />
+    <Compile Include="Models\PlayerProfile\PlayerProfileModel.cs" />
     <Compile Include="PlayerProfileController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -310,6 +311,7 @@
     <Content Include="Scripts\HeadToHead\play.js" />
     <Content Include="Scripts\Home\index.js" />
     <Content Include="Scripts\League\index.js" />
+    <Content Include="Scripts\PlayerProfile\index.js" />
     <Content Include="Scripts\Players\index.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Components\bootstrap\less\alerts.less" />
@@ -357,6 +359,7 @@
     <Content Include="Content\League\index.less" />
     <Content Include="Content\large.less" />
     <Content Include="Content\Home\index.less" />
+    <Content Include="Content\PlayerProfile\index.less" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <Content Include="Samples\Battleships.ExamplePlayer.zip" />
     <None Include="T4MVC.tt.settings.xml" />

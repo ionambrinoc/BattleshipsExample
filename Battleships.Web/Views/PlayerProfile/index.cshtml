@@ -1,8 +1,36 @@
-﻿
+﻿@using System.Configuration
+@using Battleships.Core.Models
+@model PlayerRecord
+
 @{
-    ViewBag.Title = "index";
+    ViewBag.Title = "Profile: " + @Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>index</h2>
+@Styles.Render("~/bundles/styles/profile")
 
+<h4> Id: @Model.Id </h4>
+<img src="@Url.Content(Path.Combine("../..", ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], Model.PictureFileName))"/>
+<p> Last updated: @Model.LastUpdated </p>
+<h3>Records:</h3>
+<p>Wins: @Model.WonMatchResults.Count</p>
+<p>Losses: @Model.LostMatchResults.Count</p>
+
+<table class="table table-hover" id="leaderboard">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Match Wins</th>
+            <th>Match Losses</th>
+            <th>Total rounds won</th>
+        </tr>
+    </thead>
+</table>
+@section scripts{
+    @Scripts.Render("~/bundles/scripts/profile")
+    <script type="text/javascript">
+        $(function() {
+            battleships.profile.index.init();
+        });
+    </script>
+}
