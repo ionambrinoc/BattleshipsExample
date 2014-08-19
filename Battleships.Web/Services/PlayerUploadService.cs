@@ -18,7 +18,7 @@
 
     public class PlayerUploadService : IPlayerUploadService
     {
-        private readonly BotLoader botLoader = new BotLoader();
+        private readonly IBotLoader botLoader = new BotLoader();
 
         public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName)
         {

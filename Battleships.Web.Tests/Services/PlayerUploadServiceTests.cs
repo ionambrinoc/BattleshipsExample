@@ -13,7 +13,7 @@
         private const string TestPlayerName = "testName";
         private const string TempFileContent = "test";
         private const string TestFileName = TestPlayerName + ".dll";
-        private IPlayerUploadService playerUploadService;
+        private PlayerUploadService playerUploadService;
 
         [SetUp]
         public void SetUp()
@@ -26,7 +26,6 @@
         public void Overwrite_succeeds_in_overwriting_a_file()
         {
             // Given
-
             var tempPath = Path.GetTempFileName();
             File.WriteAllText(tempPath, TempFileContent);
             var realPath = Path.Combine(TestPlayerStore.Directory, TestFileName);
