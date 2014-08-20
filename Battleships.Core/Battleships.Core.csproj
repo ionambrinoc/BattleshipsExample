@@ -121,6 +121,10 @@
     <Compile Include="Migrations\201408191128017_AddLeagueRecord.Designer.cs">
       <DependentUpon>201408191128017_AddLeagueRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201408201605458_AddGameLogAndGameEvent.cs" />
+    <Compile Include="Migrations\201408201605458_AddGameLogAndGameEvent.Designer.cs">
+      <DependentUpon>201408201605458_AddGameLogAndGameEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LeagueRecord.cs" />
     <Compile Include="Models\GameEvent.cs" />
@@ -182,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201408191128017_AddLeagueRecord.resx">
       <DependentUpon>201408191128017_AddLeagueRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201408201605458_AddGameLogAndGameEvent.resx">
+      <DependentUpon>201408201605458_AddGameLogAndGameEvent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
