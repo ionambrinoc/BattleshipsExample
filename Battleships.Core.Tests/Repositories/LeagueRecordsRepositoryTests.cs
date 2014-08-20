@@ -51,5 +51,15 @@
             repo.GetAll().Count().Should().Be(2);
             repo.GetLatestLeagueTime().Should().Be(laterTime);
         }
+
+        [Test]
+        public void Returns_minimum_datetime_when_league_repo_is_empty()
+        {
+            // when
+            repo.SaveContext();
+
+            // Then
+            repo.GetLatestLeagueTime().Should().Be(DateTime.MinValue);
+        }
     }
 }

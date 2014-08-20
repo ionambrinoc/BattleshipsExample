@@ -34,11 +34,12 @@
         public void SetUp()
         {
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
-            fakeLeagueRecordsRepository = A.Fake<ILeagueRecordsRepository>();
             fakeLeagueRunner = A.Fake<ILeagueRunner>();
             fakeLeaderboardFactory = A.Fake<ILeaderboardFactory>();
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
             fakeBattleshipsPlayerRepository = A.Fake<IBattleshipsPlayerRepository>();
+            fakeLeagueRecordsRepository = A.Fake<ILeagueRecordsRepository>();
+
             controller = new LeagueController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository, fakeLeagueRecordsRepository);
 
             playerRecordOne = A.Fake<PlayerRecord>();
@@ -81,7 +82,7 @@
         }
 
         [Test]
-        public void UpdatedPlayers_only_contains_players_with_LastUpdated_later_than_most_recent_match_time()
+        public void UpdatedPlayers_only_contains_players_with_LastUpdated_later_than_most_recent_league_start()
         {
             // Given
             var earlierDate = new DateTime(2001, 1, 1);

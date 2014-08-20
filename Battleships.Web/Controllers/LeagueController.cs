@@ -37,7 +37,7 @@
         [HttpPost]
         public virtual ActionResult RunLeague()
         {
-            var now = DateTime.Now;
+            var leagueStartTime = DateTime.Now;
             var players = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(p)).ToList();
             var updatedPlayers = players.Where(player => player.PlayerRecord.LastUpdated >= leagueRecordsRepository.GetLatestLeagueTime()).ToList();
 
@@ -48,7 +48,7 @@
 
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
 
-            leagueRecordsRepository.AddLeague(now);
+            leagueRecordsRepository.AddLeague(leagueStartTime);
             leagueRecordsRepository.SaveContext();
 
             return Json(leaderboard);
