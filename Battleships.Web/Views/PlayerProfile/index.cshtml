@@ -12,25 +12,60 @@
 <h4> Id: @Model.Id </h4>
 <img src="@Url.Content(Path.Combine("../..", ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], Model.PictureFileName))"/>
 <p> Last updated: @Model.LastUpdated </p>
-<h3>Records:</h3>
-<p>Wins: @Model.WonMatchResults.Count</p>
-<p>Losses: @Model.LostMatchResults.Count</p>
 
-<table class="table table-hover" id="leaderboard">
+<h2>Records:</h2>
+
+<h3>Matches Won: @Model.WonMatchResults.Count</h3>
+
+<table class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th></th>
-            <th>Match Wins</th>
-            <th>Match Losses</th>
-            <th>Total rounds won</th>
+            <th>Against</th>
+            <th>Score</th>
+            <th>Time Played</th>
         </tr>
     </thead>
+
+    <tbody>
+        @foreach (var matchResult in Model.WonMatchResults)
+        {
+            <tr class="tableContent">
+                <td>@Html.ActionLink(matchResult.Loser.Name, MVC.PlayerProfile.Index(matchResult.LoserId))</td>
+                <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
+                <td>@matchResult.TimePlayed</td>
+            </tr>
+        }
+    </tbody>
+
 </table>
-@section scripts{
-    @Scripts.Render("~/bundles/scripts/profile")
-    <script type="text/javascript">
+    
+<h3>Matches Lost: @Model.LostMatchResults.Count</h3>
+    
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Against</th>
+            <th>Score</th>
+            <th>Time Played</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var matchResult in Model.LostMatchResults)
+        {
+            <tr class="tableContent">
+                <td>@Html.ActionLink(matchResult.Winner.Name, MVC.PlayerProfile.Index(matchResult.WinnerId))</td>
+                <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
+                <td>@matchResult.TimePlayed</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<script type="text/javascript">
         $(function() {
             battleships.profile.index.init();
         });
     </script>
-}
