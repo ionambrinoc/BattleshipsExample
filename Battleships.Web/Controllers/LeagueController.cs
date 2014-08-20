@@ -31,6 +31,7 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
+            ViewBag.LeagueCount = leagueRecordsRepository.GetCount();
             return View();
         }
 

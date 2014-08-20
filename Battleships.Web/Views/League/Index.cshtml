@@ -8,26 +8,41 @@
 
 @using (Html.BeginForm(MVC.League.RunLeague(), FormMethod.Post, new { id = "run-league" })) {}
 
+@{
+    if (ViewBag.LeagueCount == 0)
+    {
+
+        <div id="noLeagueBefore">
+            <h3>No league has been run before.</h3>
+        </div>
+    }
+    else
+    {
+        <h3> Latest League Results: </h3>
+        <table class="table table-hover" id="leaderboard">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Match Wins</th>
+                    <th>Match Losses</th>
+                    <th>Total rounds won</th>
+                </tr>
+            </thead>
+        </table>
+    }
+}
+
 <div id="gameSetup">
     <button id="runLeagueButton" type="button" class="btn btn-info">
         Run League
     </button>
 </div>
 
-<table class="table table-hover" id="leaderboard">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Match Wins</th>
-            <th>Match Losses</th>
-            <th>Total rounds won</th>
-        </tr>
-    </thead>
-</table>
 <button id="resetGameButton" type="button" class="btn btn-success">Play again?</button>
 <div id="loading-spinner">
     <img src="../../Images/Explodingbattleship.gif" alt="Loading...">
 </div>
+
 
 @section scripts{
     @Scripts.Render("~/bundles/scripts/league/index")

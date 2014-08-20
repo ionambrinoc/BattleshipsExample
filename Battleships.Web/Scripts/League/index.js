@@ -6,17 +6,19 @@ window.battleships.league.index = (function($, undefined) {
     var gameSetup = $('#gameSetup');
     var resetButton = $('#resetGameButton');
     var leaderboard = $('#leaderboard');
+    var noLeagueBefore = $('#noLeagueBefore');
 
     function resetGame() {
         gameSetup.show();
         loadingSpinner.hide();
         leaderboard.find('.player, .round-stats').remove();
-        leaderboard.hide();
+       
         resetButton.hide();
     }
 
     function startLeague() {
         gameSetup.hide();
+        leaderboard.hide();
         loadingSpinner.show();
     }
 
@@ -40,8 +42,7 @@ window.battleships.league.index = (function($, undefined) {
                 '<tr>' +
                 '<td>vs. ' + roundStats[j].OpponentName + ' - ' + roundStats[j].Wins + ':' + roundStats[j].Losses + '</td>' +
                 '<td></td><td></td><td></td>' +
-                '</tr>'
-            ;
+                '</tr>';
         }
         roundStatsHtml += '</tbody>';
         return roundStatsHtml;

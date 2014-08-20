@@ -9,6 +9,7 @@
     {
         void AddLeague(DateTime startTime);
         DateTime GetLatestLeagueTime();
+        int GetCount();
     }
 
     public class LeagueRecordsRepository : Repository<LeagueRecord>, ILeagueRecordsRepository
@@ -23,6 +24,11 @@
         public DateTime GetLatestLeagueTime()
         {
             return !Entities.Any() ? DateTime.MinValue : Entities.Max(league => league.StartTime);
+        }
+
+        public int GetCount()
+        {
+            return Entities.Count();
         }
     }
 }
