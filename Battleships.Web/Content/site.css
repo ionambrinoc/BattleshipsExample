@@ -1,0 +1,35 @@
+﻿body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+* {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+  max-width: 280px;
+}
+.field-validation-error {
+  color: red;
+}
+:not(.navbar) a {
+  color: #428bca;
+}
+:not(.navbar) a:hover,
+:not(.navbar) a:focus {
+  color: #2a6496;
+  text-decoration: underline;
+}
+:not(.navbar) a:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+/*# sourceMappingURL=site.css.map */

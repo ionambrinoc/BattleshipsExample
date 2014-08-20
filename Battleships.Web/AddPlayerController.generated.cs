@@ -21,11 +21,91 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace T4MVC
+namespace Battleships.Web.Controllers
 {
-    public class AddPlayerController
+    public partial class AddPlayerController
     {
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected AddPlayerController(Dummy d) { }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoute(callInfo.RouteValueDictionary);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
+        }
+
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult OverwriteYes()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.OverwriteYes);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public AddPlayerController Actions { get { return MVC.AddPlayer; } }
+        [GeneratedCode("T4MVC", "2.0")]
+        public readonly string Area = "";
+        [GeneratedCode("T4MVC", "2.0")]
+        public readonly string Name = "AddPlayer";
+        [GeneratedCode("T4MVC", "2.0")]
+        public const string NameConst = "AddPlayer";
+
+        static readonly ActionNamesClass s_actions = new ActionNamesClass();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionNamesClass ActionNames { get { return s_actions; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNamesClass
+        {
+            public readonly string Index = "Index";
+            public readonly string OverwriteYes = "OverwriteYes";
+            public readonly string OverwriteNo = "OverwriteNo";
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNameConstants
+        {
+            public const string Index = "Index";
+            public const string OverwriteYes = "OverwriteYes";
+            public const string OverwriteNo = "OverwriteNo";
+        }
+
+
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_OverwriteYes s_params_OverwriteYes = new ActionParamsClass_OverwriteYes();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_OverwriteYes OverwriteYesParams { get { return s_params_OverwriteYes; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_OverwriteYes
+        {
+            public readonly string model = "model";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -42,6 +122,58 @@ namespace T4MVC
         }
     }
 
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public partial class T4MVC_AddPlayerController : Battleships.Web.Controllers.AddPlayerController
+    {
+        public T4MVC_AddPlayerController() : base(Dummy.Instance) { }
+
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            IndexOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.AddPlayer.AddPlayerModel model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Index(Battleships.Web.Models.AddPlayer.AddPlayerModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            IndexOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void OverwriteYesOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.AddPlayer.AddPlayerModel model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult OverwriteYes(Battleships.Web.Models.AddPlayer.AddPlayerModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.OverwriteYes);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            OverwriteYesOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void OverwriteNoOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult OverwriteNo()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.OverwriteNo);
+            OverwriteNoOverride(callInfo);
+            return callInfo;
+        }
+
+    }
 }
 
 #endregion T4MVC

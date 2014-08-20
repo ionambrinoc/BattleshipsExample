@@ -4,9 +4,16 @@
 
     public static class PopupHelper
     {
+        public static string PopupKey = "showPopup";
+
+        public static bool HasPopup(this TempDataDictionary tempData)
+        {
+            return tempData[PopupKey] != null;
+        }
+
         public static void AddPopup(this TempDataDictionary tempData, string message)
         {
-            tempData.Add("showPopup", message);
+            tempData.Add(PopupKey, message);
         }
     }
 }

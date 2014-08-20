@@ -1,5 +1,6 @@
 ﻿window.battleships = window.battleships || {};
-window.battleships.index = (function($, undefined) {
+window.battleships.addPlayer = window.battleships.addPlayer || {};
+window.battleships.addPlayer.index = (function($, undefined) {
     return {
         buttonOpen: function() {
             $('#uploadPlayerFileBtn').on('click', function() { $('input[id=File]').click(); });
@@ -10,7 +11,6 @@ window.battleships.index = (function($, undefined) {
             $('input[id=Picture]').change(function() {
                 $('#textBoxCoverRight').val($(this).val());
             });
-
         }
     };
 })(jQuery);

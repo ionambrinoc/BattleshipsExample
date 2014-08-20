@@ -27,7 +27,8 @@
                 "~/Scripts/HeadToHead/play.js"));
 
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/addplayer/addplayer").Include(
-                "~/Scripts/AddPlayer/addplayer.js", "~/Scripts/AddPlayer/index.js"));
+                "~/Scripts/AddPlayer/addplayer.js",
+                "~/Scripts/AddPlayer/index.js"));
 
             bundles.Add(new CustomScriptBundle("~/bundles/scripts/players/index").Include(
                 "~/Scripts/Players/index.js"));
@@ -38,7 +39,8 @@
             bundles.Add(new CustomStyleBundle("~/bundles/styles/common").Include(
                 "~/Components/bootstrap/less/bootstrap.less",
                 "~/Content/site.less",
-                "~/Components/jquery-ui/themes/smoothness/jquery-ui.css"));
+                "~/Components/jquery-ui/themes/smoothness/jquery-ui.css",
+                "~/Content/Shared/popup.less"));
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/matchresults/index").Include(
                 "~/Content/MatchResults/index.less"));

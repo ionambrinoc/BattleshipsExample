@@ -25,13 +25,13 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
-    public static T4MVC.AccountController Account = new T4MVC.AccountController();
-    public static T4MVC.AddPlayerController AddPlayer = new T4MVC.AddPlayerController();
-    public static T4MVC.HomeController Home = new T4MVC.HomeController();
-    public static T4MVC.LeagueController League = new T4MVC.LeagueController();
-    public static T4MVC.ManagePlayersController ManagePlayers = new T4MVC.ManagePlayersController();
-    public static T4MVC.MatchResultsController MatchResults = new T4MVC.MatchResultsController();
-    public static T4MVC.PlayersController Players = new T4MVC.PlayersController();
+    public static Battleships.Web.Controllers.AccountController Account = new Battleships.Web.Controllers.T4MVC_AccountController();
+    public static Battleships.Web.Controllers.AddPlayerController AddPlayer = new Battleships.Web.Controllers.T4MVC_AddPlayerController();
+    public static Battleships.Web.Controllers.HomeController Home = new Battleships.Web.Controllers.T4MVC_HomeController();
+    public static Battleships.Web.Controllers.LeagueController League = new Battleships.Web.Controllers.T4MVC_LeagueController();
+    public static Battleships.Web.Controllers.ManagePlayersController ManagePlayers = new Battleships.Web.Controllers.T4MVC_ManagePlayersController();
+    public static Battleships.Web.Controllers.MatchResultsController MatchResults = new Battleships.Web.Controllers.T4MVC_MatchResultsController();
+    public static Battleships.Web.Controllers.PlayersController Players = new Battleships.Web.Controllers.T4MVC_PlayersController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -49,6 +49,34 @@ namespace T4MVC
     }
 }
 
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_ActionResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+     
+    public override void ExecuteResult(System.Web.Mvc.ControllerContext context) { }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_JsonResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
 
 
 
@@ -121,6 +149,10 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string AddPlayer_less = Url("AddPlayer.less");
+            public static readonly string AddPlayer_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AddPlayer.min.css") ? Url("AddPlayer.min.css") : Url("AddPlayer.css");
+                 
+            public static readonly string AddPlayer_css_map = Url("AddPlayer.css.map");
+            public static readonly string AddPlayer_min_css = Url("AddPlayer.min.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -164,7 +196,23 @@ namespace Links
             public static readonly string index_less = Url("index.less");
         }
     
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Shared {
+            private const string URLPATH = "~/Content/Shared";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string popup_less = Url("popup.less");
+            public static readonly string Popup_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Popup.min.css") ? Url("Popup.min.css") : Url("Popup.css");
+                 
+            public static readonly string Popup_css_map = Url("Popup.css.map");
+            public static readonly string Popup_min_css = Url("Popup.min.css");
+        }
+    
         public static readonly string site_less = Url("site.less");
+        public static readonly string site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.css") ? Url("site.min.css") : Url("site.css");
+             
+        public static readonly string site_css_map = Url("site.css.map");
+        public static readonly string site_min_css = Url("site.min.css");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

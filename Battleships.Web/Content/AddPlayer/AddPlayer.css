@@ -1,0 +1,11 @@
+﻿input#File,
+input#Picture {
+  display: none;
+}
+#textBoxCoverLeft {
+  float: left;
+}
+#textBoxCoverRight {
+  float: right;
+}
+/*# sourceMappingURL=AddPlayer.css.map */

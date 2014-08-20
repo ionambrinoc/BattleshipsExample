@@ -7,7 +7,6 @@
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
-    using System;
     using System.IO;
     using System.Web;
     using System.Web.Mvc;
@@ -63,7 +62,6 @@
             if (!playerRecordsRepository.PlayerNameExists(uploadedBot.Name))
             {
                 var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.GetUserId(), model.File, model.Picture, uploadedBot.Name);
-                playerRecord.LastUpdated = DateTime.Now; //is this necessary? should it be in OverwriteYes too?
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
                 TempData.AddPopup("Player Created!");
@@ -87,7 +85,6 @@
             playerRecordsRepository.MarkPlayerAsUpdated(model.PlayerName);
             playerRecordsRepository.SaveContext();
             TempData.AddPopup("Player Updated!");
-
             return RedirectToAction(MVC.Players.Index());
         }
 
