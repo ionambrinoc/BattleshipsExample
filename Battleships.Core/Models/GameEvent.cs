@@ -4,6 +4,7 @@
 
     public class GameEvent
     {
+        public int Id { get; set; }
         public DateTime Time { get; set; }
         public bool IsPlayer1Turn { get; set; }
         public string SelectedTarget { get; set; }

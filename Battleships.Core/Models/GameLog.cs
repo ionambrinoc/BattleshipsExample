@@ -1,11 +1,11 @@
 ﻿namespace Battleships.Core.Models
 {
-    using Battleships.Player.Interface;
     using System;
     using System.Collections.Generic;
 
     public class GameLog
     {
+        public int Id { get; set; }
         public PlayerRecord Player1 { get; set; }
         public PlayerRecord Player2 { get; set; }
         public DateTime StartTime { get; set; }

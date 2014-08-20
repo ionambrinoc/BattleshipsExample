@@ -2,6 +2,7 @@
 {
     using Battleships.Core.Repositories;
     using Battleships.Player;
+    using Battleships.Runner.Factories;
     using Battleships.Runner.Runners;
     using Battleships.Web.Models.AddPlayer;
     using System.Linq;
@@ -12,12 +13,14 @@
         private readonly IPlayerRecordsRepository playerRecordsRepository;
         private readonly IBattleshipsPlayerRepository battleshipsPlayerRepository;
         private readonly IHeadToHeadRunner headToHeadRunner;
+        private readonly IGameLogRepository gameLogRepository;
 
-        public PlayersController(IPlayerRecordsRepository playerRecordsRepository, IBattleshipsPlayerRepository battleshipsPlayerRepository, IHeadToHeadRunner headToHeadRunner)
+        public PlayersController(IPlayerRecordsRepository playerRecordsRepository, IBattleshipsPlayerRepository battleshipsPlayerRepository, IHeadToHeadRunner headToHeadRunner, IGameLogRepository gameLogRepository)
         {
             this.playerRecordsRepository = playerRecordsRepository;
             this.battleshipsPlayerRepository = battleshipsPlayerRepository;
             this.headToHeadRunner = headToHeadRunner;
+            this.gameLogRepository = gameLogRepository;
         }
 
         [HttpGet]
@@ -31,7 +34,7 @@
         {
             var battleshipsPlayerOne = battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecordId(playerOneId);
             var battleshipsPlayerTwo = battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecordId(playerTwoId);
-            var result = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo);
+            var result = headToHeadRunner.FindWinner(battleshipsPlayerOne, battleshipsPlayerTwo, new GameLogFactory(new GridSquareStringConverter()), gameLogRepository);
             return Json(new { winnerName = result.Winner.Name, resultType = (int)result.ResultType });
         }
     }

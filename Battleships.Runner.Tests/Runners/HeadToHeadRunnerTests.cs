@@ -1,5 +1,7 @@
 ﻿namespace Battleships.Runner.Tests.Runners
 {
+    using Battleships.Core.Models;
+    using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Runner.Factories;
     using Battleships.Runner.Models;
@@ -17,6 +19,8 @@
         private IBattleshipsPlayer playerOne;
         private IBattleshipsPlayer playerTwo;
         private IShipsPlacementFactory shipsPlacementFactory;
+        private IGameLogFactory gameLogFactory;
+        private IGameLogRepository gameLogRepo;
 
         [SetUp]
         public void SetUp()
@@ -25,6 +29,9 @@
             playerOne = GetNewValidPlayer();
             playerTwo = GetNewValidPlayer();
             runner = new HeadToHeadRunner(shipsPlacementFactory);
+
+            gameLogFactory = A.Fake<IGameLogFactory>();
+            gameLogRepo = A.Fake<IGameLogRepository>();
         }
 
         [TestCaseSource("Games")]
@@ -167,7 +174,7 @@
 
         private GameResult GetResult()
         {
-            return runner.FindWinner(playerOne, playerTwo);
+            return runner.FindWinner(playerOne, playerTwo, gameLogFactory, gameLogRepo);
         }
     }
 }
