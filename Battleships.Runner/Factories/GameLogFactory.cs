@@ -4,6 +4,7 @@
     using Battleships.Player.Interface;
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
 
     public interface IGameLogFactory
@@ -17,6 +18,7 @@
     {
         private readonly GridSquareStringConverter converter;
         private GameLog gameLog;
+
         public GameLogFactory(GridSquareStringConverter converter)
         {
             this.converter = converter;
@@ -30,19 +32,21 @@
                           Player2 = player2,
                           StartTime = startTime,
                           Player1PositionsString = player1Positions.Aggregate("", (s, position) => s + converter.ShipPositionToString(position)),
-                          Player2PositionsString = player2Positions.Aggregate("", (s, position) => s + converter.ShipPositionToString(position))
+                          Player2PositionsString = player2Positions.Aggregate("", (s, position) => s + converter.ShipPositionToString(position)),
+                          DetailedLog = new Collection<GameEvent>()
                       };
         }
 
         public void AddGameEvent(DateTime time, bool isPlayer1Turn, IGridSquare selectedTarget, bool isHit)
         {
             var selectedTargetString = converter.GridSquareToString(selectedTarget);
-            var gameEvent = new GameEvent{
-                                        IsHit = isHit,
-                                        IsPlayer1Turn = isPlayer1Turn,
-                                        SelectedTarget = selectedTargetString,
-                                        Time = time
-                                    };
+            var gameEvent = new GameEvent
+                            {
+                                IsHit = isHit,
+                                IsPlayer1Turn = isPlayer1Turn,
+                                SelectedTarget = selectedTargetString,
+                                Time = time
+                            };
             gameLog.DetailedLog.Add(gameEvent);
         }
 
