@@ -3,19 +3,36 @@
     using Battleships.Core.Models;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Linq;
 
     public interface IMatchResultsRepository : IRepository<MatchResult>
     {
-        void AddResults(List<MatchResult> results);
+        void UpdateResults(IEnumerable<MatchResult> results);
     }
 
     public class MatchResultsRepository : Repository<MatchResult>, IMatchResultsRepository
     {
         public MatchResultsRepository(DbContext context) : base(context) {}
 
-        public void AddResults(List<MatchResult> results)
+        public void UpdateResults(IEnumerable<MatchResult> results)
         {
-            Entities.AddRange(results);
+            var newResults = results.Where(result => !TryUpdateResult(result)).ToList();
+            AddResults(newResults);
+        }
+
+        private bool TryUpdateResult(MatchResult newResult)
+        {
+            foreach (var existingResult in Entities.AsEnumerable().Where(entity => entity.SamePlayers(newResult)))
+            {
+                existingResult.CopyFrom(newResult);
+                return true;
+            }
+            return false;
+        }
+
+        private void AddResults(IEnumerable<MatchResult> newResults)
+        {
+            Entities.AddRange(newResults);
         }
     }
 }

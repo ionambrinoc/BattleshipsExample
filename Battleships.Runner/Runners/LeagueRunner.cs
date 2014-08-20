@@ -7,7 +7,7 @@
 
     public interface ILeagueRunner
     {
-        List<MatchResult> GetLeagueResults(List<IBattleshipsPlayer> players, int numberOfRounds = 100);
+        List<MatchResult> GetLeagueResults(List<IBattleshipsPlayer> players, IEnumerable<IBattleshipsPlayer> updatedPlayers, int numberOfRounds = 100);
     }
 
     public class LeagueRunner : ILeagueRunner
@@ -19,15 +19,13 @@
             this.matchRunner = matchRunner;
         }
 
-        public List<MatchResult> GetLeagueResults(List<IBattleshipsPlayer> players, int numberOfRounds = 100)
+        public List<MatchResult> GetLeagueResults(List<IBattleshipsPlayer> players, IEnumerable<IBattleshipsPlayer> updatedPlayers, int numberOfRounds = 100)
         {
             var results = new List<MatchResult>();
-            for (var i = 0; i < players.Count(); i++)
+            foreach (var recentlyUpdatedPlayer in updatedPlayers)
             {
-                for (var j = i + 1; j < players.Count(); j++)
-                {
-                    results.Add(matchRunner.GetMatchResult(players[i], players[j], numberOfRounds));
-                }
+                players.Remove(recentlyUpdatedPlayer);
+                results.AddRange(players.Select(player => matchRunner.GetMatchResult(recentlyUpdatedPlayer, player, numberOfRounds)));
             }
             return results;
         }

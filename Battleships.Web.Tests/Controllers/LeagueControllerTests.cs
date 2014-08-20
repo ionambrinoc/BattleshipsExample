@@ -3,6 +3,7 @@
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
     using Battleships.Player;
+    using Battleships.Player.Interface;
     using Battleships.Runner.Runners;
     using Battleships.Web.Controllers;
     using Battleships.Web.Factories;
@@ -10,11 +11,13 @@
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
+    using System;
     using System.Collections.Generic;
 
     [TestFixture]
     public class LeagueControllerTests
     {
+        private const int NumberOfRounds = 100;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
         private ILeagueRunner fakeLeagueRunner;
         private ILeaderboardFactory fakeLeaderboardFactory;
@@ -25,6 +28,7 @@
         private MatchResult playerTwoWin;
         private IMatchResultsRepository fakeMatchResultsRepository;
         private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepository;
+        private ILeagueRecordsRepository fakeLeagueRecordsRepository;
 
         [SetUp]
         public void SetUp()
@@ -34,7 +38,9 @@
             fakeLeaderboardFactory = A.Fake<ILeaderboardFactory>();
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
             fakeBattleshipsPlayerRepository = A.Fake<IBattleshipsPlayerRepository>();
-            controller = new LeagueController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository);
+            fakeLeagueRecordsRepository = A.Fake<ILeagueRecordsRepository>();
+
+            controller = new LeagueController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository, fakeLeagueRecordsRepository);
 
             playerRecordOne = A.Fake<PlayerRecord>();
             playerRecordTwo = A.Fake<PlayerRecord>();
@@ -65,7 +71,7 @@
                                               Losses = 2
                                           }
                                       };
-            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
+            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
             A.CallTo(() => fakeLeaderboardFactory.GenerateLeaderboard(matchResults)).Returns(expectedLeaderboard);
 
             // When
@@ -73,6 +79,35 @@
 
             // Then
             Assert.That(result, IsMVC.Json(expectedLeaderboard));
+        }
+
+        [Test]
+        public void UpdatedPlayers_only_contains_players_with_LastUpdated_later_than_most_recent_league_start()
+        {
+            // Given
+            var earlierDate = new DateTime(2001, 1, 1);
+            var middleDate = new DateTime(2001, 6, 1);
+            var laterDate = new DateTime(2002, 1, 1);
+            playerRecordOne.LastUpdated = earlierDate;
+            playerRecordTwo.LastUpdated = laterDate;
+
+            var fakeBattleshipsBot = A.Fake<IBattleshipsBot>();
+
+            var playerOne = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordOne);
+            var playerTwo = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordTwo);
+
+            A.CallTo(() => fakePlayerRecordsRepository.GetAll()).Returns(new List<PlayerRecord> { playerRecordOne, playerRecordTwo });
+
+            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordOne)).Returns(playerOne);
+            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordTwo)).Returns(playerTwo);
+            A.CallTo(() => fakeLeagueRecordsRepository.GetLatestLeagueTime()).Returns(middleDate);
+
+            // When
+            var result = controller.RunLeague();
+
+            // Then
+            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>.That.Contains(playerOne), A<List<IBattleshipsPlayer>>.That.Contains(playerTwo), NumberOfRounds)).MustHaveHappened();
+            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>.That.Contains(playerTwo), A<List<IBattleshipsPlayer>>.That.Not.Contains(playerOne), NumberOfRounds)).MustHaveHappened();
         }
 
         private MatchResult SetUpMatchResult(PlayerRecord winner, PlayerRecord loser)
