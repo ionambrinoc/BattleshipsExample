@@ -1,13 +1,10 @@
 ﻿namespace Battleships.Runner.Factories
 {
     using Battleships.Core.Models;
-    using Battleships.Player;
     using Battleships.Player.Interface;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.UI.WebControls.WebParts;
 
     public interface IGameLogFactory
     {
@@ -40,13 +37,13 @@
         public void AddGameEvent(DateTime time, bool isPlayer1Turn, IGridSquare selectedTarget, bool isHit)
         {
             var selectedTargetString = converter.GridSquareToString(selectedTarget);
-            gameLog.DetailedLog.Add(new GameEvent
-                                    {
+            var gameEvent = new GameEvent{
                                         IsHit = isHit,
                                         IsPlayer1Turn = isPlayer1Turn,
                                         SelectedTarget = selectedTargetString,
                                         Time = time
-                                    });
+                                    };
+            gameLog.DetailedLog.Add(gameEvent);
         }
 
         public GameLog GetCompleteGame(bool player1Won, ResultType resultType)

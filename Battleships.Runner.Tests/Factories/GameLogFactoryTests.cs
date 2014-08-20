@@ -6,6 +6,7 @@
     using FakeItEasy;
     using NUnit.Framework;
     using System;
+    using System.Collections.Generic;
 
     [TestFixture]
     public class GameLogFactoryTests
@@ -15,8 +16,8 @@
         private PlayerRecord playerTwoRecord;
         private DateTime earlierTime;
         private DateTime laterTime;
-        private IShipPosition[] playerOnePositions;
-        private IShipPosition[] playerTwoPositions;
+        private List<ShipPosition> player1Positions;
+        private List<ShipPosition> player2Positions;
 
         [SetUp]
         public void SetUp()
@@ -27,15 +28,18 @@
 
             playerOneRecord = A.Fake<PlayerRecord>();
             playerTwoRecord = A.Fake<PlayerRecord>();
+
+            player1Positions = new List<ShipPosition> { (new ShipPosition(new GridSquare('A', 3), new GridSquare('A', 7))) };
+            player2Positions = new List<ShipPosition> { (new ShipPosition(new GridSquare('A', 3), new GridSquare('A', 7))) };
         }
 
         [Test]
         public void Can_create_GameLogs()
         {
             // When
-            factory.InitialiseGameLog(playerOneRecord, playerTwoRecord, earlierTime, playerOnePositions, playerTwoPositions);
-            factory.AddGameEvent(laterTime, true, new GridSquare('A', 1), true);
-            var result = factory.GetCompleteGame(true, ResultType.Default);
+            //factory.InitialiseGameLog(playerOneRecord, playerTwoRecord, earlierTime, player1Positions, player2Positions);
+            //factory.AddGameEvent(laterTime, true, new GridSquare('A', 1), true);
+            //var result = factory.GetCompleteGame(true, ResultType.Default);
 
             // Then
             //result.DetailedLog.First().SelectedTarget.Column.Should().Be(1);
