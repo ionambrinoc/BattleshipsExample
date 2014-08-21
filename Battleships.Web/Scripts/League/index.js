@@ -12,8 +12,6 @@ window.battleships.league.index = (function($, undefined) {
     function resetGame() {
         gameSetup.show();
         loadingSpinner.hide();
-   //     leaderboard.find('.player, .round-stats').remove();
-
         resetButton.hide();
     }
 
@@ -52,26 +50,28 @@ window.battleships.league.index = (function($, undefined) {
     }
 
     function makeLeaderboard(data) {
+        noLeagueBefore.hide();
+
         for (var i = 0; i < data.length; i++) {
             var playerStats = data[i];
             leaderboard.append(generatePlayerStatsHtml(playerStats));
             leaderboard.append(generateRoundStatsHtml(playerStats.RoundStats));
         }
         $('.player').on('click', togglePlayerStats);
-        noLeagueBefore.hide();
+
         latestResults.show();
         leaderboard.show();
     }
 
 
     return {
-        init: function () {
+        init: function() {
 
-            $('#latest-league').ajaxSubmit(function (data) {
+            $('#latest-league').ajaxSubmit(function(data) {
                 if (data.length === 0) {
-                    noLeagueBefore.show();
                     latestResults.hide();
                     leaderboard.hide();
+                    noLeagueBefore.show();
                 } else {
                     makeLeaderboard(data);
                 }

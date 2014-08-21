@@ -71,7 +71,7 @@ namespace Battleships.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string LatestLeagureResults = "LatestLeagureResults";
+            public readonly string LatestLeagueResults = "LatestLeagueResults";
             public readonly string RunLeague = "RunLeague";
         }
 
@@ -79,7 +79,7 @@ namespace Battleships.Web.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string LatestLeagureResults = "LatestLeagureResults";
+            public const string LatestLeagueResults = "LatestLeagueResults";
             public const string RunLeague = "RunLeague";
         }
 
@@ -117,13 +117,13 @@ namespace Battleships.Web.Controllers
         }
 
         [NonAction]
-        partial void LatestLeagureResultsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void LatestLeagueResultsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult LatestLeagureResults()
+        public override System.Web.Mvc.ActionResult LatestLeagueResults()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LatestLeagureResults);
-            LatestLeagureResultsOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LatestLeagueResults);
+            LatestLeagueResultsOverride(callInfo);
             return callInfo;
         }
 

@@ -7,26 +7,24 @@
 }
 
 @using (Html.BeginForm(MVC.League.RunLeague(), FormMethod.Post, new { id = "run-league" })) {}
-@using (Html.BeginForm(MVC.League.LatestLeagureResults(), FormMethod.Get, new { id = "latest-league" })) {}
+@using (Html.BeginForm(MVC.League.LatestLeagueResults(), FormMethod.Get, new { id = "latest-league" })) {}
 
 <div id="noLeagueBefore">
     <h3>No league has been run before.</h3>
 </div>
 
 @{
-
-        <h3 id="latestResults"> Latest League Results (@ViewBag.LatestLeague): </h3>
-        <table class="table table-hover" id="leaderboard">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Match Wins</th>
-                    <th>Match Losses</th>
-                    <th>Total rounds won</th>
-                </tr>
-            </thead>
-        </table>
-
+    <h3 id="latestResults"> Latest League Results (@ViewBag.LatestLeague): </h3>
+    <table class="table table-hover" id="leaderboard">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Match Wins</th>
+                <th>Match Losses</th>
+                <th>Total rounds won</th>
+            </tr>
+        </thead>
+    </table>
 }
 
 <div id="gameSetup">

@@ -18,6 +18,8 @@
     public class LeagueControllerTests
     {
         private const int NumberOfRounds = 100;
+        private DateTime middleDate;
+        private DateTime laterDate;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
         private ILeagueRunner fakeLeagueRunner;
         private ILeaderboardFactory fakeLeaderboardFactory;
@@ -30,6 +32,8 @@
         private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepository;
         private ILeagueRecordsRepository fakeLeagueRecordsRepository;
 
+        private DateTime earlierDate;
+
         [SetUp]
         public void SetUp()
         {
@@ -40,13 +44,51 @@
             fakeBattleshipsPlayerRepository = A.Fake<IBattleshipsPlayerRepository>();
             fakeLeagueRecordsRepository = A.Fake<ILeagueRecordsRepository>();
 
+            earlierDate = new DateTime(2001, 1, 1);
+            middleDate = new DateTime(2001, 6, 1);
+            laterDate = new DateTime(2002, 1, 1);
+
             controller = new LeagueController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository, fakeLeagueRecordsRepository);
 
             playerRecordOne = A.Fake<PlayerRecord>();
             playerRecordTwo = A.Fake<PlayerRecord>();
 
-            playerOneWin = SetUpMatchResult(playerRecordOne, playerRecordTwo);
-            playerTwoWin = SetUpMatchResult(playerRecordTwo, playerRecordOne);
+            playerOneWin = SetUpMatchResult(playerRecordOne, playerRecordTwo, laterDate);
+            playerTwoWin = SetUpMatchResult(playerRecordTwo, playerRecordOne, laterDate);
+        }
+
+        [Test]
+        public void Latest_League_Results_returns_json_results()
+        {
+            //Given
+
+            var matchResults = new List<MatchResult> { playerOneWin, playerOneWin, playerTwoWin };
+            var expectedLeaderboard = new List<PlayerStats>
+                                      {
+                                          new PlayerStats
+                                          {
+                                              Id = playerRecordOne.Id,
+                                              Name = playerRecordOne.Name,
+                                              Wins = 2,
+                                              Losses = 1
+                                          },
+                                          new PlayerStats
+                                          {
+                                              Id = playerRecordTwo.Id,
+                                              Name = playerRecordTwo.Name,
+                                              Wins = 1,
+                                              Losses = 2
+                                          }
+                                      };
+            A.CallTo(() => fakeLeagueRecordsRepository.GetLatestLeagueTime()).Returns(middleDate);
+            A.CallTo(() => fakeMatchResultsRepository.GetAll()).Returns(matchResults);
+            //    A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
+            A.CallTo(() => fakeLeaderboardFactory.GenerateLeaderboard(A<List<MatchResult>>.That.IsSameSequenceAs(matchResults))).Returns(expectedLeaderboard);
+
+            //When
+            var result = controller.LatestLeagueResults();
+            //Then
+            Assert.That(result, IsMVC.Json(expectedLeaderboard));
         }
 
         [Test]
@@ -85,9 +127,6 @@
         public void UpdatedPlayers_only_contains_players_with_LastUpdated_later_than_most_recent_league_start()
         {
             // Given
-            var earlierDate = new DateTime(2001, 1, 1);
-            var middleDate = new DateTime(2001, 6, 1);
-            var laterDate = new DateTime(2002, 1, 1);
             playerRecordOne.LastUpdated = earlierDate;
             playerRecordTwo.LastUpdated = laterDate;
 
@@ -110,13 +149,14 @@
             A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>.That.Contains(playerTwo), A<List<IBattleshipsPlayer>>.That.Not.Contains(playerOne), NumberOfRounds)).MustHaveHappened();
         }
 
-        private MatchResult SetUpMatchResult(PlayerRecord winner, PlayerRecord loser)
+        private MatchResult SetUpMatchResult(PlayerRecord winner, PlayerRecord loser, DateTime timePlayed)
         {
             var matchResult = A.Fake<MatchResult>();
             matchResult.Winner = winner;
             matchResult.Loser = loser;
             matchResult.WinnerWins = 2;
             matchResult.LoserWins = 1;
+            matchResult.TimePlayed = timePlayed;
 
             return matchResult;
         }

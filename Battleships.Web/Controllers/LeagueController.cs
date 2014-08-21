@@ -31,14 +31,12 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            var leagueCount = leagueRecordsRepository.GetCount();
-            ViewBag.LeagueCount = leagueCount;
             ViewBag.LatestLeague = leagueRecordsRepository.GetLatestLeagueTime();
             return View();
         }
 
         [HttpGet]
-        public virtual ActionResult LatestLeagureResults()
+        public virtual ActionResult LatestLeagueResults()
         {
             var latestLeagueTime = leagueRecordsRepository.GetLatestLeagueTime();
             var matchResults = matchResultsRepository.GetAll().Where(mr => mr.TimePlayed >= latestLeagueTime).ToList();
