@@ -62,27 +62,26 @@
         {
             //Given
 
-            var matchResults = new List<MatchResult> { playerOneWin, playerOneWin, playerTwoWin };
+            var matchResults = new List<MatchResult> { playerOneWin, playerTwoWin, playerTwoWin };
             var expectedLeaderboard = new List<PlayerStats>
                                       {
                                           new PlayerStats
                                           {
                                               Id = playerRecordOne.Id,
                                               Name = playerRecordOne.Name,
-                                              Wins = 2,
-                                              Losses = 1
+                                              Wins = 1,
+                                              Losses = 2
                                           },
                                           new PlayerStats
                                           {
                                               Id = playerRecordTwo.Id,
                                               Name = playerRecordTwo.Name,
-                                              Wins = 1,
-                                              Losses = 2
+                                              Wins = 2,
+                                              Losses = 1
                                           }
                                       };
             A.CallTo(() => fakeLeagueRecordsRepository.GetLatestLeagueTime()).Returns(middleDate);
             A.CallTo(() => fakeMatchResultsRepository.GetAll()).Returns(matchResults);
-            //    A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
             A.CallTo(() => fakeLeaderboardFactory.GenerateLeaderboard(A<List<MatchResult>>.That.IsSameSequenceAs(matchResults))).Returns(expectedLeaderboard);
 
             //When
