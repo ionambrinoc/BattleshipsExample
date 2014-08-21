@@ -50,8 +50,10 @@ window.battleships.league.index = (function($, undefined) {
     }
 
     function makeLeaderboard(data) {
-        noLeagueBefore.hide();
 
+
+        $("#leaderboard tr").remove();
+        noLeagueBefore.hide();
         for (var i = 0; i < data.length; i++) {
             var playerStats = data[i];
             leaderboard.append(generatePlayerStatsHtml(playerStats));
@@ -82,7 +84,7 @@ window.battleships.league.index = (function($, undefined) {
 
             $('#runLeagueButton').click(function() {
                 startLeague();
-                $('#run-league').ajaxSubmit(function(data) {
+                $('#run-league').ajaxSubmit(function (data) {
                     loadingSpinner.hide();
                     makeLeaderboard(data);
                     resetButton.show();
