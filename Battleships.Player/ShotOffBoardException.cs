@@ -4,7 +4,7 @@ namespace Battleships.Player
 
     public class ShotOffBoardException : Exception
     {
-        public ShotOffBoardException(string message, IBattleshipsPlayer player)
+        public ShotOffBoardException(string message, IBattleshipsPlayer player) : base(message)
         {
             Player = player;
         }
