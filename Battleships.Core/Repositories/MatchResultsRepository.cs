@@ -7,8 +7,11 @@
 
     public interface IMatchResultsRepository : IRepository<MatchResult>
     {
+
         void UpdateResults(IEnumerable<MatchResult> results);
+        IEnumerable<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds);
     }
+
 
     public class MatchResultsRepository : Repository<MatchResult>, IMatchResultsRepository
     {
@@ -20,6 +23,11 @@
             AddResults(newResults);
         }
 
+        public IEnumerable<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds)
+        {
+
+            var query = Entities.Where(x => x.Id == 1).ToList();
+        }
         private bool TryUpdateResult(MatchResult newResult)
         {
             foreach (var existingResult in Entities.AsEnumerable().Where(entity => entity.SamePlayers(newResult)))

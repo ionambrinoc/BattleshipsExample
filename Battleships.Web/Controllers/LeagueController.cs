@@ -52,9 +52,10 @@
             var updatedPlayers = players.Where(player => player.PlayerRecord.LastUpdated >= leagueRecordsRepository.GetLatestLeagueTime()).ToList();
 
             var matchResults = leagueRunner.GetLeagueResults(players, updatedPlayers);
-
             matchResultsRepository.UpdateResults(matchResults);
             matchResultsRepository.SaveContext();
+            var playerIds = players.Select(x => x.PlayerRecord.Id);
+            var allMatchResults = matchResultsRepository.GetAllMatchResults(playerIds);
 
             leagueRecordsRepository.AddLeague(leagueStartTime);
             leagueRecordsRepository.SaveContext();
