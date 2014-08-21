@@ -8,11 +8,14 @@ window.battleships.league.index = (function($, undefined) {
     var leaderboard = $('#leaderboard');
     var noLeagueBefore = $('#noLeagueBefore');
     var latestResults = $('#latestResults');
+    var noLeagueRun = $('#noLeagueRun');
 
     function resetGame() {
         gameSetup.show();
         loadingSpinner.hide();
         resetButton.hide();
+        noLeagueRun.hide();
+        latestLeaderboard();
     }
 
     function startLeague() {
@@ -65,31 +68,46 @@ window.battleships.league.index = (function($, undefined) {
         leaderboard.show();
     }
 
+    function latestLeaderboard() {
+        $('#latest-league').ajaxSubmit(function (data) {
+            if (data.length === 0) {
+                latestResults.hide();
+                leaderboard.hide();
+                noLeagueBefore.show();
+            } else {
+                makeLeaderboard(data);
+            }
+        });
+    }
+
+    function runLeague() {
+        $('#runLeagueButton').click(function () {
+            startLeague();
+            $('#run-league').ajaxSubmit(function (data) {
+
+                loadingSpinner.hide();
+                if (data.length !== 0) {
+                    makeLeaderboard(data);
+                } else {
+                    noLeagueRun.show();
+                }
+                resetButton.show();
+            });
+        });
+    }
+
 
     return {
-        init: function() {
+        init: function () {
 
-            $('#latest-league').ajaxSubmit(function(data) {
-                if (data.length === 0) {
-                    latestResults.hide();
-                    leaderboard.hide();
-                    noLeagueBefore.show();
-                } else {
-                    makeLeaderboard(data);
-                }
-            });
+            noLeagueRun.hide();
+
+            latestLeaderboard();
 
             resetGame();
             resetButton.on('click', resetGame);
 
-            $('#runLeagueButton').click(function() {
-                startLeague();
-                $('#run-league').ajaxSubmit(function (data) {
-                    loadingSpinner.hide();
-                    makeLeaderboard(data);
-                    resetButton.show();
-                });
-            });
+            runLeague();
         }
     };
 })(jQuery);
