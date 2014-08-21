@@ -1,5 +1,6 @@
 ﻿@using System.Configuration
 @using Battleships.Core.Models
+@using Battleships.Web.Services
 @model PlayerRecord
 
 @{
@@ -13,7 +14,8 @@
 <h3>Player Records:</h3>
 <p>Last updated: @Model.LastUpdated<br />Player Id: @Model.Id </p>
 
-    <input class="btn" id="submit" type="submit" value="Download" />
+<input class="btn" id="submit" type="submit" value="Download" />
+<a href=@PlayerUploadService.GenerateFullPath(Model.Name) target="_blank">Download</a>
 
 
 <h3>Matches Won: @Model.WonMatchResults.Count</h3>
@@ -28,8 +30,7 @@
     </thead>
 
     <tbody>
-        @foreach (var matchResult in Model.WonMatchResults)
-        {
+        @foreach (var matchResult in Model.WonMatchResults) {
             <tr class="tableContent">
                 <td>@Html.ActionLink(matchResult.Loser.Name, MVC.PlayerProfile.Index(matchResult.LoserId))</td>
                 <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
@@ -53,8 +54,7 @@
     </thead>
 
     <tbody>
-        @foreach (var matchResult in Model.LostMatchResults)
-        {
+        @foreach (var matchResult in Model.LostMatchResults) {
             <tr class="tableContent">
                 <td>@Html.ActionLink(matchResult.Winner.Name, MVC.PlayerProfile.Index(matchResult.WinnerId))</td>
                 <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
