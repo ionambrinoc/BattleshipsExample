@@ -7,7 +7,8 @@
         Default,
         Timeout,
         ShipPositionsInvalid,
-        OpponentThrewException
+        OpponentThrewException,
+        ShotOffBoard
     };
 
     public class GameResult

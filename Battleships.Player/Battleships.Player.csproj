@@ -53,6 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="ShipFactory.cs" />
+    <Compile Include="ShotOffBoardException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Battleships.Core\Battleships.Core.csproj">

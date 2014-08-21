@@ -14,6 +14,7 @@
     {
         private const string PlayerRecordName = "Player Name";
         private const int TimeOut = 50;
+        private readonly IGridSquare validGridSquare = new GridSquare('A', 1);
         private IBattleshipsBot fakeBot;
         private PlayerRecord fakePlayerRecord;
         private BattleshipsPlayer player;
@@ -141,6 +142,8 @@
         [Test]
         public void Stopwatch_does_not_time_out_if_select_target_is_quick()
         {
+            // Given
+            A.CallTo(() => fakeBot.SelectTarget()).Returns(validGridSquare);
             // When
             player.SelectTarget();
 
@@ -152,7 +155,7 @@
         public void Stopwatch_times_out_if_select_target_is_slow()
         {
             // Given
-            A.CallTo(() => fakeBot.SelectTarget()).Invokes(() => Thread.Sleep(TimeOut * 2));
+            A.CallTo(() => fakeBot.SelectTarget()).Invokes(() => Thread.Sleep(TimeOut * 2)).Returns(validGridSquare);
 
             // When
             player.SelectTarget();
@@ -165,7 +168,7 @@
         public void Stopwatch_is_not_automatically_reset()
         {
             // Given
-            A.CallTo(() => fakeBot.SelectTarget()).Invokes(() => Thread.Sleep(TimeOut / 2));
+            A.CallTo(() => fakeBot.SelectTarget()).Invokes(() => Thread.Sleep(TimeOut / 2)).Returns(validGridSquare);
 
             // When
             player.SelectTarget();
@@ -180,7 +183,7 @@
         public void Stopwatch_can_be_reset()
         {
             // Given
-            A.CallTo(() => fakeBot.SelectTarget()).Invokes(() => Thread.Sleep(TimeOut / 2));
+            A.CallTo(() => fakeBot.SelectTarget()).Invokes(() => Thread.Sleep(TimeOut / 2)).Returns(validGridSquare);
 
             // When
             player.SelectTarget();
@@ -197,7 +200,7 @@
         public void All_methods_contribute_to_timeout()
         {
             // Given
-            A.CallTo(() => fakeBot.SelectTarget()).Invokes(() => Thread.Sleep(TimeOut / 2));
+            A.CallTo(() => fakeBot.SelectTarget()).Invokes(() => Thread.Sleep(TimeOut / 2)).Returns(validGridSquare);
             A.CallTo(() => fakeBot.HandleShotResult(A<GridSquare>._, A<bool>._)).Invokes(() => Thread.Sleep(TimeOut / 2));
             A.CallTo(() => fakeBot.HandleOpponentsShot(A<GridSquare>._)).Invokes(() => Thread.Sleep(TimeOut / 2));
 
@@ -208,6 +211,23 @@
 
             // Then
             player.HasTimedOut().Should().BeTrue("Player should time out when handling shot result takes a long time.");
+        }
+
+        [TestCase('A', -1)]
+        [TestCase('C', 11)]
+        [TestCase('a', 5)]
+        [TestCase('K', 6)]
+        public void Choosing_invalid_grid_square_throws_ShotOffBoardException(char row, int column)
+        {
+            // Given
+            var invalidGridSquare = new GridSquare(row, column);
+            A.CallTo(() => fakeBot.SelectTarget()).Returns(invalidGridSquare);
+
+            //When
+            Action action = () => player.SelectTarget();
+
+            // Then
+            action.ShouldThrow<ShotOffBoardException>().Where(e => e.Player == player);
         }
 
         private static List<ShipPosition> GetBotShipPositions()
