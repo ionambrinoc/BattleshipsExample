@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Battleships.Web.Helper
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -50,7 +51,13 @@
                 </div>
             </div>
         </div>
+        @if (TempData.HasPopup()) {
+            <div id="PopupBanner">
+                @TempData[PopupHelper.PopupKey]
+            </div>
+        }
         <div class="container body-content">
+
             <h2>@ViewBag.Title</h2>
             @RenderBody()
             <hr />
@@ -64,5 +71,11 @@
 
         @Scripts.Render("~/bundles/scripts/common")
         @RenderSection("scripts", false)
+        <script type="text/javascript">
+            $(function() {
+                battleships.common.index.fade();
+            });
+        </script>
+
     </body>
 </html>

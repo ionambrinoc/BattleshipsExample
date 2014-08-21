@@ -3,41 +3,75 @@
 @{
     ViewBag.Title = "Add a Player";
 }
+@Styles.Render("~/bundles/styles/addplayer")
 
+<p>
+    <div class="text-center">
+        Please Upload Player Files as .dll and Avatar pictures as gif or png.
+    </div>
+    <div class="text-center">
+        To overwrite a player, upload a new player with the same name.
+    </div>
+</p>
 
 @Html.ValidationMessage("")
 @Html.ValidationMessageFor(m => m.File)
-
 @if (!Model.CanOverwrite) {
     using (Html.BeginForm(MVC.AddPlayer.Index(), FormMethod.Post, new { enctype = "multipart/form-data", id = "add-player-form" })) {
-        <div class="form-group">
-            @Html.LabelFor(m => m.File)
-            @Html.TextBoxFor(m => m.File, new { type = "file" })
+        <div class="jumbotron text-center">
+            <h3>
+                New Player
+            </h3>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="uploadPlayerFileBtn" type="button">Upload Player File</button>
+                        </span>
+                        <input id="textBoxCoverLeft" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input id="textBoxCoverRight" type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="uploadAvatarBtn" type="button">Upload Player Avatar</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.File, new { type = "file" })
+            </div>
+
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Picture, new { type = "file" })
+            </div>
+
+            <input class="btn btn-primary" id="submit" type="submit" value="Create Player" />
         </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Picture)
-            @Html.TextBoxFor(m => m.Picture, new { type = "file" })
-        </div>
-        <input class="btn" id="submit" type="submit" value="Submit" />
     }
 }
 else {
-    <p class="field-validation-error">You already have a bot with name '@Model.PlayerName'. Do you want to overwrite it?</p>
-    @Styles.Render("~/bundles/styles/addplayer")
-    <table class="table-overwrite">
-        <tr>
-            <td>
-                @using (Html.BeginForm(MVC.AddPlayer.OverwriteYes(), FormMethod.Post)) {
-                    @Html.HiddenFor(model => model.TemporaryPath)
-                    @Html.HiddenFor(model => model.PlayerName)
-                    <input class="btn" id="submit" type="submit" value="Yes" />
-                }
-            </td>
-            <td>
-                @using (Html.BeginForm(MVC.AddPlayer.OverwriteNo(), FormMethod.Post)) {
-                    <input class="btn" id="submit" type="submit" value="No" />
-                }
-            </td>
-        </tr>
-    </table>
+    <div class="jumbotron text-center">
+        <p class="field-validation-error text-center">You already have a bot with name '@Model.PlayerName'. Do you want to overwrite it?</p>
+        @using (Html.BeginForm(MVC.AddPlayer.OverwriteYes(), FormMethod.Post)) {
+            @Html.HiddenFor(model => model.TemporaryPath)
+            @Html.HiddenFor(model => model.PlayerName)
+            <input class="btn btn-danger btn-block center-block" type="submit" value="Yes" />
+        }
+        @using (Html.BeginForm(MVC.AddPlayer.OverwriteNo(), FormMethod.Post)) {
+            <input class="btn btn btn-block center-block" type="submit" value="No" />
+        }
+    </div>
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/scripts/addplayer/addplayer")
+
+    <script type="text/javascript">
+        $(function() {
+            battleships.addPlayer.index.buttonOpen();
+        });
+    </script>
 }

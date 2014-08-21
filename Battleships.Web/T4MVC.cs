@@ -89,6 +89,14 @@ namespace Links
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class AddPlayer {
+            private const string URLPATH = "~/Scripts/AddPlayer";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string index_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/index.min.js") ? Url("index.min.js") : Url("index.js");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class HeadToHead {
             private const string URLPATH = "~/Scripts/HeadToHead";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -120,6 +128,14 @@ namespace Links
             public static readonly string index_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/index.min.js") ? Url("index.min.js") : Url("index.js");
         }
     
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Shared {
+            private const string URLPATH = "~/Scripts/Shared";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string index_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/index.min.js") ? Url("index.min.js") : Url("index.js");
+        }
+    
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -133,6 +149,10 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string AddPlayer_less = Url("AddPlayer.less");
+            public static readonly string AddPlayer_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AddPlayer.min.css") ? Url("AddPlayer.min.css") : Url("AddPlayer.css");
+                 
+            public static readonly string AddPlayer_css_map = Url("AddPlayer.css.map");
+            public static readonly string AddPlayer_min_css = Url("AddPlayer.min.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -176,7 +196,23 @@ namespace Links
             public static readonly string index_less = Url("index.less");
         }
     
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Shared {
+            private const string URLPATH = "~/Content/Shared";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string popup_less = Url("popup.less");
+            public static readonly string Popup_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Popup.min.css") ? Url("Popup.min.css") : Url("Popup.css");
+                 
+            public static readonly string Popup_css_map = Url("Popup.css.map");
+            public static readonly string Popup_min_css = Url("Popup.min.css");
+        }
+    
         public static readonly string site_less = Url("site.less");
+        public static readonly string site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.css") ? Url("site.min.css") : Url("site.css");
+             
+        public static readonly string site_css_map = Url("site.css.map");
+        public static readonly string site_min_css = Url("site.min.css");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

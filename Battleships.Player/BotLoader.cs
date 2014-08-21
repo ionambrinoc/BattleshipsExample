@@ -16,14 +16,24 @@
     {
         public IBattleshipsBot LoadBotFromFullPath(string path)
         {
-            var playerType = Assembly.Load(File.ReadAllBytes(path))
+            Type playerType;
+
+            try
+            {
+                playerType = Assembly.Load(File.ReadAllBytes(path))
                                      .GetTypes()
                                      .FirstOrDefault(t => t.GetInterface(typeof(IBattleshipsBot).FullName) != null);
+            }
+            catch (BadImageFormatException)
+            {
+                throw new InvalidPlayerException();
+            }
 
             if (playerType == null)
             {
                 throw new InvalidPlayerException();
             }
+
             return (IBattleshipsBot)Activator.CreateInstance(playerType);
         }
 

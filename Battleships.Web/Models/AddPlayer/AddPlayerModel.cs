@@ -1,6 +1,5 @@
 ﻿namespace Battleships.Web.Models.AddPlayer
 {
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
 
@@ -12,11 +11,9 @@
 
         public bool CanOverwrite { get; set; }
 
-        [Required(ErrorMessage = "Please select the player file.")]
-        [DisplayName("File:")]
+        [Required(ErrorMessage = "Please select the player file. Instructions on making your player are avaliable on the homepage.")]
         public HttpPostedFileBase File { get; set; }
 
-        [DisplayName("Profile Picture:")]
         public HttpPostedFileBase Picture { get; set; }
     }
 }

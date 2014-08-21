@@ -215,6 +215,7 @@
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Helper\PopupHelper.cs" />
     <Compile Include="LeagueController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -284,6 +285,24 @@
     <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
     <Content Include="Components\respond\dest\respond.min.js" />
     <Content Include="Components\respond\dest\respond.src.js" />
+    <Content Include="Content\AddPlayer\AddPlayer.css">
+      <DependentUpon>AddPlayer.less</DependentUpon>
+    </Content>
+    <Content Include="Content\AddPlayer\AddPlayer.min.css">
+      <DependentUpon>AddPlayer.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\Popup.css">
+      <DependentUpon>popup.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\Popup.min.css">
+      <DependentUpon>Popup.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site.css">
+      <DependentUpon>site.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site.min.css">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -303,6 +322,7 @@
     <Content Include="Images\green-loading-spinner.gif" />
     <Content Include="Images\remove.png" />
     <Content Include="Samples\Battleships.Player.Interface.dll" />
+    <Content Include="Scripts\Shared\index.js" />
     <Content Include="Scripts\HeadToHead\play.js" />
     <Content Include="Scripts\Home\index.js" />
     <Content Include="Scripts\League\index.js" />
@@ -353,9 +373,20 @@
     <Content Include="Content\League\index.less" />
     <Content Include="Content\large.less" />
     <Content Include="Content\Home\index.less" />
+    <Content Include="Content\AddPlayer\AddPlayer.css.map">
+      <DependentUpon>AddPlayer.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site.css.map">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\popup.less" />
+    <Content Include="Content\Shared\Popup.css.map">
+      <DependentUpon>Popup.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <Content Include="Samples\Battleships.ExamplePlayer.zip" />
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Scripts\AddPlayer\index.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
