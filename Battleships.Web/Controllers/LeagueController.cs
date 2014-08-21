@@ -31,8 +31,20 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            ViewBag.LeagueCount = leagueRecordsRepository.GetCount();
+            var leagueCount = leagueRecordsRepository.GetCount();
+            ViewBag.LeagueCount = leagueCount;
+            ViewBag.LatestLeague = leagueRecordsRepository.GetLatestLeagueTime();
             return View();
+        }
+
+        [HttpGet]
+        public virtual ActionResult LatestLeagureResults()
+        {
+            var latestLeagueTime = leagueRecordsRepository.GetLatestLeagueTime();
+            var matchResults = matchResultsRepository.GetAll().Where(mr => mr.TimePlayed >= latestLeagueTime).ToList();
+            var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
+
+            return Json(leaderboard, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -49,8 +61,11 @@
 
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
 
-            leagueRecordsRepository.AddLeague(leagueStartTime);
-            leagueRecordsRepository.SaveContext();
+            if (updatedPlayers.Count > 0)
+            {
+                leagueRecordsRepository.AddLeague(leagueStartTime);
+                leagueRecordsRepository.SaveContext();
+            }
 
             return Json(leaderboard);
         }

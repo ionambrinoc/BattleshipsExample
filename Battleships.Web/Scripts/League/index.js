@@ -7,19 +7,22 @@ window.battleships.league.index = (function($, undefined) {
     var resetButton = $('#resetGameButton');
     var leaderboard = $('#leaderboard');
     var noLeagueBefore = $('#noLeagueBefore');
+    var latestResults = $('#latestResults');
 
     function resetGame() {
         gameSetup.show();
         loadingSpinner.hide();
-        leaderboard.find('.player, .round-stats').remove();
-       
+   //     leaderboard.find('.player, .round-stats').remove();
+
         resetButton.hide();
     }
 
     function startLeague() {
         gameSetup.hide();
         leaderboard.hide();
+        noLeagueBefore.hide();
         loadingSpinner.show();
+        latestResults.hide();
     }
 
     function togglePlayerStats() {
@@ -48,8 +51,32 @@ window.battleships.league.index = (function($, undefined) {
         return roundStatsHtml;
     }
 
+    function makeLeaderboard(data) {
+        for (var i = 0; i < data.length; i++) {
+            var playerStats = data[i];
+            leaderboard.append(generatePlayerStatsHtml(playerStats));
+            leaderboard.append(generateRoundStatsHtml(playerStats.RoundStats));
+        }
+        $('.player').on('click', togglePlayerStats);
+        noLeagueBefore.hide();
+        latestResults.show();
+        leaderboard.show();
+    }
+
+
     return {
-        init: function() {
+        init: function () {
+
+            $('#latest-league').ajaxSubmit(function (data) {
+                if (data.length === 0) {
+                    noLeagueBefore.show();
+                    latestResults.hide();
+                    leaderboard.hide();
+                } else {
+                    makeLeaderboard(data);
+                }
+            });
+
             resetGame();
             resetButton.on('click', resetGame);
 
@@ -57,13 +84,7 @@ window.battleships.league.index = (function($, undefined) {
                 startLeague();
                 $('#run-league').ajaxSubmit(function(data) {
                     loadingSpinner.hide();
-                    for (var i = 0; i < data.length; i++) {
-                        var playerStats = data[i];
-                        leaderboard.append(generatePlayerStatsHtml(playerStats));
-                        leaderboard.append(generateRoundStatsHtml(playerStats.RoundStats));
-                    }
-                    $('.player').on('click', togglePlayerStats);
-                    leaderboard.show();
+                    makeLeaderboard(data);
                     resetButton.show();
                 });
             });
