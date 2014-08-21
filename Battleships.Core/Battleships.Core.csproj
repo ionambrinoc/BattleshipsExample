@@ -197,6 +197,12 @@
       <Name>Battleships.Player.Interface</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Battleships.Player.Interface\Battleships.Player.Interface.csproj">
+      <Project>{E12D571A-3135-4D8D-A590-816BC9B02AEA}</Project>
+      <Name>Battleships.Player.Interface</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

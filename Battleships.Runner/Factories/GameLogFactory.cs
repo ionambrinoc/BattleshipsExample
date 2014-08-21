@@ -18,7 +18,6 @@
     {
         private readonly GridSquareStringConverter converter;
         private GameLog gameLog;
-
         public GameLogFactory(GridSquareStringConverter converter)
         {
             this.converter = converter;
