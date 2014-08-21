@@ -68,6 +68,26 @@
             repo.GetAll().Count(match => match.Winner == player1 && match.Loser == player3).Should().Be(1);
         }
 
+        [Test]
+        public void Displays_results_between_all_players()
+        {
+            // Given
+            repo.Add(CreateMatchResult(player1, player2, earlierDate));
+            repo.Add(CreateMatchResult(player1, player3, earlierDate));
+            repo.Add(CreateMatchResult(player2, player3, earlierDate));
+            repo.SaveContext();
+
+            // When
+            var listOfTwoPlayerIds = new List<int> { player1.Id, player2.Id };
+            var listOfThreePlayerIds = new List<int> { player1.Id, player2.Id, player3.Id };
+            var matchResults1 = repo.GetAllMatchResults(listOfTwoPlayerIds);
+            var matchResults2 = repo.GetAllMatchResults(listOfThreePlayerIds);
+
+            // Then
+            matchResults1.Count().Should().Be(1);
+            matchResults2.Count().Should().Be(3);
+        }
+
         private PlayerRecord CreatePlayer(string name)
         {
             return new PlayerRecord { Name = name, UserId = userId, LastUpdated = DateTime.Now };

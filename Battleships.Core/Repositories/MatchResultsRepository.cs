@@ -1,17 +1,16 @@
 ﻿namespace Battleships.Core.Repositories
 {
     using Battleships.Core.Models;
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
 
     public interface IMatchResultsRepository : IRepository<MatchResult>
     {
-
         void UpdateResults(IEnumerable<MatchResult> results);
-        IEnumerable<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds);
+        List<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds);
     }
-
 
     public class MatchResultsRepository : Repository<MatchResult>, IMatchResultsRepository
     {
@@ -23,11 +22,29 @@
             AddResults(newResults);
         }
 
-        public IEnumerable<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds)
+        public List<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds)
         {
-
-            var query = Entities.Where(x => x.Id == 1).ToList();
+            var playerIdsSet = new HashSet<int>(playerIds);
+            var playerIdsSetCopy = new HashSet<int>(playerIds);
+            var allMatchResults = new List<MatchResult>();
+            foreach (var firstPlayerId in playerIdsSet)
+            {
+                playerIdsSetCopy.Remove(firstPlayerId);
+                allMatchResults.AddRange(playerIdsSetCopy.Select(secondPlayerId => FindResultBetween(firstPlayerId, secondPlayerId)));
+            }
+            return allMatchResults;
         }
+
+        private MatchResult FindResultBetween(int firstPlayerId, int secondPlayerId)
+        {
+            foreach (var matchResult in Entities.Where(result => (result.WinnerId == firstPlayerId && result.LoserId == secondPlayerId) || (result.WinnerId == secondPlayerId && result.LoserId == firstPlayerId)))
+            {
+                return matchResult;
+            }
+            throw new Exception();
+            return null;
+        }
+
         private bool TryUpdateResult(MatchResult newResult)
         {
             foreach (var existingResult in Entities.AsEnumerable().Where(entity => entity.SamePlayers(newResult)))

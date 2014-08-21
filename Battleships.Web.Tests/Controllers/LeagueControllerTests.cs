@@ -7,8 +7,6 @@
     using Battleships.Runner.Runners;
     using Battleships.Web.Controllers;
     using Battleships.Web.Factories;
-    using Battleships.Web.Models.League;
-    using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
     using System;
@@ -82,38 +80,6 @@
             //When
             var result = controller.LatestLeagueResults();
             //Then
-            Assert.That(result, IsMVC.Json(expectedLeaderboard));
-        }
-
-        [Test]
-        public void Run_league_returns_json_results()
-        {
-            // Given
-            var matchResults = new List<MatchResult> { playerOneWin, playerOneWin, playerTwoWin };
-            var expectedLeaderboard = new List<PlayerStats>
-                                      {
-                                          new PlayerStats
-                                          {
-                                              Id = playerRecordOne.Id,
-                                              Name = playerRecordOne.Name,
-                                              Wins = 2,
-                                              Losses = 1
-                                          },
-                                          new PlayerStats
-                                          {
-                                              Id = playerRecordTwo.Id,
-                                              Name = playerRecordTwo.Name,
-                                              Wins = 1,
-                                              Losses = 2
-                                          }
-                                      };
-            A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>._, A<List<IBattleshipsPlayer>>._, A<int>._)).Returns(matchResults);
-            A.CallTo(() => fakeLeaderboardFactory.GenerateLeaderboard(matchResults)).Returns(expectedLeaderboard);
-
-            // When
-            var result = controller.RunLeague();
-
-            // Then
             Assert.That(result, IsMVC.Json(expectedLeaderboard));
         }
 
