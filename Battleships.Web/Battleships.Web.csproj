@@ -242,6 +242,7 @@
     <Compile Include="Models\Account\CreateAccountViewModel.cs" />
     <Compile Include="Models\Account\LogInViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\PlayerDeletionService.cs" />
     <Compile Include="Services\PlayerUploadService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="SharedController.generated.cs">

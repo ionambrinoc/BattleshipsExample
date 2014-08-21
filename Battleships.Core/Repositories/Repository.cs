@@ -38,5 +38,10 @@
         {
             context.SaveChanges();
         }
+
+        public void RemoveRange(IEnumerable<T> range)
+        {
+            Entities.RemoveRange(range);
+        }
     }
 }

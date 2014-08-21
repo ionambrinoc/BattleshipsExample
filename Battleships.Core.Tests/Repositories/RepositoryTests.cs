@@ -55,6 +55,22 @@
             ListShouldContainTwoEntities(result);
         }
 
+        [Test]
+        public void Can_remove_range()
+        {
+            // Given
+            repo.Add(entity1);
+            repo.Add(entity2);
+            repo.SaveContext();
+
+            // When
+            repo.RemoveRange(new List<TestEntity> { entity1, entity2 });
+            repo.SaveContext();
+
+            // Then
+            TestDb.GetAll<TestEntity>().Should().HaveCount(0);
+        }
+
         private static Expression<Func<TestEntity, bool>> EntityNamed(string name)
         {
             return entity => entity.Name == name;
