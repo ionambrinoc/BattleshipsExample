@@ -53,14 +53,11 @@
 
             var matchResults = leagueRunner.GetLeagueResults(players, updatedPlayers);
 
-            if (updatedPlayers.Count > 0)
-            {
-                matchResultsRepository.UpdateResults(matchResults);
-                matchResultsRepository.SaveContext();
+            matchResultsRepository.UpdateResults(matchResults);
+            matchResultsRepository.SaveContext();
 
-                leagueRecordsRepository.AddLeague(leagueStartTime);
-                leagueRecordsRepository.SaveContext();
-            }
+            leagueRecordsRepository.AddLeague(leagueStartTime);
+            leagueRecordsRepository.SaveContext();
 
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
 
