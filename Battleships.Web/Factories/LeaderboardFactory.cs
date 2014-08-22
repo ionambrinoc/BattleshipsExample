@@ -7,12 +7,12 @@
 
     public interface ILeaderboardFactory
     {
-        List<PlayerStats> GenerateLeaderboard(List<MatchResult> results);
+        List<PlayerStats> GenerateLeaderboard(IEnumerable<MatchResult> results);
     }
 
     public class LeaderboardFactory : ILeaderboardFactory
     {
-        public List<PlayerStats> GenerateLeaderboard(List<MatchResult> results)
+        public List<PlayerStats> GenerateLeaderboard(IEnumerable<MatchResult> results)
         {
             return GetAggregatedStats(results).OrderByDescending(x => x).ToList();
         }

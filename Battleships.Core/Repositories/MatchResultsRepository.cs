@@ -1,7 +1,6 @@
 ﻿namespace Battleships.Core.Repositories
 {
     using Battleships.Core.Models;
-    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
@@ -9,7 +8,7 @@
     public interface IMatchResultsRepository : IRepository<MatchResult>
     {
         void UpdateResults(IEnumerable<MatchResult> results);
-        List<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds);
+        IEnumerable<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds);
     }
 
     public class MatchResultsRepository : Repository<MatchResult>, IMatchResultsRepository
@@ -22,27 +21,15 @@
             AddResults(newResults);
         }
 
-        public List<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds)
+        public IEnumerable<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds)
         {
             var playerIdsSet = new HashSet<int>(playerIds);
-            var playerIdsSetCopy = new HashSet<int>(playerIds);
-            var allMatchResults = new List<MatchResult>();
-            foreach (var firstPlayerId in playerIdsSet)
-            {
-                playerIdsSetCopy.Remove(firstPlayerId);
-                allMatchResults.AddRange(playerIdsSetCopy.Select(secondPlayerId => FindResultBetween(firstPlayerId, secondPlayerId)));
-            }
-            return allMatchResults;
+            return playerIdsSet.SelectMany(x => playerIdsSet.Where(y => y > x), FindResultBetween);
         }
 
         private MatchResult FindResultBetween(int firstPlayerId, int secondPlayerId)
         {
-            foreach (var matchResult in Entities.Where(result => (result.WinnerId == firstPlayerId && result.LoserId == secondPlayerId) || (result.WinnerId == secondPlayerId && result.LoserId == firstPlayerId)))
-            {
-                return matchResult;
-            }
-            throw new Exception();
-            return null;
+            return Entities.Single(result => (result.WinnerId == firstPlayerId && result.LoserId == secondPlayerId) || (result.WinnerId == secondPlayerId && result.LoserId == firstPlayerId));
         }
 
         private bool TryUpdateResult(MatchResult newResult)
