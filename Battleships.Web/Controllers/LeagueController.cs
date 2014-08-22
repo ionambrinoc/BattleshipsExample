@@ -60,7 +60,7 @@
             leagueRecordsRepository.AddLeague(leagueStartTime);
             leagueRecordsRepository.SaveContext();
 
-            var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
+            var leaderboard = leaderboardFactory.GenerateLeaderboard(allMatchResults);
 
             return Json(leaderboard);
         }
