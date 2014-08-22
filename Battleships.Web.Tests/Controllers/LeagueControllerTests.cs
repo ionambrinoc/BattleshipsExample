@@ -18,8 +18,9 @@
     public class LeagueControllerTests
     {
         private const int NumberOfRounds = 100;
-        private DateTime middleDate;
-        private DateTime laterDate;
+        private readonly DateTime earlierDate = new DateTime(2001, 1, 1);
+        private readonly DateTime middleDate = new DateTime(2001, 6, 1);
+        private readonly DateTime laterDate = new DateTime(2002, 1, 1);
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
         private ILeagueRunner fakeLeagueRunner;
         private ILeaderboardFactory fakeLeaderboardFactory;
@@ -32,8 +33,6 @@
         private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepository;
         private ILeagueRecordsRepository fakeLeagueRecordsRepository;
 
-        private DateTime earlierDate;
-
         [SetUp]
         public void SetUp()
         {
@@ -43,10 +42,6 @@
             fakeMatchResultsRepository = A.Fake<IMatchResultsRepository>();
             fakeBattleshipsPlayerRepository = A.Fake<IBattleshipsPlayerRepository>();
             fakeLeagueRecordsRepository = A.Fake<ILeagueRecordsRepository>();
-
-            earlierDate = new DateTime(2001, 1, 1);
-            middleDate = new DateTime(2001, 6, 1);
-            laterDate = new DateTime(2002, 1, 1);
 
             controller = new LeagueController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository, fakeLeagueRecordsRepository);
 

@@ -11,19 +11,20 @@ window.battleships.league.index = (function($, undefined) {
     var leagueRunFailureMessage = $('#leagueRunFailureMessage');
 
     function resetGame() {
-        gameSetup.show();
         loadingSpinner.hide();
         resetButton.hide();
         leagueRunFailureMessage.hide();
+        gameSetup.show();
         latestLeaderboard();
     }
 
     function startLeague() {
         gameSetup.hide();
+        latestResultsTimestamp.hide();
         leaderboard.hide();
         noLeagueBeforeMessage.hide();
         loadingSpinner.show();
-        latestResultsTimestamp.hide();
+
     }
 
     function togglePlayerStats() {
@@ -39,6 +40,7 @@ window.battleships.league.index = (function($, undefined) {
             '</tr></tbody>';
     }
 
+
     function generateRoundStatsHtml(roundStats) {
         var roundStatsHtml = '<tbody class="round-stats">';
         for (var j = 0; j < roundStats.length; j++) {
@@ -53,7 +55,7 @@ window.battleships.league.index = (function($, undefined) {
     }
 
     function makeLeaderboard(data) {
-        $("#leaderboard tr").remove();
+        $("#leaderboard tbody tr").remove();
         noLeagueBeforeMessage.hide();
 
         for (var i = 0; i < data.length; i++) {

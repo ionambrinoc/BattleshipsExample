@@ -5,6 +5,7 @@
     using Battleships.Runner.Runners;
     using Battleships.Web.Factories;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -31,15 +32,13 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            ViewBag.LatestLeague = leagueRecordsRepository.GetLatestLeagueTime();
             return View();
         }
 
         [HttpGet]
         public virtual ActionResult LatestLeagueResults()
         {
-            var latestLeagueTime = leagueRecordsRepository.GetLatestLeagueTime();
-            var matchResults = matchResultsRepository.GetAll().Where(mr => mr.TimePlayed >= latestLeagueTime).ToList();
+            var matchResults = matchResultsRepository.GetAll().ToList();
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
 
             return Json(leaderboard, JsonRequestBehavior.AllowGet);
@@ -49,23 +48,28 @@
         public virtual ActionResult RunLeague()
         {
             var leagueStartTime = DateTime.Now;
-            var players = playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(p)).ToList();
+            var players = GetPlayers();
             var updatedPlayers = players.Where(player => player.PlayerRecord.LastUpdated >= leagueRecordsRepository.GetLatestLeagueTime()).ToList();
 
             var matchResults = leagueRunner.GetLeagueResults(players, updatedPlayers);
 
-            matchResultsRepository.UpdateResults(matchResults);
-            matchResultsRepository.SaveContext();
-
-            var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
-
             if (updatedPlayers.Count > 0)
             {
+                matchResultsRepository.UpdateResults(matchResults);
+                matchResultsRepository.SaveContext();
+
                 leagueRecordsRepository.AddLeague(leagueStartTime);
                 leagueRecordsRepository.SaveContext();
             }
 
+            var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
+
             return Json(leaderboard);
+        }
+
+        private List<IBattleshipsPlayer> GetPlayers()
+        {
+            return playerRecordsRepository.GetAll().Select(p => battleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(p)).ToList();
         }
     }
 }
