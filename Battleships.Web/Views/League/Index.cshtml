@@ -14,21 +14,20 @@
 </div>
 
 <div id="leagueRunFailureMessage" class="leagueMessage alert alert-danger">
-    League could not be run; please change players and play again.
+    No league has been run because no players have been updated since the last league.
 </div>
 
 
-    <div id="latestResults" class="leagueMessage alert alert-success"> Latest Leaderboard: </div>
-    <table class="table table-hover" id="leaderboard">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Match Wins</th>
-                <th>Match Losses</th>
-                <th>Total rounds won</th>
-            </tr>
-        </thead>
-    </table>
+<table class="table table-hover" id="leaderboard">
+    <thead>
+        <tr>
+            <th>Latest Leaderboard (@ViewBag.LatestLeagueTime):</th>
+            <th>Match Wins</th>
+            <th>Match Losses</th>
+            <th>Total rounds won</th>
+        </tr>
+    </thead>
+</table>
 
 <div id="gameSetup">
     <button id="runLeagueButton" type="button" class="btn btn-info">
@@ -36,7 +35,6 @@
     </button>
 </div>
 
-<button id="resetGameButton" type="button" class="btn btn-success">Play again?</button>
 <div id="loading-spinner">
     <img src="../../Images/Explodingbattleship.gif" alt="Loading...">
 </div>

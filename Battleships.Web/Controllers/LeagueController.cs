@@ -32,6 +32,7 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
+            ViewBag.LatestLeagueTime = leagueRecordsRepository.GetLatestLeagueTime();
             return View();
         }
 

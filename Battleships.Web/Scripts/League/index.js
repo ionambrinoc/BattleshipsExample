@@ -4,15 +4,12 @@ window.battleships.league = window.battleships.league || {};
 window.battleships.league.index = (function($, undefined) {
     var loadingSpinner = $('#loading-spinner');
     var gameSetup = $('#gameSetup');
-    var resetButton = $('#resetGameButton');
     var leaderboard = $('#leaderboard');
     var noLeagueBeforeMessage = $('#noLeagueBeforeMessage');
-    var latestResultsTimestamp = $('#latestResults');
     var leagueRunFailureMessage = $('#leagueRunFailureMessage');
 
     function resetGame() {
         loadingSpinner.hide();
-        resetButton.hide();
         leagueRunFailureMessage.hide();
         gameSetup.show();
         latestLeaderboard();
@@ -20,11 +17,9 @@ window.battleships.league.index = (function($, undefined) {
 
     function startLeague() {
         gameSetup.hide();
-        latestResultsTimestamp.hide();
         leaderboard.hide();
         noLeagueBeforeMessage.hide();
         loadingSpinner.show();
-
     }
 
     function togglePlayerStats() {
@@ -65,14 +60,12 @@ window.battleships.league.index = (function($, undefined) {
         }
         $('.player').on('click', togglePlayerStats);
 
-        latestResultsTimestamp.show();
         leaderboard.show();
     }
 
     function latestLeaderboard() {
         $('#latest-league').ajaxSubmit(function(data) {
             if (data.length === 0) {
-                latestResultsTimestamp.hide();
                 leaderboard.hide();
                 noLeagueBeforeMessage.show();
             } else {
@@ -85,14 +78,17 @@ window.battleships.league.index = (function($, undefined) {
         $('#runLeagueButton').click(function() {
             startLeague();
             $('#run-league').ajaxSubmit(function(data) {
-
                 loadingSpinner.hide();
+
                 if (data.length !== 0) {
                     makeLeaderboard(data);
+                    leaderboard.show();
                 } else {
+                    leaderboard.hide();
                     leagueRunFailureMessage.show();
                 }
-                resetButton.show();
+
+                gameSetup.show();
             });
         });
     }
@@ -102,7 +98,6 @@ window.battleships.league.index = (function($, undefined) {
         init: function() {
             leagueRunFailureMessage.hide();
             resetGame();
-            resetButton.click(resetGame);
             runLeagueButtonSetup();
         }
     };
