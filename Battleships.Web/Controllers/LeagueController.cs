@@ -41,7 +41,6 @@
         {
             var matchResults = matchResultsRepository.GetAll().ToList();
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
-            var thing = new { a = 12, b = "string" };
             return Json(leaderboard, JsonRequestBehavior.AllowGet);
         }
 
@@ -62,8 +61,10 @@
             leagueRecordsRepository.SaveContext();
 
             var leaderboard = leaderboardFactory.GenerateLeaderboard(allMatchResults);
+            bool isUpdated = updatedPlayers.Count > 0;
 
-            return Json(leaderboard);
+            var leaderboardAndUpdate = new { leaderboard, isUpdated };
+            return Json(leaderboardAndUpdate);
         }
 
         private List<IBattleshipsPlayer> GetPlayers()

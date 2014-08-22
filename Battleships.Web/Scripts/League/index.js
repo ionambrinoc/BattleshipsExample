@@ -63,6 +63,21 @@ window.battleships.league.index = (function($, undefined) {
         leaderboard.show();
     }
 
+    function postLeaderboard(data) {
+        if (data.isUpdated) {
+            makeLeaderboard(data.leaderboard);
+            leaderboard.show();
+        } else {
+            if (data.leaderboard.length > 0) {
+                leaderboard.show();
+            } else {
+                leaderboard.hide();
+            }
+            leagueRunFailureMessage.show();
+        }
+
+    }
+
     function latestLeaderboard() {
         $('#latest-league').ajaxSubmit(function(data) {
             if (data.length === 0) {
@@ -74,20 +89,14 @@ window.battleships.league.index = (function($, undefined) {
         });
     }
 
+
+
     function runLeagueButtonSetup() {
         $('#runLeagueButton').click(function() {
             startLeague();
             $('#run-league').ajaxSubmit(function(data) {
                 loadingSpinner.hide();
-
-                if (data.length !== 0) {
-                    makeLeaderboard(data);
-                    leaderboard.show();
-                } else {
-                    leaderboard.show();
-                    leagueRunFailureMessage.show();
-                }
-
+                postLeaderboard(data);
                 gameSetup.show();
             });
         });
