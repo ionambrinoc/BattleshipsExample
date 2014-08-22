@@ -3,6 +3,7 @@
     using Battleships.Core.Models;
     using Battleships.Player.Interface;
     using Battleships.Runner.Factories;
+    using Battleships.Runner.Helper;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
@@ -42,19 +43,7 @@
         }
 
         [Test]
-        public void Can_create_GameLogs()
-        {
-            // When
-            factory.InitialiseGameLog(playerOneRecord, playerTwoRecord, earlierTime, player1Positions, player2Positions);
-            factory.AddGameEvent(laterTime, true, validGridSquare, true);
-            var result = factory.GetCompleteGame(true, ResultType.Default);
-
-            // Then
-            result.Should().NotBe(null);
-        }
-
-        [Test]
-        public void Can_set_game_log_fields()
+        public void Can_create_and_set_game_log_fields()
         {
             // When
             factory.InitialiseGameLog(playerOneRecord, playerTwoRecord, earlierTime, player1Positions, player2Positions);

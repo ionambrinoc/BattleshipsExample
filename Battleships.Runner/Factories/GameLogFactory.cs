@@ -2,6 +2,7 @@
 {
     using Battleships.Core.Models;
     using Battleships.Player.Interface;
+    using Battleships.Runner.Helper;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -18,6 +19,7 @@
     {
         private readonly GridSquareStringConverter converter;
         private GameLog gameLog;
+
         public GameLogFactory(GridSquareStringConverter converter)
         {
             this.converter = converter;

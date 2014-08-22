@@ -1,8 +1,9 @@
-﻿namespace Battleships.Runner.Factories
+﻿namespace Battleships.Runner.Helper
 {
     using Battleships.Player.Interface;
+    using System.Globalization;
 
-    public class GridSquareStringConverter 
+    public class GridSquareStringConverter
     {
         public string ShipPositionToString(IShipPosition shipPosition)
         {
@@ -11,8 +12,7 @@
 
         public string GridSquareToString(IGridSquare gridSquare)
         {
-            return gridSquare.Row + gridSquare.Column.ToString();
+            return gridSquare.Row + gridSquare.Column.ToString(CultureInfo.CurrentCulture);
         }
-
     }
 }

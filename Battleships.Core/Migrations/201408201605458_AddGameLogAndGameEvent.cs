@@ -1,8 +1,7 @@
 namespace Battleships.Core.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class AddGameLogAndGameEvent : DbMigration
     {
         public override void Up()
@@ -25,7 +24,7 @@ namespace Battleships.Core.Migrations
                 .ForeignKey("dbo.PlayerRecords", t => t.Player2_Id)
                 .Index(t => t.Player1_Id)
                 .Index(t => t.Player2_Id);
-            
+
             CreateTable(
                 "dbo.GameEvents",
                 c => new
@@ -40,9 +39,9 @@ namespace Battleships.Core.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.GameLogs", t => t.GameLogId, cascadeDelete: true)
                 .Index(t => t.GameLogId);
-            
+
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.GameLogs", "Player2_Id", "dbo.PlayerRecords");

@@ -33,7 +33,6 @@
 
         private PlayersController controller;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
-        private IGameLogFactory fakeGameLogFactory;
         private IGameLogRepository fakeGameLogRepo;
 
         [SetUp]
@@ -42,7 +41,6 @@
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakeBattleshipsPlayerRepo = A.Fake<IBattleshipsPlayerRepository>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
-            fakeGameLogFactory = A.Fake<IGameLogFactory>();
             fakeGameLogRepo = A.Fake<IGameLogRepository>();
             controller = new PlayersController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepo, fakeHeadToHeadRunner, fakeGameLogRepo);
         }
