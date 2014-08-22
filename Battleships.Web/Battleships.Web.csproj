@@ -233,7 +233,6 @@
     </Compile>
     <Compile Include="Models\AddPlayer\AddPlayerModel.cs" />
     <Compile Include="Models\AddPlayer\PlayerRecordViewModel.cs" />
-    <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
     <Compile Include="Models\League\RoundStats.cs" />
     <Compile Include="Models\League\PlayerStats.cs" />
     <Compile Include="Factories\LeaderboardFactory.cs" />
@@ -416,7 +415,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -9,6 +9,6 @@ namespace Battleships.Player
             Player = player;
         }
 
-        public IBattleshipsPlayer Player { get; set; }
+        public IBattleshipsPlayer Player { get; private set; }
     }
 }

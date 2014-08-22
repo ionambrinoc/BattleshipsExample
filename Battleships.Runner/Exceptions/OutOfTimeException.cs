@@ -10,6 +10,6 @@
             Winner = winner;
         }
 
-        public IBattleshipsPlayer Winner { get; set; }
+        public IBattleshipsPlayer Winner { get; private set; }
     }
 }

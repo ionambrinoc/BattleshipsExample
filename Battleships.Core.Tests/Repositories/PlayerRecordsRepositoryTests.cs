@@ -20,7 +20,6 @@
         private PlayerRecordsRepository repo;
         private string validUserId1;
         private string validUserId2;
-        public TestBattleshipsContext RepoTestContext { get; set; }
 
         [SetUp]
         public void SetUp()
@@ -85,14 +84,19 @@
         public void Marking_player_as_updated_gives_new_lastUpdated_time()
         {
             // Given
-            var oldTime = repo.GetByPlayerName(PlayerForUser1).LastUpdated;
+            var oldTime = GetPlayer1().LastUpdated;
 
             // When
             repo.MarkPlayerAsUpdated(PlayerForUser1);
-            var newTime = repo.GetByPlayerName(PlayerForUser1).LastUpdated;
+            var newTime = GetPlayer1().LastUpdated;
 
             // Then
             newTime.Should().NotBe(oldTime);
+        }
+
+        private PlayerRecord GetPlayer1()
+        {
+            return repo.GetPlayerRecordById(1);
         }
 
         private void AddPlayerRecordForUser1()

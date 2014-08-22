@@ -18,12 +18,7 @@
             get { return playerRecord.Id; }
         }
 
-        public string UserId
-        {
-            get { return playerRecord.UserId; }
-        }
-
-        public virtual User User
+        public User User
         {
             get { return playerRecord.User; }
         }
@@ -37,11 +32,11 @@
         {
             get
             {
-                if (playerRecord.PictureFileName != null)
+                if (playerRecord.PictureFileName == null)
                 {
-                    return Path.Combine(ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], playerRecord.PictureFileName);
+                    return null;
                 }
-                return null;
+                return Path.Combine(ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], playerRecord.PictureFileName);
             }
         }
     }

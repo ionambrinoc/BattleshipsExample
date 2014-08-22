@@ -19,7 +19,7 @@
             ResultType = resultType;
         }
 
-        public IBattleshipsPlayer Winner { get; set; }
-        public ResultType ResultType { get; set; }
+        public IBattleshipsPlayer Winner { get; private set; }
+        public ResultType ResultType { get; private set; }
     }
 }

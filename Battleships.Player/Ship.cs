@@ -29,8 +29,8 @@
             get { return (EndingSquare.Column - StartingSquare.Column) + (EndingSquare.Row - StartingSquare.Row) + 1; }
         }
 
-        public IGridSquare StartingSquare { get; set; }
-        public IGridSquare EndingSquare { get; set; }
+        public IGridSquare StartingSquare { get; private set; }
+        public IGridSquare EndingSquare { get; private set; }
 
         public bool IsValid
         {

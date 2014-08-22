@@ -4,7 +4,7 @@
 
     public static class PopupHelper
     {
-        public static string PopupKey = "showPopup";
+        public const string PopupKey = "showPopup";
 
         public static bool HasPopup(this TempDataDictionary tempData)
         {
