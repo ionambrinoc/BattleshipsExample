@@ -41,14 +41,7 @@
         <tr>
             <td>@player.User.UserName</td>
             <td>
-                @if (player.PictureFileName != null)
-                {
-                    @Html.ActionLink(player.Name, MVC.ManagePlayers.ClickPlayer(player.Id))
-                }
-                else
-                {
-                    @player.Name
-                }
+                @Html.ActionLink(player.Name, MVC.ManagePlayers.ClickPlayer(player.Id))
             </td>
             <td>
                 <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">
