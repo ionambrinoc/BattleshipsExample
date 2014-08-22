@@ -41,7 +41,7 @@
         {
             var matchResults = matchResultsRepository.GetAll().ToList();
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
-
+            var thing = new { a = 12, b = "string" };
             return Json(leaderboard, JsonRequestBehavior.AllowGet);
         }
 

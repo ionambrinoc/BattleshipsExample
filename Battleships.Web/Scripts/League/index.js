@@ -84,7 +84,7 @@ window.battleships.league.index = (function($, undefined) {
                     makeLeaderboard(data);
                     leaderboard.show();
                 } else {
-                    leaderboard.hide();
+                    leaderboard.show();
                     leagueRunFailureMessage.show();
                 }
 
