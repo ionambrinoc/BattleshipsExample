@@ -6,24 +6,24 @@ window.battleships.league.index = (function($, undefined) {
     var gameSetup = $('#gameSetup');
     var resetButton = $('#resetGameButton');
     var leaderboard = $('#leaderboard');
-    var noLeagueBefore = $('#noLeagueBefore');
-    var latestResults = $('#latestResults');
-    var noLeagueRun = $('#noLeagueRun');
+    var noLeagueBeforeMessage = $('#noLeagueBeforeMessage');
+    var latestResultsTimestamp = $('#latestResults');
+    var leagueRunFailureMessage = $('#leagueRunFailureMessage');
 
     function resetGame() {
         gameSetup.show();
         loadingSpinner.hide();
         resetButton.hide();
-        noLeagueRun.hide();
+        leagueRunFailureMessage.hide();
         latestLeaderboard();
     }
 
     function startLeague() {
         gameSetup.hide();
         leaderboard.hide();
-        noLeagueBefore.hide();
+        noLeagueBeforeMessage.hide();
         loadingSpinner.show();
-        latestResults.hide();
+        latestResultsTimestamp.hide();
     }
 
     function togglePlayerStats() {
@@ -53,10 +53,9 @@ window.battleships.league.index = (function($, undefined) {
     }
 
     function makeLeaderboard(data) {
-
-
         $("#leaderboard tr").remove();
-        noLeagueBefore.hide();
+        noLeagueBeforeMessage.hide();
+
         for (var i = 0; i < data.length; i++) {
             var playerStats = data[i];
             leaderboard.append(generatePlayerStatsHtml(playerStats));
@@ -64,32 +63,32 @@ window.battleships.league.index = (function($, undefined) {
         }
         $('.player').on('click', togglePlayerStats);
 
-        latestResults.show();
+        latestResultsTimestamp.show();
         leaderboard.show();
     }
 
     function latestLeaderboard() {
-        $('#latest-league').ajaxSubmit(function (data) {
+        $('#latest-league').ajaxSubmit(function(data) {
             if (data.length === 0) {
-                latestResults.hide();
+                latestResultsTimestamp.hide();
                 leaderboard.hide();
-                noLeagueBefore.show();
+                noLeagueBeforeMessage.show();
             } else {
                 makeLeaderboard(data);
             }
         });
     }
 
-    function runLeague() {
-        $('#runLeagueButton').click(function () {
+    function runLeagueButtonSetup() {
+        $('#runLeagueButton').click(function() {
             startLeague();
-            $('#run-league').ajaxSubmit(function (data) {
+            $('#run-league').ajaxSubmit(function(data) {
 
                 loadingSpinner.hide();
                 if (data.length !== 0) {
                     makeLeaderboard(data);
                 } else {
-                    noLeagueRun.show();
+                    leagueRunFailureMessage.show();
                 }
                 resetButton.show();
             });
@@ -98,16 +97,11 @@ window.battleships.league.index = (function($, undefined) {
 
 
     return {
-        init: function () {
-
-            noLeagueRun.hide();
-
-            latestLeaderboard();
-
+        init: function() {
+            leagueRunFailureMessage.hide();
             resetGame();
-            resetButton.on('click', resetGame);
-
-            runLeague();
+            resetButton.click(resetGame);
+            runLeagueButtonSetup();
         }
     };
 })(jQuery);

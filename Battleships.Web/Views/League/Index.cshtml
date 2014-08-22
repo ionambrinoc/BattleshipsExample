@@ -9,16 +9,16 @@
 @using (Html.BeginForm(MVC.League.RunLeague(), FormMethod.Post, new { id = "run-league" })) {}
 @using (Html.BeginForm(MVC.League.LatestLeagueResults(), FormMethod.Get, new { id = "latest-league" })) {}
 
-<div id="noLeagueBefore" class="leagueMessage">
-    <h3>No league has been run before.</h3>
+<div id="noLeagueBeforeMessage" class="leagueMessage alert alert-info">
+    No league has been run before.
 </div>
 
-<div id="noLeagueRun" class="leagueMessage">
+<div id="leagueRunFailureMessage" class="leagueMessage alert alert-danger">
     <h3>League could not be run; please change players and play again.</h3>
 </div>
 
 @{
-    <h3 id="latestResults" class="leagueMessage"> Latest League Results (@ViewBag.LatestLeague): </h3>
+    <div id="latestResults" class="leagueMessage alert alert-success"> Latest League Results (@ViewBag.LatestLeague): </div>
     <table class="table table-hover" id="leaderboard">
         <thead>
             <tr>
