@@ -1,38 +1,61 @@
-﻿@using Battleships.Web.Factories
-@model LeaderboardFactory
+﻿@using Battleships.Web.Models.League
+@model List<PlayerStats>
 @Styles.Render("~/bundles/styles/league")
 
 @{
     ViewBag.Title = "League";
 }
 
-@using (Html.BeginForm(MVC.League.RunLeague(), FormMethod.Post, new { id = "run-league" })) {}
-@using (Html.BeginForm(MVC.League.LatestLeagueResults(), FormMethod.Get, new { id = "latest-league" })) {}
-
-<div id="noLeagueBeforeMessage" class="leagueMessage alert alert-info">
-    No league has been run before.
-</div>
-
-<div id="leagueRunFailureMessage" class="leagueMessage alert alert-info">
-    No league has been run because no players have been updated since the last league.
-</div>
 
 
-<table class="table table-hover" id="leaderboard">
-    <thead>
-        <tr>
-            <th id="latestLeaderboard">Latest Leaderboard (@ViewBag.LatestLeagueTime):</th>
-            <th>Match Wins</th>
-            <th>Match Losses</th>
-            <th>Total rounds won</th>
-        </tr>
-    </thead>
-</table>
+@{
+    if (!Model.Any()) {
+        <div id="noLeagueBeforeMessage" class="leagueMessage alert alert-info">
+            No league has been run before.
+        </div>
+    }
+    else {
+        <table class="table table-hover" id="leaderboard">
+            <thead>
+                <tr>
+                    <th id="latestLeaderboard">Latest Leaderboard (@ViewBag.LatestLeagueTime):</th>
+                    <th>Match Wins</th>
+                    <th>Match Losses</th>
+                    <th>Total rounds won</th>
+                </tr>
+            </thead>
+            @foreach (var playerStat in Model) {
+                <tbody class="player">
+                    <tr class="info">
+                        <td>@playerStat.Name</td>
+                        <td>@playerStat.Wins</td>
+                        <td>@playerStat.Losses</td>
+                        <td>@playerStat.TotalRoundWins</td>
+                    </tr>
+                </tbody>
+                <tbody class="round-stats">
+                    @foreach (var roundStat in playerStat.RoundStats) {
+                        <tr>
+                            <td> vs. @roundStat.OpponentName - @roundStat.Wins : @roundStat.Losses</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            }
+
+        </table>
+    }
+}
+
 
 <div id="gameSetup">
-    <button id="runLeagueButton" type="button" class="btn btn-info">
-        Run League
-    </button>
+    @using (Html.BeginForm(MVC.League.RunLeague(), FormMethod.Post)) {
+        <button id="runLeagueButton" type="submit" class="btn btn-info">
+            Run League
+        </button>
+    }
 </div>
 
 <div id="loading-spinner">

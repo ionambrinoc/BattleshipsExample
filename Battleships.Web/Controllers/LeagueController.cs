@@ -4,6 +4,7 @@
     using Battleships.Player;
     using Battleships.Runner.Runners;
     using Battleships.Web.Factories;
+    using Battleships.Web.Helper;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -32,16 +33,13 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            ViewBag.LatestLeagueTime = leagueRecordsRepository.GetLatestLeagueTime();
-            return View();
-        }
+            var latestLeagueTime = leagueRecordsRepository.GetLatestLeagueTime();
 
-        [HttpGet]
-        public virtual ActionResult LatestLeagueResults()
-        {
+            ViewBag.LatestLeagueTime = latestLeagueTime;
+
             var matchResults = matchResultsRepository.GetAll().ToList();
             var leaderboard = leaderboardFactory.GenerateLeaderboard(matchResults);
-            return Json(leaderboard, JsonRequestBehavior.AllowGet);
+            return View(leaderboard);
         }
 
         [HttpPost]
@@ -54,17 +52,18 @@
             var matchResults = leagueRunner.GetLeagueResults(players, updatedPlayers);
             matchResultsRepository.UpdateResults(matchResults);
             matchResultsRepository.SaveContext();
-            var playerIds = players.Select(x => x.PlayerRecord.Id);
-            var allMatchResults = matchResultsRepository.GetAllMatchResults(playerIds);
 
-            leagueRecordsRepository.AddLeague(leagueStartTime);
-            leagueRecordsRepository.SaveContext();
+            if (updatedPlayers.Count == 0)
+            {
+                TempData.AddPopup("Couldn't run league because no players have been updated since the last league. Please update or upload players and try again.");
+            }
+            else
+            {
+                leagueRecordsRepository.AddLeague(leagueStartTime);
+                leagueRecordsRepository.SaveContext();
+            }
 
-            var leaderboard = leaderboardFactory.GenerateLeaderboard(allMatchResults);
-            bool isUpdated = updatedPlayers.Count > 0;
-
-            var leaderboardAndUpdate = new { leaderboard, isUpdated };
-            return Json(leaderboardAndUpdate);
+            return RedirectToAction(MVC.League.Index());
         }
 
         private List<IBattleshipsPlayer> GetPlayers()
