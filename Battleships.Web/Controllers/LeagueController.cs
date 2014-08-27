@@ -55,13 +55,11 @@
 
             if (updatedPlayers.Count == 0)
             {
-                TempData.AddPopup("Couldn't run league because no players have been updated since the last league. Please update or upload players and try again.");
+                TempData.AddPopup("Couldn't run league because no players have been updated since the last league. Please update or upload players and try again.", "alert-warning");
             }
-            else
-            {
-                leagueRecordsRepository.AddLeague(leagueStartTime);
-                leagueRecordsRepository.SaveContext();
-            }
+
+            leagueRecordsRepository.AddLeague(leagueStartTime);
+            leagueRecordsRepository.SaveContext();
 
             return RedirectToAction(MVC.League.Index());
         }

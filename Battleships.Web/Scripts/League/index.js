@@ -23,19 +23,11 @@ window.battleships.league.index = (function($, undefined) {
     }
 
 
-    function runLeagueButtonSetup() {
-        $('#runLeagueButton').click(function() {
-            startLeague();
-        });
-    }
-
-
     return {
         init: function() {
             $('.player').on('click', togglePlayerStats);
             resetGame();
-            $('#runLeagueButton').click(startLeague());
-            //  runLeagueButtonSetup();
+            $('#runLeagueButton').click(startLeague);
         }
     };
 })(jQuery);
