@@ -59,6 +59,19 @@
             return View(Views.Register);
         }
 
+        [HttpGet]
+        public virtual ActionResult ChangePasswordPage()
+        {
+            return View(Views.ChangePasswordPage);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public virtual ActionResult ChangePassword()
+        {
+            return View(Views.ChangePasswordPage);
+        }
+
         [HttpPost]
         public virtual ActionResult Register(CreateAccountViewModel model)
         {

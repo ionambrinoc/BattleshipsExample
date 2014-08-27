@@ -231,6 +231,7 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account\ChangePasswordViewModel.cs" />
     <Compile Include="Models\AddPlayer\AddPlayerModel.cs" />
     <Compile Include="Models\AddPlayer\PlayerRecordViewModel.cs" />
     <Compile Include="Models\League\RoundStats.cs" />
@@ -426,6 +427,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\League\Index.cshtml" />
     <Content Include="Views\ManagePlayers\Index.cshtml" />
+    <Content Include="Views\Account\ChangePasswordPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

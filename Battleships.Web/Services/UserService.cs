@@ -4,6 +4,7 @@
     using Microsoft.AspNet.Identity;
     using System.Diagnostics.CodeAnalysis;
     using System.Security.Claims;
+    using System.Threading.Tasks;
 
     public interface IUserService
     {
@@ -30,6 +31,16 @@
         {
             return userManager.Create(new User { UserName = userName }, password);
         }
+
+        public Task<IdentityResult> ChangePassword(string userName, string currentPassword, string newPassword)
+        {
+            return userManager.ChangePasswordAsync(userName, currentPassword, newPassword);
+        }
+
+        /*    public Task<IdentityResult> ResetPassword(string userName)
+        {
+            return userManager.ResetPasswordAsync(userName, token, newPassword);
+        }*/
 
         public User Find(string userName, string password)
         {
