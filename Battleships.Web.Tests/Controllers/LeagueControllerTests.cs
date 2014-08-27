@@ -83,10 +83,11 @@
             A.CallTo(() => fakeLeaderboardFactory.GenerateLeaderboard(A<List<MatchResult>>.That.IsSameSequenceAs(matchResults))).Returns(expectedLeaderboard);
 
             //When
-            var index = controller.Index() as ViewResult;
-            var result = index.ViewData.Model.As<List<PlayerStats>>();
+            var view = controller.Index() as ViewResult;
+            Assert.That(!view.Equals(null));
+            var model = view.ViewData.Model.As<List<PlayerStats>>();
             //Then
-            Assert.That(result.Equals(expectedLeaderboard));
+            Assert.That(model.Equals(expectedLeaderboard));
         }
 
         [Test]
@@ -101,11 +102,7 @@
             var playerOne = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordOne);
             var playerTwo = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordTwo);
 
-            A.CallTo(() => fakePlayerRecordsRepository.GetAll()).Returns(new List<PlayerRecord> { playerRecordOne, playerRecordTwo });
-
-            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordOne)).Returns(playerOne);
-            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordTwo)).Returns(playerTwo);
-            A.CallTo(() => fakeLeagueRecordsRepository.GetLatestLeagueTime()).Returns(middleDate);
+            FakeRepositoryCalls(playerOne, playerTwo);
 
             // When
             controller.RunLeague();
@@ -118,8 +115,6 @@
         [Test]
         public void Run_League_Redirects_To_Index()
         {
-            //Given
-
             //When
             var result = controller.RunLeague();
 
@@ -139,11 +134,7 @@
             var playerOne = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordOne);
             var playerTwo = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordTwo);
 
-            A.CallTo(() => fakePlayerRecordsRepository.GetAll()).Returns(new List<PlayerRecord> { playerRecordOne, playerRecordTwo });
-
-            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordOne)).Returns(playerOne);
-            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordTwo)).Returns(playerTwo);
-            A.CallTo(() => fakeLeagueRecordsRepository.GetLatestLeagueTime()).Returns(middleDate);
+            FakeRepositoryCalls(playerOne, playerTwo);
 
             //When
             controller.RunLeague();
@@ -162,6 +153,14 @@
             matchResult.TimePlayed = timePlayed;
 
             return matchResult;
+        }
+
+        private void FakeRepositoryCalls(BattleshipsPlayer playerOne, BattleshipsPlayer playerTwo)
+        {
+            A.CallTo(() => fakePlayerRecordsRepository.GetAll()).Returns(new List<PlayerRecord> { playerRecordOne, playerRecordTwo });
+            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordOne)).Returns(playerOne);
+            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordTwo)).Returns(playerTwo);
+            A.CallTo(() => fakeLeagueRecordsRepository.GetLatestLeagueTime()).Returns(middleDate);
         }
     }
 }

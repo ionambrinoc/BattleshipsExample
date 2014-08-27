@@ -34,7 +34,8 @@ window.battleships.league.index = (function($, undefined) {
         init: function() {
             $('.player').on('click', togglePlayerStats);
             resetGame();
-            runLeagueButtonSetup();
+            $('#runLeagueButton').click(startLeague());
+            //  runLeagueButtonSetup();
         }
     };
 })(jQuery);
