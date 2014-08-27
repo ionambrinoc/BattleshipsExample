@@ -1,7 +1,6 @@
 ﻿namespace Battleships.Runner.Tests.Runners
 {
     using Battleships.Core.Models;
-    using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Runner.Factories;
     using Battleships.Runner.Models;
@@ -24,8 +23,7 @@
         private PlayerRecord winnerPlayerRecord;
         private PlayerRecord loserPlayerRecord;
         private IMatchScoreBoard matchScoreBoard;
-        private IGameLogFactory gameLogFactory;
-        private IGameLogRepository gameLogRepo;
+        private ILogger fakeLogger;
 
         [SetUp]
         public void SetUp()
@@ -45,13 +43,11 @@
             matchScoreBoard = A.Fake<IMatchScoreBoard>();
             A.CallTo(() => matchScoreBoardFactory.GetMatchScoreBoard(playerOne, playerTwo)).Returns(matchScoreBoard);
 
-            gameLogFactory = A.Fake<IGameLogFactory>();
-            gameLogRepo = A.Fake<IGameLogRepository>();
-
+            fakeLogger = A.Fake<ILogger>();
 
             A.CallTo(() => matchScoreBoard.IsDraw()).Returns(false);
 
-            matchRunner = new MatchRunner(headToHeadRunner, matchScoreBoardFactory, gameLogFactory, gameLogRepo);
+            matchRunner = new MatchRunner(headToHeadRunner, matchScoreBoardFactory);
         }
 
         [TestCaseSource("Games")]
@@ -81,7 +77,7 @@
             GetMatchResult(NumberOfRounds);
 
             // Then
-            A.CallTo(() => headToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._,gameLogFactory,gameLogRepo)).MustHaveHappened(Repeated.Exactly.Times(NumberOfRounds));
+            A.CallTo(() => headToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._, A<ILogger>._)).MustHaveHappened(Repeated.Exactly.Times(NumberOfRounds));
         }
 
         [Test]
@@ -91,8 +87,8 @@
             GetMatchResult(3);
 
             // Then
-            A.CallTo(() => headToHeadRunner.FindWinner(playerOne, playerTwo, gameLogFactory, gameLogRepo)).MustHaveHappened(Repeated.Exactly.Times(2));
-            A.CallTo(() => headToHeadRunner.FindWinner(playerTwo, playerOne, gameLogFactory, gameLogRepo)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => headToHeadRunner.FindWinner(playerOne, playerTwo, A<ILogger>._)).MustHaveHappened(Repeated.Exactly.Times(2));
+            A.CallTo(() => headToHeadRunner.FindWinner(playerTwo, playerOne, A<ILogger>._)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [Test]
@@ -105,7 +101,7 @@
             GetMatchResult(NumberOfRounds);
 
             // Then
-            A.CallTo(() => headToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._, gameLogFactory, gameLogRepo)).MustHaveHappened(Repeated.Exactly.Times(NumberOfRounds + 1));
+            A.CallTo(() => headToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._, A<ILogger>._)).MustHaveHappened(Repeated.Exactly.Times(NumberOfRounds + 1));
         }
 
         // ReSharper disable once UnusedMember.Local

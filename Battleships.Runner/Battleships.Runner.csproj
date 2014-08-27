@@ -39,6 +39,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="JsonPrettyPrinterPlus">
+      <HintPath>..\packages\JsonPrettyPrinter.1.0.1.1\lib\net35\JsonPrettyPrinterPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.0.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -50,6 +53,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,11 +61,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factories\GameLogFactory.cs" />
     <Compile Include="Helper\GridSquareStringConverter.cs" />
+    <Compile Include="Models\GameEvent.cs" />
+    <Compile Include="Models\GameLog.cs" />
+    <Compile Include="Models\ResultType.cs" />
     <Compile Include="Runners\HeadToHeadRunner.cs" />
     <Compile Include="Factories\MatchScoreBoardFactory.cs" />
     <Compile Include="Runners\LeagueRunner.cs" />
+    <Compile Include="Runners\Logger.cs" />
     <Compile Include="Runners\MatchRunner.cs" />
     <Compile Include="Models\MatchScoreBoard.cs" />
     <Compile Include="Exceptions\OutOfTimeException.cs" />

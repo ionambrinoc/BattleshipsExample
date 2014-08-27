@@ -1,16 +1,13 @@
 ﻿namespace Battleships.Runner.Runners
 {
-    using Battleships.Core.Models;
-    using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Runner.Exceptions;
     using Battleships.Runner.Factories;
     using Battleships.Runner.Models;
-    using System;
 
     public interface IHeadToHeadRunner
     {
-        GameResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, IGameLogFactory gameLogFactory, IGameLogRepository gameLogRepo);
+        GameResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, ILogger logger);
     }
 
     public class HeadToHeadRunner : IHeadToHeadRunner
@@ -23,63 +20,62 @@
             this.shipsPlacementFactory = shipsPlacementFactory;
         }
 
-        public GameResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, IGameLogFactory gameLogFactory, IGameLogRepository gameLogRepo)
+        public GameResult FindWinner(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, ILogger logger)
         {
             try
             {
                 var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
                 var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
-
-                gameLogFactory.InitialiseGameLog(playerOne.PlayerRecord, playerTwo.PlayerRecord, DateTime.Now, playerOne.GetShipPositions(), playerTwo.GetShipPositions());
+                logger.NewGameLog();
 
                 if (!playerOneShipsPlacement.IsValid())
                 {
-                    gameLogRepo.AddGameLog(gameLogFactory.GetCompleteGame(false, ResultType.ShipPositionsInvalid));
-                    gameLogRepo.SaveContext();
-                    return new GameResult(playerTwo, ResultType.ShipPositionsInvalid);
+                    var gameResult = new GameResult(playerTwo, ResultType.ShipPositionsInvalid);
+                    logger.AddGameResult(gameResult);
+                    return gameResult;
                 }
 
                 if (!playerTwoShipsPlacement.IsValid())
                 {
-                    gameLogRepo.AddGameLog(gameLogFactory.GetCompleteGame(true, ResultType.ShipPositionsInvalid));
-                    gameLogRepo.SaveContext();
-                    return new GameResult(playerOne, ResultType.ShipPositionsInvalid);
+                    var gameResult = new GameResult(playerOne, ResultType.ShipPositionsInvalid);
+                    logger.AddGameResult(gameResult);
+                    return gameResult;
                 }
 
                 while (true)
                 {
                     isPlayerOneTurn = true;
-                    MakeMove(playerOne, playerTwo, playerTwoShipsPlacement, gameLogFactory);
+                    MakeMove(playerOne, playerTwo, playerTwoShipsPlacement, logger);
 
                     if (playerTwoShipsPlacement.AllHit())
                     {
-                        gameLogRepo.AddGameLog(gameLogFactory.GetCompleteGame(true, ResultType.Default));
-                        gameLogRepo.SaveContext();
-                        return new GameResult(playerOne, ResultType.Default);
+                        var gameResult = new GameResult(playerOne, ResultType.Default);
+                        logger.AddGameResult(gameResult);
+                        return gameResult;
                     }
 
                     isPlayerOneTurn = false;
-                    MakeMove(playerTwo, playerOne, playerOneShipsPlacement, gameLogFactory);
+                    MakeMove(playerTwo, playerOne, playerOneShipsPlacement, logger);
 
                     if (playerOneShipsPlacement.AllHit())
                     {
-                        gameLogRepo.AddGameLog(gameLogFactory.GetCompleteGame(false, ResultType.Default));
-                        gameLogRepo.SaveContext();
-                        return new GameResult(playerTwo, ResultType.Default);
+                        var gameResult = new GameResult(playerTwo, ResultType.Default);
+                        logger.AddGameResult(gameResult);
+                        return gameResult;
                     }
                 }
             }
             catch (OutOfTimeException e)
             {
-                gameLogRepo.AddGameLog(gameLogFactory.GetCompleteGame(isPlayerOneTurn, ResultType.Timeout));
-                gameLogRepo.SaveContext();
-                return new GameResult(e.Winner, ResultType.Timeout);
+                var gameResult = new GameResult(e.Winner, ResultType.Timeout);
+                logger.AddGameResult(gameResult);
+                return gameResult;
             }
             catch (BotException e)
             {
-                gameLogRepo.AddGameLog(gameLogFactory.GetCompleteGame(!isPlayerOneTurn, ResultType.OpponentThrewException));
-                gameLogRepo.SaveContext();
-                return new GameResult(e.Player == playerOne ? playerTwo : playerOne, ResultType.OpponentThrewException);
+                var gameResult = new GameResult(e.Player == playerOne ? playerTwo : playerOne, ResultType.OpponentThrewException);
+                logger.AddGameResult(gameResult);
+                return gameResult;
             }
         }
 
@@ -95,7 +91,7 @@
             }
         }
 
-        private void MakeMove(IBattleshipsPlayer attacker, IBattleshipsPlayer defender, IShipsPlacement defendingShips, IGameLogFactory gameLogFactory)
+        private void MakeMove(IBattleshipsPlayer attacker, IBattleshipsPlayer defender, IShipsPlacement defendingShips, ILogger logger)
         {
             var target = attacker.SelectTarget();
             var defendingIsHit = defendingShips.IsHit(target);
@@ -103,7 +99,7 @@
             defender.HandleOpponentsShot(target);
             CheckTimeout(attacker, defender);
 
-            gameLogFactory.AddGameEvent(DateTime.Now, isPlayerOneTurn, target, defendingIsHit);
+            logger.AddGameEvent(isPlayerOneTurn, target, defendingIsHit);
         }
     }
 }

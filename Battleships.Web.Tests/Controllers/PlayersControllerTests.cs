@@ -3,7 +3,6 @@
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
     using Battleships.Player;
-    using Battleships.Runner.Factories;
     using Battleships.Runner.Models;
     using Battleships.Runner.Runners;
     using Battleships.Web.Controllers;
@@ -33,7 +32,7 @@
 
         private PlayersController controller;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
-        private IGameLogRepository fakeGameLogRepo;
+        private ILogger fakeLogger;
 
         [SetUp]
         public void SetUp()
@@ -41,8 +40,8 @@
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakeBattleshipsPlayerRepo = A.Fake<IBattleshipsPlayerRepository>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
-            fakeGameLogRepo = A.Fake<IGameLogRepository>();
-            controller = new PlayersController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepo, fakeHeadToHeadRunner, fakeGameLogRepo);
+            fakeLogger = A.Fake<ILogger>();
+            controller = new PlayersController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepo, fakeHeadToHeadRunner);
         }
 
         [Test]
@@ -64,13 +63,13 @@
         {
             // Given
             SetUpPlayers();
-            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(fakeWinner, fakeLoser, A<IGameLogFactory>._, fakeGameLogRepo)).Returns(new GameResult(fakeWinner, ResultType.Default));
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(fakeWinner, fakeLoser, A<ILogger>._)).Returns(new GameResult(fakeWinner, ResultType.Default));
 
             // When
             var result = controller.RunGame(WinnerId, LoserId);
 
             // Then
-            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._, A<IGameLogFactory>._, fakeGameLogRepo)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => fakeHeadToHeadRunner.FindWinner(A<IBattleshipsPlayer>._, A<IBattleshipsPlayer>._, A<ILogger>._)).MustHaveHappened(Repeated.Exactly.Once);
             Assert.IsInstanceOf<JsonResult>(result);
             result.GetProperty("winnerName").Should().Be(WinnerName);
             result.GetProperty("resultType").Should().Be((int)ResultType.Default);

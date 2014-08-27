@@ -16,8 +16,6 @@
 
         public DbSet<LeagueRecord> LeagueRecords { get; set; }
 
-        public DbSet<GameLog> GameLogs { get; set; }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PlayerRecord>()

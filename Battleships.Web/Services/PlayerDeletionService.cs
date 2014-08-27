@@ -14,28 +14,19 @@
     {
         private readonly PlayerRecordsRepository playerRecordsRepository;
         private readonly MatchResultsRepository matchResultsRepository;
-        private readonly GameLogRepository gameLogRepository;
 
-        public PlayerDeletionService(PlayerRecordsRepository playerRecordsRepository, MatchResultsRepository matchResultsRepository, GameLogRepository gameLogRepository)
+        public PlayerDeletionService(PlayerRecordsRepository playerRecordsRepository, MatchResultsRepository matchResultsRepository)
         {
             this.playerRecordsRepository = playerRecordsRepository;
             this.matchResultsRepository = matchResultsRepository;
-            this.gameLogRepository = gameLogRepository;
         }
 
         public void DeleteRecordsByPlayerId(int id)
         {
             var playersToBeDeleted = new List<PlayerRecord> { playerRecordsRepository.GetPlayerRecordById(id) };
             DeleteMatchResultsByPlayerId(id);
-            DeleteGameLogsByPlayerId(id);
             playerRecordsRepository.RemoveRange(playersToBeDeleted);
             playerRecordsRepository.SaveContext();
-        }
-
-        private void DeleteGameLogsByPlayerId(int id)
-        {
-            gameLogRepository.RemoveRange(gameLogRepository.GetAll().Where(gameLog => gameLog.Player1.Id == id || gameLog.Player2.Id == id));
-            gameLogRepository.SaveContext();
         }
 
         private void DeleteMatchResultsByPlayerId(int id)

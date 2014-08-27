@@ -1,4 +1,4 @@
-﻿namespace Battleships.Core.Models
+﻿namespace Battleships.Runner.Models
 {
     public enum ResultType
     {

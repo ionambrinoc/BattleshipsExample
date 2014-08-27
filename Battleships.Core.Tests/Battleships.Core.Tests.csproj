@@ -80,7 +80,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\LeagueRecordsRepositoryTests.cs" />
     <Compile Include="Repositories\MatchResultsRepositoryTests.cs" />
-    <Compile Include="Repositories\GameLogRepositoryTests.cs" />
     <Compile Include="Repositories\PlayerRecordsRepositoryTests.cs" />
     <Compile Include="Repositories\RepositoryTests.cs" />
     <Compile Include="TestHelpers\Attributes\RequiresDatabaseAttribute.cs" />
