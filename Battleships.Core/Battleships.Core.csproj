@@ -114,6 +114,10 @@
     <Compile Include="Migrations\201408191128017_AddLeagueRecord.Designer.cs">
       <DependentUpon>201408191128017_AddLeagueRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201408261519417_RemoveDuplicateOldMatchResults.cs" />
+    <Compile Include="Migrations\201408261519417_RemoveDuplicateOldMatchResults.Designer.cs">
+      <DependentUpon>201408261519417_RemoveDuplicateOldMatchResults.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LeagueRecord.cs" />
     <Compile Include="Models\MatchResult.cs" />
@@ -171,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201408191128017_AddLeagueRecord.resx">
       <DependentUpon>201408191128017_AddLeagueRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201408261519417_RemoveDuplicateOldMatchResults.resx">
+      <DependentUpon>201408261519417_RemoveDuplicateOldMatchResults.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
