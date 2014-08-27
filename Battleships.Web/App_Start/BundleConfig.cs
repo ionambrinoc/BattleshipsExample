@@ -39,9 +39,6 @@
                 "~/Content/site.less",
                 "~/Components/jquery-ui/themes/smoothness/jquery-ui.css"));
 
-            bundles.Add(new CustomStyleBundle("~/bundles/styles/matchresults/index").Include(
-                "~/Content/MatchResults/index.less"));
-
             bundles.Add(new CustomStyleBundle("~/bundles/styles/players").Include(
                 "~/Content/Players/index.less"));
 

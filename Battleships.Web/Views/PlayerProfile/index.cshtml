@@ -1,80 +1,93 @@
 ﻿@using System.Configuration
 @using Battleships.Core.Models
-@using Battleships.Web.Services
 @model PlayerRecord
 
 @{
     ViewBag.Title = Model.Name;
 }
 @if (Model.PictureFileName != null) {
-    <img class="PlayerPicture" src="@Url.Content(Path.Combine("../..", ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], Model.PictureFileName))">
-    }
-    @Styles.Render("~/bundles/styles/profile")
-    @Scripts.Render("~/bundles/scripts/playerprofile/index")
+    <img id="PlayerPicture" src="@Url.Content(Path.Combine("../..", ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], Model.PictureFileName))">
+}
+@Styles.Render("~/bundles/styles/profile")
 
-    <h3>Player Records:</h3>
-    <p> Creator: @Model.User.UserName <br/> Last updated: @Model.LastUpdated<br />Player Id: @Model.Id </p>
+<h3>Player Records:</h3>
+<p>
+    <b>Creator:&nbsp;</b>@Model.User.UserName<br>
+    <b>Last updated:&nbsp;</b>@Model.LastUpdated
+</p>
 
-    @if (Model.User.UserName == User.Identity.Name)
-    {
-        <a href="@Url.Content("~/PlayerStore/" + Model.Name + ".dll")" class="btn" style="background-color:#DDDDDD; text-decoration:none; color:black">Download</a>
-    }
+@if (Model.User.UserName == User.Identity.Name) {
+    <a href="@Url.Content("~/PlayerStore/" + Model.Name + ".dll")" class="btn btn-primary" id="downloadPlayerButton">Download</a>
+}
+else {
+    <br/>
+    <br/>
+}
 
-    <h3>Matches Won: @Model.WonMatchResults.Count</h3>
+<h3>Matches Won: @Model.WonMatchResults.Count</h3>
 
-    <table class="table table-striped table-bordered">
-        <thead>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Against</th>
+            <th>Score</th>
+            <th>Time Played</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var matchResult in Model.WonMatchResults) {
             <tr>
-                <th>Against</th>
-                <th>Score</th>
-                <th>Time Played</th>
+                <td>@Html.ActionLink(matchResult.Loser.Name, MVC.PlayerProfile.Index(matchResult.LoserId))</td>
+                <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
+                <td>@matchResult.TimePlayed</td>
             </tr>
-        </thead>
+        }
+    </tbody>
+</table>
 
-        <tbody>
-            @foreach (var matchResult in Model.WonMatchResults) {
-                <tr class="tableContent">
-                    <td>@Html.ActionLink(matchResult.Loser.Name, MVC.PlayerProfile.Index(matchResult.LoserId))</td>
-                    <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
-                    <td>@matchResult.TimePlayed</td>
-                </tr>
-            }
-        </tbody>
-
-    </table>
-
-    <h3>Matches Lost: @Model.LostMatchResults.Count</h3>
+<h3>Matches Lost: @Model.LostMatchResults.Count</h3>
 
 
-    <table class="table table-striped table-bordered">
-        <thead>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Against</th>
+            <th>Score</th>
+            <th>Time Played</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var matchResult in Model.LostMatchResults) {
             <tr>
-                <th>Against</th>
-                <th>Score</th>
-                <th>Time Played</th>
+                <td>@Html.ActionLink(matchResult.Winner.Name, MVC.PlayerProfile.Index(matchResult.WinnerId))</td>
+                <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
+                <td>@matchResult.TimePlayed</td>
             </tr>
-        </thead>
+        }
+    </tbody>
+</table>
 
-        <tbody>
-            @foreach (var matchResult in Model.LostMatchResults) {
-                <tr class="tableContent">
-                    <td>@Html.ActionLink(matchResult.Winner.Name, MVC.PlayerProfile.Index(matchResult.WinnerId))</td>
-                    <td>@matchResult.WinnerWins - @matchResult.LoserWins</td>
-                    <td>@matchResult.TimePlayed</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    @using (Html.BeginForm(MVC.ManagePlayers.DeletePlayer(Model.Id), FormMethod.Post)) {
-        @Html.Hidden("playerId", Model.Id)
-        <input class="btn" id="submit" type="submit" value="Delete Player" style="float: right; margin-bottom: 20px" />
-    }
+@if (Model.User.UserName == User.Identity.Name) {
+    <button class="btn btn-default" id="deletePlayerButton" data-toggle="modal" data-target="#deletePlayerModal">Delete Player</button>
+    <div class="modal fade" id="deletePlayerModal" tabindex="-1" role="dialog" aria-labelledby="deletePlayerLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="deletePlayerLabel">Confirm delete</h4>
+                </div>
+                <div class="modal-body">All the player's properties and match records will be deleted. This will be permanent. Are you sure?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="float: left">No</button>
+                    @using (Html.BeginForm(MVC.ManagePlayers.DeletePlayer(Model.Id), FormMethod.Post)) {
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
-    @section scripts{
-        @Scripts.Render("~/bundles/scripts/playerprofile/index")
-        <script type="text/javascript">
-            $(function() {
-                battleships.playerprofile.index.init();
-            });
-        </script>
-    }
+    
