@@ -87,7 +87,7 @@
 
             //When
             var view = controller.Index() as ViewResult;
-            Assert.That(!view.Equals(null));
+            Assert.NotNull(view);
             var model = view.ViewData.Model.As<List<PlayerStats>>();
             //Then
             Assert.That(model.Equals(expectedLeaderboard));
