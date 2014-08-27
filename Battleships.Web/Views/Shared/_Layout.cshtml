@@ -52,7 +52,7 @@
             </div>
         </div>
         @if (TempData.HasPopup()) {
-            <div id="PopupBanner">
+            <div id="PopupBanner" class="@TempData[PopupHelper.PopupClass]">
                 @TempData[PopupHelper.PopupKey]
             </div>
         }
