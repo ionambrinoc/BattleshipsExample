@@ -55,7 +55,7 @@
 
             if (updatedPlayers.Count == 0)
             {
-                TempData.AddPopup("Couldn't run league because no players have been updated since the last league. Please update or upload players and try again.", "alert-warning");
+                TempData.AddPopup("Couldn't run league because no players have been updated since the last league. Please update or upload players and try again.", PopupType.Warning);
             }
 
             leagueRecordsRepository.AddLeague(leagueStartTime);

@@ -35,6 +35,7 @@
         private IMatchResultsRepository fakeMatchResultsRepository;
         private IBattleshipsPlayerRepository fakeBattleshipsPlayerRepository;
         private ILeagueRecordsRepository fakeLeagueRecordsRepository;
+        private IBattleshipsBot fakeBattleshipsBot;
 
         [SetUp]
         public void SetUp()
@@ -47,6 +48,8 @@
             fakeLeagueRecordsRepository = A.Fake<ILeagueRecordsRepository>();
 
             controller = new LeagueController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepository, fakeLeagueRunner, fakeLeaderboardFactory, fakeMatchResultsRepository, fakeLeagueRecordsRepository);
+
+            fakeBattleshipsBot = A.Fake<IBattleshipsBot>();
 
             playerRecordOne = A.Fake<PlayerRecord>();
             playerRecordTwo = A.Fake<PlayerRecord>();
@@ -97,8 +100,6 @@
             playerRecordOne.LastUpdated = earlierDate;
             playerRecordTwo.LastUpdated = laterDate;
 
-            var fakeBattleshipsBot = A.Fake<IBattleshipsBot>();
-
             var playerOne = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordOne);
             var playerTwo = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordTwo);
 
@@ -126,10 +127,8 @@
         public void Running_league_without_updated_players_gives_popup()
         {
             //Given
-            playerRecordOne.LastUpdated = middleDate;
+            playerRecordOne.LastUpdated = laterDate;
             playerRecordTwo.LastUpdated = earlierDate;
-
-            var fakeBattleshipsBot = A.Fake<IBattleshipsBot>();
 
             var playerOne = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordOne);
             var playerTwo = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordTwo);

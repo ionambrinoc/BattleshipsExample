@@ -64,7 +64,7 @@
                 var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.GetUserId(), model.File, model.Picture, uploadedBot.Name);
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
-                TempData.AddPopup("Player Created!", "alert-success");
+                TempData.AddPopup("Player Created!", PopupType.Success);
                 return RedirectToAction(MVC.Players.Index());
             }
 
@@ -84,7 +84,7 @@
             playersUploadService.OverwritePlayer(model);
             playerRecordsRepository.MarkPlayerAsUpdated(model.PlayerName);
             playerRecordsRepository.SaveContext();
-            TempData.AddPopup("Player Updated!", "alert-success");
+            TempData.AddPopup("Player Updated!", PopupType.Success);
             return RedirectToAction(MVC.Players.Index());
         }
 

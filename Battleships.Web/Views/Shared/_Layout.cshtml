@@ -52,8 +52,9 @@
             </div>
         </div>
         @if (TempData.HasPopup()) {
-            <div id="PopupBanner" class="@TempData[PopupHelper.PopupClass]">
-                @TempData[PopupHelper.PopupKey]
+            var popup = TempData.GetPopup();
+            <div id="PopupBanner" class="@popup.CssClass">
+                @popup.Message
             </div>
         }
         <div class="container body-content">
