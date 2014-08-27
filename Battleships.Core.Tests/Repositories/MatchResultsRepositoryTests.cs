@@ -38,7 +38,7 @@
         public void Will_overwrite_result_if_players_already_played_each_other()
         {
             // Given
-            repo.Add(CreateMatchResult(player1, player2, earlierDate));
+            repo.UpdateResults(new List<MatchResult> { CreateMatchResult(player1, player2, earlierDate) });
             repo.SaveContext();
 
             // When
@@ -56,7 +56,7 @@
         public void Will_add_result_if_players_have_not_played_each_other()
         {
             // Given
-            repo.Add(CreateMatchResult(player1, player2, earlierDate));
+            repo.UpdateResults(new List<MatchResult> { CreateMatchResult(player1, player2, earlierDate) });
             repo.SaveContext();
 
             // When
@@ -72,9 +72,12 @@
         public void Displays_results_between_all_players()
         {
             // Given
-            repo.Add(CreateMatchResult(player1, player2, earlierDate));
-            repo.Add(CreateMatchResult(player1, player3, earlierDate));
-            repo.Add(CreateMatchResult(player2, player3, earlierDate));
+            repo.UpdateResults(new List<MatchResult>
+                               {
+                                   CreateMatchResult(player1, player2, earlierDate),
+                                   CreateMatchResult(player1, player3, earlierDate),
+                                   CreateMatchResult(player2, player3, earlierDate)
+                               });
             repo.SaveContext();
 
             // When
@@ -86,6 +89,17 @@
             // Then
             matchResults1.Count().Should().Be(1);
             matchResults2.Count().Should().Be(3);
+        }
+
+        [Test]
+        public void Inherited_method_Add_throws_exception()
+        {
+            // When
+            Action action = () => repo.Add(CreateMatchResult(player1, player2, earlierDate));
+
+            // Then
+            action.ShouldThrow<InvalidOperationException>().WithMessage(
+                "The 'Add' method for MatchResultsRepository can lead to duplicate entries and should not be used. Use 'UpdateResults' instead.");
         }
 
         private PlayerRecord CreatePlayer(string name)

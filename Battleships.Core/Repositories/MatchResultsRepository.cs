@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Core.Repositories
 {
     using Battleships.Core.Models;
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
@@ -27,6 +28,11 @@
             return playerIdsSet.SelectMany(x => playerIdsSet.Where(y => y > x), FindResultBetween);
         }
 
+        public override void Add(MatchResult entity)
+        {
+            throw new InvalidOperationException("The 'Add' method for MatchResultsRepository can lead to duplicate entries and should not be used. Use 'UpdateResults' instead.");
+        }
+
         private MatchResult FindResultBetween(int firstPlayerId, int secondPlayerId)
         {
             return Entities.Single(result => (result.WinnerId == firstPlayerId && result.LoserId == secondPlayerId) || (result.WinnerId == secondPlayerId && result.LoserId == firstPlayerId));
@@ -34,7 +40,7 @@
 
         private bool TryUpdateResult(MatchResult newResult)
         {
-            foreach (var existingResult in Entities.AsEnumerable().Where(entity => entity.SamePlayers(newResult)))
+            foreach (var existingResult in Entities.AsEnumerable().Where(entity => entity.HasSamePlayersAs(newResult)))
             {
                 existingResult.CopyFrom(newResult);
                 return true;

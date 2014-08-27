@@ -29,7 +29,7 @@
             return Entities;
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             Entities.Add(entity);
         }
