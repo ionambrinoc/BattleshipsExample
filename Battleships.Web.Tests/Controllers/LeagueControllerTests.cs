@@ -7,12 +7,15 @@
     using Battleships.Runner.Runners;
     using Battleships.Web.Controllers;
     using Battleships.Web.Factories;
+    using Battleships.Web.Helper;
     using Battleships.Web.Models.League;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
+    using FluentAssertions;
     using NUnit.Framework;
     using System;
     using System.Collections.Generic;
+    using System.Web.Mvc;
 
     [TestFixture]
     public class LeagueControllerTests
@@ -53,7 +56,7 @@
         }
 
         [Test]
-        public void Latest_League_Results_returns_json_results()
+        public void Index_returns_expected_leaderboard()
         {
             //Given
 
@@ -80,9 +83,10 @@
             A.CallTo(() => fakeLeaderboardFactory.GenerateLeaderboard(A<List<MatchResult>>.That.IsSameSequenceAs(matchResults))).Returns(expectedLeaderboard);
 
             //When
-            var result = controller.LatestLeagueResults();
+            var index = controller.Index() as ViewResult;
+            var result = index.ViewData.Model.As<List<PlayerStats>>();
             //Then
-            Assert.That(result, IsMVC.Json(expectedLeaderboard));
+            Assert.That(result.Equals(expectedLeaderboard));
         }
 
         [Test]
@@ -109,6 +113,43 @@
             // Then
             A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>.That.Contains(playerOne), A<List<IBattleshipsPlayer>>.That.Contains(playerTwo), NumberOfRounds)).MustHaveHappened();
             A.CallTo(() => fakeLeagueRunner.GetLeagueResults(A<List<IBattleshipsPlayer>>.That.Contains(playerTwo), A<List<IBattleshipsPlayer>>.That.Not.Contains(playerOne), NumberOfRounds)).MustHaveHappened();
+        }
+
+        [Test]
+        public void Run_League_Redirects_To_Index()
+        {
+            //Given
+
+            //When
+            var result = controller.RunLeague();
+
+            //Then
+            Assert.That(result, IsMVC.RedirectTo(MVC.League.Index()));
+        }
+
+        [Test]
+        public void Running_league_without_updated_players_gives_popup()
+        {
+            //Given
+            playerRecordOne.LastUpdated = middleDate;
+            playerRecordTwo.LastUpdated = earlierDate;
+
+            var fakeBattleshipsBot = A.Fake<IBattleshipsBot>();
+
+            var playerOne = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordOne);
+            var playerTwo = new BattleshipsPlayer(fakeBattleshipsBot, playerRecordTwo);
+
+            A.CallTo(() => fakePlayerRecordsRepository.GetAll()).Returns(new List<PlayerRecord> { playerRecordOne, playerRecordTwo });
+
+            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordOne)).Returns(playerOne);
+            A.CallTo(() => fakeBattleshipsPlayerRepository.GetBattleshipsPlayerFromPlayerRecord(playerRecordTwo)).Returns(playerTwo);
+            A.CallTo(() => fakeLeagueRecordsRepository.GetLatestLeagueTime()).Returns(middleDate);
+
+            //When
+            controller.RunLeague();
+
+            //Then
+            controller.TempData.HasPopup();
         }
 
         private MatchResult SetUpMatchResult(PlayerRecord winner, PlayerRecord loser, DateTime timePlayed)
