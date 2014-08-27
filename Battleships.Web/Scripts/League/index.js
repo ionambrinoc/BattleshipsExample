@@ -22,10 +22,9 @@ window.battleships.league.index = (function($, undefined) {
         $(this).next().toggle();
     }
 
-
     return {
         init: function() {
-            $('.player').on('click', togglePlayerStats);
+            $('.player').click(togglePlayerStats);
             resetGame();
             $('#runLeagueButton').click(startLeague);
         }
