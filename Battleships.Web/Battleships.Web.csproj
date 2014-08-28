@@ -391,6 +391,7 @@
     <Content Include="Content\Home\index.less" />
     <Content Include="Content\Shared\popup.less" />
     <Content Include="Content\PlayerProfile\index.less" />
+    <Content Include="PlayerStore\ProfilePicture\.create-folder" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <Content Include="Samples\Battleships.ExamplePlayer.zip" />
     <None Include="T4MVC.tt.settings.xml" />
