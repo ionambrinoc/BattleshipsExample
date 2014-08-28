@@ -1,4 +1,4 @@
-﻿namespace Battleships.Web.Models.AddPlayer
+﻿namespace Battleships.Web.Models.PlayerProfile
 {
     using Battleships.Core.Models;
     using Battleships.Web.Services;

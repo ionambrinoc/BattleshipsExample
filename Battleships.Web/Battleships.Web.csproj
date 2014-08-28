@@ -232,7 +232,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AddPlayer\AddPlayerModel.cs" />
-    <Compile Include="Models\AddPlayer\PlayerRecordViewModel.cs" />
+    <Compile Include="Models\PlayerProfile\PlayerRecordViewModel.cs" />
     <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
     <Compile Include="Models\League\RoundStats.cs" />
     <Compile Include="Models\League\PlayerStats.cs" />

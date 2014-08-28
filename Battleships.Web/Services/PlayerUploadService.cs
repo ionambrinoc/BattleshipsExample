@@ -19,16 +19,18 @@
 
     public class PlayerUploadService : IPlayerUploadService
     {
+        private static readonly string PlayerStoreDirectoryPath = "../../" + ConfigurationManager.AppSettings["PlayerStoreDirectory"];
+        private static readonly string PlayerProfilePictureStoreDirectoryPath = "../../" + ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"];
         private readonly BotLoader botLoader = new BotLoader();
 
         public static string GenerateFullDownloadPicturePath(string pictureName)
         {
-            return Path.Combine("../..", ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], pictureName);
+            return Path.Combine(PlayerProfilePictureStoreDirectoryPath, pictureName);
         }
 
         public static string GenerateFullDownloadBotPath(string playerName)
         {
-            return Path.Combine("../..", ConfigurationManager.AppSettings["PlayerStoreDirectory"], playerName + ".dll");
+            return Path.Combine(PlayerStoreDirectoryPath, playerName + ".dll");
         }
 
         public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName)

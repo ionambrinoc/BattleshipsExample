@@ -1,7 +1,7 @@
 ﻿namespace Battleships.Web.Controllers
 {
     using Battleships.Core.Repositories;
-    using Battleships.Web.Models.AddPlayer;
+    using Battleships.Web.Models.PlayerProfile;
     using Battleships.Web.Services;
     using System.Web.Mvc;
 
