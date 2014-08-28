@@ -78,8 +78,8 @@ namespace Battleships.Web.Controllers
         {
             public readonly string LogOff = "LogOff";
             public readonly string LogIn = "LogIn";
-            public readonly string Register = "Register";
             public readonly string ChangePassword = "ChangePassword";
+            public readonly string Register = "Register";
             public readonly string IsUserNameAvailable = "IsUserNameAvailable";
         }
 
@@ -88,8 +88,8 @@ namespace Battleships.Web.Controllers
         {
             public const string LogOff = "LogOff";
             public const string LogIn = "LogIn";
-            public const string Register = "Register";
             public const string ChangePassword = "ChangePassword";
+            public const string Register = "Register";
             public const string IsUserNameAvailable = "IsUserNameAvailable";
         }
 
@@ -186,17 +186,6 @@ namespace Battleships.Web.Controllers
         }
 
         [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Register()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
-            RegisterOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
         partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
@@ -216,6 +205,17 @@ namespace Battleships.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             ChangePasswordOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Register()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+            RegisterOverride(callInfo);
             return callInfo;
         }
 

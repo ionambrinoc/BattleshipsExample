@@ -2,6 +2,7 @@
 {
     using Battleships.Core.Models;
     using Battleships.Web.Controllers;
+    using Battleships.Web.Helper;
     using Battleships.Web.Models.Account;
     using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
@@ -56,8 +57,7 @@
         {
             // Given
             var model = new LogInViewModel();
-            controller.ModelState.Add("testError", new ModelState());
-            controller.ModelState.AddModelError("testError", "test");
+            AddModelErrorToController();
 
             // When
             var result = controller.LogIn(model);
@@ -73,6 +73,7 @@
             var model = new LogInViewModel();
             var user = new User();
             var identity = new ClaimsIdentity();
+
             A.CallTo(() => userService.Find(model.Name, model.Password)).Returns(user);
             A.CallTo(() => userService.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie)).Returns(identity);
 
@@ -97,6 +98,60 @@
             // Then
             Assert.That(controller, HasMVC.ModelLevelErrors());
             Assert.That(result, IsMVC.View(MVC.Account.Views.Login));
+        }
+
+        [Test]
+        public void ChangePassword_returns_change_password_view()
+        {
+            // When
+            var result = controller.ChangePassword();
+
+            // Then
+            Assert.That(result, IsMVC.View(MVC.Account.Views.ChangePassword));
+        }
+
+        [Test]
+        public void Successful_password_change_redirects_to_home_and_has_popup()
+        {
+            // Given
+            var model = new ChangePasswordViewModel();
+            PasswordChangeUserSetup(IdentityResult.Success, model);
+            // When
+            var result = controller.ChangePassword(model);
+
+            // Then
+            Assert.That(result, IsMVC.RedirectTo(MVC.Home.Index()));
+            Assert.That(controller.TempData.HasPopup());
+        }
+
+        [Test]
+        public void Unsuccessful_password_change_returns_same_view_and_has_popup()
+        {
+            //Given
+            var model = new ChangePasswordViewModel();
+            PasswordChangeUserSetup(IdentityResult.Failed(), model);
+
+            // When
+            var result = controller.ChangePassword(model);
+
+            // Then
+            Assert.That(result, IsMVC.View(MVC.Account.Views.ChangePassword));
+            Assert.That(controller.TempData.HasPopup());
+        }
+
+        [Test]
+        public void Password_change_with_invalid_model_returns_change_password_view()
+        {
+            // Given
+            var model = new ChangePasswordViewModel();
+
+            AddModelErrorToController();
+
+            // When
+            var result = controller.ChangePassword(model);
+
+            // Then
+            Assert.That(result, IsMVC.View(MVC.Account.Views.ChangePassword));
         }
 
         [Test]
@@ -165,8 +220,7 @@
         {
             // Given
             var model = new CreateAccountViewModel();
-            controller.ModelState.Add("testError", new ModelState());
-            controller.ModelState.AddModelError("testError", "test");
+            AddModelErrorToController();
 
             // When
             var result = controller.Register(model);
@@ -201,6 +255,19 @@
             // Then
             Assert.That(result, IsMVC.Json(String.Format("Username {0} is already taken", UserName)));
             result.JsonRequestBehavior.Should().Be(JsonRequestBehavior.AllowGet);
+        }
+
+        private void AddModelErrorToController()
+        {
+            controller.ModelState.Add("testError", new ModelState());
+            controller.ModelState.AddModelError("testError", "test");
+        }
+
+        private void PasswordChangeUserSetup(IdentityResult result, ChangePasswordViewModel model)
+        {
+            var userId = new User().Id;
+            A.CallTo(() => authenticationManager.User.Identity).Returns(new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, userId) }));
+            A.CallTo(() => userService.ChangePassword(userId, model.CurrentPassword, model.NewPassword)).Returns(result);
         }
     }
 }

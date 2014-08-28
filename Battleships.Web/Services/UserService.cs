@@ -4,13 +4,12 @@
     using Microsoft.AspNet.Identity;
     using System.Diagnostics.CodeAnalysis;
     using System.Security.Claims;
-    using System.Threading.Tasks;
 
     public interface IUserService
     {
         IdentityResult AddUser(string userName, string password);
 
-        Task<IdentityResult> ChangePassword(string userName, string currentPassword, string newPassword);
+        IdentityResult ChangePassword(string userName, string currentPassword, string newPassword);
 
         User Find(string userName, string password);
 
@@ -34,15 +33,18 @@
             return userManager.Create(new User { UserName = userName }, password);
         }
 
-        public Task<IdentityResult> ChangePassword(string userId, string currentPassword, string newPassword)
+        public IdentityResult ChangePassword(string userId, string currentPassword, string newPassword)
         {
-            return userManager.ChangePasswordAsync(userId, currentPassword, newPassword);
+            var result = userManager.ChangePasswordAsync(userId, currentPassword, newPassword).Result;
+            return result;
         }
 
-        /*    public Task<IdentityResult> ResetPassword(string userName)
+        public IdentityResult ResetPassword(string userName, string token, string newPassword)
         {
-            return userManager.ResetPasswordAsync(userName, token, newPassword);
-        }*/
+            var userId = userManager.FindByName(userName).Id;
+            var result = userManager.ResetPasswordAsync(userId, token, newPassword).Result;
+            return result;
+        }
 
         public User Find(string userName, string password)
         {
