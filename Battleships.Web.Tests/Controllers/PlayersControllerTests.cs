@@ -1,20 +1,14 @@
 ﻿namespace Battleships.Web.Tests.Controllers
 {
-    using Battleships.Core.Models;
     using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Runner.Models;
     using Battleships.Runner.Runners;
     using Battleships.Web.Controllers;
-    using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Tests.TestHelpers;
-    using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
 
     [TestFixture]
@@ -40,20 +34,6 @@
             fakeBattleshipsPlayerRepo = A.Fake<IBattleshipsPlayerRepository>();
             fakeHeadToHeadRunner = A.Fake<IHeadToHeadRunner>();
             controller = new PlayersController(fakePlayerRecordsRepository, fakeBattleshipsPlayerRepo, fakeHeadToHeadRunner);
-        }
-
-        [Test]
-        public void Index_view_converts_all_player_records_to_player_record_view_models()
-        {
-            // Given
-            A.CallTo(() => fakePlayerRecordsRepository.GetAll()).Returns(new List<PlayerRecord> { new PlayerRecord(), new PlayerRecord() });
-
-            // When
-            var result = controller.Index();
-
-            // Then
-            Assert.That(result, IsMVC.View(String.Empty));
-            controller.ViewData.Model.As<IEnumerable<PlayerRecordViewModel>>().Count().Should().Be(2);
         }
 
         [Test]

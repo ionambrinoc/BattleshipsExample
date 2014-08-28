@@ -3,7 +3,6 @@
     using Battleships.Core.Repositories;
     using Battleships.Player.Tests.TestHelpers;
     using Battleships.Web.Controllers;
-    using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
@@ -15,18 +14,15 @@
     [TestFixture]
     public class ManagePlayersControllerTests
     {
-        private const int TestPlayerId = 1;
         private ManagePlayersController controller;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
-        private IPlayerUploadService fakePlayerUploadService;
 
         [SetUp]
         public void SetUp()
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
-            fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
-            controller = new ManagePlayersController(fakePlayerRecordsRepository, fakePlayerUploadService) { ControllerContext = GetFakeControllerContext() };
+            controller = new ManagePlayersController(fakePlayerRecordsRepository) { ControllerContext = GetFakeControllerContext() };
         }
 
         [Test]
@@ -37,20 +33,6 @@
 
             // Then
             Assert.That(result, IsMVC.View(""));
-        }
-
-        [Test]
-        public void Successful_player_delete_redirect_to_manageplayers_index()
-        {
-            // Given
-            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(TestPlayerId)).DoesNothing();
-
-            // When
-            var result = controller.DeletePlayer(TestPlayerId);
-
-            // Then
-            A.CallTo(() => fakePlayerRecordsRepository.DeletePlayerRecordById(TestPlayerId)).MustHaveHappened();
-            Assert.That(result, IsMVC.RedirectTo(MVC.ManagePlayers.Index()));
         }
 
         private ControllerContext GetFakeControllerContext()

@@ -42,9 +42,6 @@
                 "~/Components/jquery-ui/themes/smoothness/jquery-ui.css",
                 "~/Content/Shared/popup.less"));
 
-            bundles.Add(new CustomStyleBundle("~/bundles/styles/matchresults/index").Include(
-                "~/Content/MatchResults/index.less"));
-
             bundles.Add(new CustomStyleBundle("~/bundles/styles/players").Include(
                 "~/Content/Players/index.less"));
 
@@ -59,6 +56,9 @@
 
             bundles.Add(new CustomStyleBundle("~/bundles/styles/index").Include(
                 "~/Content/Home/index.less"));
+
+            bundles.Add(new CustomStyleBundle("~/bundles/styles/profile").Include(
+                "~/Content/PlayerProfile/index.less"));
         }
     }
 }

@@ -5,6 +5,7 @@
     using Battleships.Player.Interface;
     using Battleships.Web.Models.AddPlayer;
     using System;
+    using System.Configuration;
     using System.IO;
     using System.Web;
 
@@ -19,6 +20,18 @@
     public class PlayerUploadService : IPlayerUploadService
     {
         private readonly IBotLoader botLoader = new BotLoader();
+        private static readonly string PlayerStoreDirectoryPath = "../../" + ConfigurationManager.AppSettings["PlayerStoreDirectory"];
+        private static readonly string PlayerProfilePictureStoreDirectoryPath = "../../" + ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"];
+
+        public static string GenerateFullDownloadPicturePath(string pictureName)
+        {
+            return Path.Combine(PlayerProfilePictureStoreDirectoryPath, pictureName);
+        }
+
+        public static string GenerateFullDownloadBotPath(string playerName)
+        {
+            return Path.Combine(PlayerStoreDirectoryPath, playerName + ".dll");
+        }
 
         public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName)
         {
@@ -38,7 +51,7 @@
 
         public void DeletePlayer(string playerName, string pictureFileName)
         {
-            File.Delete(GenerateFullPath(playerName));
+            File.Delete(GenerateFullBotPath(playerName));
             if (pictureFileName != null)
             {
                 File.Delete(GenerateFullPicturePath(pictureFileName));
@@ -47,23 +60,14 @@
 
         public void OverwritePlayer(AddPlayerModel model)
         {
-            var realPath = GenerateFullPath(model.PlayerName);
+            var realPath = GenerateFullBotPath(model.PlayerName);
             File.Delete(realPath);
             File.Move(model.TemporaryPath, realPath);
         }
 
-        private static string GenerateFullPath(string playerName)
+        private static string GenerateFullBotPath(string playerName)
         {
             return Path.Combine(GetUploadDirectoryPath(), playerName + ".dll");
-        }
-
-        private static string GenerateFullPicturePath(string pictureName)
-        {
-            if (pictureName != null)
-            {
-                return Path.Combine(GetPictureUploadDirectoryPath(), pictureName);
-            }
-            return null;
         }
 
         private static string GetUploadDirectoryPath()
@@ -74,6 +78,15 @@
         private static string GetPictureUploadDirectoryPath()
         {
             return DirectoryPath.GetFromAppSettings("PlayerProfilePictureStoreDirectory");
+        }
+
+        private string GenerateFullPicturePath(string pictureName)
+        {
+            if (pictureName != null)
+            {
+                return Path.Combine(GetPictureUploadDirectoryPath(), pictureName);
+            }
+            return null;
         }
 
         private string GetPictureName(HttpPostedFileBase picture, IBattleshipsBot battleshipsPlayer)
@@ -97,7 +110,7 @@
 
         private IBattleshipsBot SaveAndReturnPlayer(HttpPostedFileBase file, string playerName)
         {
-            var fullPath = GenerateFullPath(playerName);
+            var fullPath = GenerateFullBotPath(playerName);
             file.SaveAs(fullPath);
             return botLoader.LoadBotFromFullPath(fullPath);
         }

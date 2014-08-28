@@ -9,21 +9,23 @@
 
 <br/>
 <table class=" table table-striped" id="playerTable">
-    <tr>
-        <th>Player Name</th>
-        <th>Last Updated</th>
-        <th></th>
-    </tr>
+    <thead>
+        <tr>
+            <th>Player Name</th>
+            <th>Last Updated</th>
+            <th id="WinHeader">Wins&nbsp;&nbsp;-</th>
+            <th id="LossHeader">&nbsp;&nbsp;Losses</th>
+        </tr>
+    </thead>
+
     @foreach (var player in Model) {
         <tr>
-            <td>@player.Name</td>
-            <td>@player.LastUpdated</td>
-            <td class ="td-align">
-                @using (Html.BeginForm(MVC.ManagePlayers.DeletePlayer(), FormMethod.Post)) {
-                    @Html.Hidden("playerId", player.Id)
-                    <input class="btn" id="submit" type="submit" value="Delete" />
-                }
+            <td>
+                @Html.ActionLink(player.Name, MVC.PlayerProfile.Index(player.Id))
             </td>
+            <td>@player.LastUpdated</td>
+            <td id="WinCell">@player.WonMatchResults.Count&nbsp;&nbsp;-</td>
+            <td id="LossCell">&nbsp;&nbsp;@player.LostMatchResults.Count</td>
         </tr>
     }
 </table>
