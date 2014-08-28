@@ -63,7 +63,7 @@
     <Compile Include="BotLoaderTests.cs" />
     <Compile Include="ShipTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestHelpers\ProjectDirectory.cs" />
+    <Compile Include="TestHelpers\TestDirectory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

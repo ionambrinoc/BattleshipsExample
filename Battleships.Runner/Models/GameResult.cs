@@ -1,6 +1,5 @@
 ﻿namespace Battleships.Runner.Models
 {
-    using Battleships.Core.Models;
     using Battleships.Player;
 
     public class GameResult

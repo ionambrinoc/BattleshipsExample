@@ -4,7 +4,7 @@
     using NUnit.Framework;
     using System.IO;
 
-    public static class ProjectDirectory
+    public static class TestDirectory
     {
         private const string PlayerStoreDirectoryName = "TestPlayerStore";
 

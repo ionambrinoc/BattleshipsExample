@@ -16,7 +16,7 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = ProjectDirectory.TestPlayerStore;
+            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestDirectory.TestPlayerStore;
         }
 
         [SetUp]

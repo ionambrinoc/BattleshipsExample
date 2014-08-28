@@ -5,7 +5,6 @@ namespace Battleships.Runner.Runners
     using Battleships.Runner.Models;
     using JsonPrettyPrinterPlus;
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Web.Script.Serialization;
 
@@ -18,7 +17,7 @@ namespace Battleships.Runner.Runners
 
     public class Logger : ILogger
     {
-        private int logNumber;
+        private int currentLogNumber;
 
         public Logger(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
@@ -34,9 +33,7 @@ namespace Battleships.Runner.Runners
 
         public void StartGame()
         {
-            var detailedLog = new List<GameEvent>();
-
-            CurrentLog = new GameLog(++logNumber, PlayerOne, PlayerTwo, PlayerOne.GetShipPositions(), PlayerTwo.GetShipPositions(), detailedLog);
+            CurrentLog = new GameLog(++currentLogNumber, PlayerOne, PlayerTwo);
         }
 
         public void AddGameEvent(bool isPlayerOneTurn, IGridSquare target, bool defendingIsHit)
@@ -50,7 +47,7 @@ namespace Battleships.Runner.Runners
 
             var json = new JavaScriptSerializer().Serialize(CurrentLog).PrettyPrintJson();
 
-            File.WriteAllText(CurrentLog.GetPath(LogFilePrefix, logNumber), json);
+            File.WriteAllText(CurrentLog.GetPath(LogFilePrefix, currentLogNumber), json);
         }
     }
 }

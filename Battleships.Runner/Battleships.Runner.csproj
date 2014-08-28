@@ -65,7 +65,6 @@
     <Compile Include="Models\GameEvent.cs" />
     <Compile Include="Models\GameLog.cs" />
     <Compile Include="Models\ResultType.cs" />
-    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Runners\HeadToHeadRunner.cs" />
     <Compile Include="Factories\MatchScoreBoardFactory.cs" />
     <Compile Include="Runners\LeagueRunner.cs" />

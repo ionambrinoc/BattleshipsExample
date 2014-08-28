@@ -19,14 +19,14 @@
         private readonly IBattleshipsPlayer playerOne;
         private readonly IBattleshipsPlayer playerTwo;
 
-        public GameLog(int gameNumber, IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, IEnumerable<IShipPosition> playerOneShipPositions, IEnumerable<IShipPosition> playerTwoShipPositions, ICollection<GameEvent> detailedLog)
+        public GameLog(int gameNumber, IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo)
         {
             GameNumber = gameNumber;
             this.playerOne = playerOne;
             this.playerTwo = playerTwo;
-            Player1Positions = playerOneShipPositions;
-            Player2Positions = playerTwoShipPositions;
-            DetailedLog = detailedLog;
+            Player1Positions = playerOne.GetShipPositions();
+            Player2Positions = playerTwo.GetShipPositions();
+            DetailedLog = new List<GameEvent>();
         }
 
         // Included in JSON serialization for log files
@@ -45,7 +45,7 @@
 
         public int GameNumber { get; set; }
         public bool Player1Won { get; set; }
-        public ResultType ResultType { get; set; }
+        public string ResultTypeString { get; set; }
         public IEnumerable<IShipPosition> Player1Positions { get; set; }
         public IEnumerable<IShipPosition> Player2Positions { get; set; }
         public ICollection<GameEvent> DetailedLog { get; set; }
@@ -64,7 +64,7 @@
 
         public void AddResults(GameResult gameResult)
         {
-            ResultType = gameResult.ResultType;
+            ResultTypeString = Enum.GetName(typeof(ResultType), gameResult.ResultType);
             Player1Won = gameResult.Winner == playerOne;
         }
 

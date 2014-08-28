@@ -17,7 +17,7 @@
     [TestFixture]
     public class LeagueControllerTests
     {
-        private const int NumberOfRounds = 100;
+        private const int NumberOfRounds = 101;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
         private ILeagueRunner fakeLeagueRunner;
         private ILeaderboardFactory fakeLeaderboardFactory;
