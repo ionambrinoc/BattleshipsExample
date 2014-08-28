@@ -114,29 +114,27 @@
         public void Successful_password_change_redirects_to_home_and_has_popup()
         {
             // Given
-            var model = new ChangePasswordViewModel();
-            PasswordChangeUserSetup(IdentityResult.Success, model);
+            var model = SetupChangePasswordTestAndGetModel(IdentityResult.Success);
             // When
             var result = controller.ChangePassword(model);
 
             // Then
             Assert.That(result, IsMVC.RedirectTo(MVC.Home.Index()));
-            Assert.That(controller.TempData.HasPopup());
+            Assert.That(controller.TempData.GetPopup().CssClass == "alert-success");
         }
 
         [Test]
         public void Unsuccessful_password_change_returns_same_view_and_has_popup()
         {
             //Given
-            var model = new ChangePasswordViewModel();
-            PasswordChangeUserSetup(IdentityResult.Failed(), model);
+            var model = SetupChangePasswordTestAndGetModel(IdentityResult.Failed());
 
             // When
             var result = controller.ChangePassword(model);
 
             // Then
             Assert.That(result, IsMVC.View(MVC.Account.Views.ChangePassword));
-            Assert.That(controller.TempData.HasPopup());
+            Assert.That(controller.TempData.GetPopup().CssClass == "alert-danger");
         }
 
         [Test]
@@ -144,7 +142,6 @@
         {
             // Given
             var model = new ChangePasswordViewModel();
-
             AddModelErrorToController();
 
             // When
@@ -211,6 +208,7 @@
             var result = controller.Register(model);
 
             // Then
+            Assert.That(controller.TempData.GetPopup().CssClass == "alert-danger");
             Assert.That(controller, HasMVC.ModelLevelErrors());
             Assert.That(result, IsMVC.View(MVC.Account.Views.Register));
         }
@@ -263,11 +261,13 @@
             controller.ModelState.AddModelError("testError", "test");
         }
 
-        private void PasswordChangeUserSetup(IdentityResult result, ChangePasswordViewModel model)
+        private ChangePasswordViewModel SetupChangePasswordTestAndGetModel(IdentityResult result)
         {
+            var model = new ChangePasswordViewModel();
             var userId = new User().Id;
             A.CallTo(() => authenticationManager.User.Identity).Returns(new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, userId) }));
             A.CallTo(() => userService.ChangePassword(userId, model.CurrentPassword, model.NewPassword)).Returns(result);
+            return model;
         }
     }
 }

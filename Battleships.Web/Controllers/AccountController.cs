@@ -61,7 +61,6 @@
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public virtual ActionResult ChangePassword(ChangePasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -70,7 +69,7 @@
                 var result = userService.ChangePassword(userId, model.CurrentPassword, model.NewPassword);
                 if (!result.Succeeded)
                 {
-                    ModelState.AddModelError("", result.Errors.FirstOrDefault());
+                    ModelState.AddModelError("", String.Join("; ", result.Errors));
                     TempData.AddPopup("Couldn't change password.", PopupType.Danger);
                     return View(Views.ChangePassword);
                 }

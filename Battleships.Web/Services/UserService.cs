@@ -35,15 +35,7 @@
 
         public IdentityResult ChangePassword(string userId, string currentPassword, string newPassword)
         {
-            var result = userManager.ChangePasswordAsync(userId, currentPassword, newPassword).Result;
-            return result;
-        }
-
-        public IdentityResult ResetPassword(string userName, string token, string newPassword)
-        {
-            var userId = userManager.FindByName(userName).Id;
-            var result = userManager.ResetPasswordAsync(userId, token, newPassword).Result;
-            return result;
+            return userManager.ChangePasswordAsync(userId, currentPassword, newPassword).Result;
         }
 
         public User Find(string userName, string password)
