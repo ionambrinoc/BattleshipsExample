@@ -56,6 +56,12 @@ namespace Battleships.Web.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ChangePassword()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.JsonResult IsUserNameAvailable()
         {
             return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsUserNameAvailable);
@@ -101,6 +107,14 @@ namespace Battleships.Web.Controllers
         public ActionParamsClass_LogIn LogInParams { get { return s_params_LogIn; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_LogIn
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_ChangePassword s_params_ChangePassword = new ActionParamsClass_ChangePassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ChangePassword ChangePasswordParams { get { return s_params_ChangePassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ChangePassword
         {
             public readonly string model = "model";
         }
@@ -202,13 +216,14 @@ namespace Battleships.Web.Controllers
         }
 
         [NonAction]
-        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.Account.ChangePasswordViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult ChangePassword()
+        public override System.Web.Mvc.ActionResult ChangePassword(Battleships.Web.Models.Account.ChangePasswordViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
-            ChangePasswordOverride(callInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            ChangePasswordOverride(callInfo, model);
             return callInfo;
         }
 

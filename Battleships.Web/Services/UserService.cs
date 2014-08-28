@@ -10,6 +10,8 @@
     {
         IdentityResult AddUser(string userName, string password);
 
+        Task<IdentityResult> ChangePassword(string userName, string currentPassword, string newPassword);
+
         User Find(string userName, string password);
 
         ClaimsIdentity CreateIdentity(User user, string authenticationType);
