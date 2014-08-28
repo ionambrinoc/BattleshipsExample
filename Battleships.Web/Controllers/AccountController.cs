@@ -72,7 +72,7 @@
         {
             if (ModelState.IsValid)
             {
-                var result = userService.ChangePassword(authenticationManager.User.Identity.GetUserName(), model.CurrentPassword, model.NewPassword);
+                var result = userService.ChangePassword(authenticationManager.User.Identity.GetUserId(), model.CurrentPassword, model.NewPassword);
                 if (!result.Result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Result.Errors.FirstOrDefault());

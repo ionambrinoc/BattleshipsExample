@@ -34,9 +34,9 @@
             return userManager.Create(new User { UserName = userName }, password);
         }
 
-        public Task<IdentityResult> ChangePassword(string userName, string currentPassword, string newPassword)
+        public Task<IdentityResult> ChangePassword(string userId, string currentPassword, string newPassword)
         {
-            return userManager.ChangePasswordAsync(userName, currentPassword, newPassword);
+            return userManager.ChangePasswordAsync(userId, currentPassword, newPassword);
         }
 
         /*    public Task<IdentityResult> ResetPassword(string userName)
