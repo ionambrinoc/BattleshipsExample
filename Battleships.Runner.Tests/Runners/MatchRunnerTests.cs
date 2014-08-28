@@ -23,7 +23,6 @@
         private PlayerRecord winnerPlayerRecord;
         private PlayerRecord loserPlayerRecord;
         private IMatchScoreBoard matchScoreBoard;
-        private ILogger fakeLogger;
 
         [SetUp]
         public void SetUp()
@@ -42,8 +41,6 @@
             matchScoreBoardFactory = A.Fake<IMatchScoreBoardFactory>();
             matchScoreBoard = A.Fake<IMatchScoreBoard>();
             A.CallTo(() => matchScoreBoardFactory.GetMatchScoreBoard(playerOne, playerTwo)).Returns(matchScoreBoard);
-
-            fakeLogger = A.Fake<ILogger>();
 
             A.CallTo(() => matchScoreBoard.IsDraw()).Returns(false);
 
