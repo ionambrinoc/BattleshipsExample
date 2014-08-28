@@ -24,7 +24,7 @@
         [SetUp]
         public void SetUp()
         {
-            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
+            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = ProjectDirectory.TestPlayerStore;
             fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerDeletionService = A.Fake<IPlayerDeletionService>();

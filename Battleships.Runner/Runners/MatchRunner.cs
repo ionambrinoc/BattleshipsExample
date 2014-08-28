@@ -7,7 +7,7 @@
 
     public interface IMatchRunner
     {
-        MatchResult GetMatchResult(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, int numberOfRounds = 100);
+        MatchResult GetMatchResult(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, int numberOfRounds);
     }
 
     public class MatchRunner : IMatchRunner
@@ -21,7 +21,7 @@
             this.matchScoreBoardFactory = matchScoreBoardFactory;
         }
 
-        public MatchResult GetMatchResult(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, int numberOfRounds = 100)
+        public MatchResult GetMatchResult(IBattleshipsPlayer playerOne, IBattleshipsPlayer playerTwo, int numberOfRounds)
         {
             var logger = new Logger(playerOne, playerTwo);
 
@@ -42,8 +42,6 @@
             {
                 matchScoreBoard.IncrementPlayerWins(headToHeadRunner.FindWinner(playerOne, playerTwo, logger).Winner);
             }
-
-            logger.CreateTextFile();
 
             return new MatchResult
                    {

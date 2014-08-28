@@ -4,20 +4,22 @@
     using NUnit.Framework;
     using System.IO;
 
-    public static class TestPlayerStore
+    public static class ProjectDirectory
     {
-        private const string DirectoryName = "TestPlayerStore";
+        private const string PlayerStoreDirectoryName = "TestPlayerStore";
 
-        public static string Directory
+        public static string TestPlayerStore
+        {
+            get { return Path.Combine(Root, PlayerStoreDirectoryName); }
+        }
+
+        public static string Root
         {
             get
             {
-                var projectDirectory = NCrunchEnvironment.NCrunchIsResident() ?
+                return NCrunchEnvironment.NCrunchIsResident() ?
                     Path.GetDirectoryName(NCrunchEnvironment.GetOriginalProjectPath()) :
                     Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..");
-
-                // ReSharper disable once AssignNullToNotNullAttribute
-                return Path.Combine(projectDirectory, DirectoryName);
             }
         }
     }

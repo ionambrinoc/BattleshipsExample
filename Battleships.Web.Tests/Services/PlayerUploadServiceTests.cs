@@ -19,7 +19,7 @@
         public void SetUp()
         {
             playerUploadService = new PlayerUploadService();
-            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
+            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = ProjectDirectory.TestPlayerStore;
         }
 
         [Test]
@@ -28,7 +28,7 @@
             // Given
             var tempPath = Path.GetTempFileName();
             File.WriteAllText(tempPath, TempFileContent);
-            var realPath = Path.Combine(TestPlayerStore.Directory, TestFileName);
+            var realPath = Path.Combine(ProjectDirectory.TestPlayerStore, TestFileName);
             var fileStream = File.Create(realPath);
             fileStream.Close();
 

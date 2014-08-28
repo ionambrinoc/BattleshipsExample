@@ -34,8 +34,8 @@
         [SetUp]
         public void SetUp()
         {
-            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestPlayerStore.Directory;
-            ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"] = TestPlayerStore.Directory;
+            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = ProjectDirectory.TestPlayerStore;
+            ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"] = ProjectDirectory.TestPlayerStore;
             fakePlayerRecordRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             controller = new AddPlayerController(fakePlayerRecordRepository, fakePlayerUploadService) { ControllerContext = GetFakeControllerContext() };

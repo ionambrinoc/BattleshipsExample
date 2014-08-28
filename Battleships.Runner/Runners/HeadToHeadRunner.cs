@@ -26,19 +26,19 @@
             {
                 var playerOneShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerOne);
                 var playerTwoShipsPlacement = shipsPlacementFactory.GetShipsPlacement(playerTwo);
-                logger.NewGameLog();
+                logger.StartGame();
 
                 if (!playerOneShipsPlacement.IsValid())
                 {
                     var gameResult = new GameResult(playerTwo, ResultType.ShipPositionsInvalid);
-                    logger.AddGameResult(gameResult);
+                    logger.CompleteGame(gameResult);
                     return gameResult;
                 }
 
                 if (!playerTwoShipsPlacement.IsValid())
                 {
                     var gameResult = new GameResult(playerOne, ResultType.ShipPositionsInvalid);
-                    logger.AddGameResult(gameResult);
+                    logger.CompleteGame(gameResult);
                     return gameResult;
                 }
 
@@ -50,7 +50,7 @@
                     if (playerTwoShipsPlacement.AllHit())
                     {
                         var gameResult = new GameResult(playerOne, ResultType.Default);
-                        logger.AddGameResult(gameResult);
+                        logger.CompleteGame(gameResult);
                         return gameResult;
                     }
 
@@ -60,7 +60,7 @@
                     if (playerOneShipsPlacement.AllHit())
                     {
                         var gameResult = new GameResult(playerTwo, ResultType.Default);
-                        logger.AddGameResult(gameResult);
+                        logger.CompleteGame(gameResult);
                         return gameResult;
                     }
                 }
@@ -68,13 +68,13 @@
             catch (OutOfTimeException e)
             {
                 var gameResult = new GameResult(e.Winner, ResultType.Timeout);
-                logger.AddGameResult(gameResult);
+                logger.CompleteGame(gameResult);
                 return gameResult;
             }
             catch (BotException e)
             {
                 var gameResult = new GameResult(e.Player == playerOne ? playerTwo : playerOne, ResultType.OpponentThrewException);
-                logger.AddGameResult(gameResult);
+                logger.CompleteGame(gameResult);
                 return gameResult;
             }
         }

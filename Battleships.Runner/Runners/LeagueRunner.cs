@@ -7,7 +7,7 @@
 
     public interface ILeagueRunner
     {
-        List<MatchResult> GetLeagueResults(List<IBattleshipsPlayer> players, IEnumerable<IBattleshipsPlayer> updatedPlayers, int numberOfRounds = 100);
+        List<MatchResult> GetLeagueResults(List<IBattleshipsPlayer> players, IEnumerable<IBattleshipsPlayer> updatedPlayers, int numberOfRounds = 101);
     }
 
     public class LeagueRunner : ILeagueRunner
@@ -19,7 +19,7 @@
             this.matchRunner = matchRunner;
         }
 
-        public List<MatchResult> GetLeagueResults(List<IBattleshipsPlayer> players, IEnumerable<IBattleshipsPlayer> updatedPlayers, int numberOfRounds = 100)
+        public List<MatchResult> GetLeagueResults(List<IBattleshipsPlayer> players, IEnumerable<IBattleshipsPlayer> updatedPlayers, int numberOfRounds = 101)
         {
             var results = new List<MatchResult>();
             foreach (var recentlyUpdatedPlayer in updatedPlayers)

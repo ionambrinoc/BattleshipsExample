@@ -63,6 +63,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -96,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Runners\HeadToHeadRunnerTests.cs" />
     <Compile Include="Runners\LeagueRunnerTests.cs" />
+    <Compile Include="Runners\LoggerTests.cs" />
     <Compile Include="Runners\MatchRunnerTests.cs" />
     <Compile Include="Models\MatchScoreBoardTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,6 +118,10 @@
     <ProjectReference Include="..\Battleships.Player.Interface\Battleships.Player.Interface.csproj">
       <Project>{E12D571A-3135-4D8D-A590-816BC9B02AEA}</Project>
       <Name>Battleships.Player.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battleships.Player.Tests\Battleships.Player.Tests.csproj">
+      <Project>{4A1701C7-1E01-4998-9E29-00C201ECF7D3}</Project>
+      <Name>Battleships.Player.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\Battleships.Player\Battleships.Player.csproj">
       <Project>{59E0E326-4953-4D40-A556-70E29F9172B4}</Project>
