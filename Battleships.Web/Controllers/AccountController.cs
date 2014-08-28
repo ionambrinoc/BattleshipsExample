@@ -61,9 +61,9 @@
         }
 
         [HttpGet]
-        public virtual ActionResult ChangePasswordPage()
+        public virtual ActionResult ChangePassword()
         {
-            return View(Views.ChangePasswordPage);
+            return View(Views.ChangePassword);
         }
 
         [HttpPost]
@@ -72,16 +72,17 @@
         {
             if (ModelState.IsValid)
             {
-                var result = userService.ChangePassword(authenticationManager.User.Identity.GetUserId(), model.CurrentPassword, model.NewPassword);
-                if (!result.Result.Succeeded)
+                var userId = authenticationManager.User.Identity.GetUserId();
+                var result = userService.ChangePassword(userId, model.CurrentPassword, model.NewPassword).Result;
+                if (!result.Succeeded)
                 {
-                    ModelState.AddModelError("", result.Result.Errors.FirstOrDefault());
+                    ModelState.AddModelError("", result.Errors.FirstOrDefault());
                     TempData.AddPopup("Couldn't change password.", PopupType.Danger);
-                    return View(Views.ChangePasswordPage);
+                    return View(Views.ChangePassword);
                 }
             }
             TempData.AddPopup("Password successfully changed!", PopupType.Success);
-            return View(Views.ChangePasswordPage);
+            return RedirectToAction(MVC.Home.Index());
         }
 
         [HttpPost]
@@ -93,6 +94,7 @@
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.FirstOrDefault());
+                    TempData.AddPopup("Couldn't register user.", PopupType.Danger);
                     return View(Views.Register);
                 }
 
