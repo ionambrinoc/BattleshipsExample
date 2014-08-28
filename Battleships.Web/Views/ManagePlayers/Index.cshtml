@@ -21,7 +21,7 @@
     @foreach (var player in Model) {
         <tr>
             <td>
-                @Html.ActionLink(player.Name, MVC.ManagePlayers.ClickPlayer(player.Id))
+                @Html.ActionLink(player.Name, MVC.PlayerProfile.Index(player.Id))
             </td>
             <td>@player.LastUpdated</td>
             <td id="WinCell">@player.WonMatchResults.Count&nbsp;&nbsp;-</td>

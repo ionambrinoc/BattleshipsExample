@@ -1,8 +1,9 @@
 ﻿namespace Battleships.Web.Models.AddPlayer
 {
     using Battleships.Core.Models;
-    using System.Configuration;
-    using System.IO;
+    using Battleships.Web.Services;
+    using System;
+    using System.Collections.Generic;
 
     public class PlayerRecordViewModel
     {
@@ -35,14 +36,32 @@
 
         public string PictureFileName
         {
-            get
-            {
-                if (playerRecord.PictureFileName != null)
-                {
-                    return Path.Combine(ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], playerRecord.PictureFileName);
-                }
-                return null;
-            }
+            get { return playerRecord.PictureFileName; }
+        }
+
+        public DateTime LastUpdated
+        {
+            get { return playerRecord.LastUpdated; }
+        }
+
+        public virtual ICollection<MatchResult> WonMatchResults
+        {
+            get { return playerRecord.WonMatchResults; }
+        }
+
+        public virtual ICollection<MatchResult> LostMatchResults
+        {
+            get { return playerRecord.LostMatchResults; }
+        }
+
+        public string PictureFilePath
+        {
+            get { return PlayerUploadService.GenerateFullDownloadPicturePath(PictureFileName); }
+        }
+
+        public string BotDownloadPath
+        {
+            get { return PlayerUploadService.GenerateFullDownloadBotPath(Name); }
         }
     }
 }

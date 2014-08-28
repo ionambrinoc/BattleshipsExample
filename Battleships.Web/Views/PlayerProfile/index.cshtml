@@ -1,12 +1,11 @@
-﻿@using System.Configuration
-@using Battleships.Core.Models
-@model PlayerRecord
+﻿@using Battleships.Web.Models.AddPlayer
+@model PlayerRecordViewModel
 
 @{
     ViewBag.Title = Model.Name;
 }
 @if (Model.PictureFileName != null) {
-    <img id="PlayerPicture" src="@Url.Content(Path.Combine("../..", ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"], Model.PictureFileName))">
+    <img id="PlayerPicture" src="@Model.PictureFilePath">
 }
 @Styles.Render("~/bundles/styles/profile")
 
@@ -16,13 +15,7 @@
     <b>Last updated:&nbsp;</b>@Model.LastUpdated
 </p>
 
-@if (Model.User.UserName == User.Identity.Name) {
-    <a href="@Url.Content("~/PlayerStore/" + Model.Name + ".dll")" class="btn btn-primary" id="downloadPlayerButton">Download</a>
-}
-else {
-    <br/>
-    <br/>
-}
+<a href="@Model.BotDownloadPath" class="btn btn-primary" id="downloadPlayerButton">Download</a>
 
 <h3>Matches Won: @Model.WonMatchResults.Count</h3>
 
@@ -81,7 +74,7 @@ else {
                 <div class="modal-body">All the player's properties and match records will be deleted. This will be permanent. Are you sure?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" style="float: left">No</button>
-                    @using (Html.BeginForm(MVC.ManagePlayers.DeletePlayer(Model.Id), FormMethod.Post)) {
+                    @using (Html.BeginForm(MVC.PlayerProfile.DeletePlayer(Model.Id), FormMethod.Post)) {
                         <button type="submit" class="btn btn-danger">Yes</button>
                     }
                 </div>
@@ -89,5 +82,11 @@ else {
         </div>
     </div>
 }
+
+
+
+
+
+
 
     

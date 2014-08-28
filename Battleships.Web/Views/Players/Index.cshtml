@@ -1,5 +1,5 @@
-﻿@using Battleships.Web.Models.AddPlayer
-@model IEnumerable<PlayerRecordViewModel>
+﻿@using Battleships.Core.Models
+@model IEnumerable<PlayerRecord>
 
 @{
     ViewBag.Title = "Players";
@@ -40,12 +40,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var player in Model)
-        {
+        @foreach (var player in Model) {
             <tr>
                 <td>@player.User.UserName</td>
                 <td>
-                    @Html.ActionLink(player.Name, MVC.ManagePlayers.ClickPlayer(player.Id))
+                    @Html.ActionLink(player.Name, MVC.PlayerProfile.Index(player.Id))
                 </td>
                 <td>
                     <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">
