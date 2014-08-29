@@ -9,6 +9,8 @@
     {
         IdentityResult AddUser(string userName, string password);
 
+        IdentityResult ChangePassword(string userName, string currentPassword, string newPassword);
+
         User Find(string userName, string password);
 
         ClaimsIdentity CreateIdentity(User user, string authenticationType);
@@ -29,6 +31,11 @@
         public IdentityResult AddUser(string userName, string password)
         {
             return userManager.Create(new User { UserName = userName }, password);
+        }
+
+        public IdentityResult ChangePassword(string userId, string currentPassword, string newPassword)
+        {
+            return userManager.ChangePasswordAsync(userId, currentPassword, newPassword).Result;
         }
 
         public User Find(string userName, string password)

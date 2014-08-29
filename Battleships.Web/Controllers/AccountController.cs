@@ -1,6 +1,7 @@
 ﻿namespace Battleships.Web.Controllers
 {
     using Battleships.Core.Models;
+    using Battleships.Web.Helper;
     using Battleships.Web.Models.Account;
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
@@ -54,6 +55,31 @@
         }
 
         [HttpGet]
+        public virtual ActionResult ChangePassword()
+        {
+            return View(Views.ChangePassword);
+        }
+
+        [HttpPost]
+        public virtual ActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = authenticationManager.User.Identity.GetUserId();
+                var result = userService.ChangePassword(userId, model.CurrentPassword, model.NewPassword);
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", String.Join("; ", result.Errors));
+                    TempData.AddPopup("Couldn't change password.", PopupType.Danger);
+                    return View(Views.ChangePassword);
+                }
+                TempData.AddPopup("Password successfully changed!", PopupType.Success);
+                return RedirectToAction(MVC.Home.Index());
+            }
+            return View(Views.ChangePassword);
+        }
+
+        [HttpGet]
         public virtual ActionResult Register()
         {
             return View(Views.Register);
@@ -68,6 +94,7 @@
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.FirstOrDefault());
+                    TempData.AddPopup("Couldn't register user.", PopupType.Danger);
                     return View(Views.Register);
                 }
 

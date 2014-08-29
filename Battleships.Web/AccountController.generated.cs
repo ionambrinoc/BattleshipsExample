@@ -78,6 +78,7 @@ namespace Battleships.Web.Controllers
         {
             public readonly string LogOff = "LogOff";
             public readonly string LogIn = "LogIn";
+            public readonly string ChangePassword = "ChangePassword";
             public readonly string Register = "Register";
             public readonly string IsUserNameAvailable = "IsUserNameAvailable";
         }
@@ -87,6 +88,7 @@ namespace Battleships.Web.Controllers
         {
             public const string LogOff = "LogOff";
             public const string LogIn = "LogIn";
+            public const string ChangePassword = "ChangePassword";
             public const string Register = "Register";
             public const string IsUserNameAvailable = "IsUserNameAvailable";
         }
@@ -97,6 +99,14 @@ namespace Battleships.Web.Controllers
         public ActionParamsClass_LogIn LogInParams { get { return s_params_LogIn; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_LogIn
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_ChangePassword s_params_ChangePassword = new ActionParamsClass_ChangePassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ChangePassword ChangePasswordParams { get { return s_params_ChangePassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ChangePassword
         {
             public readonly string model = "model";
         }
@@ -126,9 +136,11 @@ namespace Battleships.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string ChangePassword = "ChangePassword";
                 public readonly string Login = "Login";
                 public readonly string Register = "Register";
             }
+            public readonly string ChangePassword = "~/Views/Account/ChangePassword.cshtml";
             public readonly string Login = "~/Views/Account/Login.cshtml";
             public readonly string Register = "~/Views/Account/Register.cshtml";
         }
@@ -170,6 +182,29 @@ namespace Battleships.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogIn);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             LogInOverride(callInfo, model);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ChangePassword()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
+            ChangePasswordOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Battleships.Web.Models.Account.ChangePasswordViewModel model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ChangePassword(Battleships.Web.Models.Account.ChangePasswordViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            ChangePasswordOverride(callInfo, model);
             return callInfo;
         }
 
