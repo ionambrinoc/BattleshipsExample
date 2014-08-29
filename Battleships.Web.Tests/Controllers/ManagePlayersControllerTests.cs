@@ -16,15 +16,13 @@
     {
         private ManagePlayersController controller;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
-        private IPlayerDeletionService fakePlayerDeletionService;
 
         [SetUp]
         public void SetUp()
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestDirectory.TestPlayerStore;
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
-            fakePlayerDeletionService = A.Fake<IPlayerDeletionService>();
-            controller = new ManagePlayersController(fakePlayerRecordsRepository, fakePlayerUploadService, fakePlayerDeletionService) { ControllerContext = GetFakeControllerContext() };
+            controller = new ManagePlayersController(fakePlayerRecordsRepository) { ControllerContext = GetFakeControllerContext() };
         }
 
         [Test]
@@ -35,20 +33,6 @@
 
             // Then
             Assert.That(result, IsMVC.View(""));
-        }
-
-        [Test]
-        public void Successful_player_delete_redirect_to_manageplayers_index()
-        {
-            // Given
-            A.CallTo(() => fakePlayerDeletionService.DeleteRecordsByPlayerId(TestPlayerId)).DoesNothing();
-
-            // When
-            var result = controller.DeletePlayer(TestPlayerId);
-
-            // Then
-            A.CallTo(() => fakePlayerDeletionService.DeleteRecordsByPlayerId(TestPlayerId)).MustHaveHappened();
-            Assert.That(result, IsMVC.RedirectTo(MVC.ManagePlayers.Index()));
         }
 
         private ControllerContext GetFakeControllerContext()

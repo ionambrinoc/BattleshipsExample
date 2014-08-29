@@ -5,6 +5,7 @@
         Default,
         Timeout,
         ShipPositionsInvalid,
-        OpponentThrewException
+        OpponentThrewException,
+        ShotOffBoard
     };
 }

@@ -108,7 +108,7 @@ namespace Battleships.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_DeletePlayer
         {
-            public readonly string id = "id";
+            public readonly string playerId = "playerId";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -144,14 +144,14 @@ namespace Battleships.Web.Controllers
         }
 
         [NonAction]
-        partial void DeletePlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+        partial void DeletePlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int playerId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult DeletePlayer(int id)
+        public override System.Web.Mvc.ActionResult DeletePlayer(int playerId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeletePlayer);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            DeletePlayerOverride(callInfo, id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "playerId", playerId);
+            DeletePlayerOverride(callInfo, playerId);
             return callInfo;
         }
 

@@ -8,9 +8,13 @@
     public interface IPlayerRecordsRepository : IRepository<PlayerRecord>
     {
         PlayerRecord GetPlayerRecordById(int id);
+
         bool PlayerNameExists(string botName);
+
         bool PlayerNameExistsForUser(string botName, string userId);
+
         IEnumerable<PlayerRecord> GetAllForUserId(string userId);
+
         void MarkPlayerAsUpdated(string playerName);
     };
 
@@ -31,7 +35,7 @@
 
         public bool PlayerNameExists(string playerName)
         {
-            return Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName) != null;
+            return GetByPlayerName(playerName) != null;
         }
 
         public bool PlayerNameExistsForUser(string playerName, string userId)
@@ -43,7 +47,10 @@
         {
             return GetAll().Where(playerRecord => playerRecord.UserId == userId);
         }
+
+        private PlayerRecord GetByPlayerName(string playerName)
+        {
+            return Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName);
         }
-    }
     }
 }

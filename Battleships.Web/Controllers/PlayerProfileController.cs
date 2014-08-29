@@ -9,11 +9,13 @@
     {
         private readonly IPlayerRecordsRepository playerRecordsRepository;
         private readonly IPlayerUploadService playerUploadService;
+        private readonly IPlayerDeletionService playerDeletionService;
 
-        public PlayerProfileController(IPlayerRecordsRepository playerRecordsRepository, IPlayerUploadService playerUploadService)
+        public PlayerProfileController(IPlayerRecordsRepository playerRecordsRepository, IPlayerUploadService playerUploadService, IPlayerDeletionService playerDeletionService)
         {
             this.playerRecordsRepository = playerRecordsRepository;
             this.playerUploadService = playerUploadService;
+            this.playerDeletionService = playerDeletionService;
         }
 
         [HttpGet]
@@ -23,11 +25,11 @@
         }
 
         [HttpPost]
-        public virtual ActionResult DeletePlayer(int id)
+        public virtual ActionResult DeletePlayer(int playerId)
         {
-            var player = playerRecordsRepository.GetPlayerRecordById(id);
-            playerRecordsRepository.DeletePlayerRecordById(id);
+            var player = playerRecordsRepository.GetPlayerRecordById(playerId);
             playerUploadService.DeletePlayer(player.Name, player.PictureFileName);
+            playerDeletionService.DeleteRecordsByPlayerId(playerId);
             return RedirectToAction(MVC.ManagePlayers.Index());
         }
     }
