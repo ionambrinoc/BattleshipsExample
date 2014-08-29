@@ -6,7 +6,9 @@
     public interface IRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
+
         void Add(T entity);
+
         void SaveContext();
     }
 
@@ -37,11 +39,6 @@
         public void SaveContext()
         {
             context.SaveChanges();
-        }
-
-        public void RemoveRange(IEnumerable<T> range)
-        {
-            Entities.RemoveRange(range);
         }
     }
 }

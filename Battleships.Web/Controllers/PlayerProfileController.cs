@@ -8,13 +8,11 @@
     public partial class PlayerProfileController : Controller
     {
         private readonly IPlayerRecordsRepository playerRecordsRepository;
-        private readonly IPlayerUploadService playerUploadService;
         private readonly IPlayerDeletionService playerDeletionService;
 
-        public PlayerProfileController(IPlayerRecordsRepository playerRecordsRepository, IPlayerUploadService playerUploadService, IPlayerDeletionService playerDeletionService)
+        public PlayerProfileController(IPlayerRecordsRepository playerRecordsRepository, IPlayerDeletionService playerDeletionService)
         {
             this.playerRecordsRepository = playerRecordsRepository;
-            this.playerUploadService = playerUploadService;
             this.playerDeletionService = playerDeletionService;
         }
 
@@ -27,8 +25,6 @@
         [HttpPost]
         public virtual ActionResult DeletePlayer(int playerId)
         {
-            var player = playerRecordsRepository.GetPlayerRecordById(playerId);
-            playerUploadService.DeletePlayer(player.Name, player.PictureFileName);
             playerDeletionService.DeleteRecordsByPlayerId(playerId);
             return RedirectToAction(MVC.ManagePlayers.Index());
         }

@@ -9,7 +9,8 @@
     public interface IMatchResultsRepository : IRepository<MatchResult>
     {
         void UpdateResults(IEnumerable<MatchResult> results);
-        IEnumerable<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds);
+
+        void DeleteAllForPlayerId(int id);
     }
 
     public class MatchResultsRepository : Repository<MatchResult>, IMatchResultsRepository
@@ -22,20 +23,15 @@
             AddResults(newResults);
         }
 
-        public IEnumerable<MatchResult> GetAllMatchResults(IEnumerable<int> playerIds)
+        public void DeleteAllForPlayerId(int id)
         {
-            var playerIdsSet = new HashSet<int>(playerIds);
-            return playerIdsSet.SelectMany(x => playerIdsSet.Where(y => y > x), FindResultBetween);
+            var results = Entities.Where(x => x.WinnerId == id || x.LoserId == id);
+            Entities.RemoveRange(results);
         }
 
         public override void Add(MatchResult entity)
         {
             throw new InvalidOperationException("The 'Add' method for MatchResultsRepository can lead to duplicate entries and should not be used. Use 'UpdateResults' instead.");
-        }
-
-        private MatchResult FindResultBetween(int firstPlayerId, int secondPlayerId)
-        {
-            return Entities.Single(result => (result.WinnerId == firstPlayerId && result.LoserId == secondPlayerId) || (result.WinnerId == secondPlayerId && result.LoserId == firstPlayerId));
         }
 
         private bool TryUpdateResult(MatchResult newResult)

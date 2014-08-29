@@ -48,6 +48,11 @@
             return GetAll().Where(playerRecord => playerRecord.UserId == userId);
         }
 
+        public void Delete(PlayerRecord playerToDelete)
+        {
+            Entities.Remove(playerToDelete);
+        }
+
         private PlayerRecord GetByPlayerName(string playerName)
         {
             return Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName);

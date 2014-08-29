@@ -1,9 +1,6 @@
 ﻿namespace Battleships.Web.Services
 {
-    using Battleships.Core.Models;
     using Battleships.Core.Repositories;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public interface IPlayerDeletionService
     {
@@ -14,25 +11,24 @@
     {
         private readonly PlayerRecordsRepository playerRecordsRepository;
         private readonly MatchResultsRepository matchResultsRepository;
+        private readonly PlayerUploadService playerUploadService;
 
-        public PlayerDeletionService(PlayerRecordsRepository playerRecordsRepository, MatchResultsRepository matchResultsRepository)
+        public PlayerDeletionService(PlayerRecordsRepository playerRecordsRepository, MatchResultsRepository matchResultsRepository, PlayerUploadService playerUploadService)
         {
             this.playerRecordsRepository = playerRecordsRepository;
             this.matchResultsRepository = matchResultsRepository;
+            this.playerUploadService = playerUploadService;
         }
 
         public void DeleteRecordsByPlayerId(int id)
         {
-            var playersToBeDeleted = new List<PlayerRecord> { playerRecordsRepository.GetPlayerRecordById(id) };
-            DeleteMatchResultsByPlayerId(id);
-            playerRecordsRepository.RemoveRange(playersToBeDeleted);
-            playerRecordsRepository.SaveContext();
-        }
+            var playerToDelete = playerRecordsRepository.GetPlayerRecordById(id);
 
-        private void DeleteMatchResultsByPlayerId(int id)
-        {
-            matchResultsRepository.RemoveRange(matchResultsRepository.GetAll().Where(matchResult => matchResult.WinnerId == id || matchResult.LoserId == id));
-            matchResultsRepository.SaveContext();
+            playerUploadService.DeleteFilesForPlayer(playerToDelete.Name, playerToDelete.PictureFileName);
+
+            matchResultsRepository.DeleteAllForPlayerId(id);
+            playerRecordsRepository.Delete(playerToDelete);
+            playerRecordsRepository.SaveContext();
         }
     }
 }

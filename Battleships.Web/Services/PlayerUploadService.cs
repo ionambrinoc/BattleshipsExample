@@ -13,8 +13,10 @@
     {
         PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName);
         IBattleshipsBot LoadBotFromFile(HttpPostedFileBase playerFile);
+
         void OverwritePlayer(AddPlayerModel model);
-        void DeletePlayer(string playerName, string pictureFileName);
+
+        void DeleteFilesForPlayer(string playerName, string pictureFileName);
     }
 
     public class PlayerUploadService : IPlayerUploadService
@@ -49,7 +51,7 @@
             return botLoader.LoadBotFromFullPath(tempPath);
         }
 
-        public void DeletePlayer(string playerName, string pictureFileName)
+        public void DeleteFilesForPlayer(string playerName, string pictureFileName)
         {
             File.Delete(GenerateFullBotPath(playerName));
             if (pictureFileName != null)

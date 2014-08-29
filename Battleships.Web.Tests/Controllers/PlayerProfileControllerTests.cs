@@ -28,7 +28,7 @@
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             fakePlayerDeletionService = A.Fake<IPlayerDeletionService>();
-            controller = new PlayerProfileController(fakePlayerRecordsRepository, fakePlayerUploadService, fakePlayerDeletionService);
+            controller = new PlayerProfileController(fakePlayerRecordsRepository, fakePlayerDeletionService);
         }
 
         [Test]
