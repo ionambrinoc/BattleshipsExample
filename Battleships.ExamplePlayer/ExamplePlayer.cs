@@ -27,7 +27,7 @@
 
         public string Name
         {
-            get { return "Ion's Awesome Player"; }
+            get { return "Ion's Awesomest Player"; }
         }
 
         public int CountGridSquares()
@@ -58,8 +58,8 @@
 
                 while (canNotPlaceShip)
                 {
-                    startCol = direction == Direction.Horizontal ? randomizer.Next(1, 10 - shipLength) : randomizer.Next(1, 10);
-                    startRow = (char)(direction == Direction.Horizontal ? randomizer.Next('A', 'J') : randomizer.Next('A', 'J' - shipLength));
+                    startCol = direction == Direction.Horizontal ? randomizer.Next(1, 9 - shipLength) : randomizer.Next(1, 10);
+                    startRow = (char)(direction == Direction.Horizontal ? randomizer.Next('A', 'J') : randomizer.Next('A', 'I' - shipLength));
 
                     direction = randomizer.Next(0, 2) == 0 ? Direction.Horizontal : Direction.Vertical;
 
