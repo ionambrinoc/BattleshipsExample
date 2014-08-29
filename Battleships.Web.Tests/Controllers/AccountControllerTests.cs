@@ -120,7 +120,7 @@
 
             // Then
             Assert.That(result, IsMVC.RedirectTo(MVC.Home.Index()));
-            Assert.That(controller.TempData.GetPopup().CssClass == "alert-success");
+            Assert.AreEqual(controller.TempData.GetPopup().CssClass, "alert-success");
         }
 
         [Test]
@@ -134,7 +134,7 @@
 
             // Then
             Assert.That(result, IsMVC.View(MVC.Account.Views.ChangePassword));
-            Assert.That(controller.TempData.GetPopup().CssClass == "alert-danger");
+            Assert.AreEqual(controller.TempData.GetPopup().CssClass, "alert-danger");
         }
 
         [Test]
@@ -208,7 +208,7 @@
             var result = controller.Register(model);
 
             // Then
-            Assert.That(controller.TempData.GetPopup().CssClass == "alert-danger");
+            Assert.AreEqual(controller.TempData.GetPopup().CssClass, "alert-danger");
             Assert.That(controller, HasMVC.ModelLevelErrors());
             Assert.That(result, IsMVC.View(MVC.Account.Views.Register));
         }
