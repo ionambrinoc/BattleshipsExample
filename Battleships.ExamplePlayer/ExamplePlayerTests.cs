@@ -26,6 +26,16 @@
         }
 
         [Test]
+        public void Seventeen_ship_tiles_placed()
+        {
+            // When
+            player.GetShipPositions();
+
+            // Then
+            player.CountGridSquares().Should().Be(17);
+        }
+
+        [Test]
         public void Second_square_is_A_2()
         {
             // Given
