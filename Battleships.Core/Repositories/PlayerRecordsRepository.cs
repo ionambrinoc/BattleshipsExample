@@ -11,7 +11,6 @@
         bool PlayerNameExists(string botName);
         bool PlayerNameExistsForUser(string botName, string userId);
         IEnumerable<PlayerRecord> GetAllForUserId(string userId);
-        PlayerRecord GetByPlayerName(string playerName);
         void MarkPlayerAsUpdated(string playerName);
     };
 
@@ -23,11 +22,6 @@
         public PlayerRecord GetPlayerRecordById(int id)
         {
             return Entities.AsQueryable().FirstOrDefault(x => x.Id == id);
-        }
-
-        public PlayerRecord GetByPlayerName(string playerName)
-        {
-            return Entities.AsQueryable().FirstOrDefault(x => x.Name == playerName);
         }
 
         public void MarkPlayerAsUpdated(string playerName)
@@ -49,5 +43,7 @@
         {
             return GetAll().Where(playerRecord => playerRecord.UserId == userId);
         }
+        }
+    }
     }
 }

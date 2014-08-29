@@ -22,13 +22,10 @@
             TimePlayed = otherMatchResult.TimePlayed;
         }
 
-        public bool SamePlayers(MatchResult otherMatchResult)
+        public bool HasSamePlayersAs(MatchResult otherMatchResult)
         {
-            if (Winner.Id != otherMatchResult.Winner.Id && Winner.Id != otherMatchResult.Loser.Id)
-            {
-                return false;
-            }
-            return Loser.Id == otherMatchResult.Winner.Id || Loser.Id == otherMatchResult.Loser.Id;
+            return ((Winner.Id == otherMatchResult.Winner.Id && Loser.Id == otherMatchResult.Loser.Id) ||
+                    (Winner.Id == otherMatchResult.Loser.Id && Loser.Id == otherMatchResult.Winner.Id));
         }
     }
 }

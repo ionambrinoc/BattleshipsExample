@@ -62,6 +62,10 @@
             }
 
             row = (char)(row + 1);
+            if (row > 'J')
+            {
+                row = 'A';
+            }
             col = 1;
             return new GridSquare(row, col);
         }

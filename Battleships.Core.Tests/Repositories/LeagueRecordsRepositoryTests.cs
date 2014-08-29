@@ -25,14 +25,15 @@
         {
             // Given
             var testLeagueTime = new DateTime(2000, 1, 1);
-
-            // When
             repo.AddLeague(testLeagueTime);
             repo.SaveContext();
 
+            // When
+            var firstTime = repo.GetAll().First().StartTime;
+
             // Then
             repo.GetAll().Count().Should().Be(1);
-            repo.GetAll().First().StartTime.Should().Be(testLeagueTime);
+            firstTime.Should().Be(testLeagueTime);
         }
 
         [Test]
@@ -41,25 +42,30 @@
             // Given
             var earlierTime = new DateTime(2000, 1, 1);
             var laterTime = new DateTime(2001, 1, 1);
-
-            // When
             repo.AddLeague(earlierTime);
             repo.AddLeague(laterTime);
             repo.SaveContext();
 
+            // When
+            var latestTime = repo.GetLatestLeagueTime();
+
             // Then
             repo.GetAll().Count().Should().Be(2);
-            repo.GetLatestLeagueTime().Should().Be(laterTime);
+            latestTime.Should().Be(laterTime);
         }
 
         [Test]
         public void Returns_minimum_datetime_when_league_repo_is_empty()
         {
-            // when
+            // Given
             repo.SaveContext();
 
+            // When
+            var latestTime = repo.GetLatestLeagueTime();
+
             // Then
-            repo.GetLatestLeagueTime().Should().Be(DateTime.MinValue);
+            repo.GetAll().Count().Should().Be(0);
+            latestTime.Should().Be(DateTime.MinValue);
         }
     }
 }

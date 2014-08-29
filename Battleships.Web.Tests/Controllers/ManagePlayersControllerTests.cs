@@ -3,7 +3,6 @@
     using Battleships.Core.Repositories;
     using Battleships.Player.Tests.TestHelpers;
     using Battleships.Web.Controllers;
-    using Battleships.Web.Services;
     using Battleships.Web.Tests.TestHelpers.NUnitConstraints;
     using FakeItEasy;
     using NUnit.Framework;
@@ -15,17 +14,14 @@
     [TestFixture]
     public class ManagePlayersControllerTests
     {
-        private const int TestPlayerId = 1;
         private ManagePlayersController controller;
         private IPlayerRecordsRepository fakePlayerRecordsRepository;
-        private IPlayerUploadService fakePlayerUploadService;
         private IPlayerDeletionService fakePlayerDeletionService;
 
         [SetUp]
         public void SetUp()
         {
             ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestDirectory.TestPlayerStore;
-            fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerDeletionService = A.Fake<IPlayerDeletionService>();
             controller = new ManagePlayersController(fakePlayerRecordsRepository, fakePlayerUploadService, fakePlayerDeletionService) { ControllerContext = GetFakeControllerContext() };

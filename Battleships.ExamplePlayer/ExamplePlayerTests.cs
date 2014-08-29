@@ -50,5 +50,18 @@
             // Then
             secondTarget.Should().Be(new GridSquare('B', 1));
         }
+
+        [Test]
+        public void Selects_A_1_when_reaching_end_of_grid()
+        {
+            // Given
+            player.LastTarget = new GridSquare('J', 10);
+
+            // When
+            var secondTarget = player.SelectTarget();
+
+            // Then
+            secondTarget.Should().Be(new GridSquare('A', 1));
+        }
     }
 }

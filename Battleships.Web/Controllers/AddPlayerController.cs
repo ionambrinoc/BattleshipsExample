@@ -3,6 +3,7 @@
     using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Player.Interface;
+    using Battleships.Web.Helper;
     using Battleships.Web.Models.AddPlayer;
     using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
@@ -37,7 +38,7 @@
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
             IBattleshipsBot uploadedBot;
@@ -63,6 +64,7 @@
                 var playerRecord = playersUploadService.UploadAndGetPlayerRecord(User.Identity.GetUserId(), model.File, model.Picture, uploadedBot.Name);
                 playerRecordsRepository.Add(playerRecord);
                 playerRecordsRepository.SaveContext();
+                TempData.AddPopup("Player Created!", PopupType.Success);
                 return RedirectToAction(MVC.Players.Index());
             }
 
@@ -82,6 +84,7 @@
             playersUploadService.OverwritePlayer(model);
             playerRecordsRepository.MarkPlayerAsUpdated(model.PlayerName);
             playerRecordsRepository.SaveContext();
+            TempData.AddPopup("Player Updated!", PopupType.Success);
             return RedirectToAction(MVC.Players.Index());
         }
 

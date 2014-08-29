@@ -1,5 +1,5 @@
-﻿@using Battleships.Web.Models.AddPlayer
-@model IEnumerable<PlayerRecordViewModel>
+﻿@using Battleships.Core.Models
+@model IEnumerable<PlayerRecord>
 
 @{
     ViewBag.Title = "Players";
@@ -32,29 +32,28 @@
 <h3>List of players</h3>
 
 <table class="table table-striped" id="playerTable">
-    <tr>
-        <th>User Name</th>
-        <th>Player Name</th>
-        <th class="text-center actions"></th>
-    </tr>
-    @foreach (var player in Model) {
+    <thead>
         <tr>
-            <td>@player.User.UserName</td>
-            <td>
-                @if (player.PictureFileName != null) {
-                    <a href="@player.PictureFileName">@player.Name</a>
-                }
-                else {
-                    @player.Name
-                }
-            </td>
-            <td>
-                <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">
-                    Add to Game
-                </button>
-            </td>
+            <th>User Name</th>
+            <th>Player Name</th>
+            <th class="text-center actions"></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var player in Model) {
+            <tr>
+                <td>@player.User.UserName</td>
+                <td>
+                    @Html.ActionLink(player.Name, MVC.PlayerProfile.Index(player.Id))
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default" data-player-id="@player.Id" data-player-name="@player.Name">
+                        Add to Game
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @section scripts{

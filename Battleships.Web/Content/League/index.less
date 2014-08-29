@@ -3,6 +3,10 @@
 #leaderboard {
     th {
         text-align: center;
+
+        &#latestLeaderboard {
+            text-align: left
+        }
     }
 
     .player {
@@ -23,8 +27,17 @@
 #gameSetup {
     text-align: center;
     #runLeagueButton {
-        .large;
-        margin-top: 0.5em;
-        width: 55%;
+        font-size: 3em;
+        margin-top: 0.35em;
+        width: 30%;
+        border-radius: 0.28em;
     }
+}
+
+#loading-spinner {
+    display: none;
+}
+
+.leagueMessage {
+    text-align: center;
 }

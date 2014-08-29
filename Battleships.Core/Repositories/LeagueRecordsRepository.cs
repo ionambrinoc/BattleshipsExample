@@ -22,7 +22,7 @@
 
         public DateTime GetLatestLeagueTime()
         {
-            return !Entities.Any() ? DateTime.MinValue : Entities.Max(league => league.StartTime);
+            return Entities.Any() ? Entities.Max(league => league.StartTime) : DateTime.MinValue;
         }
     }
 }

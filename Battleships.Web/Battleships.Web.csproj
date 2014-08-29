@@ -215,9 +215,11 @@
     <Compile Include="Controllers\LeagueController.cs" />
     <Compile Include="Controllers\ManagePlayersController.cs" />
     <Compile Include="Controllers\MatchResultsController.cs" />
+    <Compile Include="Controllers\PlayerProfileController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Helper\PopupHelper.cs" />
     <Compile Include="LeagueController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -234,11 +236,13 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AddPlayer\AddPlayerModel.cs" />
-    <Compile Include="Models\AddPlayer\PlayerRecordViewModel.cs" />
-    <Compile Include="Models\HeadToHead\PlayViewModel.cs" />
+    <Compile Include="Models\PlayerProfile\PlayerRecordViewModel.cs" />
     <Compile Include="Models\League\RoundStats.cs" />
     <Compile Include="Models\League\PlayerStats.cs" />
     <Compile Include="Factories\LeaderboardFactory.cs" />
+    <Compile Include="PlayerProfileController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="PlayersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -274,6 +278,20 @@
     <Content Include="Components\jquery-form\jquery.form.js" />
     <Content Include="Components\jquery-ui\jquery-ui.js" />
     <Content Include="Components\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\animated-overlay.gif" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-icons_222222_256x240.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-icons_454545_256x240.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-icons_888888_256x240.png" />
+    <Content Include="Components\jquery-ui\themes\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Components\jquery-ui\themes\smoothness\jquery-ui.css" />
     <Content Include="Components\jquery-ui\themes\smoothness\jquery-ui.min.css" />
     <Content Include="Components\jquery.validation\dist\additional-methods.js" />
@@ -288,6 +306,24 @@
     <Content Include="Components\respond\dest\respond.matchmedia.addListener.src.js" />
     <Content Include="Components\respond\dest\respond.min.js" />
     <Content Include="Components\respond\dest\respond.src.js" />
+    <Content Include="Content\AddPlayer\AddPlayer.css">
+      <DependentUpon>AddPlayer.less</DependentUpon>
+    </Content>
+    <Content Include="Content\AddPlayer\AddPlayer.min.css">
+      <DependentUpon>AddPlayer.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\Popup.css">
+      <DependentUpon>popup.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\Popup.min.css">
+      <DependentUpon>Popup.css</DependentUpon>
+    </Content>
+    <Content Include="Content\site.css">
+      <DependentUpon>site.less</DependentUpon>
+    </Content>
+    <Content Include="Content\site.min.css">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -297,7 +333,6 @@
     <Content Include="Content\Players\index.less" />
     <Content Include="Content\AddPlayer\AddPlayer.less" />
     <Content Include="Content\ManagePlayers\index.less" />
-    <Content Include="Content\MatchResults\index.less" />
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
@@ -307,6 +342,7 @@
     <Content Include="Images\green-loading-spinner.gif" />
     <Content Include="Images\remove.png" />
     <Content Include="Samples\Battleships.Player.Interface.dll" />
+    <Content Include="Scripts\Shared\index.js" />
     <Content Include="Scripts\HeadToHead\play.js" />
     <Content Include="Scripts\Home\index.js" />
     <Content Include="Scripts\League\index.js" />
@@ -358,9 +394,13 @@
     <Content Include="Content\large.less" />
     <Content Include="Content\Home\index.less" />
     <Content Include="GameLogs\.create-folder" />
+    <Content Include="Content\Shared\popup.less" />
+    <Content Include="Content\PlayerProfile\index.less" />
+    <Content Include="PlayerStore\ProfilePicture\.create-folder" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <Content Include="Samples\Battleships.ExamplePlayer.zip" />
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Scripts\AddPlayer\index.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -387,10 +427,10 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\League\Index.cshtml" />
     <Content Include="Views\ManagePlayers\Index.cshtml" />
+    <Content Include="Views\PlayerProfile\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

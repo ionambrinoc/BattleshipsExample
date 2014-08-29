@@ -1,20 +1,17 @@
 ﻿namespace Battleships.Web.Controllers
 {
     using Battleships.Core.Repositories;
-    using Battleships.Web.Services;
     using Microsoft.AspNet.Identity;
     using System.Web.Mvc;
 
     public partial class ManagePlayersController : Controller
     {
         private readonly IPlayerRecordsRepository playerRecordsRepository;
-        private readonly IPlayerUploadService playerUploadService;
         private readonly IPlayerDeletionService playerDeletionService;
 
         public ManagePlayersController(IPlayerRecordsRepository playerRecordsRepository, IPlayerUploadService playerUploadService, IPlayerDeletionService playerDeletionService)
         {
             this.playerRecordsRepository = playerRecordsRepository;
-            this.playerUploadService = playerUploadService;
             this.playerDeletionService = playerDeletionService;
         }
 

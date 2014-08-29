@@ -120,6 +120,20 @@
             secondWinner.Should().Be(playerTwo);
         }
 
+        [TestCaseSource("Games")]
+        public void Player_loses_on_ShotOffBoard_if_shot_is_off_the_board(int expectedWinner, int expectedLoser)
+        {
+            // Given
+            A.CallTo(() => Player(expectedLoser).SelectTarget()).Throws(new ShotOffBoardException("message", Player(expectedLoser)));
+
+            // When
+            var result = GetResult();
+
+            // Then
+            result.Winner.Should().Be(Player(expectedWinner));
+            result.ResultType.Should().Be(ResultType.ShotOffBoard);
+        }
+
         // ReSharper disable once UnusedMember.Local
         private static IEnumerable<int[]> Games()
         {

@@ -54,5 +54,15 @@
             // Then
             getPlayer.ShouldThrow<InvalidPlayerException>();
         }
+
+        [Test]
+        public void Throws_exception_if_file_not_a_dll()
+        {
+            // When
+            Action getPlayer = () => loader.LoadBotByName("not_a_dll");
+
+            // Then
+            getPlayer.ShouldThrow<InvalidPlayerException>();
+        }
     }
 }

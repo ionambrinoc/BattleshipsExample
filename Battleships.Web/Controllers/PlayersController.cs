@@ -3,7 +3,6 @@
     using Battleships.Core.Repositories;
     using Battleships.Player;
     using Battleships.Runner.Runners;
-    using Battleships.Web.Models.AddPlayer;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -23,7 +22,7 @@
         [HttpGet]
         public virtual ActionResult Index()
         {
-            return View(playerRecordsRepository.GetAll().Reverse().Select(m => new PlayerRecordViewModel(m)));
+            return View(playerRecordsRepository.GetAll().Reverse());
         }
 
         [HttpPost]

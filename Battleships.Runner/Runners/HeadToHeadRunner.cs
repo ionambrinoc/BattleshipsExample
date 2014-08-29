@@ -77,6 +77,10 @@
                 logger.CompleteGame(gameResult);
                 return gameResult;
             }
+            catch (ShotOffBoardException e)
+            {
+                return new GameResult(e.Player == playerOne ? playerTwo : playerOne, ResultType.ShotOffBoard);
+            }
         }
 
         private static void CheckTimeout(IBattleshipsPlayer attacker, IBattleshipsPlayer defender)

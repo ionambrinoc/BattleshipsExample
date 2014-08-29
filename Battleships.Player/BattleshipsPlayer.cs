@@ -64,6 +64,10 @@ namespace Battleships.Player
             }
 
             stopwatch.Stop();
+            if (target.Column < 1 || target.Column > 10 || target.Row < 'A' || target.Row > 'J')
+            {
+                throw new ShotOffBoardException(String.Format("{0} has tried to shoot off the board, aiming at square {1}{2}", Name, target.Row, target.Column), this);
+            }
             return target;
         }
 

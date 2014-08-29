@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Battleships.Web.Helper
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -50,10 +51,17 @@
                 </div>
             </div>
         </div>
+        @if (TempData.HasPopup()) {
+            var popup = TempData.GetPopup();
+            <div id="PopupBanner" class="@popup.CssClass">
+                @popup.Message
+            </div>
+        }
         <div class="container body-content">
+
             <h2>@ViewBag.Title</h2>
             @RenderBody()
-            <hr />
+            <hr style="clear:both" />
             <footer>
                 <p>
                     &copy; @DateTime.Now.Year - Softwire.
@@ -64,5 +72,11 @@
 
         @Scripts.Render("~/bundles/scripts/common")
         @RenderSection("scripts", false)
+        <script type="text/javascript">
+            $(function() {
+                battleships.common.index.fade();
+            });
+        </script>
+
     </body>
 </html>

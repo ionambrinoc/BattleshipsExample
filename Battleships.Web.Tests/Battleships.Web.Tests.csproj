@@ -120,6 +120,7 @@
     <Compile Include="Controllers\HomeControllerTests.cs" />
     <Compile Include="Controllers\LeagueControllerTests.cs" />
     <Compile Include="Controllers\ManagePlayersControllerTests.cs" />
+    <Compile Include="Controllers\PlayerProfileControllerTests.cs" />
     <Compile Include="Controllers\PlayersControllerTests.cs" />
     <Compile Include="Controllers\MatchResultsControllerTests.cs" />
     <Compile Include="Controllers\AddPlayerControllerTests.cs" />
