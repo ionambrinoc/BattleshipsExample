@@ -2,7 +2,6 @@
 {
     using Battleships.Core.Models;
     using Battleships.Core.Repositories;
-    using Battleships.Player.Tests.TestHelpers;
     using Battleships.Web.Controllers;
     using Battleships.Web.Models.PlayerProfile;
     using Battleships.Web.Services;
@@ -10,7 +9,7 @@
     using FakeItEasy;
     using FluentAssertions;
     using NUnit.Framework;
-    using System.Configuration;
+    using System.Web.Mvc;
 
     [TestFixture]
     public class PlayerProfileControllerTests
@@ -24,7 +23,6 @@
         [SetUp]
         public void SetUp()
         {
-            ConfigurationManager.AppSettings["PlayerStoreDirectory"] = TestDirectory.TestPlayerStore;
             fakePlayerRecordsRepository = A.Fake<IPlayerRecordsRepository>();
             fakePlayerUploadService = A.Fake<IPlayerUploadService>();
             fakePlayerDeletionService = A.Fake<IPlayerDeletionService>();
@@ -46,13 +44,14 @@
         public void Index_view_converts_player_record_to_player_record_view_model()
         {
             // Given
-            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(A<int>._)).Returns(new PlayerRecord());
+            A.CallTo(() => fakePlayerRecordsRepository.GetPlayerRecordById(A<int>._)).Returns(new PlayerRecord { Id = 1, Name = "Foo", PictureFileName = "Foo.jpg" });
 
             // When
-            controller.Index();
+            var viewResult = controller.Index(TestPlayerId) as ViewResult;
 
             // Then
-            controller.ViewData.Model.Should().Be(A<PlayerRecordViewModel>._);
+            Assert.NotNull(viewResult);
+            viewResult.ViewData.Model.Should().BeOfType<PlayerRecordViewModel>();
         }
     }
 }

@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Battleships.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Battleships.Web\Bin\Battleships.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Battleships.Runner">
       <HintPath>..\Battleships.Web\Bin\Battleships.Runner.dll</HintPath>
     </Reference>

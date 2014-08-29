@@ -12,6 +12,7 @@
     public interface IPlayerUploadService
     {
         PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName);
+
         IBattleshipsBot LoadBotFromFile(HttpPostedFileBase playerFile);
 
         void OverwritePlayer(AddPlayerModel model);
@@ -21,18 +22,18 @@
 
     public class PlayerUploadService : IPlayerUploadService
     {
+        public const string PlayerStoreDirectory = "PlayerStoreDirectory";
+        public const string ProfilePictureDirectory = "PlayerProfilePictureStoreDirectory";
         private readonly IBotLoader botLoader = new BotLoader();
-        private static readonly string PlayerStoreDirectoryPath = "../../" + ConfigurationManager.AppSettings["PlayerStoreDirectory"];
-        private static readonly string PlayerProfilePictureStoreDirectoryPath = "../../" + ConfigurationManager.AppSettings["PlayerProfilePictureStoreDirectory"];
-
-        public static string GenerateFullDownloadPicturePath(string pictureName)
-        {
-            return Path.Combine(PlayerProfilePictureStoreDirectoryPath, pictureName);
-        }
 
         public static string GenerateFullDownloadBotPath(string playerName)
         {
-            return Path.Combine(PlayerStoreDirectoryPath, playerName + ".dll");
+            return Path.Combine("..", "..", ConfigurationManager.AppSettings[PlayerStoreDirectory], playerName + ".dll");
+        }
+
+        public static string GenerateFullDownloadPicturePath(string pictureName)
+        {
+            return Path.Combine("..", "..", ConfigurationManager.AppSettings[ProfilePictureDirectory], pictureName);
         }
 
         public PlayerRecord UploadAndGetPlayerRecord(string userName, HttpPostedFileBase file, HttpPostedFileBase picture, string playerName)
@@ -74,12 +75,12 @@
 
         private static string GetUploadDirectoryPath()
         {
-            return DirectoryPath.GetFromAppSettings("PlayerStoreDirectory");
+            return DirectoryPath.GetFromAppSettings(PlayerStoreDirectory);
         }
 
         private static string GetPictureUploadDirectoryPath()
         {
-            return DirectoryPath.GetFromAppSettings("PlayerProfilePictureStoreDirectory");
+            return DirectoryPath.GetFromAppSettings(ProfilePictureDirectory);
         }
 
         private string GenerateFullPicturePath(string pictureName)

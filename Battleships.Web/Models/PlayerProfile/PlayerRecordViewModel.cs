@@ -34,11 +34,6 @@
             get { return playerRecord.Name; }
         }
 
-        public string PictureFileName
-        {
-            get { return playerRecord.PictureFileName; }
-        }
-
         public DateTime LastUpdated
         {
             get { return playerRecord.LastUpdated; }
@@ -56,7 +51,7 @@
 
         public string PictureFilePath
         {
-            get { return PlayerUploadService.GenerateFullDownloadPicturePath(PictureFileName); }
+            get { return playerRecord.PictureFileName != null ? PlayerUploadService.GenerateFullDownloadPicturePath(playerRecord.PictureFileName) : null; }
         }
 
         public string BotDownloadPath

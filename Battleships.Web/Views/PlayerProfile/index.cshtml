@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = Model.Name;
 }
-@if (Model.PictureFileName != null) {
+@if (Model.PictureFilePath != null) {
     <img id="PlayerPicture" src="@Model.PictureFilePath">
 }
 @Styles.Render("~/bundles/styles/profile")
@@ -40,7 +40,6 @@
 </table>
 
 <h3>Matches Lost: @Model.LostMatchResults.Count</h3>
-
 
 <table class="table table-striped">
     <thead>
@@ -82,12 +81,5 @@
         </div>
     </div>
 }
-
-
-
-
-
-
-
 
     
